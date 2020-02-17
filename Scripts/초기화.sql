@@ -274,7 +274,18 @@ ALTER TABLE library_team.member
 		REFERENCES library_team.grade ( -- 회원등급
 			grade_no -- 등급번호
 		);
--- 사용자 추가yi_java3st_3team
-drop user if exists 'user_yi_java3st_3team'@'localhost';
+	
+	
+-- 사용자 추가
+/*drop user if exists 'user_yi_java3st_3team'@'localhost';
 grant all privileges on yi_java3st_3team.* to 'user_yi_java3st_3team'@'localhost' identified by 'rootroot';
+flush privileges;*/
+drop user if exists 'leesangwon'@'192.168.10.%';
+grant all privileges on yi_java3st_3team.* to 'leesangwon'@'192.168.10.%' identified by 'threecushion';
+flush privileges;
+drop user if exists 'yugyeongjin'@'192.168.10.%';
+grant all privileges on yi_java3st_3team.* to 'yugyeongjin'@'192.168.10.%' identified by 'threecushion';
+flush privileges;
+drop user if exists 'hwangtaewon'@'192.168.10.%';
+grant all privileges on yi_java3st_3team.* to 'hwangtaewon'@'192.168.10.%' identified by 'threecushion';
 flush privileges;

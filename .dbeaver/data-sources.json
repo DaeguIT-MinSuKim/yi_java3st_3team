@@ -1,0 +1,46 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql5-17052417892-24205c4fa7f32a11": {
+			"provider": "mysql",
+			"driver": "mysql5",
+			"name": "MySQL - localhost(root)",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"url": "jdbc:mysql://localhost:3306/",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
+				"type": "dev",
+				"handlers": {}
+			}
+		},
+		"mysql5-170529c6e34-5c48cfab07ba503": {
+			"provider": "mysql",
+			"driver": "mysql5",
+			"name": "MySQL - yi_java3st_3team",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "yi_java3st_3team",
+				"url": "jdbc:mysql://localhost:3306/yi_java3st_3team",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
+				"type": "dev",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false
+		}
+	}
+}

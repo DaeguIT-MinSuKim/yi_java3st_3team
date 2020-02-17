@@ -12,21 +12,20 @@
 				"port": "3306",
 				"url": "jdbc:mysql://localhost:3306/",
 				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
-				"type": "dev",
-				"handlers": {}
+				"type": "dev"
 			}
 		},
-		"mysql5-170529c6e34-5c48cfab07ba503": {
+		"mysql5-17053104ae2-54d50854cb55faf7": {
 			"provider": "mysql",
 			"driver": "mysql5",
-			"name": "MySQL - yi_java3st_3team",
+			"name": "MySQL - yi_java3st_3team(taewon)",
 			"save-password": true,
 			"read-only": false,
 			"configuration": {
-				"host": "localhost",
+				"host": "192.168.10.71",
 				"port": "3306",
 				"database": "yi_java3st_3team",
-				"url": "jdbc:mysql://localhost:3306/yi_java3st_3team",
+				"url": "jdbc:mysql://192.168.10.71:3306/yi_java3st_3team",
 				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
 				"type": "dev",
 				"handlers": {}

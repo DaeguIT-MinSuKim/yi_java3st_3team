@@ -35,7 +35,7 @@ dependencies {
 }
 jar{
     version = 1.0
-    mainClassName="ncs_test_htw.ui.LoginFrame"
+    mainClassName="yi_java3st_3team.ui.MainFrame"
   	baseName = 'Erp'
   	manifest{
   	    attributes 'Title' : baseName, 'Version':version, 'Main-Class':mainClassName

@@ -222,4 +222,8 @@
   <term name="등록" physicalName="registration">
     <physicalSynonyms>regist</physicalSynonyms>
   </term>
+  <term name="기본" physicalName="basis">
+    <physicalSynonyms>bass</physicalSynonyms>
+  </term>
+  <term name="상세" physicalName="detail"/>
 </tm:TermDictionary>

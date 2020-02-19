@@ -1,1 +1,1 @@
-{"resources":{"Scripts/Script.sql":{},"Scripts/데이터.sql":{},"Scripts/초기화.sql":{"sql-editor-data-source-id":"mysql5-17052417892-24205c4fa7f32a11"},"Scripts/테스트.sql":{}}}
+{"resources":{"Scripts/Script.sql":{"sql-editor-data-source-id":"mysql5-170576154e9-1f82bd2578a85d0"},"Scripts/데이터.sql":{"sql-editor-data-source-id":"mysql5-170576154e9-1f82bd2578a85d0"},"Scripts/초기화.sql":{"sql-editor-data-source-id":"mysql5-17052417892-24205c4fa7f32a11"},"Scripts/테스트.sql":{}}}

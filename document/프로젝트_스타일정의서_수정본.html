@@ -1,0 +1,799 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>리포트</title>
+    <style type="text/css">
+        .entity{
+            border: solid 1px #7E2828;
+            margin-bottom: 20px;
+        }
+        .header{
+            background-color: #7E2828;
+            color: white;
+        }
+        .column-header{
+            background-color: #E8E8E8;
+        }
+        td{
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<h2>도서관 프로젝트의 템플릿</h2>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">도서 (book)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>도서코드(PK)</td>
+        <td>book_code</td>
+        <td>코드</td>
+        <td>CHAR(7)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>도서명</td>
+        <td>book_name</td>
+        <td>도서명</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>저자이름</td>
+        <td>authr_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>역자이름</td>
+        <td>trnslr_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>출판사</td>
+        <td>pls</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>발행년도</td>
+        <td>pblicte_year</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>도서가격</td>
+        <td>book_price</td>
+        <td>금액</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>대여가능여부</td>
+        <td>lend_psb_cdt</td>
+        <td>상태</td>
+        <td>TINYINT</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>총대여횟수</td>
+        <td>total_le_cnt</td>
+        <td>총</td>
+        <td>INTEGER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>도서이미지</td>
+        <td>book_img</td>
+        <td>이미지</td>
+        <td>LONGBLOB</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>대분류번호</td>
+        <td>lc_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>중분류번호</td>
+        <td>ml_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>등록일자</td>
+        <td>regist_date</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>폐기여부</td>
+        <td>dsuse_cdt</td>
+        <td>상태</td>
+        <td>TINYINT</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">회원등급 (grade)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>등급번호(PK)</td>
+        <td>grade_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>등급이름</td>
+        <td>grad_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>도서대여권수</td>
+        <td>book_le_cnt</td>
+        <td>총</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">대분류 (large_classification)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>대분류번호(PK)</td>
+        <td>lclas_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>대분류이름</td>
+        <td>lclas_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">대여/반납 (lending)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>대여반납번호(PK)</td>
+        <td>lend_rturn_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원ID(FK)</td>
+        <td>mber_id</td>
+        <td>아이디</td>
+        <td>VARCHAR(30)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>도서코드(FK)</td>
+        <td>book_cd</td>
+        <td>코드</td>
+        <td>CHAR(7)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>대여일</td>
+        <td>lend_date</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>반납예정일</td>
+        <td>rturn_due_date</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>반납연기여부</td>
+        <td>rturn_psm_cdt</td>
+        <td>상태</td>
+        <td>TINYINT</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>반납일</td>
+        <td>rturn_date</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>연체여부</td>
+        <td>overdue_cdt</td>
+        <td>상태</td>
+        <td>TINYINT</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>연체일</td>
+        <td>overdue_date</td>
+        <td>총</td>
+        <td>INTEGER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">사서 (librarian)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>사서ID(PK)</td>
+        <td>lb_id</td>
+        <td>아이디</td>
+        <td>VARCHAR(30)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>사서비밀번호</td>
+        <td>lb_pass</td>
+        <td>비밀번호</td>
+        <td>CHAR(41)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>사서이름</td>
+        <td>lb_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>사서생년월일</td>
+        <td>lb_birthday</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>사서우편번호</td>
+        <td>lb_zip</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>사서기본주소</td>
+        <td>lb_bass_ad</td>
+        <td>주소</td>
+        <td>VARCHAR(255)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>사서상세주소</td>
+        <td>lb_detail_ad</td>
+        <td>주소</td>
+        <td>VARCHAR(255)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>사서전화번호</td>
+        <td>lb_tel</td>
+        <td>전화번호</td>
+        <td>VARCHAR(30)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>직책</td>
+        <td>title</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>입사일</td>
+        <td>join_date</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>근무여부</td>
+        <td>work_cdt</td>
+        <td>상태</td>
+        <td>TINYINT</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">회원 (member)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>회원ID(PK)</td>
+        <td>mber_id</td>
+        <td>아이디</td>
+        <td>VARCHAR(30)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원비밀번호</td>
+        <td>mber_pass</td>
+        <td>비밀번호</td>
+        <td>CHAR(41)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원이름</td>
+        <td>mber_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원생년월일</td>
+        <td>mber_brthdy</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원우편번호</td>
+        <td>mber_zip</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원기본주소</td>
+        <td>mber_bass_ad</td>
+        <td>주소</td>
+        <td>VARCHAR(255)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원상세주소</td>
+        <td>mber_detail_ad</td>
+        <td>주소</td>
+        <td>VARCHAR(255)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원전화번호</td>
+        <td>mber_tel</td>
+        <td>전화번호</td>
+        <td>VARCHAR(30)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>총대여권수</td>
+        <td>total_le_cnt</td>
+        <td>총</td>
+        <td>INTEGER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>대여도서권수</td>
+        <td>lend_book_cnt</td>
+        <td>총</td>
+        <td>INTEGER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>등급(FK)</td>
+        <td>grade</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>대여가능여부</td>
+        <td>lend_psb_cdt</td>
+        <td>상태</td>
+        <td>TINYINT</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>가입일</td>
+        <td>join_dt</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>탈퇴여부</td>
+        <td>wdr_cdt</td>
+        <td>상태</td>
+        <td>TINYINT</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">중분류 (middle_classification)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>중분류번호(PK)</td>
+        <td>mlsfc_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>중분류이름</td>
+        <td>mlsfc_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>대분류번호</td>
+        <td>lclas_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">출판사 (publishing_company)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>출판사번호(PK)</td>
+        <td>pls_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>출판사이름</td>
+        <td>pls_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">추천도서 (recommendation)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>추천도서번호(PK)</td>
+        <td>recom_book_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>도서코드(FK)</td>
+        <td>book_code</td>
+        <td>코드</td>
+        <td>CHAR(7)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>도서소개</td>
+        <td>book_cont</td>
+        <td>내용</td>
+        <td>VARCHAR(255)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">신청도서 (request_book)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>신청도서번호(PK)</td>
+        <td>reqst_book_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>신청회원ID(FK)</td>
+        <td>reqst_mb_id</td>
+        <td>아이디</td>
+        <td>VARCHAR(30)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>신청도서명</td>
+        <td>reqst_book_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>신청도서저자</td>
+        <td>reqst_book_author</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>신청도서역자</td>
+        <td>reqst_book_trnslr</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>신청도서출판사</td>
+        <td>request_book_pls</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>신청날짜</td>
+        <td>reqst_date</td>
+        <td>일시</td>
+        <td>DATE</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>입고여부</td>
+        <td>wh_cdt</td>
+        <td>상태</td>
+        <td>TINYINT</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">직책 (title)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>직책번호(PK)</td>
+        <td>title_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>직책명</td>
+        <td>title_name</td>
+        <td>이름</td>
+        <td>VARCHAR(50)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table class="entity" cellpadding="0" cellspacing="0">
+    <tr>
+        <td colspan="6" class="header">우편번호 (zip_code)</td>
+    </tr>
+    <tr class="column-header">
+        <td>논리명</td>
+        <td>물리명</td>
+        <td>도메인</td>
+        <td>데이터 타입</td>
+        <td>Not Null</td>
+        <td>설명</td>
+    </tr>
+    <tr>
+        <td>우편번호</td>
+        <td>zip_code</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>시도</td>
+        <td>ctprvn</td>
+        <td>지역</td>
+        <td>VARCHAR(10)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>시군구</td>
+        <td>signgu</td>
+        <td>지역</td>
+        <td>VARCHAR(10)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>도로명</td>
+        <td>road_name</td>
+        <td>지역</td>
+        <td>VARCHAR(10)</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>건물번호본번</td>
+        <td>buld_no_origin_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>건물번호부번</td>
+        <td>buld_no_vice_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+</body>
+</html>

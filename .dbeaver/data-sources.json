@@ -15,17 +15,17 @@
 				"type": "dev"
 			}
 		},
-		"mysql5-170576154e9-1f82bd2578a85d0": {
+		"mysql5-170619a8516-764fd9c0d9ad85fa": {
 			"provider": "mysql",
 			"driver": "mysql5",
-			"name": "MySQL - yi_java3st_3team(java3st)",
+			"name": "MySQL - yi_java3st_3team(user)",
 			"save-password": true,
 			"read-only": false,
 			"configuration": {
-				"host": "dev.yi.or.kr",
-				"port": "13306",
+				"host": "localhost",
+				"port": "3306",
 				"database": "yi_java3st_3team",
-				"url": "jdbc:mysql://dev.yi.or.kr:13306/yi_java3st_3team",
+				"url": "jdbc:mysql://localhost:3306/yi_java3st_3team",
 				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
 				"type": "dev",
 				"handlers": {}

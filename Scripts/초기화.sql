@@ -272,8 +272,8 @@ ALTER TABLE yi_java3st_3team.request_book
 		);
 	
 -- 사용자 추가
-drop user if exists 'java3st'@'dev.yi.or.kr';
-grant all privileges on yi_java3st_3team.* to 'java3st'@'dev.yi.or.kr' identified by 'java3st';
+drop user if exists 'java3st'@'localhost';
+grant all privileges on yi_java3st_3team.* to 'java3st'@'localhost' identified by 'rootroot';
 flush privileges;
 /*drop user if exists 'leesangwon'@'192.168.10.%';
 grant all privileges on yi_java3st_3team.* to 'leesangwon'@'192.168.10.%' identified by 'threecushion';

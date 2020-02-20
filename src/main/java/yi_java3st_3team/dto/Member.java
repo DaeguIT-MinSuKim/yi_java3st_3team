@@ -7,9 +7,9 @@ public class Member {
 	private String mberPass;
 	private String mberName;
 	private Date mberbirthday;
-	private int mberZip;
-	private String mberBassAd;
-	private String mberDetailAd;
+	private ZipCode mberZip;
+	private ZipCode mberBassAd;
+	private ZipCode mberDetailAd;
 	private String mberTel;
 	private int totalLeCnt;
 	private int lendBookCnt;
@@ -28,14 +28,14 @@ public class Member {
 		this.mberId = mberId;
 	}
 
-	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, int mberZip, String mberBassAd,
-			String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade, boolean lendPsbCdt,
-			Date joinDt, boolean wdrCdt) {
+	public Member(String mberId, String mberPass, String mberName, Date mberbirthday, ZipCode mberZip,
+			ZipCode mberBassAd, ZipCode mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade,
+			boolean lendPsbCdt, Date joinDt, boolean wdrCdt) {
 		super();
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 		this.mberName = mberName;
-		this.mberbirthday = mberBrthdy;
+		this.mberbirthday = mberbirthday;
 		this.mberZip = mberZip;
 		this.mberBassAd = mberBassAd;
 		this.mberDetailAd = mberDetailAd;
@@ -76,31 +76,31 @@ public class Member {
 		return mberbirthday;
 	}
 
-	public void setMberbirthday(Date mberBrthdy) {
-		this.mberbirthday = mberBrthdy;
+	public void setMberbirthday(Date mberbirthday) {
+		this.mberbirthday = mberbirthday;
 	}
 
-	public int getMberZip() {
+	public ZipCode getMberZip() {
 		return mberZip;
 	}
 
-	public void setMberZip(int mberZip) {
+	public void setMberZip(ZipCode mberZip) {
 		this.mberZip = mberZip;
 	}
 
-	public String getMberBassAd() {
+	public ZipCode getMberBassAd() {
 		return mberBassAd;
 	}
 
-	public void setMberBassAd(String mberBassAd) {
+	public void setMberBassAd(ZipCode mberBassAd) {
 		this.mberBassAd = mberBassAd;
 	}
 
-	public String getMberDetailAd() {
+	public ZipCode getMberDetailAd() {
 		return mberDetailAd;
 	}
 
-	public void setMberDetailAd(String mberDetailAd) {
+	public void setMberDetailAd(ZipCode mberDetailAd) {
 		this.mberDetailAd = mberDetailAd;
 	}
 
@@ -169,13 +169,13 @@ public class Member {
 		result = prime * result + lendBookCnt;
 		result = prime * result + (lendPsbCdt ? 1231 : 1237);
 		result = prime * result + ((mberBassAd == null) ? 0 : mberBassAd.hashCode());
-		result = prime * result + ((mberbirthday == null) ? 0 : mberbirthday.hashCode());
 		result = prime * result + ((mberDetailAd == null) ? 0 : mberDetailAd.hashCode());
 		result = prime * result + ((mberId == null) ? 0 : mberId.hashCode());
 		result = prime * result + ((mberName == null) ? 0 : mberName.hashCode());
 		result = prime * result + ((mberPass == null) ? 0 : mberPass.hashCode());
 		result = prime * result + ((mberTel == null) ? 0 : mberTel.hashCode());
-		result = prime * result + mberZip;
+		result = prime * result + ((mberZip == null) ? 0 : mberZip.hashCode());
+		result = prime * result + ((mberbirthday == null) ? 0 : mberbirthday.hashCode());
 		result = prime * result + totalLeCnt;
 		result = prime * result + (wdrCdt ? 1231 : 1237);
 		return result;
@@ -209,11 +209,6 @@ public class Member {
 				return false;
 		} else if (!mberBassAd.equals(other.mberBassAd))
 			return false;
-		if (mberbirthday == null) {
-			if (other.mberbirthday != null)
-				return false;
-		} else if (!mberbirthday.equals(other.mberbirthday))
-			return false;
 		if (mberDetailAd == null) {
 			if (other.mberDetailAd != null)
 				return false;
@@ -239,7 +234,15 @@ public class Member {
 				return false;
 		} else if (!mberTel.equals(other.mberTel))
 			return false;
-		if (mberZip != other.mberZip)
+		if (mberZip == null) {
+			if (other.mberZip != null)
+				return false;
+		} else if (!mberZip.equals(other.mberZip))
+			return false;
+		if (mberbirthday == null) {
+			if (other.mberbirthday != null)
+				return false;
+		} else if (!mberbirthday.equals(other.mberbirthday))
 			return false;
 		if (totalLeCnt != other.totalLeCnt)
 			return false;
@@ -250,10 +253,10 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [mberId=" + mberId + ", mberPass=" + mberPass + ", mberName=" + mberName + ", mberBrthdy="
-				+ mberbirthday + ", mberZip=" + mberZip + ", mberBassAd=" + mberBassAd + ", mberDetailAd=" + mberDetailAd
-				+ ", mberTel=" + mberTel + ", totalLeCnt=" + totalLeCnt + ", lendBookCnt=" + lendBookCnt + ", grade="
-				+ grade + ", lendPsbCdt=" + lendPsbCdt + ", joinDt=" + joinDt + ", wdrCdt=" + wdrCdt + "]";
+		return "Member [mberId=" + mberId + ", mberPass=" + mberPass + ", mberName=" + mberName + ", mberbirthday="
+				+ mberbirthday + ", mberZip=" + mberZip + ", mberBassAd=" + mberBassAd + ", mberDetailAd="
+				+ mberDetailAd + ", mberTel=" + mberTel + ", totalLeCnt=" + totalLeCnt + ", lendBookCnt=" + lendBookCnt
+				+ ", grade=" + grade + ", lendPsbCdt=" + lendPsbCdt + ", joinDt=" + joinDt + ", wdrCdt=" + wdrCdt + "]";
 	}
 
 }

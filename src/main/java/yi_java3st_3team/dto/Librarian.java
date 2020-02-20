@@ -7,9 +7,9 @@ public class Librarian {
 	private String lbPass;
 	private String lbName;
 	private Date lbBirthDay;
-	private int lbZip;
-	private String lbBassAd;
-	private String lbDetailAd;
+	private ZipCode lbZip;
+	private ZipCode lbBassAd;
+	private ZipCode lbDetailAd;
 	private String lbTel;
 	private Title title;
 	private Date joinDate;
@@ -25,8 +25,8 @@ public class Librarian {
 		this.lbId = lbId;
 	}
 
-	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, int lbZip, String lbBassAd,
-			String lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
+	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, ZipCode lbBassAd,
+			ZipCode lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
 		super();
 		this.lbId = lbId;
 		this.lbPass = lbPass;
@@ -73,27 +73,27 @@ public class Librarian {
 		this.lbBirthDay = lbBirthDay;
 	}
 
-	public int getLbZip() {
+	public ZipCode getLbZip() {
 		return lbZip;
 	}
 
-	public void setLbZip(int lbZip) {
+	public void setLbZip(ZipCode lbZip) {
 		this.lbZip = lbZip;
 	}
 
-	public String getLbBassAd() {
+	public ZipCode getLbBassAd() {
 		return lbBassAd;
 	}
 
-	public void setLbBassAd(String lbBassAd) {
+	public void setLbBassAd(ZipCode lbBassAd) {
 		this.lbBassAd = lbBassAd;
 	}
 
-	public String getLbDetailAd() {
+	public ZipCode getLbDetailAd() {
 		return lbDetailAd;
 	}
 
-	public void setLbDetailAd(String lbDetailAd) {
+	public void setLbDetailAd(ZipCode lbDetailAd) {
 		this.lbDetailAd = lbDetailAd;
 	}
 
@@ -141,7 +141,7 @@ public class Librarian {
 		result = prime * result + ((lbName == null) ? 0 : lbName.hashCode());
 		result = prime * result + ((lbPass == null) ? 0 : lbPass.hashCode());
 		result = prime * result + ((lbTel == null) ? 0 : lbTel.hashCode());
-		result = prime * result + lbZip;
+		result = prime * result + ((lbZip == null) ? 0 : lbZip.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + (workCdt ? 1231 : 1237);
 		return result;
@@ -196,7 +196,10 @@ public class Librarian {
 				return false;
 		} else if (!lbTel.equals(other.lbTel))
 			return false;
-		if (lbZip != other.lbZip)
+		if (lbZip == null) {
+			if (other.lbZip != null)
+				return false;
+		} else if (!lbZip.equals(other.lbZip))
 			return false;
 		if (title == null) {
 			if (other.title != null)

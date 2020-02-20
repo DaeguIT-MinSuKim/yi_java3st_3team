@@ -1,0 +1,260 @@
+package yi_java3st_3team.dto;
+
+import java.util.Arrays;
+import java.util.Date;
+
+public class Book {
+	private String bookCode;
+	private String bookName;
+	private String authrName;
+	private String trnslrName;
+	private PublishingCompany pls;
+	private Date pblicteYear;
+	private int bookPrice;
+	private boolean lendPsbCdt;
+	private int totalLeCnt;
+	private byte[] bookImg;
+	private LargeClassification lcNo;
+	private MiddleClassification mlNo;
+	private Date registDate;
+	private boolean dsuseCdt;
+
+	public Book() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Book(String bookCode) {
+		super();
+		this.bookCode = bookCode;
+	}
+
+	public Book(String bookCode, String bookName, String authrName, String trnslrName, PublishingCompany pls,
+			Date pblicteYear, int bookPrice, boolean lendPsbCdt, int totalLeCnt, byte[] bookImg,
+			LargeClassification lcNo, MiddleClassification mlNo, Date registDate, boolean dsuseCdt) {
+		super();
+		this.bookCode = bookCode;
+		this.bookName = bookName;
+		this.authrName = authrName;
+		this.trnslrName = trnslrName;
+		this.pls = pls;
+		this.pblicteYear = pblicteYear;
+		this.bookPrice = bookPrice;
+		this.lendPsbCdt = lendPsbCdt;
+		this.totalLeCnt = totalLeCnt;
+		this.bookImg = bookImg;
+		this.lcNo = lcNo;
+		this.mlNo = mlNo;
+		this.registDate = registDate;
+		this.dsuseCdt = dsuseCdt;
+	}
+
+	public String getBookCode() {
+		return bookCode;
+	}
+
+	public void setBookCode(String bookCode) {
+		this.bookCode = bookCode;
+	}
+
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+
+	public String getAuthrName() {
+		return authrName;
+	}
+
+	public void setAuthrName(String authrName) {
+		this.authrName = authrName;
+	}
+
+	public String getTrnslrName() {
+		return trnslrName;
+	}
+
+	public void setTrnslrName(String trnslrName) {
+		this.trnslrName = trnslrName;
+	}
+
+	public PublishingCompany getPls() {
+		return pls;
+	}
+
+	public void setPls(PublishingCompany pls) {
+		this.pls = pls;
+	}
+
+	public Date getPblicteYear() {
+		return pblicteYear;
+	}
+
+	public void setPblicteYear(Date pblicteYear) {
+		this.pblicteYear = pblicteYear;
+	}
+
+	public int getBookPrice() {
+		return bookPrice;
+	}
+
+	public void setBookPrice(int bookPrice) {
+		this.bookPrice = bookPrice;
+	}
+
+	public boolean isLendPsbCdt() {
+		return lendPsbCdt;
+	}
+
+	public void setLendPsbCdt(boolean lendPsbCdt) {
+		this.lendPsbCdt = lendPsbCdt;
+	}
+
+	public int getTotalLeCnt() {
+		return totalLeCnt;
+	}
+
+	public void setTotalLeCnt(int totalLeCnt) {
+		this.totalLeCnt = totalLeCnt;
+	}
+
+	public byte[] getBookImg() {
+		return bookImg;
+	}
+
+	public void setBookImg(byte[] bookImg) {
+		this.bookImg = bookImg;
+	}
+
+	public LargeClassification getLcNo() {
+		return lcNo;
+	}
+
+	public void setLcNo(LargeClassification lcNo) {
+		this.lcNo = lcNo;
+	}
+
+	public MiddleClassification getMlNo() {
+		return mlNo;
+	}
+
+	public void setMlNo(MiddleClassification mlNo) {
+		this.mlNo = mlNo;
+	}
+
+	public Date getRegistDate() {
+		return registDate;
+	}
+
+	public void setRegistDate(Date registDate) {
+		this.registDate = registDate;
+	}
+
+	public boolean isDsuseCdt() {
+		return dsuseCdt;
+	}
+
+	public void setDsuseCdt(boolean dsuseCdt) {
+		this.dsuseCdt = dsuseCdt;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((authrName == null) ? 0 : authrName.hashCode());
+		result = prime * result + ((bookCode == null) ? 0 : bookCode.hashCode());
+		result = prime * result + Arrays.hashCode(bookImg);
+		result = prime * result + ((bookName == null) ? 0 : bookName.hashCode());
+		result = prime * result + bookPrice;
+		result = prime * result + (dsuseCdt ? 1231 : 1237);
+		result = prime * result + ((lcNo == null) ? 0 : lcNo.hashCode());
+		result = prime * result + (lendPsbCdt ? 1231 : 1237);
+		result = prime * result + ((mlNo == null) ? 0 : mlNo.hashCode());
+		result = prime * result + ((pblicteYear == null) ? 0 : pblicteYear.hashCode());
+		result = prime * result + ((pls == null) ? 0 : pls.hashCode());
+		result = prime * result + ((registDate == null) ? 0 : registDate.hashCode());
+		result = prime * result + totalLeCnt;
+		result = prime * result + ((trnslrName == null) ? 0 : trnslrName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		if (authrName == null) {
+			if (other.authrName != null)
+				return false;
+		} else if (!authrName.equals(other.authrName))
+			return false;
+		if (bookCode == null) {
+			if (other.bookCode != null)
+				return false;
+		} else if (!bookCode.equals(other.bookCode))
+			return false;
+		if (!Arrays.equals(bookImg, other.bookImg))
+			return false;
+		if (bookName == null) {
+			if (other.bookName != null)
+				return false;
+		} else if (!bookName.equals(other.bookName))
+			return false;
+		if (bookPrice != other.bookPrice)
+			return false;
+		if (dsuseCdt != other.dsuseCdt)
+			return false;
+		if (lcNo == null) {
+			if (other.lcNo != null)
+				return false;
+		} else if (!lcNo.equals(other.lcNo))
+			return false;
+		if (lendPsbCdt != other.lendPsbCdt)
+			return false;
+		if (mlNo == null) {
+			if (other.mlNo != null)
+				return false;
+		} else if (!mlNo.equals(other.mlNo))
+			return false;
+		if (pblicteYear == null) {
+			if (other.pblicteYear != null)
+				return false;
+		} else if (!pblicteYear.equals(other.pblicteYear))
+			return false;
+		if (pls == null) {
+			if (other.pls != null)
+				return false;
+		} else if (!pls.equals(other.pls))
+			return false;
+		if (registDate == null) {
+			if (other.registDate != null)
+				return false;
+		} else if (!registDate.equals(other.registDate))
+			return false;
+		if (totalLeCnt != other.totalLeCnt)
+			return false;
+		if (trnslrName == null) {
+			if (other.trnslrName != null)
+				return false;
+		} else if (!trnslrName.equals(other.trnslrName))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Book [bookCode=" + bookCode + ", bookName=" + bookName + ", authrName=" + authrName + ", trnslrName="
+				+ trnslrName + ", pls=" + pls + ", pblicteYear=" + pblicteYear + ", bookPrice=" + bookPrice
+				+ ", lendPsbCdt=" + lendPsbCdt + ", totalLeCnt=" + totalLeCnt + ", bookImg=" + Arrays.toString(bookImg)
+				+ ", lcNo=" + lcNo + ", mlNo=" + mlNo + ", registDate=" + registDate + ", dsuseCdt=" + dsuseCdt + "]";
+	}
+
+}

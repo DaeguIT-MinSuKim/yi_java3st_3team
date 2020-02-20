@@ -2,7 +2,7 @@ select user(), database ();
 
 -- member 회원
 desc member;
-load data local infile 'D:/workspace/workspace_gradle/yi_java3st_3team/document/member.txt'
+load data local infile 'D:/workspace/workspace-teamProject/yi_java3st_3team/document/data/member.txt'
 into table yi_java3st_3team.member 
 character set 'utf8'
 fields terminated by ',';
@@ -16,6 +16,12 @@ fields terminated by ',';
 -- book 도서
 
 -- publishing_company 출판사
+desc publishing_company;
+load data local infile 'D:/workspace/workspace-teamProject/yi_java3st_3team/document/data/pls_data.csv'
+into table yi_java3st_3team.librarian 
+character set 'utf8'
+fields terminated by ','
+ignore 1 lines;
 
 -- recommendation 추천도서
 
@@ -24,9 +30,8 @@ fields terminated by ',';
 -- middle_classification 중분류
 
 -- librarian 사서
-
 desc librarian;
-load data local infile 'D:/workspace/workspace_gradle/yi_java3st_3team/document/librarian.txt'
+load data local infile 'D:/workspace/workspace-teamProject/yi_java3st_3team/document/data/librarian.txt'
 into table yi_java3st_3team.librarian 
 character set 'utf8'
 fields terminated by ',';

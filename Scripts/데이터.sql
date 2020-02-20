@@ -22,9 +22,14 @@ insert into member values();
 -- librarian 사서
 
 desc librarian;
-insert into librarian(lb_id , lb_pass , lb_name, lb_birthday, lb_zip, ) values();
+LOAD DATA INFILE 
 
 -- title 직책
+desc title;
+insert into title values
+(1,'총관리자'),
+(2,'사서'),
+(3,'회원');
 
 -- zip_code 우편번호
 

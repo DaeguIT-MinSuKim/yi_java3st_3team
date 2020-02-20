@@ -8,7 +8,7 @@ insert into grade values
 
 -- member 회원
 desc member;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/member.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/member.txt'
 into table yi_java3st_3team.member
 character set 'utf8'
 fields terminated by ',';
@@ -20,7 +20,7 @@ desc request_book;
 
 -- book 도서
 desc book;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/book_data.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/book_data.csv'
 into table yi_java3st_3team.book 
 character set 'utf8'
 fields terminated by ','
@@ -28,7 +28,7 @@ ignore 1 lines;
 
 -- publishing_company 출판사
 desc publishing_company;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/pls_data.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/pls_data.csv'
 into table yi_java3st_3team.publishing_company
 character set 'utf8'
 fields terminated by ','
@@ -64,7 +64,7 @@ insert into title values
 
 -- librarian 사서
 desc librarian;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/librarian.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/librarian.txt'
 into table yi_java3st_3team.librarian 
 character set 'utf8'
 fields terminated by ',';

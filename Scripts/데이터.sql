@@ -1,9 +1,7 @@
 select user(), database ();
 
 -- member 회원
-desc member;
-insert into member(mber_id, mber_pass, mber_name, mber_brthdy, mber_adres, mber_tel, total_le_cnt, lend_book_cnt, grade, lend_psb_cdt, join_dt, wdr_cdt) values
-();
+insert into member values();
 
 -- grade 회원등급
 
@@ -23,7 +21,15 @@ insert into member(mber_id, mber_pass, mber_name, mber_brthdy, mber_adres, mber_
 
 -- librarian 사서
 
+desc librarian;
+LOAD DATA INFILE 
+
 -- title 직책
+desc title;
+insert into title values
+(1,'총관리자'),
+(2,'사서'),
+(3,'회원');
 
 -- zip_code 우편번호
 

@@ -82,15 +82,17 @@ ALTER TABLE yi_java3st_3team.lending
 
 -- 사서
 CREATE TABLE yi_java3st_3team.librarian (
-	lb_id       VARCHAR(30)  NOT NULL COMMENT '사서ID', -- 사서ID
-	lb_pass     CHAR(41)     NOT NULL COMMENT '사서비밀번호', -- 사서비밀번호
-	lb_name     VARCHAR(50)  NOT NULL COMMENT '사서이름', -- 사서이름
-	lb_birthday DATE         NULL     COMMENT '사서생년월일', -- 사서생년월일
-	lb_adres    VARCHAR(255) NULL     COMMENT '사서주소', -- 사서주소
-	lb_tel      VARCHAR(30)  NULL     COMMENT '사서전화번호', -- 사서전화번호
-	title       INTEGER      NOT NULL COMMENT '직책', -- 직책
-	join_date   DATE         NOT NULL COMMENT '입사일', -- 입사일
-	work_cdt    TINYINT      NOT NULL COMMENT '근무여부' -- 근무여부
+	lb_id        VARCHAR(30)  NOT NULL COMMENT '사서ID', -- 사서ID
+	lb_pass      CHAR(41)     NOT NULL COMMENT '사서비밀번호', -- 사서비밀번호
+	lb_name      VARCHAR(50)  NOT NULL COMMENT '사서이름', -- 사서이름
+	lb_birthday  DATE         NULL     COMMENT '사서생년월일', -- 사서생년월일
+	lb_zip       INTEGER      NULL     COMMENT '사서우편번호', -- 사서우편번호
+	lb_bass_ad   VARCHAR(255) NULL     COMMENT '사서기본주소', -- 사서기본주소
+	lb_detail_ad VARCHAR(255) NULL     COMMENT '사서상세주소', -- 사서상세주소
+	lb_tel       VARCHAR(30)  NULL     COMMENT '사서전화번호', -- 사서전화번호
+	title        INTEGER      NOT NULL COMMENT '직책', -- 직책
+	join_date    DATE         NOT NULL COMMENT '입사일', -- 입사일
+	work_cdt     TINYINT      NOT NULL COMMENT '근무여부' -- 근무여부
 )
 COMMENT '사서';
 
@@ -103,18 +105,20 @@ ALTER TABLE yi_java3st_3team.librarian
 
 -- 회원
 CREATE TABLE yi_java3st_3team.member (
-	mber_id       VARCHAR(30)  NOT NULL COMMENT '회원ID', -- 회원ID
-	mber_pass     CHAR(41)     NOT NULL COMMENT '회원비밀번호', -- 회원비밀번호
-	mber_name     VARCHAR(50)  NOT NULL COMMENT '회원이름', -- 회원이름
-	mber_brthdy   DATE         NOT NULL COMMENT '회원생년월일', -- 회원생년월일
-	mber_adres    VARCHAR(255) NOT NULL COMMENT '회원주소', -- 회원주소
-	mber_tel      VARCHAR(30)  NOT NULL COMMENT '회원전화번호', -- 회원전화번호
-	total_le_cnt  INTEGER      NULL     COMMENT '총대여권수', -- 총대여권수
-	lend_book_cnt INTEGER      NULL     COMMENT '대여도서권수', -- 대여도서권수
-	grade         INTEGER      NULL     COMMENT '등급', -- 등급
-	lend_psb_cdt  TINYINT      NULL     COMMENT '대여가능여부', -- 대여가능여부
-	join_dt       DATE         NOT NULL COMMENT '가입일', -- 가입일
-	wdr_cdt       TINYINT      NULL     COMMENT '탈퇴여부' -- 탈퇴여부
+	mber_id        VARCHAR(30)  NOT NULL COMMENT '회원ID', -- 회원ID
+	mber_pass      CHAR(41)     NOT NULL COMMENT '회원비밀번호', -- 회원비밀번호
+	mber_name      VARCHAR(50)  NOT NULL COMMENT '회원이름', -- 회원이름
+	mber_brthdy    DATE         NOT NULL COMMENT '회원생년월일', -- 회원생년월일
+	mber_zip       INTEGER      NOT NULL COMMENT '회원우편번호', -- 회원우편번호
+	mber_bass_ad   VARCHAR(255) NULL     COMMENT '회원기본주소', -- 회원기본주소
+	mber_detail_ad VARCHAR(255) NULL     COMMENT '회원상세주소', -- 회원상세주소
+	mber_tel       VARCHAR(30)  NOT NULL COMMENT '회원전화번호', -- 회원전화번호
+	total_le_cnt   INTEGER      NULL     COMMENT '총대여권수', -- 총대여권수
+	lend_book_cnt  INTEGER      NULL     COMMENT '대여도서권수', -- 대여도서권수
+	grade          INTEGER      NULL     COMMENT '등급', -- 등급
+	lend_psb_cdt   TINYINT      NULL     COMMENT '대여가능여부', -- 대여가능여부
+	join_dt        DATE         NOT NULL COMMENT '가입일', -- 가입일
+	wdr_cdt        TINYINT      NULL     COMMENT '탈퇴여부' -- 탈퇴여부
 )
 COMMENT '회원';
 
@@ -205,21 +209,14 @@ ALTER TABLE yi_java3st_3team.title
 
 -- 우편번호
 CREATE TABLE yi_java3st_3team.zip_code (
-	zip_code  INTEGER     NOT NULL COMMENT '우편번호', -- 우편번호
-	ctprvn    VARCHAR(10) NOT NULL COMMENT '시도', -- 시도
-	signgu    VARCHAR(10) NOT NULL COMMENT '시군구', -- 시군구
-	road_name VARCHAR(10) NOT NULL COMMENT '도로명', -- 도로명
-	lnm_mnnm  INTEGER     NOT NULL COMMENT '지번본번', -- 지번본번
-	lnm_slno  INTEGER     NOT NULL COMMENT '지번부번' -- 지번부번
+	zip_code          INTEGER     NOT NULL COMMENT '우편번호', -- 우편번호
+	ctprvn            VARCHAR(10) NOT NULL COMMENT '시도', -- 시도
+	signgu            VARCHAR(10) NOT NULL COMMENT '시군구', -- 시군구
+	road_name         VARCHAR(10) NOT NULL COMMENT '도로명', -- 도로명
+	buld_no_origin_no INTEGER     NULL     COMMENT '건물번호본번', -- 건물번호본번
+	buld_no_vice_no   INTEGER     NULL     COMMENT '건물번호부번' -- 건물번호부번
 )
 COMMENT '우편번호';
-
--- 우편번호
-ALTER TABLE yi_java3st_3team.zip_code
-	ADD CONSTRAINT PK_zip_code -- 우편번호 기본키
-		PRIMARY KEY (
-			zip_code -- 우편번호
-		);
 
 -- 대여/반납
 ALTER TABLE yi_java3st_3team.lending

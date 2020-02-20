@@ -1,9 +1,7 @@
 select user(), database ();
 
 -- member 회원
-desc member;
-insert into member(mber_id, mber_pass, mber_name, mber_brthdy, mber_adres, mber_tel, total_le_cnt, lend_book_cnt, grade, lend_psb_cdt, join_dt, wdr_cdt) values
-();
+insert into member values();
 
 -- grade 회원등급
 
@@ -22,6 +20,9 @@ insert into member(mber_id, mber_pass, mber_name, mber_brthdy, mber_adres, mber_
 -- middle_classification 중분류
 
 -- librarian 사서
+
+desc librarian;
+insert into librarian(lb_id , lb_pass , lb_name, lb_birthday, lb_zip, ) values();
 
 -- title 직책
 

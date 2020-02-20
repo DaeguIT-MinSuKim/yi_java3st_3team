@@ -6,3 +6,6 @@ from librarian;
 
 select *
 from member;
+
+select *
+from grade;

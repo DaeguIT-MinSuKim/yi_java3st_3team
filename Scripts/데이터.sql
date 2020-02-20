@@ -2,14 +2,20 @@ select user(), database ();
 
 -- member 회원
 desc member;
-load data local infile 'D:/workspace/workspace_gradle/yi_java3st_3team/document/member.txt'
-into table yi_java3st_3team.member 
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/member.txt'
+into table yi_java3st_3team.member
 character set 'utf8'
 fields terminated by ',';
 
 -- grade 회원등급
+desc grade;
+insert into grade values
+(1,'일반',5),
+(2,'우수',7);
 
 -- request_book 신청도서
+desc request_book; 
+
  
 -- lending 대여/반납
 
@@ -24,9 +30,8 @@ fields terminated by ',';
 -- middle_classification 중분류
 
 -- librarian 사서
-
 desc librarian;
-load data local infile 'D:/workspace/workspace_gradle/yi_java3st_3team/document/librarian.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/librarian.txt'
 into table yi_java3st_3team.librarian 
 character set 'utf8'
 fields terminated by ',';
@@ -37,6 +42,7 @@ insert into title values
 (1,'총관리자'),
 (2,'사서'),
 (3,'회원');
+
 
 -- zip_code 우편번호
 

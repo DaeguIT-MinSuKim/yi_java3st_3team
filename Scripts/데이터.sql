@@ -1,7 +1,11 @@
 select user(), database ();
 
 -- member 회원
-insert into member values();
+desc member;
+load data local infile 'D:/workspace/workspace_gradle/yi_java3st_3team/document/member.txt'
+into table yi_java3st_3team.member 
+character set 'utf8'
+fields terminated by ',';
 
 -- grade 회원등급
 
@@ -22,7 +26,10 @@ insert into member values();
 -- librarian 사서
 
 desc librarian;
-LOAD DATA INFILE 
+load data local infile 'D:/workspace/workspace_gradle/yi_java3st_3team/document/librarian.txt'
+into table yi_java3st_3team.librarian 
+character set 'utf8'
+fields terminated by ',';
 
 -- title 직책
 desc title;

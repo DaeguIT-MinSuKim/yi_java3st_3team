@@ -270,6 +270,7 @@ ALTER TABLE yi_java3st_3team.request_book
 		REFERENCES yi_java3st_3team.member ( -- 회원
 			mber_id -- 회원ID
 		);
+	
 -- 사용자 추가
 drop user if exists 'java3st'@'dev.yi.or.kr';
 grant all privileges on yi_java3st_3team.* to 'java3st'@'dev.yi.or.kr' identified by 'java3st';

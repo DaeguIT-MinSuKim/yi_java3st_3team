@@ -9,7 +9,7 @@ public class Member {
 	private Date mberbirthday;
 	private ZipCode mberZip;
 	private ZipCode mberBassAd;
-	private ZipCode mberDetailAd;
+	private String mberDetailAd;
 	private String mberTel;
 	private int totalLeCnt;
 	private int lendBookCnt;
@@ -29,7 +29,7 @@ public class Member {
 	}
 
 	public Member(String mberId, String mberPass, String mberName, Date mberbirthday, ZipCode mberZip,
-			ZipCode mberBassAd, ZipCode mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade,
+			ZipCode mberBassAd, String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade,
 			boolean lendPsbCdt, Date joinDt, boolean wdrCdt) {
 		super();
 		this.mberId = mberId;
@@ -96,11 +96,11 @@ public class Member {
 		this.mberBassAd = mberBassAd;
 	}
 
-	public ZipCode getMberDetailAd() {
+	public String getMberDetailAd() {
 		return mberDetailAd;
 	}
 
-	public void setMberDetailAd(ZipCode mberDetailAd) {
+	public void setMberDetailAd(String mberDetailAd) {
 		this.mberDetailAd = mberDetailAd;
 	}
 

@@ -9,7 +9,7 @@ public class Librarian {
 	private Date lbBirthDay;
 	private ZipCode lbZip;
 	private ZipCode lbBassAd;
-	private ZipCode lbDetailAd;
+	private String lbDetailAd;
 	private String lbTel;
 	private Title title;
 	private Date joinDate;
@@ -26,7 +26,7 @@ public class Librarian {
 	}
 
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, ZipCode lbBassAd,
-			ZipCode lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
+			String lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
 		super();
 		this.lbId = lbId;
 		this.lbPass = lbPass;
@@ -89,11 +89,11 @@ public class Librarian {
 		this.lbBassAd = lbBassAd;
 	}
 
-	public ZipCode getLbDetailAd() {
+	public String getLbDetailAd() {
 		return lbDetailAd;
 	}
 
-	public void setLbDetailAd(ZipCode lbDetailAd) {
+	public void setLbDetailAd(String lbDetailAd) {
 		this.lbDetailAd = lbDetailAd;
 	}
 

@@ -8,7 +8,7 @@ public class Librarian {
 	private String lbName;
 	private Date lbBirthDay;
 	private ZipCode lbZip;
-	private ZipCode lbBassAd;
+	private String lbBassAd;
 	private String lbDetailAd;
 	private String lbTel;
 	private Title title;
@@ -25,7 +25,7 @@ public class Librarian {
 		this.lbId = lbId;
 	}
 
-	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, ZipCode lbBassAd,
+	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
 			String lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
 		super();
 		this.lbId = lbId;
@@ -81,11 +81,11 @@ public class Librarian {
 		this.lbZip = lbZip;
 	}
 
-	public ZipCode getLbBassAd() {
+	public String getLbBassAd() {
 		return lbBassAd;
 	}
 
-	public void setLbBassAd(ZipCode lbBassAd) {
+	public void setLbBassAd(String lbBassAd) {
 		this.lbBassAd = lbBassAd;
 	}
 

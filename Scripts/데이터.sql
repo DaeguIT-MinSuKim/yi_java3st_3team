@@ -1,10 +1,12 @@
 select user(), database ();
 
+
 -- grade 회원등급
 desc grade;
 insert into grade values
 (1,'일반',5),
 (2,'우수',7);
+
 
 -- member 회원
 desc member;
@@ -13,10 +15,21 @@ into table yi_java3st_3team.member
 character set 'utf8'
 fields terminated by ',';
 
+
 -- request_book 신청도서
 desc request_book; 
+insert into request_book values
+(1, 'ku23324@naver.com', 'Cosmos', '칼 세이건', null, 'Ballantine Books', '2020.02.15', 0),
+(2, 'ferw2@naver.com', 'Sapiens', '유발 하라리', null, 'vintage Books', '2020.02.01', 0),
+(3, 'ya2354fr@yahoo.com', '먼 바다', '공지영', null, '해냄', '2020.02.01', 0),
+(4, 'sdksdl@daum.net', '오늘 밤은 사라지지 말아요', '백수린', null, '마음산책', '2020.02.02', 0),
+(5, 'fivestar@nate.com', '파도가 무엇을 가져올지 누가 알겠어', '박향', null, '나무옆의자', '2020.02.03', 0),
+(6, 'sam223@naver.com', '마당이 있는 집', '김진영', null, '엘릭시르', '2020.02.04', 0),
+(7, 'ddr23dd@naver.com', '태평천하', '채만식', null, '문학과지성사', '2020.02.05', 0),
+(8, 'fdfsdasd@naver.com', '단 하나의 문장', '구병모', null, '문학동네', '2020.02.08', 0),
+(9, 'ggg243r4@gmail.com', '독의 꽃', '최수철', null, '작가정신', '2020.02.09', 0),
+(10, 'gfdssdh@naver.com', '우리들의 행복한 시간', '공지영', null, '해냄', '2020.02.09', 0);
 
--- lending 대여/반납
 
 -- book 도서
 desc book;
@@ -25,6 +38,15 @@ into table yi_java3st_3team.book
 character set 'utf8'
 fields terminated by ','
 ignore 1 lines;
+
+
+-- lending 대여/반납
+desc lending;
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending.txt'
+into table yi_java3st_3team.lending 
+character set 'utf8'
+fields terminated by ',';
+
 
 -- publishing_company 출판사
 desc publishing_company;
@@ -35,6 +57,7 @@ fields terminated by ','
 ignore 1 lines;
 
 -- recommendation 추천도서
+
 
 -- large_classification 대분류
 desc large_classification;
@@ -89,4 +112,8 @@ character set 'utf8'
 fields terminated by ',';
 
 -- zip_code 우편번호
-
+desc zip_code;
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/경북,대구.txt'
+into table yi_java3st_3team.zip_code
+character set 'utf8'
+fields terminated by ',';

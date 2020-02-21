@@ -132,10 +132,18 @@ ALTER TABLE yi_java3st_3team.member
 -- 중분류
 CREATE TABLE yi_java3st_3team.middle_classification (
 	mlsfc_no   INTEGER     NOT NULL COMMENT '중분류번호', -- 중분류번호
-	mlsfc_name VARCHAR(50) NOT NULL COMMENT '중분류이름', -- 중분류이름
-	lclas_no   INTEGER     NOT NULL COMMENT '대분류번호' -- 대분류번호
+	lclas_no   INTEGER     NOT NULL COMMENT '대분류번호', -- 대분류번호
+	mlsfc_name VARCHAR(50) NOT NULL COMMENT '중분류이름' -- 중분류이름
 )
 COMMENT '중분류';
+
+-- 중분류
+ALTER TABLE yi_java3st_3team.middle_classification
+	ADD CONSTRAINT PK_middle_classification -- 중분류 기본키2
+		PRIMARY KEY (
+			mlsfc_no, -- 중분류번호
+			lclas_no  -- 대분류번호
+		);
 
 -- 출판사
 CREATE TABLE yi_java3st_3team.publishing_company (

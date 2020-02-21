@@ -7,6 +7,8 @@ import yi_java3st_3team.dto.Lending;
 
 @SuppressWarnings("serial")
 public class LendingListPanel extends AbsListPanel<Lending> {
+	public LendingListPanel() {
+	}
 
 	@Override
 	protected void setTblWidthAlign() {

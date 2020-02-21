@@ -10,9 +10,10 @@ public class MiddleClassification {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MiddleClassification(int mlsfcNo) {
+	public MiddleClassification(int mlsfcNo, LargeClassification lclasNo) {
 		super();
 		this.mlsfcNo = mlsfcNo;
+		this.lclasNo = lclasNo;
 	}
 
 	public MiddleClassification(int mlsfcNo, String mlsfcName, LargeClassification lclasNo) {

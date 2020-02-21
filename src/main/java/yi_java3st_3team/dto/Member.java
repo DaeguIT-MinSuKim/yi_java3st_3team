@@ -8,19 +8,17 @@ public class Member {
 	private String mberName;
 	private Date mberbirthday;
 	private ZipCode mberZip;
-	private ZipCode mberBassAd;
+	private String mberBassAd;
 	private String mberDetailAd;
 	private String mberTel;
 	private int totalLeCnt;
 	private int lendBookCnt;
 	private Grade grade;
-	private boolean lendPsbCdt;
+	private int lendPsbCdt;
 	private Date joinDt;
-	private boolean wdrCdt;
+	private int wdrCdt;
 
 	public Member() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Member(String mberId) {
@@ -28,9 +26,15 @@ public class Member {
 		this.mberId = mberId;
 	}
 
+	public Member(String mberId, String mberPass) {
+		super();
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+	}
+
 	public Member(String mberId, String mberPass, String mberName, Date mberbirthday, ZipCode mberZip,
-			ZipCode mberBassAd, String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade,
-			boolean lendPsbCdt, Date joinDt, boolean wdrCdt) {
+			String mberBassAd, String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade,
+			int lendPsbCdt, Date joinDt, int wdrCdt) {
 		super();
 		this.mberId = mberId;
 		this.mberPass = mberPass;
@@ -88,11 +92,11 @@ public class Member {
 		this.mberZip = mberZip;
 	}
 
-	public ZipCode getMberBassAd() {
+	public String getMberBassAd() {
 		return mberBassAd;
 	}
 
-	public void setMberBassAd(ZipCode mberBassAd) {
+	public void setMberBassAd(String mberBassAd) {
 		this.mberBassAd = mberBassAd;
 	}
 
@@ -136,11 +140,11 @@ public class Member {
 		this.grade = grade;
 	}
 
-	public boolean isLendPsbCdt() {
+	public int getLendPsbCdt() {
 		return lendPsbCdt;
 	}
 
-	public void setLendPsbCdt(boolean lendPsbCdt) {
+	public void setLendPsbCdt(int lendPsbCdt) {
 		this.lendPsbCdt = lendPsbCdt;
 	}
 
@@ -152,11 +156,11 @@ public class Member {
 		this.joinDt = joinDt;
 	}
 
-	public boolean isWdrCdt() {
+	public int getWdrCdt() {
 		return wdrCdt;
 	}
 
-	public void setWdrCdt(boolean wdrCdt) {
+	public void setWdrCdt(int wdrCdt) {
 		this.wdrCdt = wdrCdt;
 	}
 
@@ -167,7 +171,7 @@ public class Member {
 		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
 		result = prime * result + ((joinDt == null) ? 0 : joinDt.hashCode());
 		result = prime * result + lendBookCnt;
-		result = prime * result + (lendPsbCdt ? 1231 : 1237);
+		result = prime * result + lendPsbCdt;
 		result = prime * result + ((mberBassAd == null) ? 0 : mberBassAd.hashCode());
 		result = prime * result + ((mberDetailAd == null) ? 0 : mberDetailAd.hashCode());
 		result = prime * result + ((mberId == null) ? 0 : mberId.hashCode());
@@ -177,7 +181,7 @@ public class Member {
 		result = prime * result + ((mberZip == null) ? 0 : mberZip.hashCode());
 		result = prime * result + ((mberbirthday == null) ? 0 : mberbirthday.hashCode());
 		result = prime * result + totalLeCnt;
-		result = prime * result + (wdrCdt ? 1231 : 1237);
+		result = prime * result + wdrCdt;
 		return result;
 	}
 
@@ -253,10 +257,10 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [mberId=" + mberId + ", mberPass=" + mberPass + ", mberName=" + mberName + ", mberbirthday="
-				+ mberbirthday + ", mberZip=" + mberZip + ", mberBassAd=" + mberBassAd + ", mberDetailAd="
-				+ mberDetailAd + ", mberTel=" + mberTel + ", totalLeCnt=" + totalLeCnt + ", lendBookCnt=" + lendBookCnt
-				+ ", grade=" + grade + ", lendPsbCdt=" + lendPsbCdt + ", joinDt=" + joinDt + ", wdrCdt=" + wdrCdt + "]";
+		return String.format(
+				"Member [mberId=%s, mberPass=%s, mberName=%s, mberbirthday=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s]",
+				mberId, mberPass, mberName, mberbirthday, mberZip, mberBassAd, mberDetailAd, mberTel, totalLeCnt,
+				lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
 	}
 
 }

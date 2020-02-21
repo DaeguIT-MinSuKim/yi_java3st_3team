@@ -52,7 +52,7 @@ insert into large_classification values
 
 -- middle_classification 중분류
 desc middle_classification ;
-insert into middle_classification values
+insert into middle_classification(mlsfc_no, mlsfc_name, lclas_no) values
 (01, '신문', 01),
 (02, '백과사전', 01),
 (01, '동양철학', 02),

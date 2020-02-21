@@ -108,7 +108,7 @@ CREATE TABLE yi_java3st_3team.member (
 	mber_id        VARCHAR(30)  NOT NULL COMMENT '회원ID', -- 회원ID
 	mber_pass      CHAR(41)     NOT NULL COMMENT '회원비밀번호', -- 회원비밀번호
 	mber_name      VARCHAR(50)  NOT NULL COMMENT '회원이름', -- 회원이름
-	mber_birthday    DATE         NOT NULL COMMENT '회원생년월일', -- 회원생년월일
+	mber_brthdy    DATE         NOT NULL COMMENT '회원생년월일', -- 회원생년월일
 	mber_zip       INTEGER      NOT NULL COMMENT '회원우편번호', -- 회원우편번호
 	mber_bass_ad   VARCHAR(255) NULL     COMMENT '회원기본주소', -- 회원기본주소
 	mber_detail_ad VARCHAR(255) NULL     COMMENT '회원상세주소', -- 회원상세주소
@@ -136,13 +136,6 @@ CREATE TABLE yi_java3st_3team.middle_classification (
 	lclas_no   INTEGER     NOT NULL COMMENT '대분류번호' -- 대분류번호
 )
 COMMENT '중분류';
-
--- 중분류
-ALTER TABLE yi_java3st_3team.middle_classification
-	ADD CONSTRAINT PK_middle_classification -- 중분류 기본키2
-		PRIMARY KEY (
-			mlsfc_no -- 중분류번호
-		);
 
 -- 출판사
 CREATE TABLE yi_java3st_3team.publishing_company (

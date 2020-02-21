@@ -27,3 +27,6 @@ from lending;
 
 select *
 from request_book;
+
+select *
+from zip_code;

@@ -1,10 +1,12 @@
 select user(), database ();
 
+
 -- grade 회원등급
 desc grade;
 insert into grade values
 (1,'일반',5),
 (2,'우수',7);
+
 
 -- member 회원
 desc member;
@@ -12,6 +14,7 @@ load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/docu
 into table yi_java3st_3team.member
 character set 'utf8'
 fields terminated by ',';
+
 
 -- request_book 신청도서
 desc request_book; 
@@ -28,13 +31,6 @@ insert into request_book values
 (10, 'gfdssdh@naver.com', '우리들의 행복한 시간', '공지영', null, '해냄', '2020.02.09', 0);
 
 
--- lending 대여/반납
-desc lending;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending.txt'
-into table yi_java3st_3team.lending 
-character set 'utf8'
-fields terminated by ',';
-
 -- book 도서
 desc book;
 load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/book_data.csv'
@@ -42,6 +38,15 @@ into table yi_java3st_3team.book
 character set 'utf8'
 fields terminated by ','
 ignore 1 lines;
+
+
+-- lending 대여/반납
+desc lending;
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending.txt'
+into table yi_java3st_3team.lending 
+character set 'utf8'
+fields terminated by ',';
+
 
 -- publishing_company 출판사
 desc publishing_company;
@@ -52,6 +57,7 @@ fields terminated by ','
 ignore 1 lines;
 
 -- recommendation 추천도서
+
 
 -- large_classification 대분류
 desc large_classification;
@@ -106,4 +112,8 @@ character set 'utf8'
 fields terminated by ',';
 
 -- zip_code 우편번호
-
+desc zip_code;
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/경북,대구.txt'
+into table yi_java3st_3team.zip_code
+character set 'utf8'
+fields terminated by ',';

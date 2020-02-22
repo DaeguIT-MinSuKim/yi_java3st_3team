@@ -6,7 +6,7 @@ public class Member {
 	private String mberId;
 	private String mberPass;
 	private String mberName;
-	private Date mberbirthday;
+	private Date mberBrthdy;
 	private ZipCode mberZip;
 	private String mberBassAd;
 	private String mberDetailAd;
@@ -14,32 +14,30 @@ public class Member {
 	private int totalLeCnt;
 	private int lendBookCnt;
 	private Grade grade;
-	private int lendPsbCdt;
+	private boolean lendPsbCdt;
 	private Date joinDt;
-	private int wdrCdt;
+	private boolean wdrCdt;
 
 	public Member() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Member(String mberId) {
-		super();
 		this.mberId = mberId;
 	}
 
 	public Member(String mberId, String mberPass) {
-		super();
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 	}
 
-	public Member(String mberId, String mberPass, String mberName, Date mberbirthday, ZipCode mberZip,
-			String mberBassAd, String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade,
-			int lendPsbCdt, Date joinDt, int wdrCdt) {
-		super();
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade, boolean lendPsbCdt,
+			Date joinDt, boolean wdrCdt) {
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 		this.mberName = mberName;
-		this.mberbirthday = mberbirthday;
+		this.mberBrthdy = mberBrthdy;
 		this.mberZip = mberZip;
 		this.mberBassAd = mberBassAd;
 		this.mberDetailAd = mberDetailAd;
@@ -76,12 +74,12 @@ public class Member {
 		this.mberName = mberName;
 	}
 
-	public Date getMberbirthday() {
-		return mberbirthday;
+	public Date getMberBrthdy() {
+		return mberBrthdy;
 	}
 
-	public void setMberbirthday(Date mberbirthday) {
-		this.mberbirthday = mberbirthday;
+	public void setMberBrthdy(Date mberBrthdy) {
+		this.mberBrthdy = mberBrthdy;
 	}
 
 	public ZipCode getMberZip() {
@@ -140,11 +138,11 @@ public class Member {
 		this.grade = grade;
 	}
 
-	public int getLendPsbCdt() {
+	public boolean isLendPsbCdt() {
 		return lendPsbCdt;
 	}
 
-	public void setLendPsbCdt(int lendPsbCdt) {
+	public void setLendPsbCdt(boolean lendPsbCdt) {
 		this.lendPsbCdt = lendPsbCdt;
 	}
 
@@ -156,11 +154,11 @@ public class Member {
 		this.joinDt = joinDt;
 	}
 
-	public int getWdrCdt() {
+	public boolean isWdrCdt() {
 		return wdrCdt;
 	}
 
-	public void setWdrCdt(int wdrCdt) {
+	public void setWdrCdt(boolean wdrCdt) {
 		this.wdrCdt = wdrCdt;
 	}
 
@@ -171,17 +169,17 @@ public class Member {
 		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
 		result = prime * result + ((joinDt == null) ? 0 : joinDt.hashCode());
 		result = prime * result + lendBookCnt;
-		result = prime * result + lendPsbCdt;
+		result = prime * result + (lendPsbCdt ? 1231 : 1237);
 		result = prime * result + ((mberBassAd == null) ? 0 : mberBassAd.hashCode());
+		result = prime * result + ((mberBrthdy == null) ? 0 : mberBrthdy.hashCode());
 		result = prime * result + ((mberDetailAd == null) ? 0 : mberDetailAd.hashCode());
 		result = prime * result + ((mberId == null) ? 0 : mberId.hashCode());
 		result = prime * result + ((mberName == null) ? 0 : mberName.hashCode());
 		result = prime * result + ((mberPass == null) ? 0 : mberPass.hashCode());
 		result = prime * result + ((mberTel == null) ? 0 : mberTel.hashCode());
 		result = prime * result + ((mberZip == null) ? 0 : mberZip.hashCode());
-		result = prime * result + ((mberbirthday == null) ? 0 : mberbirthday.hashCode());
 		result = prime * result + totalLeCnt;
-		result = prime * result + wdrCdt;
+		result = prime * result + (wdrCdt ? 1231 : 1237);
 		return result;
 	}
 
@@ -213,6 +211,11 @@ public class Member {
 				return false;
 		} else if (!mberBassAd.equals(other.mberBassAd))
 			return false;
+		if (mberBrthdy == null) {
+			if (other.mberBrthdy != null)
+				return false;
+		} else if (!mberBrthdy.equals(other.mberBrthdy))
+			return false;
 		if (mberDetailAd == null) {
 			if (other.mberDetailAd != null)
 				return false;
@@ -243,11 +246,6 @@ public class Member {
 				return false;
 		} else if (!mberZip.equals(other.mberZip))
 			return false;
-		if (mberbirthday == null) {
-			if (other.mberbirthday != null)
-				return false;
-		} else if (!mberbirthday.equals(other.mberbirthday))
-			return false;
 		if (totalLeCnt != other.totalLeCnt)
 			return false;
 		if (wdrCdt != other.wdrCdt)
@@ -258,8 +256,8 @@ public class Member {
 	@Override
 	public String toString() {
 		return String.format(
-				"Member [mberId=%s, mberPass=%s, mberName=%s, mberbirthday=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s]",
-				mberId, mberPass, mberName, mberbirthday, mberZip, mberBassAd, mberDetailAd, mberTel, totalLeCnt,
+				"Member [mberId=%s, mberPass=%s, mberName=%s, mberBrthdy=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s]",
+				mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, totalLeCnt,
 				lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
 	}
 

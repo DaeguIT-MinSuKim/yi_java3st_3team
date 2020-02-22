@@ -80,27 +80,21 @@ public class MemberDaoImpl implements MemberDao {
 	private Member getMember(ResultSet rs) throws SQLException {
 		String mberId = rs.getString("mber_id");
 		String mberPass = rs.getString("mber_pass");
+		String mberName = rs.getString("mber_name");
+		Date mberBrthdy = rs.getTimestamp("mber_brthdy");
+		ZipCode mberZip = new ZipCode(rs.getInt("mber_zip"));
+		String mberBassAd = rs.getString("mber_bass_ad");
+		String mberDetailAd = rs.getString("mber_detail_ad");
+		String mberTel = rs.getString("mber_tel");
+		int totalLeCnt = rs.getInt("total_le_cnt");
+		int lendBookCnt = rs.getInt("lend_book_cnt");
+		Grade grade = new Grade(rs.getInt("grade"));
+		boolean lendPsbCdt = rs.getInt("lend_psb_cdt") == 0 ? true : false;
+		Date joinDt= rs.getTimestamp("join_dt");
+		boolean wdrCdt = rs.getInt("wdr_cdt") == 0 ? true : false;
 		
-		return new Member(mberId, mberPass);
+		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, 
+				mberTel, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
 	}
-
-//	private Member getMember(ResultSet rs) throws SQLException {
-//		String mberId = rs.getString("mber_id");
-//		String mberPass = rs.getString("mber_pass");
-//		String mberName = rs.getString("mber_name");
-//		Date mberbirthday = rs.getTimestamp("mber_brthdy");
-//		ZipCode mberZip = new ZipCode(rs.getInt("mber_zip"));
-//		String mberBassAd = rs.getString("mber_bass_ad");
-//		String mberDetailAd = rs.getString("columnIndex");
-//		String mberTel = rs.getString("mber_tel");
-//		int totalLeCnt = rs.getInt("total_le_cnt");
-//		int lendBookCnt = rs.getInt("lend_book_cnt");
-//		Grade grade = new Grade(rs.getInt("grade"));
-//		int lendPsbCdt = rs.getInt("lend_psb_cdt");
-//		Date joinDt = rs.getTimestamp("join_dt");
-//		int wdrCdt = rs.getInt("wdr_cdt");
-//		
-//		return new Member(mberId, mberPass, mberName, mberbirthday, mberZip, mberBassAd, mberDetailAd, mberTel, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
-//	}
 
 }

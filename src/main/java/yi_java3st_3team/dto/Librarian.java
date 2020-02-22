@@ -15,19 +15,19 @@ public class Librarian {
 	private Date joinDate;
 	private boolean workCdt;
 
-	public Librarian() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public Librarian() {}
 
 	public Librarian(String lbId) {
-		super();
 		this.lbId = lbId;
+	}
+
+	public Librarian(String lbId, String lbPass) {
+		this.lbId = lbId;
+		this.lbPass = lbPass;
 	}
 
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
 			String lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
-		super();
 		this.lbId = lbId;
 		this.lbPass = lbPass;
 		this.lbName = lbName;

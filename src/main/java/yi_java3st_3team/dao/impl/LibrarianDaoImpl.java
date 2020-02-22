@@ -54,7 +54,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		String lbTel = rs.getString("lb_tel");
 		Title title = new Title(rs.getInt("title"));
 		Date joinDate = rs.getTimestamp("join_date");
-		boolean workCdt = rs.getBoolean("work_cdt");
+		boolean workCdt = rs.getInt("work_cdt") == 0 ? false : true;
 		
 		return new Librarian(lbId, lbPass, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, title, joinDate, workCdt);
 	}
@@ -77,6 +77,29 @@ public class LibrarianDaoImpl implements LibrarianDao {
 	@Override
 	public int deleteLibrarian(Librarian lib) {
 		return 0;
+	}
+
+	@Override
+	public Librarian loginLibrarian(Librarian lib) {
+		String sql = "select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, "
+				+ "lb_tel, title, join_date, work_cdt "
+				+ "from librarian "
+				+ "where lb_id = ? and lb_pass = ?";
+		
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, lib.getLbId());
+			pstmt.setString(2, lib.getLbPass());
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return getLibrarian(rs);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

@@ -7,17 +7,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import yi_java3st_3team.dao.impl.MemberDaoImpl;
-import yi_java3st_3team.dto.Member;
+import yi_java3st_3team.dao.impl.LibrarianDaoImpl;
+import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.util.LogUtil;
 
-public class MemberDaoTestLogin {
-	static MemberDao dao;
+public class LibrarianDaoTestLogin {
+	static LibrarianDao dao;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		dao = MemberDaoImpl.getInstance();
+		dao = LibrarianDaoImpl.getInstance();
 	}
 
 	@AfterClass
@@ -37,11 +37,11 @@ public class MemberDaoTestLogin {
 	}
 
 	@Test
-	public void testLoginMember() {
+	public void test() {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Member loginMember = dao.loginMember(new Member("daddystop@gmail.com", "airopwieop3678"));
-		Assert.assertNotNull(loginMember);
-		LogUtil.prnLog(loginMember);
+		Librarian loginLibrarian = dao.loginLibrarian(new Librarian("43ojlkjl@book.ff.kr", "fjgfkdlj6"));
+		Assert.assertNotNull(loginLibrarian);
+		LogUtil.prnLog(loginLibrarian);
 	}
 
 }

@@ -97,4 +97,15 @@ public class MemberDaoImpl implements MemberDao {
 				mberTel, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
 	}
 
+	@Override
+	public Member findId(Member member) {
+		String sql = "";
+		return null;
+	}
+
+	@Override
+	public Member findPw(Member member) {
+		return null;
+	}
+
 }

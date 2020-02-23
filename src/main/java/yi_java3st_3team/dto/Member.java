@@ -32,6 +32,17 @@ public class Member {
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 	}
+	
+	public Member(String mberName, Date mberBrthdy) {
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+	}
+	
+	public Member(String mberId, String mberName, Date mberBrthdy) {
+		this.mberId = mberId;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+	}
 
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade, boolean lendPsbCdt,

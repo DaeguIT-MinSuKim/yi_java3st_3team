@@ -67,7 +67,7 @@ public class MemberDaoImpl implements MemberDao {
 			LogUtil.prnLog(pstmt);
 			try(ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
-					return getMember(rs);
+					return getMember(rs, false);
 				}
 			}
 		} catch (SQLException e) {
@@ -77,7 +77,7 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
-	private Member getMember(ResultSet rs) throws SQLException {
+	private Member getMember(ResultSet rs, boolean isImg) throws SQLException {
 		String mberId = rs.getString("mber_id");
 		String mberPass = rs.getString("mber_pass");
 		String mberName = rs.getString("mber_name");
@@ -92,14 +92,19 @@ public class MemberDaoImpl implements MemberDao {
 		boolean lendPsbCdt = rs.getInt("lend_psb_cdt") == 0 ? false : true;
 		Date joinDt= rs.getTimestamp("join_dt");
 		boolean wdrCdt = rs.getInt("wdr_cdt") == 0 ? false : true;
-		
-		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, 
+		Member mber = new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, 
 				mberTel, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
+		if(isImg) {
+			byte[] mberImg = rs.getBytes("mber_img");
+			mber.setMberImg(mberImg);
+		}
+		LogUtil.prnLog("getMember => " + mber);
+		return mber;
 	}
 
 	@Override
 	public Member findId(Member member) {
-		String sql = "";
+		//String sql = "";
 		return null;
 	}
 

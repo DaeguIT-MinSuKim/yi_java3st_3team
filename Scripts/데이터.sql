@@ -10,10 +10,11 @@ insert into grade values
 
 -- member 회원
 desc member;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/member.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/member.csv'
 into table yi_java3st_3team.member
 character set 'utf8'
-fields terminated by ',';
+fields terminated by ','
+ignore 1 lines;
 
 
 -- request_book 신청도서
@@ -106,10 +107,11 @@ insert into title values
 
 -- librarian 사서
 desc librarian;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/librarian.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/librarian.csv'
 into table yi_java3st_3team.librarian 
 character set 'utf8'
-fields terminated by ',';
+fields terminated by ','
+ignore 1 lines;
 
 -- zip_code 우편번호
 desc zip_code;

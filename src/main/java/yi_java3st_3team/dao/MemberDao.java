@@ -7,6 +7,8 @@ import yi_java3st_3team.dto.Member;
 public interface MemberDao {
 	Member selectMemberByNo(Member member);
 	Member loginMember(Member member);
+	Member findId(Member member);
+	Member findPw(Member member);
 
 	List<Member> selectMemberByAll();
 

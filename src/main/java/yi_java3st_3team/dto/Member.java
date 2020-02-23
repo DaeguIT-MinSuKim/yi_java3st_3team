@@ -1,5 +1,6 @@
 package yi_java3st_3team.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Member {
@@ -11,6 +12,7 @@ public class Member {
 	private String mberBassAd;
 	private String mberDetailAd;
 	private String mberTel;
+	private byte[] mberImg;
 	private int totalLeCnt;
 	private int lendBookCnt;
 	private Grade grade;
@@ -42,6 +44,26 @@ public class Member {
 		this.mberBassAd = mberBassAd;
 		this.mberDetailAd = mberDetailAd;
 		this.mberTel = mberTel;
+		this.totalLeCnt = totalLeCnt;
+		this.lendBookCnt = lendBookCnt;
+		this.grade = grade;
+		this.lendPsbCdt = lendPsbCdt;
+		this.joinDt = joinDt;
+		this.wdrCdt = wdrCdt;
+	}
+
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg, int totalLeCnt, int lendBookCnt, Grade grade,
+			boolean lendPsbCdt, Date joinDt, boolean wdrCdt) {
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
 		this.totalLeCnt = totalLeCnt;
 		this.lendBookCnt = lendBookCnt;
 		this.grade = grade;
@@ -162,6 +184,14 @@ public class Member {
 		this.wdrCdt = wdrCdt;
 	}
 
+	public byte[] getMberImg() {
+		return mberImg;
+	}
+
+	public void setMberImg(byte[] mberImg) {
+		this.mberImg = mberImg;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -174,6 +204,7 @@ public class Member {
 		result = prime * result + ((mberBrthdy == null) ? 0 : mberBrthdy.hashCode());
 		result = prime * result + ((mberDetailAd == null) ? 0 : mberDetailAd.hashCode());
 		result = prime * result + ((mberId == null) ? 0 : mberId.hashCode());
+		result = prime * result + Arrays.hashCode(mberImg);
 		result = prime * result + ((mberName == null) ? 0 : mberName.hashCode());
 		result = prime * result + ((mberPass == null) ? 0 : mberPass.hashCode());
 		result = prime * result + ((mberTel == null) ? 0 : mberTel.hashCode());
@@ -226,6 +257,8 @@ public class Member {
 				return false;
 		} else if (!mberId.equals(other.mberId))
 			return false;
+		if (!Arrays.equals(mberImg, other.mberImg))
+			return false;
 		if (mberName == null) {
 			if (other.mberName != null)
 				return false;
@@ -256,9 +289,9 @@ public class Member {
 	@Override
 	public String toString() {
 		return String.format(
-				"Member [mberId=%s, mberPass=%s, mberName=%s, mberBrthdy=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s]",
-				mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, totalLeCnt,
-				lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
+				"Member [mberId=%s, mberPass=%s, mberName=%s, mberBrthdy=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, mberImg=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s]",
+				mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel,
+				Arrays.toString(mberImg), totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
 	}
 
 }

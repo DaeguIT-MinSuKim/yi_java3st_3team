@@ -26,14 +26,15 @@ public class LibrarianDaoImpl implements LibrarianDao {
 
 	@Override
 	public Librarian selectLibrarianByNo(Librarian lib) {
-		String sql = "select lb_id, lb_pass, lb_name ,lb_birthday ,lb_zip ,lb_bass_ad ,lb_detail_ad ,lb_tel ,title ,join_date ,work_cdt"
-				+ "from librarian" + "where lb_id = ?";
+		String sql = "lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, title, "
+					+ "join_date, work_cdt"
+					+ "from librarian" + "where lb_id = ?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			LogUtil.prnLog(pstmt);
 			pstmt.setString(1, lib.getLbId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					return getLibrarian(rs);
+					return getLibrarian(rs, true);
 				}
 			}
 		} catch (SQLException e) {
@@ -43,7 +44,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		return null;
 	}
 
-	private Librarian getLibrarian(ResultSet rs) throws SQLException {
+	private Librarian getLibrarian(ResultSet rs, boolean isImg) throws SQLException {
 		String lbId = rs.getString("lb_id");
 		String lbPass = rs.getString("lb_pass");
 		String lbName = rs.getString("lb_name");
@@ -55,8 +56,13 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		Title title = new Title(rs.getInt("title"));
 		Date joinDate = rs.getTimestamp("join_date");
 		boolean workCdt = rs.getInt("work_cdt") == 0 ? false : true;
-		
-		return new Librarian(lbId, lbPass, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, title, joinDate, workCdt);
+		Librarian lb = new Librarian(lbId, lbPass, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, title, joinDate, workCdt);
+		if(isImg) {
+			byte[] lbImg = rs.getBytes("lb_img");
+			lb.setLbImg(lbImg);
+		}
+		LogUtil.prnLog("getLibrarian => " + lb);
+		return lb;
 	}
 
 	@Override
@@ -93,7 +99,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 			LogUtil.prnLog(pstmt);
 			try(ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
-					return getLibrarian(rs);
+					return getLibrarian(rs, false);
 				}
 			}
 		} catch (SQLException e) {

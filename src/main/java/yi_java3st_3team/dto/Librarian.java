@@ -28,6 +28,17 @@ public class Librarian {
 		this.lbPass = lbPass;
 	}
 
+	public Librarian(String lbName, Date lbBirthDay) {
+		this.lbName = lbName;
+		this.lbBirthDay = lbBirthDay;
+	}
+	
+	public Librarian(String lbId, String lbName, Date lbBirthDay) {
+		this.lbId = lbId;
+		this.lbName = lbName;
+		this.lbBirthDay = lbBirthDay;
+	}
+
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
 			String lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
 		this.lbId = lbId;

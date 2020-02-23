@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -97,6 +98,50 @@ public class LibrarianDaoImpl implements LibrarianDao {
 			pstmt.setString(1, lib.getLbId());
 			pstmt.setString(2, lib.getLbPass());
 			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return getLibrarian(rs, false);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Librarian findLibrarianId(Librarian lib) {
+		String sql = "select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, "
+					+ "title, join_date, work_cdt "
+					+ "	from librarian " 
+					+ "	where lb_name = ? and lb_birthday = ? ";
+		
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, lib.getLbName());
+			pstmt.setTimestamp(2, new Timestamp(lib.getLbBirthDay().getTime()));
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return getLibrarian(rs, false);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Librarian findLibrarianPw(Librarian lib) {
+		String sql = "select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img,"
+				+ " title, join_date, work_cdt " 
+				+ "	from librarian " 
+				+ "	where lb_id = ? and lb_name = ? and lb_birthday = ?";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, lib.getLbId());
+			pstmt.setString(2, lib.getLbName());
+			pstmt.setTimestamp(3, new Timestamp(lib.getLbBirthDay().getTime()));
 			try(ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
 					return getLibrarian(rs, false);

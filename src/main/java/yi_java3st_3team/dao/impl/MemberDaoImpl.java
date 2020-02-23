@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -103,13 +104,47 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public Member findId(Member member) {
-		//String sql = "";
+	public Member findMemberId(Member member) {
+		String sql = "select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad , mber_detail_ad , mber_tel , total_le_cnt , "
+					+ " lend_book_cnt , grade , lend_psb_cdt , join_dt , wdr_cdt "  
+					+ "	from member " 
+					+ "	where mber_name = ? and mber_brthdy = ?";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, member.getMberName());
+			pstmt.setTimestamp(2, new Timestamp(member.getMberBrthdy().getTime()));;
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return getMember(rs, false);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
-	public Member findPw(Member member) {
+	public Member findMemberPw(Member member) {
+		String sql = "select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad , mber_detail_ad , mber_tel , total_le_cnt , "
+				+ " lend_book_cnt , grade , lend_psb_cdt , join_dt , wdr_cdt "  
+				+ "	from member " 
+				+ "	where mber_id = ? and mber_name = ? and mber_brthdy = ?";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, member.getMberId());
+			pstmt.setString(2, member.getMberName());
+			pstmt.setTimestamp(3, new Timestamp(member.getMberBrthdy().getTime()));
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return getMember(rs, false);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 

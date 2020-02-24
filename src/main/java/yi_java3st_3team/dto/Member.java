@@ -16,12 +16,11 @@ public class Member {
 	private int totalLeCnt;
 	private int lendBookCnt;
 	private Grade grade;
-	private boolean lendPsbCdt;
+	private int lendPsbCdt;
 	private Date joinDt;
-	private boolean wdrCdt;
+	private int wdrCdt;
 
 	public Member() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Member(String mberId) {
@@ -32,12 +31,12 @@ public class Member {
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 	}
-	
+
 	public Member(String mberName, Date mberBrthdy) {
 		this.mberName = mberName;
 		this.mberBrthdy = mberBrthdy;
 	}
-	
+
 	public Member(String mberId, String mberName, Date mberBrthdy) {
 		this.mberId = mberId;
 		this.mberName = mberName;
@@ -45,8 +44,8 @@ public class Member {
 	}
 
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
-			String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade, boolean lendPsbCdt,
-			Date joinDt, boolean wdrCdt) {
+			String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade, int lendPsbCdt,
+			Date joinDt, int wdrCdt) {
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 		this.mberName = mberName;
@@ -65,7 +64,7 @@ public class Member {
 
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, byte[] mberImg, int totalLeCnt, int lendBookCnt, Grade grade,
-			boolean lendPsbCdt, Date joinDt, boolean wdrCdt) {
+			int lendPsbCdt, Date joinDt, int wdrCdt) {
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 		this.mberName = mberName;
@@ -171,11 +170,11 @@ public class Member {
 		this.grade = grade;
 	}
 
-	public boolean isLendPsbCdt() {
+	public int getLendPsbCdt() {
 		return lendPsbCdt;
 	}
 
-	public void setLendPsbCdt(boolean lendPsbCdt) {
+	public void setLendPsbCdt(int lendPsbCdt) {
 		this.lendPsbCdt = lendPsbCdt;
 	}
 
@@ -187,11 +186,11 @@ public class Member {
 		this.joinDt = joinDt;
 	}
 
-	public boolean isWdrCdt() {
+	public int getWdrCdt() {
 		return wdrCdt;
 	}
 
-	public void setWdrCdt(boolean wdrCdt) {
+	public void setWdrCdt(int wdrCdt) {
 		this.wdrCdt = wdrCdt;
 	}
 
@@ -210,7 +209,7 @@ public class Member {
 		result = prime * result + ((grade == null) ? 0 : grade.hashCode());
 		result = prime * result + ((joinDt == null) ? 0 : joinDt.hashCode());
 		result = prime * result + lendBookCnt;
-		result = prime * result + (lendPsbCdt ? 1231 : 1237);
+		result = prime * result + lendPsbCdt;
 		result = prime * result + ((mberBassAd == null) ? 0 : mberBassAd.hashCode());
 		result = prime * result + ((mberBrthdy == null) ? 0 : mberBrthdy.hashCode());
 		result = prime * result + ((mberDetailAd == null) ? 0 : mberDetailAd.hashCode());
@@ -221,7 +220,7 @@ public class Member {
 		result = prime * result + ((mberTel == null) ? 0 : mberTel.hashCode());
 		result = prime * result + ((mberZip == null) ? 0 : mberZip.hashCode());
 		result = prime * result + totalLeCnt;
-		result = prime * result + (wdrCdt ? 1231 : 1237);
+		result = prime * result + wdrCdt;
 		return result;
 	}
 

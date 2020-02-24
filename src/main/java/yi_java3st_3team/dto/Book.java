@@ -11,28 +11,42 @@ public class Book {
 	private PublishingCompany pls;
 	private Date pblicteYear;
 	private int bookPrice;
-	private boolean lendPsbCdt;
+	private int lendPsbCdt;
 	private int totalLeCnt;
 	private byte[] bookImg;
 	private LargeClassification lcNo;
 	private MiddleClassification mlNo;
 	private Date registDate;
-	private boolean dsuseCdt;
+	private int dsuseCdt;
 
 	public Book() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Book(String bookCode) {
-		super();
 		this.bookCode = bookCode;
 	}
 
 	public Book(String bookCode, String bookName, String authrName, String trnslrName, PublishingCompany pls,
-			Date pblicteYear, int bookPrice, boolean lendPsbCdt, int totalLeCnt, byte[] bookImg,
-			LargeClassification lcNo, MiddleClassification mlNo, Date registDate, boolean dsuseCdt) {
-		super();
+			Date pblicteYear, int bookPrice, int lendPsbCdt, int totalLeCnt, LargeClassification lcNo,
+			MiddleClassification mlNo, Date registDate, int dsuseCdt) {
+		this.bookCode = bookCode;
+		this.bookName = bookName;
+		this.authrName = authrName;
+		this.trnslrName = trnslrName;
+		this.pls = pls;
+		this.pblicteYear = pblicteYear;
+		this.bookPrice = bookPrice;
+		this.lendPsbCdt = lendPsbCdt;
+		this.totalLeCnt = totalLeCnt;
+		this.lcNo = lcNo;
+		this.mlNo = mlNo;
+		this.registDate = registDate;
+		this.dsuseCdt = dsuseCdt;
+	}
+
+	public Book(String bookCode, String bookName, String authrName, String trnslrName, PublishingCompany pls,
+			Date pblicteYear, int bookPrice, int lendPsbCdt, int totalLeCnt, byte[] bookImg, LargeClassification lcNo,
+			MiddleClassification mlNo, Date registDate, int dsuseCdt) {
 		this.bookCode = bookCode;
 		this.bookName = bookName;
 		this.authrName = authrName;
@@ -105,11 +119,11 @@ public class Book {
 		this.bookPrice = bookPrice;
 	}
 
-	public boolean isLendPsbCdt() {
+	public int getLendPsbCdt() {
 		return lendPsbCdt;
 	}
 
-	public void setLendPsbCdt(boolean lendPsbCdt) {
+	public void setLendPsbCdt(int lendPsbCdt) {
 		this.lendPsbCdt = lendPsbCdt;
 	}
 
@@ -153,11 +167,11 @@ public class Book {
 		this.registDate = registDate;
 	}
 
-	public boolean isDsuseCdt() {
+	public int getDsuseCdt() {
 		return dsuseCdt;
 	}
 
-	public void setDsuseCdt(boolean dsuseCdt) {
+	public void setDsuseCdt(int dsuseCdt) {
 		this.dsuseCdt = dsuseCdt;
 	}
 
@@ -170,9 +184,9 @@ public class Book {
 		result = prime * result + Arrays.hashCode(bookImg);
 		result = prime * result + ((bookName == null) ? 0 : bookName.hashCode());
 		result = prime * result + bookPrice;
-		result = prime * result + (dsuseCdt ? 1231 : 1237);
+		result = prime * result + dsuseCdt;
 		result = prime * result + ((lcNo == null) ? 0 : lcNo.hashCode());
-		result = prime * result + (lendPsbCdt ? 1231 : 1237);
+		result = prime * result + lendPsbCdt;
 		result = prime * result + ((mlNo == null) ? 0 : mlNo.hashCode());
 		result = prime * result + ((pblicteYear == null) ? 0 : pblicteYear.hashCode());
 		result = prime * result + ((pls == null) ? 0 : pls.hashCode());
@@ -251,10 +265,10 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [bookCode=" + bookCode + ", bookName=" + bookName + ", authrName=" + authrName + ", trnslrName="
-				+ trnslrName + ", pls=" + pls + ", pblicteYear=" + pblicteYear + ", bookPrice=" + bookPrice
-				+ ", lendPsbCdt=" + lendPsbCdt + ", totalLeCnt=" + totalLeCnt + ", bookImg=" + Arrays.toString(bookImg)
-				+ ", lcNo=" + lcNo + ", mlNo=" + mlNo + ", registDate=" + registDate + ", dsuseCdt=" + dsuseCdt + "]";
+		return String.format(
+				"Book [bookCode=%s, bookName=%s, authrName=%s, trnslrName=%s, pls=%s, pblicteYear=%s, bookPrice=%s, lendPsbCdt=%s, totalLeCnt=%s, bookImg=%s, lcNo=%s, mlNo=%s, registDate=%s, dsuseCdt=%s]",
+				bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, lendPsbCdt, totalLeCnt,
+				Arrays.toString(bookImg), lcNo, mlNo, registDate, dsuseCdt);
 	}
 
 }

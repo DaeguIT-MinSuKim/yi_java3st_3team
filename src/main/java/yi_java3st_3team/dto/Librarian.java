@@ -150,7 +150,7 @@ public class Librarian {
 		this.joinDate = joinDate;
 	}
 
-	public int isWorkCdt() {
+	public int getWorkCdt() {
 		return workCdt;
 	}
 

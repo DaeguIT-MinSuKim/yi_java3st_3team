@@ -3,6 +3,7 @@ package yi_java3st_3team.dao;
 import static org.junit.Assert.fail;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -14,6 +15,8 @@ import org.junit.runners.MethodSorters;
 
 import yi_java3st_3team.dao.impl.LibrarianDaoImpl;
 import yi_java3st_3team.dto.Librarian;
+import yi_java3st_3team.dto.Title;
+import yi_java3st_3team.dto.ZipCode;
 import yi_java3st_3team.util.LogUtil;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -62,22 +65,32 @@ public class LibrarianDaoTest {
 	@Test
 	public void test03InsertLibrarian() {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-
-		fail("Not yet implemented");
+		Calendar c = Calendar.getInstance();
+		Date birthDay = new Date(c.getTimeInMillis());
+		Date joinDate = new Date(c.getTimeInMillis());
+		
+		Librarian lib = new Librarian("hwangbug@book.ff.kr", "bug", "황충", birthDay, new ZipCode(42457), "대구광역시 북구 태전로", null, "010-4432-4141", null, new Title(0), joinDate, 0);
+		LogUtil.prnLog(lib);
+		int res = dao.insertLibrarian(lib);
+		Assert.assertEquals(1, res);
 	}
 
 	@Test
 	public void test04UpdateLibrarian() {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-
-		fail("Not yet implemented");
+		Librarian lib = new Librarian("hwangbug@book.ff.kr", "bug", "황희정승", new Date(), new ZipCode(42457), "대구광역시 북구 태전로", null, "010-4432-4141", null, new Title(0), new Date(), 0);
+		int res = dao.updateLibrarian(lib);
+		Assert.assertEquals(1, res);
+		LogUtil.prnLog(lib);
 	}
 
 	@Test
 	public void test05DeleteLibrarian() {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-
-		fail("Not yet implemented");
+		Librarian lib = new Librarian("hwangbug@book.ff.kr");	
+		int res = dao.deleteLibrarian(lib);
+		Assert.assertEquals(1, res);
+		LogUtil.prnLog(lib);
 	}
 
 }

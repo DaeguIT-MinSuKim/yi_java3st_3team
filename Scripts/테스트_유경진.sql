@@ -57,6 +57,7 @@ select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	where book_code = 'A090101';
 
 select * from book;
+select * from large_classification;
 
 insert into book(book_code , book_name , authr_name , trnslr_name , pls , 
 				 pblicte_year , book_price , lend_psb_cdt , total_le_cnt ,

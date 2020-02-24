@@ -266,9 +266,9 @@ public class Book {
 	@Override
 	public String toString() {
 		return String.format(
-				"Book [bookCode=%s, bookName=%s, authrName=%s, trnslrName=%s, pls=%s, pblicteYear=%s, bookPrice=%s, lendPsbCdt=%s, totalLeCnt=%s, bookImg=%s, lcNo=%s, mlNo=%s, registDate=%s, dsuseCdt=%s]",
+				"Book [bookCode=%s, bookName=%s, authrName=%s, trnslrName=%s, pls=%s, pblicteYear=%s, bookPrice=%s, lendPsbCdt=%s, totalLeCnt=%s, bookImg=%s, lcNo=%s, mlNo=%s, registDate=%s, dsuseCdt=%s] %n",
 				bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, lendPsbCdt, totalLeCnt,
-				Arrays.toString(bookImg), lcNo, mlNo, registDate, dsuseCdt);
+				bookImg != null ? "있음[" + bookName + ".jpg]" : "없음", lcNo, mlNo, registDate, dsuseCdt);
 	}
 
 }

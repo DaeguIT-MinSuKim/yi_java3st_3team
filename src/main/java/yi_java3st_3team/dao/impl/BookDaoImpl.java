@@ -18,6 +18,13 @@ import yi_java3st_3team.dto.PublishingCompany;
 import yi_java3st_3team.util.LogUtil;
 
 public class BookDaoImpl implements BookDao {
+	private static final BookDaoImpl instance = new BookDaoImpl();
+	
+	public static BookDaoImpl getInstance() {
+		return instance;
+	}
+	
+	public BookDaoImpl() {}
 
 	@Override
 	public Book selectBookByCode(Book book) {
@@ -68,7 +75,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public List<Book> selectBookByAll() {
 		String sql = "select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ," 
-				   + " book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no , regist_date , dsuse_cdt " 
+				   + " book_price , lend_psb_cdt , total_le_cnt , lc_no, ml_no , regist_date , dsuse_cdt " 
 				   + " from book;";
 		List<Book> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
@@ -78,7 +85,7 @@ public class BookDaoImpl implements BookDao {
 			if(rs.next()) {
 				list = new ArrayList<>();
 				do {
-					list.add(getBook(rs, true));
+					list.add(getBook(rs, false));
 				} while (rs.next());
 			}
 		} catch (SQLException e) {
@@ -111,6 +118,7 @@ public class BookDaoImpl implements BookDao {
 			pstmt.setInt(12, book.getMlNo().getMlsfcNo());
 			pstmt.setTimestamp(13, new Timestamp(book.getRegistDate().getTime()));
 			pstmt.setInt(14, book.getDsuseCdt());
+			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,12 +127,6 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public int updateBook(Book book) {
-		/*update book 
-		set book_name = '먼 바다', authr_name = '공지영', trnslr_name = '', pls = '2', 
-			pblicte_year = '2020-02-17', book_price = 15800, lend_psb_cdt = 0, 
-			total_le_cnt = 5, book_img = '', lc_no = 09, ml_no = 01, 
-			regist_date ='2020-02-19', dsuse_cdt = 0
-		where book_code = 'D090101';*/
 		StringBuilder sql = new StringBuilder("update book set ");
 		if(book.getBookName() != null) sql.append("book_name = ?, ");
 		if(book.getAuthrName() != null) sql.append("authr_name = ?, ");
@@ -132,15 +134,54 @@ public class BookDaoImpl implements BookDao {
 		if(book.getPls() != null) sql.append("pls = ?, ");
 		if(book.getPblicteYear() != null) sql.append("pblicte_year = ?, ");
 		if(book.getBookPrice() != 0) sql.append("book_price = ?, ");
+		if(book.getLendPsbCdt() != 0) sql.append("lend_psb_cdt = ?, ");
+		if(book.getTotalLeCnt() != 0) sql.append("total_le_cnt = ?, ");
+		if(book.getBookImg() != null) sql.append("book_img = ?, ");
+		if(book.getLcNo() != null) sql.append("lc_no = ?, ");
+		if(book.getMlNo() != null) sql.append("ml_no = ?, ");
+		if(book.getRegistDate() != null) sql.append("regist_date = ?, ");
+		if(book.getDsuseCdt() != 0) sql.append("dsuse_cdt = ?, ");
+		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
+		sql.append("where book_code = ?");
 		
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())){
+			int argCnt = 1;
+			if(book.getBookName() != null) pstmt.setString(argCnt++, book.getBookName());
+			if(book.getAuthrName() != null) pstmt.setString(argCnt++, book.getAuthrName());
+			if(book.getTrnslrName() != null) pstmt.setString(argCnt++, book.getTrnslrName());
+			if(book.getPls() != null) pstmt.setInt(argCnt++, book.getPls().getPlsNo());
+			if(book.getPblicteYear() != null) pstmt.setTimestamp(argCnt++, new Timestamp(book.getPblicteYear().getTime()));
+			if(book.getBookPrice() != 0) pstmt.setInt(argCnt++, book.getBookPrice());
+			if(book.getLendPsbCdt() != 0) pstmt.setInt(argCnt++, book.getLendPsbCdt());
+			if(book.getTotalLeCnt() != 0) pstmt.setInt(argCnt++, book.getTotalLeCnt());
+			if(book.getBookImg() != null) pstmt.setBytes(argCnt++, book.getBookImg());
+			if(book.getLcNo() != null) pstmt.setInt(argCnt++, book.getLcNo().getLclasNo());
+			if(book.getMlNo() != null) pstmt.setInt(argCnt++, book.getMlNo().getMlsfcNo());
+			if(book.getRegistDate() != null) pstmt.setTimestamp(argCnt++, new Timestamp(book.getRegistDate().getTime()));
+			if(book.getDsuseCdt() != 0) pstmt.setInt(argCnt++, book.getDsuseCdt());
+			pstmt.setString(argCnt++, book.getBookCode());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
 	@Override
 	public int deleteBook(Book book) {
+		String sql = "delete from book where book_code = ?";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, book.getBookCode());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
-	
-
 }
+

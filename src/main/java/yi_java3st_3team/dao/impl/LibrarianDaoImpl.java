@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +28,9 @@ public class LibrarianDaoImpl implements LibrarianDao {
 
 	@Override
 	public Librarian selectLibrarianByNo(Librarian lib) {
-		String sql = "lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, title, "
+		String sql = "select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, title, "
 					+ "join_date, work_cdt"
-					+ "from librarian" + "where lb_id = ?";
+					+ "from librarian where lb_id = ?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			LogUtil.prnLog(pstmt);
 			pstmt.setString(1, lib.getLbId());
@@ -68,7 +69,39 @@ public class LibrarianDaoImpl implements LibrarianDao {
 
 	@Override
 	public List<Librarian> selectLibrarianByAll() {
-		return null;
+		String sql =  "select lb_id, lb_pass, lb_name ,lb_birthday ,lb_zip ,lb_bass_ad ,lb_detail_ad ,lb_tel, lb_img ,title ,join_date ,work_cdt from librarian";
+		
+		List<Librarian> list =null;
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {
+				list = new ArrayList<>();
+				do {
+					list.add(getLibrarianJoin(rs));
+				}while(rs.next());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	private Librarian getLibrarianJoin(ResultSet rs) throws SQLException {
+		String lbId = rs.getString("lb_id");
+		String lbPass = rs.getString("lb_pass");
+		String lbName = rs.getString("lb_name");
+		Date lbBirthDay = rs.getTimestamp("lb_birthday");
+		ZipCode lbZip = new ZipCode(rs.getInt("lb_zip"));
+		String lbBassAd = rs.getString("lb_bass_ad");
+		String lbDetailAd = rs.getString("lb_detail_ad");
+		String lbTel = rs.getString("lb_tel");
+		byte[] lbImg = rs.getBytes("lb_img");
+		Title title = new Title(rs.getInt("title"));
+		Date joinDate = rs.getTimestamp("join_date");
+		boolean workCdt = rs.getInt("work_cdt") == 0 ? false : true;
+		return new Librarian(lbId, lbPass, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, lbImg, title, joinDate, workCdt);
 	}
 
 	@Override

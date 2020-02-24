@@ -1,10 +1,11 @@
 package yi_java3st_3team.dao;
 
-import java.awt.print.Book;
 import java.util.List;
 
+import yi_java3st_3team.dto.Book;
+
 public interface BookDao {
-	Book selectBookByNo(Book book);
+	Book selectBookByCode(Book book);
 
 	List<Book> selectBookByAll();
 

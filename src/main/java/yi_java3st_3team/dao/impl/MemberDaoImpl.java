@@ -90,9 +90,9 @@ public class MemberDaoImpl implements MemberDao {
 		int totalLeCnt = rs.getInt("total_le_cnt");
 		int lendBookCnt = rs.getInt("lend_book_cnt");
 		Grade grade = new Grade(rs.getInt("grade"));
-		boolean lendPsbCdt = rs.getInt("lend_psb_cdt") == 0 ? false : true;
+		int lendPsbCdt = rs.getInt("lend_psb_cdt");
 		Date joinDt= rs.getTimestamp("join_dt");
-		boolean wdrCdt = rs.getInt("wdr_cdt") == 0 ? false : true;
+		int wdrCdt = rs.getInt("wdr_cdt");
 		Member mber = new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, 
 				mberTel, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
 		if(isImg) {

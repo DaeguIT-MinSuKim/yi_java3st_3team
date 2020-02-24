@@ -57,7 +57,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		String lbTel = rs.getString("lb_tel");
 		Title title = new Title(rs.getInt("title"));
 		Date joinDate = rs.getTimestamp("join_date");
-		boolean workCdt = rs.getInt("work_cdt") == 0 ? false : true;
+		int workCdt = rs.getInt("work_cdt");
 		Librarian lb = new Librarian(lbId, lbPass, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, title, joinDate, workCdt);
 		if(isImg) {
 			byte[] lbImg = rs.getBytes("lb_img");
@@ -100,7 +100,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		byte[] lbImg = rs.getBytes("lb_img");
 		Title title = new Title(rs.getInt("title"));
 		Date joinDate = rs.getTimestamp("join_date");
-		boolean workCdt = rs.getInt("work_cdt") == 0 ? false : true;
+		int workCdt = rs.getInt("work_cdt");
 		return new Librarian(lbId, lbPass, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, lbImg, title, joinDate, workCdt);
 	}
 

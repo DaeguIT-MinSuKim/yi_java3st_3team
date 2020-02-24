@@ -55,6 +55,7 @@ public class LibrarianDaoTest {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		List<Librarian> list = dao.selectLibrarianByAll();
 		Assert.assertNotEquals(0, list.size());
+		LogUtil.prnLog(list);
 		
 	}
 

@@ -15,7 +15,7 @@ public class Librarian {
 	private byte[] lbImg;
 	private Title title;
 	private Date joinDate;
-	private boolean workCdt;
+	private int workCdt;
 
 	public Librarian() {}
 
@@ -40,7 +40,7 @@ public class Librarian {
 	}
 
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
-			String lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
+			String lbDetailAd, String lbTel, Title title, Date joinDate, int workCdt) {
 		this.lbId = lbId;
 		this.lbPass = lbPass;
 		this.lbName = lbName;
@@ -55,7 +55,7 @@ public class Librarian {
 	}
 	
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
-			String lbDetailAd, String lbTel, byte[] lbImg, Title title, Date joinDate, boolean workCdt) {
+			String lbDetailAd, String lbTel, byte[] lbImg, Title title, Date joinDate, int workCdt) {
 		this.lbId = lbId;
 		this.lbPass = lbPass;
 		this.lbName = lbName;
@@ -150,11 +150,11 @@ public class Librarian {
 		this.joinDate = joinDate;
 	}
 
-	public boolean isWorkCdt() {
+	public int isWorkCdt() {
 		return workCdt;
 	}
 
-	public void setWorkCdt(boolean workCdt) {
+	public void setWorkCdt(int workCdt) {
 		this.workCdt = workCdt;
 	}
 	
@@ -181,7 +181,6 @@ public class Librarian {
 		result = prime * result + ((lbTel == null) ? 0 : lbTel.hashCode());
 		result = prime * result + ((lbZip == null) ? 0 : lbZip.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + (workCdt ? 1231 : 1237);
 		return result;
 	}
 

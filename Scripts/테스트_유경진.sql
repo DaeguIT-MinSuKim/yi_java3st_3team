@@ -85,3 +85,15 @@ select pls_no , pls_name from publishing_company where pls_no = 1;
 insert into publishing_company values(69, '테스트');
 update publishing_company set pls_name = '테스트출판사' where pls_no = 69;
 delete from publishing_company where pls_no = 69;
+
+
+-- 대분류
+select * from large_classification;
+select lclas_no , lclas_name from large_classification;
+select lclas_no , lclas_name from large_classification where lclas_no = 5;
+
+insert into large_classification values (11, '테스트');
+update large_classification set lclas_name = '테스트대분류' where lclas_no = 11;
+delete from large_classification where lclas_no = 11;
+
+

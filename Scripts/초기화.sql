@@ -274,6 +274,12 @@ ALTER TABLE `yi_java3st_3team`.`request_book`
 			`mber_id` -- 회원ID
 		);
 	
+	
+-- 추천도서 (자동증가 추가, 초기화 새로 할 시에 포함시키면 안됨)
+desc yi_java3st_3team.recommendation;
+ALTER TABLE `yi_java3st_3team`.`recommendation` MODIFY `recom_book_no` int not null auto_increment; -- 자동 증가 추가
+
+	
 -- 사용자 추가
 drop user if exists 'java3st'@'localhost';
 grant all privileges on yi_java3st_3team.* to 'java3st'@'localhost' identified by 'rootroot';

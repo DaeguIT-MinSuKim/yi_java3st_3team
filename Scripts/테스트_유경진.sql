@@ -104,3 +104,19 @@ select lclas_no , mlsfc_no , mlsfc_name from middle_classification where lclas_n
 insert into middle_classification values(10, 3, '테스트분류');
 update middle_classification set mlsfc_name = '테스트중분류' where lclas_no = 10 and mlsfc_no = 3;
 delete from middle_classification where lclas_no = 10 and mlsfc_no = 3;
+
+-- 추천도서
+select * from book;
+select * from recommendation;
+select lc.lclas_name as '대분류', ml.mlsfc_name as '중분류', b.authr_name as '작가', b.trnslr_name as '역자',
+	   b.book_name as '도서명', pls.pls_name as '출판사', b.book_img as '도서이미지', r.book_cont as '줄거리'
+from book b join recommendation r on b.book_code = r.book_code  
+	join large_classification lc on b.lc_no = lc.lclas_no 
+	join middle_classification ml on b.ml_no = ml.mlsfc_no and b.lc_no = ml.lclas_no 
+	join publishing_company pls on b.pls = pls.pls_no ;
+
+insert into recommendation(book_code, book_cont) values ('A090101', '도서소개 테스트....!!!');
+
+
+
+

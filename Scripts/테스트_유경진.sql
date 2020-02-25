@@ -96,4 +96,11 @@ insert into large_classification values (11, '테스트');
 update large_classification set lclas_name = '테스트대분류' where lclas_no = 11;
 delete from large_classification where lclas_no = 11;
 
+-- 중분류
+select * from middle_classification;
+select lclas_no , mlsfc_no , mlsfc_name from middle_classification;
+select lclas_no , mlsfc_no , mlsfc_name from middle_classification where lclas_no = 6 and mlsfc_no = 1;
 
+insert into middle_classification values(10, 3, '테스트분류');
+update middle_classification set mlsfc_name = '테스트중분류' where lclas_no = 10 and mlsfc_no = 3;
+delete from middle_classification where lclas_no = 10 and mlsfc_no = 3;

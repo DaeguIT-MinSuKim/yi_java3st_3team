@@ -4,18 +4,13 @@ public class LargeClassification {
 	private int lclasNo;
 	private String lclasName;
 
-	public LargeClassification() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public LargeClassification() {}
 
 	public LargeClassification(int lclasNo) {
-		super();
 		this.lclasNo = lclasNo;
 	}
 
 	public LargeClassification(int lclasNo, String lclasName) {
-		super();
 		this.lclasNo = lclasNo;
 		this.lclasName = lclasName;
 	}

@@ -1,24 +1,33 @@
 package yi_java3st_3team.dto;
 
 public class MiddleClassification {
+	private LargeClassification lclasNo;
 	private int mlsfcNo;
 	private String mlsfcName;
-	private LargeClassification lclasNo;
 
-	public MiddleClassification() {}
+	public MiddleClassification() {
+	}
 	
 	public MiddleClassification(int mlsfcNo) {
 		this.mlsfcNo = mlsfcNo;
 	}
 
-	public MiddleClassification(int mlsfcNo, LargeClassification lclasNo) {
-		this.mlsfcNo = mlsfcNo;
+	public MiddleClassification(LargeClassification lclasNo, int mlsfcNo) {
 		this.lclasNo = lclasNo;
+		this.mlsfcNo = mlsfcNo;
 	}
 
-	public MiddleClassification(int mlsfcNo, String mlsfcName, LargeClassification lclasNo) {
+	public MiddleClassification(LargeClassification lclasNo, int mlsfcNo, String mlsfcName) {
+		this.lclasNo = lclasNo;
 		this.mlsfcNo = mlsfcNo;
 		this.mlsfcName = mlsfcName;
+	}
+
+	public LargeClassification getLclasNo() {
+		return lclasNo;
+	}
+
+	public void setLclasNo(LargeClassification lclasNo) {
 		this.lclasNo = lclasNo;
 	}
 
@@ -36,14 +45,6 @@ public class MiddleClassification {
 
 	public void setMlsfcName(String mlsfcName) {
 		this.mlsfcName = mlsfcName;
-	}
-
-	public LargeClassification getLclasNo() {
-		return lclasNo;
-	}
-
-	public void setLclasNo(LargeClassification lclasNo) {
-		this.lclasNo = lclasNo;
 	}
 
 	@Override
@@ -82,7 +83,8 @@ public class MiddleClassification {
 
 	@Override
 	public String toString() {
-		return "MiddleClassification [mlsfcNo=" + mlsfcNo + ", mlsfcName=" + mlsfcName + ", lclasNo=" + lclasNo + "]";
+		return String.format("MiddleClassification [lclasNo=%s, mlsfcNo=%s, mlsfcName=%s]", lclasNo, mlsfcNo,
+				mlsfcName);
 	}
 
 }

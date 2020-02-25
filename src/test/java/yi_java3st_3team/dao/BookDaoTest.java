@@ -86,7 +86,7 @@ public class BookDaoTest {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		List<Book> lists = dao.selectBookByAll();
 		Assert.assertNotEquals(0, lists.size());
-		LogUtil.prnLog(lists);
+//		LogUtil.prnLog(lists);
 		for(Book b : lists) LogUtil.prnLog(b);
 	}
 

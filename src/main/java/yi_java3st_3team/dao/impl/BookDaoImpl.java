@@ -36,6 +36,7 @@ public class BookDaoImpl implements BookDao {
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, book.getBookCode());
+			LogUtil.prnLog(pstmt);
 			try(ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
 					return getBook(rs, true);
@@ -118,6 +119,7 @@ public class BookDaoImpl implements BookDao {
 			pstmt.setInt(12, book.getMlNo().getMlsfcNo());
 			pstmt.setTimestamp(13, new Timestamp(book.getRegistDate().getTime()));
 			pstmt.setInt(14, book.getDsuseCdt());
+			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

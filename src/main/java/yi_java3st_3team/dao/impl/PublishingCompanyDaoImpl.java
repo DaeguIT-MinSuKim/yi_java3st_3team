@@ -1,0 +1,114 @@
+package yi_java3st_3team.dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import yi_java3st_3team.dao.PublishingCompanyDao;
+import yi_java3st_3team.ds.MysqlDataSource;
+import yi_java3st_3team.dto.PublishingCompany;
+import yi_java3st_3team.util.LogUtil;
+
+public class PublishingCompanyDaoImpl implements PublishingCompanyDao {
+	private static final PublishingCompanyDaoImpl instance = new PublishingCompanyDaoImpl();
+	
+	public static PublishingCompanyDao getInstance() {
+		return instance;
+	}
+	
+	public PublishingCompanyDaoImpl() {}
+
+	@Override
+	public PublishingCompany selectPublishingCompanyByNo(PublishingCompany pc) {
+		String sql = "select pls_no , pls_name from publishing_company where pls_no = ?";
+		
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, pc.getPlsNo());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return getPls(rs);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private PublishingCompany getPls(ResultSet rs) throws SQLException {
+		int plsNo = rs.getInt("pls_no");
+		String plsName = rs.getString("pls_name");
+		return new PublishingCompany(plsNo, plsName);
+	}
+
+	@Override
+	public List<PublishingCompany> selectPublishingCompanyByAll() {
+		String sql = "select pls_no , pls_name from publishing_company";
+		List<PublishingCompany> list = null;
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {
+				list = new ArrayList<>();
+				do {
+					list.add(getPls(rs));
+				} while (rs.next());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int insertPublishingCompany(PublishingCompany pc) {
+		String sql = "insert into publishing_company values(?, ?)";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, pc.getPlsNo());
+			pstmt.setString(2, pc.getPlsName());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int updatePublishingCompany(PublishingCompany pc) {
+		String sql = "update publishing_company set pls_name = ? where pls_no = ?";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, pc.getPlsName());
+			pstmt.setInt(2, pc.getPlsNo());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int deletePublishingCompany(PublishingCompany pc) {
+		String sql = "delete from publishing_company where pls_no = ?";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, pc.getPlsNo());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+}

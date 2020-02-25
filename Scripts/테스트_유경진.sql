@@ -76,4 +76,12 @@ delete
 	from book 
 	where book_code = 'D090101';
 		 
-		 
+
+-- 출판사
+select * from publishing_company;
+select pls_no , pls_name from publishing_company;
+select pls_no , pls_name from publishing_company where pls_no = 1;
+
+insert into publishing_company values(69, '테스트');
+update publishing_company set pls_name = '테스트출판사' where pls_no = 69;
+delete from publishing_company where pls_no = 69;

@@ -42,11 +42,14 @@ ignore 1 lines;
 
 
 -- lending 대여/반납
+-- truncate table lending; -- lending 데이터 전체 삭제
+-- select * from lending;
 desc lending;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending.csv'
 into table yi_java3st_3team.lending 
 character set 'utf8'
-fields terminated by ',';
+fields terminated by ','
+ignore 1 lines;
 
 
 -- publishing_company 출판사
@@ -114,8 +117,11 @@ fields terminated by ','
 ignore 1 lines;
 
 -- zip_code 우편번호
+-- truncate table zip_code; -- zip_code 전체 삭제
+-- select * from zip_code;
 desc zip_code;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/경북,대구.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/경북,대구.csv'
 into table yi_java3st_3team.zip_code
 character set 'utf8'
-fields terminated by ',';
+fields terminated by ','
+ignore 1 lines;

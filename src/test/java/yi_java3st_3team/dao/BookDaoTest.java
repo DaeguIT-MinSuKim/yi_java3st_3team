@@ -64,6 +64,19 @@ public class BookDaoTest {
 		Assert.assertNotNull(book);
 		LogUtil.prnLog(book);
 	}
+	
+	@Test
+	public void test06selectBookByName() {
+		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Book bookName = new Book();
+		bookName.setBookName("천년의 질문");
+		Book book = dao.selectBookByName(bookName);
+		if(book.getBookImg() != null) {
+			getImgToPic(book.getBookImg(), book.getBookCode());
+		}
+		Assert.assertNotNull(book);
+		LogUtil.prnLog(book);
+	}
 
 	private void getImgToPic(byte[] bookImg, String bookCode) {
 		File picsDir = new File(System.getProperty("user.dir") + File.separator + "pics");

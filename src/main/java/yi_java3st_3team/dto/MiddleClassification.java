@@ -16,6 +16,11 @@ public class MiddleClassification {
 		this.lclasNo = lclasNo;
 		this.mlsfcNo = mlsfcNo;
 	}
+	
+	public MiddleClassification(int mlsfcNo, String mlsfcName) {
+		this.mlsfcNo = mlsfcNo;
+		this.mlsfcName = mlsfcName;
+	}
 
 	public MiddleClassification(LargeClassification lclasNo, int mlsfcNo, String mlsfcName) {
 		this.lclasNo = lclasNo;

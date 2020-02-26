@@ -9,6 +9,10 @@ public class LargeClassification {
 	public LargeClassification(int lclasNo) {
 		this.lclasNo = lclasNo;
 	}
+	
+	public LargeClassification(String lclasName) {
+		this.lclasName = lclasName;
+	}
 
 	public LargeClassification(int lclasNo, String lclasName) {
 		this.lclasNo = lclasNo;

@@ -56,6 +56,12 @@ select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	from book
 	where book_code = 'A090101';
 
+select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
+	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,
+	   regist_date , dsuse_cdt 
+	from book
+	where book_name = '천년의 질문';
+
 select * from book;
 select * from large_classification;
 
@@ -108,15 +114,41 @@ delete from middle_classification where lclas_no = 10 and mlsfc_no = 3;
 -- 추천도서
 select * from book;
 select * from recommendation;
-select lc.lclas_name as '대분류', ml.mlsfc_name as '중분류', b.authr_name as '작가', b.trnslr_name as '역자',
+select r.book_code, book_cont 
+	from recommendation
+	order by recom_book_no desc limit 1;
+
+
+select r.recom_book_no , r.book_code , r.book_cont , lc.lclas_no , lc.lclas_name , ml.mlsfc_no , ml.mlsfc_name ,
+	  	b.authr_name , b.trnslr_name , b.book_name , pls.pls_no , pls.pls_name , b.book_img
+	from recommendation r join book b on b.book_code = r.book_code  
+				join large_classification lc on b.lc_no = lc.lclas_no 
+				join middle_classification ml on b.ml_no = ml.mlsfc_no and b.lc_no = ml.lclas_no 
+				join publishing_company pls on b.pls = pls.pls_no 
+	order by r.recom_book_no desc limit 1;
+
+select r.book_code, lc.lclas_name as '대분류', ml.mlsfc_name as '중분류', b.authr_name as '작가', b.trnslr_name as '역자',
 	   b.book_name as '도서명', pls.pls_name as '출판사', b.book_img as '도서이미지', r.book_cont as '줄거리'
-from book b join recommendation r on b.book_code = r.book_code  
-	join large_classification lc on b.lc_no = lc.lclas_no 
-	join middle_classification ml on b.ml_no = ml.mlsfc_no and b.lc_no = ml.lclas_no 
-	join publishing_company pls on b.pls = pls.pls_no ;
+	from recommendation r join book b on b.book_code = r.book_code  
+				join large_classification lc on b.lc_no = lc.lclas_no 
+				join middle_classification ml on b.ml_no = ml.mlsfc_no and b.lc_no = ml.lclas_no 
+				join publishing_company pls on b.pls = pls.pls_no 
+	where r.book_code = 'A090101';
 
 insert into recommendation(book_code, book_cont) values ('A090101', '도서소개 테스트....!!!');
+insert into recommendation(book_code, book_cont) values ('A090102', '도서소개 테스트2....!!!');
 
+select * from recommendation;
+insert into recommendation(book_code, book_cont) values ('A090103', '도서소개 테스트3....!!!');
+update recommendation set book_cont = '[수정]도서소개 테스트3' where book_code = 'A090103';
+delete from recommendation where book_code = 'A090103';
 
+select count(*)+1 from recommendation;
+--  추천도서 도서번호 재정렬
+set @cnt = 0;
+update recommendation set recommendation.recom_book_no = @cnt:=@cnt+1;
+
+-- 컬럼값 초기화
+alter table recommendation auto_increment = 3;
 
 

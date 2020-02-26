@@ -185,5 +185,27 @@ public class BookDaoImpl implements BookDao {
 		return 0;
 	}
 
+	@Override
+	public Book selectBookByName(Book book) {
+		String sql = "select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year , "
+					+ "book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no , regist_date , dsuse_cdt " 
+					+ "from book " 
+					+ "where book_name = ?";
+		
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, book.getBookName());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					return getBook(rs, true);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
 

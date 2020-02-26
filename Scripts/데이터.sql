@@ -125,3 +125,8 @@ into table yi_java3st_3team.zip_code
 character set 'utf8'
 fields terminated by ','
 ignore 1 lines;
+
+-- recommendation 추천도서
+desc recommendation;
+insert into recommendation(book_code, book_cont) values ('A090101', '도서소개 테스트....!!!');
+insert into recommendation(book_code, book_cont) values ('A090102', '도서소개 테스트2....!!!');

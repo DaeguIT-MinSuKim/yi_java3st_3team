@@ -30,3 +30,6 @@ from request_book;
 
 select *
 from zip_code;
+
+select * 
+from recommendation;

@@ -152,3 +152,10 @@ update recommendation set recommendation.recom_book_no = @cnt:=@cnt+1;
 alter table recommendation auto_increment = 3;
 
 
+-- 신청도서
+select * from request_book;
+
+select reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt 
+	from request_book
+	where year(reqst_date) = 2020 and month(reqst_date) = 2;

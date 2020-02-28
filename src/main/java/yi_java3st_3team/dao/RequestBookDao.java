@@ -5,7 +5,7 @@ import java.util.List;
 import yi_java3st_3team.dto.RequestBook;
 
 public interface RequestBookDao {
-	RequestBook selectRequestBookByNo(RequestBook rb);
+	RequestBook selectRequestBookByDate(RequestBook rb);
 
 	List<RequestBook> selectRequestBookByAll();
 

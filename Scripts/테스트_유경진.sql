@@ -120,7 +120,7 @@ select r.book_code, book_cont
 
 
 select r.recom_book_no , r.book_code , r.book_cont , lc.lclas_no , lc.lclas_name , ml.mlsfc_no , ml.mlsfc_name ,
-	  	b.authr_name , b.trnslr_name , b.book_name , pls.pls_no , pls.pls_name , b.book_img
+	  	b.authr_name , b.trnslr_name , b.book_name , pls.pls_no , pls.pls_name , b.book_img, b.pblicte_year 
 	from recommendation r join book b on b.book_code = r.book_code  
 				join large_classification lc on b.lc_no = lc.lclas_no 
 				join middle_classification ml on b.ml_no = ml.mlsfc_no and b.lc_no = ml.lclas_no 

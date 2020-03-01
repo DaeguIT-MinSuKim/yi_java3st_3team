@@ -5,13 +5,18 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
+	private JButton btnTest1;
+	private JFrame frame1;
 
 	/**
 	 * Launch the application.
@@ -20,6 +25,14 @@ public class MainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					// select Look and Feel
+					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+//					UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+//					UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
+//					UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
+//					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+//					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+					
 					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -36,6 +49,7 @@ public class MainFrame extends JFrame {
 		initialize();
 	}
 	private void initialize() {
+		setTitle("테스트프레임");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 128);
 		contentPane = new JPanel();
@@ -43,7 +57,8 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 3, 10, 10));
 		
-		JButton btnTest1 = new JButton("경진 TEST");
+		btnTest1 = new JButton("경진 TEST");
+		btnTest1.addActionListener(this);
 		contentPane.add(btnTest1);
 		
 		JButton btnTest2 = new JButton("상원 TEST");
@@ -53,4 +68,21 @@ public class MainFrame extends JFrame {
 		contentPane.add(btnTest3);
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnTest1) {
+			btnTest1ActionPerformed(e);
+		}
+	}
+	protected void btnTest1ActionPerformed(ActionEvent e) {
+		if(frame1 == null) {
+			frame1 = new LoginFrame();
+			frame1.setVisible(true);
+			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		} else {
+			if(frame1.isVisible()) {
+				return;
+			}
+			frame1.setVisible(true);
+		}
+	}
 }

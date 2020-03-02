@@ -104,9 +104,8 @@ insert into middle_classification(mlsfc_no, mlsfc_name, lclas_no) values
 -- title 직책
 desc title;
 insert into title values
-(1,'총관리자'),
-(2,'사서'),
-(3,'회원');
+(0,'총관리자'),
+(1,'사서');
 
 -- librarian 사서
 desc librarian;

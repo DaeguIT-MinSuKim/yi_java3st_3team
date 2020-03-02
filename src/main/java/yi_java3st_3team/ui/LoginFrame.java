@@ -8,30 +8,39 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-
-import yi_java3st_3team.dto.Recommendation;
-import yi_java3st_3team.ui.service.LoginUiService;
 import javax.swing.border.LineBorder;
 
+import yi_java3st_3team.dto.Librarian;
+import yi_java3st_3team.dto.Member;
+import yi_java3st_3team.dto.Recommendation;
+import yi_java3st_3team.ui.dialog.FindIdDialog;
+import yi_java3st_3team.ui.dialog.FindPwDialog;
+import yi_java3st_3team.ui.exception.InvalidCheckException;
+import yi_java3st_3team.ui.service.LoginUiService;
+import javax.swing.JEditorPane;
+import javax.swing.JPasswordField;
+
 @SuppressWarnings("serial")
-public class LoginFrame extends JFrame {
+public class LoginFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField tfLoginId;
-	private JTextField tfLoginPw;
 	private JLabel lblRecomImg;
 	private JLabel lblCategoryCon;
 	private JLabel lblBookNameCon;
@@ -39,10 +48,18 @@ public class LoginFrame extends JFrame {
 	private JLabel lblPltYearCon;
 	private JLabel lblPlsCon;
 	private JTextArea taBookCont;
+	private JPanel pRecomContent;
+	private JButton btnFindId;
+	private FindIdDialog findIdDlog;
+	private FindPwDialog findPwDlog;
 	
 	private LoginUiService service;
 	private String picPath;
-	private JPanel pRecomContent;
+	private JButton btnFindPw;
+	private JButton btnNewButton;
+	public static Member loginMber;
+	public static Librarian loginLib;
+	private JPasswordField pfLoginPw;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -98,17 +115,17 @@ public class LoginFrame extends JFrame {
 		lblLoginPw.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(lblLoginPw);
 		
-		tfLoginPw = new JTextField();
-		tfLoginPw.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		pLoginTfs.add(tfLoginPw);
-		tfLoginPw.setColumns(10);
+		pfLoginPw = new JPasswordField();
+		pfLoginPw.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		pLoginTfs.add(pfLoginPw);
 		
 		JPanel pLoginBtn = new JPanel();
 		pLoginBtn.setBorder(new EmptyBorder(30, 80, 30, 80));
 		pLogin.add(pLoginBtn);
 		pLoginBtn.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnNewButton = new JButton("로그인");
+		btnNewButton = new JButton("로그인");
+		btnNewButton.addActionListener(this);
 		btnNewButton.setBackground(new Color(255, 204, 51));
 		btnNewButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		btnNewButton.setForeground(Color.WHITE);
@@ -119,10 +136,12 @@ public class LoginFrame extends JFrame {
 		pLogin.add(pLoginLbl);
 		pLoginLbl.setLayout(new GridLayout(0, 3, 5, 5));
 		
-		JButton btnFindId = new JButton("아이디찾기");
+		btnFindId = new JButton("아이디찾기");
+		btnFindId.addActionListener(this);
 		pLoginLbl.add(btnFindId);
 		
-		JButton btnFindPw = new JButton("패스워드 찾기");
+		btnFindPw = new JButton("패스워드 찾기");
+		btnFindPw.addActionListener(this);
 		pLoginLbl.add(btnFindPw);
 		
 		JButton btnNewJoin = new JButton("회원가입");
@@ -224,8 +243,6 @@ public class LoginFrame extends JFrame {
 		pRecomArea.add(scrollPane);
 		
 		
-		
-		
 		JPanel pLibraryInfo = new JPanel();
 		pLibraryInfo.setBackground(Color.WHITE);
 		pLibraryInfo.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -300,6 +317,72 @@ public class LoginFrame extends JFrame {
 				(int)picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnNewButton) {
+			btnNewButtonActionPerformed(e);
+		}
+		if (e.getSource() == btnFindPw) {
+			btnFindPwActionPerformed(e);
+		}
+		if (e.getSource() == btnFindId) {
+			btnFindIdActionPerformed(e);
+		}
+	}
+	protected void btnFindIdActionPerformed(ActionEvent e) {
+		findIdDlog = new FindIdDialog(this, "아이디 찾기");
+		findIdDlog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		findIdDlog.setVisible(true);
+	}
+	protected void btnFindPwActionPerformed(ActionEvent e) {
+		findPwDlog = new FindPwDialog(this, "패스워드 찾기");
+		findPwDlog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		findPwDlog.setVisible(true);
+	}
+	protected void btnNewButtonActionPerformed(ActionEvent e) {
+		try {
+			validCheck();
+			
+			String id = tfLoginId.getText().trim();
+			String pw = new String(pfLoginPw.getPassword());
+			
+			loginMber = service.login(new Member(id, pw));
+			loginLib = service.login(new Librarian(id, pw));
+			
+			if(loginLib != null) {
+				if(loginLib.getTitle().getTitleNo() == 0) {
+					JOptionPane.showMessageDialog(null, "총관리자 로그인 [테스트용]");
+					clearTf();
+				}
+				if(loginLib.getTitle().getTitleNo() == 1) {					
+					JOptionPane.showMessageDialog(null, "사서 로그인 [테스트용]");
+					clearTf();
+				}
+				return;
+			}
+			
+			if(loginMber != null) {
+				JOptionPane.showMessageDialog(null, "회원 로그인[테스트용]");
+				clearTf();
+				return;
+			}
+			
+			JOptionPane.showMessageDialog(null, "아이디 혹은 패스워드가 틀렸습니다.");
+			
+		} catch (InvalidCheckException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		
+	}
 	
+	private void clearTf() {
+		tfLoginId.setText("");
+		pfLoginPw.setText("");
+	}
+	
+	private void validCheck() {
+		if(tfLoginId.getText().contentEquals("") || pfLoginPw.getPassword().length == 0) {
+			throw new InvalidCheckException();
+		}
+	}
 }
 

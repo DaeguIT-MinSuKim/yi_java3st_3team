@@ -41,8 +41,6 @@ select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad,
 	where lb_id = '43ojlkjl@book.ff.kr' and lb_name = '원소' 
 		  and lb_birthday = '1961-12-31';
 		  
-		 
-		 
 -- book
 select * from book;
 
@@ -51,18 +49,7 @@ select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	   regist_date , dsuse_cdt 
 	from book;
 
--- 보유권수 cnt 추가
-select b1.book_code , b1.book_name, b2.book_cnt, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
-	   b1.book_price , b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
-	   b1.regist_date , b1.dsuse_cdt
-	from book b1, 
-		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt
-			from book
-			group by book_name, authr_name , pls, pblicte_year , book_price) b2
-	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
-			b1.book_price = b2.book_price;
-
--- 중복 카운터
+-- 도서 권수 카운터
 select book_name, count(*) as cnt
 	from book
 	group by book_name, authr_name , pls, pblicte_year , book_price
@@ -72,7 +59,50 @@ select book_name, count(*) as cnt
 delete from book where book_code = 'D100201';
 insert into book values 
 ('D100201', '북유럽 이야기', '김민주', '', 196, '2014-01-27', 14000, 0, 0, '', 10, 2, '2020-03-04', 0);
+ 
 
+-- 총관리가, 사서 도서검색
+select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
+	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
+	   b1.regist_date , b1.dsuse_cdt
+	from book b1, 
+		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt
+			from book
+			group by book_name, authr_name , pls, pblicte_year , book_price) b2
+	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
+			b1.book_price = b2.book_price;
+
+select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
+	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
+	   b1.regist_date , b1.dsuse_cdt
+	from book b1, 
+		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt
+			from book
+			group by book_name, authr_name , pls, pblicte_year , book_price) b2
+	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
+			b1.book_price = b2.book_price and b1.book_code = 'A090101';
+		
+select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
+	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
+	   b1.regist_date , b1.dsuse_cdt
+	from book b1, 
+		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt
+			from book
+			group by book_name, authr_name , pls, pblicte_year , book_price) b2
+	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
+			b1.book_price = b2.book_price and b1.book_name = '북유럽 이야기';
+
+-- 회원 도서 검색
+select b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
+	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
+	   b1.regist_date , b1.dsuse_cdt
+	from book b1, 
+		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt
+			from book
+			group by book_name, authr_name , pls, pblicte_year , book_price) b2
+	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
+			b1.book_price = b2.book_price and b1.book_name = '북유럽 이야기'
+	group by b1.book_name;
 
 select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,

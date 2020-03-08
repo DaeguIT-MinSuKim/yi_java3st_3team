@@ -46,7 +46,7 @@ select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad,
 		  and lb_birthday = '1961-12-31';
 		  
 -- book
-select * from book;
+select * from book where pls = 196;
 select max(book_code) from book;
 
 select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
@@ -195,7 +195,7 @@ select r.book_code, lc.lclas_name as '대분류', ml.mlsfc_name as '중분류', 
 	where r.book_code = 'A090101';
 
 insert into recommendation(book_code, book_cont) values ('A090101', '도서소개 테스트....!!!');
-insert into recommendation(book_code, book_cont) values ('A090102', '도서소개 테스트2....!!!');
+insert into recommendation(book_code, book_cont) values ('D090101', '도서소개 테스트2....!!!');
 
 select * from recommendation;
 insert into recommendation(book_code, book_cont) values ('A090103', '도서소개 테스트3....!!!');

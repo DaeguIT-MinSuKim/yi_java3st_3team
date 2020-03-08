@@ -145,7 +145,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		lblPblicYear.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPblicYear);
 		
-		tfRegistDate = new JDateChooser(new Date(), "yyyy-MM-dd hh:mm");
+		tfRegistDate = new JDateChooser(new Date(), "yyyy-MM-dd");
 		pCenter.add(tfRegistDate);
 		
 		JLabel lblLendPsbCdt = new JLabel("대여가능여부");
@@ -378,6 +378,8 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 			JOptionPane.showMessageDialog(null, String.format("%s[%s] 추가되었습니다.", newBook.getBookName(), newBook.getBookCode()));
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+		} catch (NumberFormatException e1) {
+			JOptionPane.showMessageDialog(null, "도서가격에 숫자만 작성해주세요.");
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

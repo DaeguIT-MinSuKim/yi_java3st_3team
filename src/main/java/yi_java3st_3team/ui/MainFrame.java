@@ -78,6 +78,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	protected void btnTest1ActionPerformed(ActionEvent e) {
 		if(frame1 == null) {
+//			frame1 = new LoginFrame();
 			frame1 = new JFrame();
 			frame1.setTitle("도서등록");
 			frame1.setBounds(100, 100, 1000, 600);

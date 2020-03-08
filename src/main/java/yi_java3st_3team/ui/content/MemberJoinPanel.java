@@ -214,11 +214,23 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 
 	@Override
 	public void setItem(Member item) {
-
+		tfID.setText(item.getMberId());
+		tfName.setText(item.getMberName());
 	}
 
 	@Override
 	public void clearTf() {
+		tfID.setText("");
+		tfName.setText("");
+		tfPW.setText("");
+		tfPWCheck.setText("");
+		tfBirthday.setDate(new Date());
+		tfTel.setText("");
+		tfZip.setText("");
+		tfAddress.setText("");
+		tfDetailAdress.setText("");
+		setPic(getClass().getClassLoader().getResource("no-Image.png").getPath());
+		
 
 	}
 }

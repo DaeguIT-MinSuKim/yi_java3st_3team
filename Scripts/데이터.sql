@@ -53,6 +53,7 @@ ignore 1 lines;
 
 
 -- publishing_company 출판사
+-- truncate table publishing_company;
 desc publishing_company;
 load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/pls_data.csv'
 into table yi_java3st_3team.publishing_company
@@ -128,4 +129,4 @@ ignore 1 lines;
 -- recommendation 추천도서
 desc recommendation;
 insert into recommendation(book_code, book_cont) values ('A090101', '도서소개 테스트....!!!');
-insert into recommendation(book_code, book_cont) values ('A090102', '도서소개 테스트2....!!!');
+-- insert into recommendation(book_code, book_cont) values ('A090102', '도서소개 테스트2....!!!');

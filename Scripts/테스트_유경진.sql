@@ -1,5 +1,9 @@
 select user(), database();
 
+select lclas_no , mlsfc_no , mlsfc_name 
+	from middle_classification
+	where lclas_no = 2;
+
 -- login 테스트
 select * from `member`;
 select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad ,
@@ -42,7 +46,8 @@ select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad,
 		  and lb_birthday = '1961-12-31';
 		  
 -- book
-select * from book;
+select * from book where pls = 196;
+select max(book_code) from book;
 
 select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,
@@ -168,7 +173,7 @@ delete from middle_classification where lclas_no = 10 and mlsfc_no = 3;
 -- 추천도서
 select * from book;
 select * from recommendation;
-select r.book_code, book_cont 
+select book_code, book_cont 
 	from recommendation
 	order by recom_book_no desc limit 1;
 
@@ -190,7 +195,7 @@ select r.book_code, lc.lclas_name as '대분류', ml.mlsfc_name as '중분류', 
 	where r.book_code = 'A090101';
 
 insert into recommendation(book_code, book_cont) values ('A090101', '도서소개 테스트....!!!');
-insert into recommendation(book_code, book_cont) values ('A090102', '도서소개 테스트2....!!!');
+insert into recommendation(book_code, book_cont) values ('D090101', '도서소개 테스트2....!!!');
 
 select * from recommendation;
 insert into recommendation(book_code, book_cont) values ('A090103', '도서소개 테스트3....!!!');

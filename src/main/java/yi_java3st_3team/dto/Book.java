@@ -311,7 +311,14 @@ public class Book {
 		return String.format(
 				"Book [bookCode=%s, bookName=%s, authrName=%s, trnslrName=%s, pls=%s, pblicteYear=%s, bookPrice=%s, bookCnt=%s, lendPsbCdt=%s, totalLeCnt=%s, bookImg=%s, lcNo=%s, mlNo=%s, registDate=%s, dsuseCdt=%s]",
 				bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, bookCnt, lendPsbCdt, totalLeCnt,
-				Arrays.toString(bookImg), lcNo, mlNo, registDate, dsuseCdt);
+				bookImg != null ? bookImg.length : null , lcNo, mlNo, registDate, dsuseCdt);
 	}
 
+	public String toDebug() {
+		return String.format(
+				"code: %s, name: %s, authr: %s, trnslr: %s, pls: %s,  pblicteYear: %s, price: %s, cnt: %s, %n"
+				+ "lendCdt: %s, totalLeCnt: %s, bookImg: %s, lcNo: %s, mlNo: %s, registDate: %s, dsuseCdt: %s", 
+				bookCode, bookName, authrName, trnslrName, pls.getPlsName(), pblicteYear, bookPrice, bookCnt, 
+				lendPsbCdt, totalLeCnt, bookImg, lcNo.getLclasName(), mlNo.getMlsfcName(), registDate, dsuseCdt);
+	}
 }

@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import yi_java3st_3team.ui.content.BookRegistrationPanel;
+
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -75,13 +78,21 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	protected void btnTest1ActionPerformed(ActionEvent e) {
 		if(frame1 == null) {
-			frame1 = new LoginFrame();
+//			frame1 = new LoginFrame();
+			frame1 = new JFrame();
+			frame1.setTitle("도서등록");
+			frame1.setBounds(100, 100, 1000, 600);
+			frame1.getContentPane().add(new BookRegistrationPanel());
 			frame1.setVisible(true);
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		} else {
 			if(frame1.isVisible()) {
 				return;
 			}
+			frame1 = new JFrame();
+			frame1.setTitle("도서등록");
+			frame1.setBounds(100, 100, 1000, 600);
+			frame1.getContentPane().add(new BookRegistrationPanel());
 			frame1.setVisible(true);
 		}
 	}

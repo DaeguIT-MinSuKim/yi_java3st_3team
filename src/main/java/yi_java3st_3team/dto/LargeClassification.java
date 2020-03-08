@@ -65,7 +65,7 @@ public class LargeClassification {
 
 	@Override
 	public String toString() {
-		return "LargeClassification [lclasNo=" + lclasNo + ", lclasName=" + lclasName + "]";
+		return String.format("%s[%02d]", lclasName, lclasNo);
 	}
 
 }

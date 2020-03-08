@@ -88,8 +88,7 @@ public class MiddleClassification {
 
 	@Override
 	public String toString() {
-		return String.format("MiddleClassification [lclasNo=%s, mlsfcNo=%s, mlsfcName=%s]", lclasNo, mlsfcNo,
-				mlsfcName);
+		return String.format("%s[%02d]", mlsfcName, mlsfcNo);
 	}
 
 }

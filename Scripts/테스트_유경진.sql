@@ -1,5 +1,9 @@
 select user(), database();
 
+select lclas_no , mlsfc_no , mlsfc_name 
+	from middle_classification
+	where lclas_no = 2;
+
 -- login 테스트
 select * from `member`;
 select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad ,
@@ -43,6 +47,7 @@ select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad,
 		  
 -- book
 select * from book;
+select max(book_code) from book;
 
 select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,
@@ -168,7 +173,7 @@ delete from middle_classification where lclas_no = 10 and mlsfc_no = 3;
 -- 추천도서
 select * from book;
 select * from recommendation;
-select r.book_code, book_cont 
+select book_code, book_cont 
 	from recommendation
 	order by recom_book_no desc limit 1;
 

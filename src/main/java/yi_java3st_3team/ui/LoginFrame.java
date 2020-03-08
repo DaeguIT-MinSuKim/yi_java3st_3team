@@ -60,6 +60,9 @@ public class LoginFrame extends JFrame implements ActionListener {
 	public static Member loginMber;
 	public static Librarian loginLib;
 	private JPasswordField pfLoginPw;
+	
+	private Dimension bookImg = new Dimension(100, 160);
+	private Dimension libraryIcon = new Dimension(96, 96);
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -178,9 +181,9 @@ public class LoginFrame extends JFrame implements ActionListener {
 		
 		lblRecomImg = new JLabel();
 		lblRecomImg.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRecomImg.setPreferredSize(new Dimension(130, 150));
-		lblRecomImg.setSize(new Dimension(130, 150));
-		setPic(lblRecomImg, getClass().getClassLoader().getResource("book-noImg.png").getPath(), new Dimension(130, 150));
+		lblRecomImg.setPreferredSize(bookImg);
+		lblRecomImg.setSize(bookImg);
+		setPic(lblRecomImg, getClass().getClassLoader().getResource("book-noImg.png").getPath(), bookImg);
 		pRecomInfo.add(lblRecomImg);
 		
 		JPanel pRecomRight = new JPanel();
@@ -257,9 +260,9 @@ public class LoginFrame extends JFrame implements ActionListener {
 		
 		JLabel lblLibraryIcon = new JLabel();
 		lblLibraryIcon.setBackground(Color.WHITE);
-		lblLibraryIcon.setPreferredSize(new Dimension(96, 96));
+		lblLibraryIcon.setPreferredSize(libraryIcon);
 		lblLibraryIcon.setSize(new Dimension(130, 100));
-		setPic(lblLibraryIcon, getClass().getClassLoader().getResource("iconBk.png").getPath(), new Dimension(96, 96));
+		setPic(lblLibraryIcon, getClass().getClassLoader().getResource("iconBk.png").getPath(), libraryIcon);
 		pLibrary.add(lblLibraryIcon);
 		
 		JPanel pLibraryLbls = new JPanel();
@@ -300,9 +303,9 @@ public class LoginFrame extends JFrame implements ActionListener {
 		lblPlsCon.setText(recom.getBookCode().getPls().getPlsName());
 		taBookCont.setText(recom.getBookCont());
 		if(recom.getBookCode().getBookImg().length == 0) {
-			setPic(lblRecomImg, getClass().getClassLoader().getResource("book-noImg.png").getPath(), new Dimension(130, 150));
+			setPic(lblRecomImg, getClass().getClassLoader().getResource("book-noImg.png").getPath(), bookImg);
 		} else {
-			setPicBookImg(recom.getBookCode().getBookImg(), new Dimension(100, 150));
+			setPicBookImg(recom.getBookCode().getBookImg(), bookImg);
 		}
 	}
 

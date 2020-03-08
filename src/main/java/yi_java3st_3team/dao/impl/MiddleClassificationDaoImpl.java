@@ -41,7 +41,7 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 		}
 		return null;
 	}
-
+	
 	private MiddleClassification getMlsfc(ResultSet rs) throws SQLException {
 		LargeClassification lclasNo = new LargeClassification(rs.getInt("lclas_no"));
 		int mlsfcNo = rs.getInt("mlsfc_no");
@@ -60,8 +60,29 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 			LogUtil.prnLog(pstmt);
 			if(rs.next()) {
 				list = new ArrayList<>();
-				while(rs.next()) {
+				do {
 					list.add(getMlsfc(rs));
+				} while(rs.next());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public List<MiddleClassification> selectMiddleClassificationGroupLc(LargeClassification lc) {
+		String sql = "select lclas_no , mlsfc_no , mlsfc_name from middle_classification where lclas_no = ?";
+		List<MiddleClassification> list = null;
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, lc.getLclasNo());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					list = new ArrayList<>();
+					do {
+						list.add(getMlsfc(rs));
+					} while(rs.next());
 				}
 			}
 		} catch (SQLException e) {

@@ -70,7 +70,7 @@ public class PublishingCompany {
 
 	@Override
 	public String toString() {
-		return "PublishingCompany [plsNo=" + plsNo + ", plsName=" + plsName + "]";
+		return String.format("%s[%02d]", plsName, plsNo);
 	}
 
 }

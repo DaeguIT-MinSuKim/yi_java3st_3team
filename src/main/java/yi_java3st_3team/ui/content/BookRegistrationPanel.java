@@ -320,8 +320,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	}
 
 	@Override
-	public void setItem(Book item) {
-	}
+	public void setItem(Book item) {}
 
 	@Override
 	public void clearTf() {

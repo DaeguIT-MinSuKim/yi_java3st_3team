@@ -29,3 +29,5 @@ set lb_id =''
 
 insert into librarian values
 ('hwangbug@book.ff.kr', 'bug', '황충', '1920-10-12', 42457, '대구광역시 북구 태전로', null, '010-4432-4141', null, 0, '2020-02-10', 0);
+
+

@@ -207,5 +207,20 @@ public class BookDaoImpl implements BookDao {
 		return null;
 	}
 
+	@Override
+	public String selectBookByLastCode() {
+		String sql = "select max(book_code) from book";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if(rs.next()) {
+				return rs.getString("max(book_code)");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
 

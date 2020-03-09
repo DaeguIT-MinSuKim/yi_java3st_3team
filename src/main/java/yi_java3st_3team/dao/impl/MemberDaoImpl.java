@@ -117,23 +117,23 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return 0;
 		
-		pstmt.setString(1, member.getMberId());
-		pstmt.setString(2, member.getMberPass());
-		pstmt.setString(3, member.getMberName());
-		pstmt.setTimestamp(4, new Timestamp(member.getMberBrthdy().getTime()));
-		pstmt.setInt(5, member.getMberZip().getZipCode());
-		pstmt.setString(6, member.getMberBassAd());
-		pstmt.setString(7, member.getMberDetailAd());
-		pstmt.setString(8, member.getMberTel());
-		if(member.getMberImg()!=null) {
-			pstmt.setBytes(9, member.getMberImg());	
-		}
-		pstmt.setInt(10, member.getTotalLeCnt());
-		pstmt.setInt(11, member.getLendBookCnt());
-		pstmt.setInt(12, member.getGrade().getGradeNo());
-		pstmt.setInt(13, member.getLendPsbCdt());
-		pstmt.setTimestamp(14, new Timestamp(member.getJoinDt().getTime()));
-		pstmt.setInt(15, member.getWdrCdt());
+//		pstmt.setString(1, member.getMberId());
+//		pstmt.setString(2, member.getMberPass());
+//		pstmt.setString(3, member.getMberName());
+//		pstmt.setTimestamp(4, new Timestamp(member.getMberBrthdy().getTime()));
+//		pstmt.setInt(5, member.getMberZip().getZipCode());
+//		pstmt.setString(6, member.getMberBassAd());
+//		pstmt.setString(7, member.getMberDetailAd());
+//		pstmt.setString(8, member.getMberTel());
+//		if(member.getMberImg()!=null) {
+//			pstmt.setBytes(9, member.getMberImg());	
+//		}
+//		pstmt.setInt(10, member.getTotalLeCnt());
+//		pstmt.setInt(11, member.getLendBookCnt());
+//		pstmt.setInt(12, member.getGrade().getGradeNo());
+//		pstmt.setInt(13, member.getLendPsbCdt());
+//		pstmt.setTimestamp(14, new Timestamp(member.getJoinDt().getTime()));
+//		pstmt.setInt(15, member.getWdrCdt());
 	}
 
 	@Override

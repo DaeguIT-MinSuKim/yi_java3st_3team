@@ -9,9 +9,9 @@ public interface LendingDao {
 
 	List<Lending> selectLendingByAll();
 
-	int insertTitle(Lending lending);
+	int insertLending(Lending lending);
 
-	int updateTitle(Lending lending);
+	int updateLending(Lending lending);
 
-	int deleteTitle(Lending lending);
+	int deleteLending(Lending lending);
 }

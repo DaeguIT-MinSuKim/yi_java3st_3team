@@ -24,7 +24,7 @@ public class BookDaoImpl implements BookDao {
 		return instance;
 	}
 	
-	public BookDaoImpl() {}
+	private BookDaoImpl() {}
 
 	@Override
 	public Book selectBookByCode(Book book) {

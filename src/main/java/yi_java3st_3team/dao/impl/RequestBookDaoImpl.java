@@ -22,7 +22,7 @@ public class RequestBookDaoImpl implements RequestBookDao {
 		return instance;
 	}
 	
-	public RequestBookDaoImpl() {}
+	private RequestBookDaoImpl() {}
 
 	@Override
 	public List<RequestBook> selectRequestBookByDate(RequestBook rb) {

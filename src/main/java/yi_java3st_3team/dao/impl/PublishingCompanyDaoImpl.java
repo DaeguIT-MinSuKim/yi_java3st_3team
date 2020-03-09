@@ -19,7 +19,7 @@ public class PublishingCompanyDaoImpl implements PublishingCompanyDao {
 		return instance;
 	}
 	
-	public PublishingCompanyDaoImpl() {}
+	private PublishingCompanyDaoImpl() {}
 
 	@Override
 	public PublishingCompany selectPublishingCompanyByNo(PublishingCompany pc) {

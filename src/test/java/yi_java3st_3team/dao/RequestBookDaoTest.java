@@ -79,42 +79,42 @@ public class RequestBookDaoTest {
 		for(RequestBook rb : lists) LogUtil.prnLog(rb);
 	}
 
-	@Test
-	public void test01InsertRequestBook() {
-		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Calendar c = Calendar.getInstance();
-		Date requestDate = new Date(c.getTimeInMillis());
-		
-		RequestBook rb = new RequestBook(new Member("ggg243r4@gmail.com"), "Java의 정석", "남궁성", "", "도우출판", requestDate, 0);
-		LogUtil.prnLog(rb);
-		int res = dao.insertRequestBook(rb);
-		Assert.assertEquals(1, res);
-		List<RequestBook> lists = dao.selectRequestBookByAll();
-		for(RequestBook rbAll : lists) LogUtil.prnLog(rbAll);
-	}
-
-	@Test
-	public void test05UpdateRequestBook() {
-		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Calendar c = Calendar.getInstance();
-		Date requestDate = new Date(c.getTimeInMillis());
-		
-		RequestBook rb = new RequestBook(11, new Member("ggg243r4@gmail.com"), "이것이 자바다", "신용권", "", "한빛미디어", requestDate, 0);
-		LogUtil.prnLog(rb);
-		int res = dao.updateRequestBook(rb);
-		Assert.assertEquals(1, res);
-		List<RequestBook> lists = dao.selectRequestBookByAll();
-		for(RequestBook rbAll : lists) LogUtil.prnLog(rbAll);
-	}
-
-	@Test
-	public void test06DeleteRequestBook() {
-		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		int res = dao.deleteRequestBook(new RequestBook(11));
-		Assert.assertEquals(1, res);
-		LogUtil.prnLog("삭제성공");
-		List<RequestBook> lists = dao.selectRequestBookByAll();
-		for(RequestBook rbAll : lists) LogUtil.prnLog(rbAll);
-	}
+//	@Test
+//	public void test01InsertRequestBook() {
+//		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+//		Calendar c = Calendar.getInstance();
+//		Date requestDate = new Date(c.getTimeInMillis());
+//		
+//		RequestBook rb = new RequestBook(new Member("ggg243r4@gmail.com"), "Java의 정석", "남궁성", "", "도우출판", requestDate, 0);
+//		LogUtil.prnLog(rb);
+//		int res = dao.insertRequestBook(rb);
+//		Assert.assertEquals(1, res);
+//		List<RequestBook> lists = dao.selectRequestBookByAll();
+//		for(RequestBook rbAll : lists) LogUtil.prnLog(rbAll);
+//	}
+//
+//	@Test
+//	public void test05UpdateRequestBook() {
+//		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+//		Calendar c = Calendar.getInstance();
+//		Date requestDate = new Date(c.getTimeInMillis());
+//		
+//		RequestBook rb = new RequestBook(11, new Member("ggg243r4@gmail.com"), "이것이 자바다", "신용권", "", "한빛미디어", requestDate, 0);
+//		LogUtil.prnLog(rb);
+//		int res = dao.updateRequestBook(rb);
+//		Assert.assertEquals(1, res);
+//		List<RequestBook> lists = dao.selectRequestBookByAll();
+//		for(RequestBook rbAll : lists) LogUtil.prnLog(rbAll);
+//	}
+//
+//	@Test
+//	public void test06DeleteRequestBook() {
+//		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+//		int res = dao.deleteRequestBook(new RequestBook(11));
+//		Assert.assertEquals(1, res);
+//		LogUtil.prnLog("삭제성공");
+//		List<RequestBook> lists = dao.selectRequestBookByAll();
+//		for(RequestBook rbAll : lists) LogUtil.prnLog(rbAll);
+//	}
 
 }

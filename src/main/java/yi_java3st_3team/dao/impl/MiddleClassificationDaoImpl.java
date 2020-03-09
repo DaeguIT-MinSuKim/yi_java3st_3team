@@ -20,7 +20,7 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 		return instance;
 	}
 	
-	public MiddleClassificationDaoImpl() {}
+	private MiddleClassificationDaoImpl() {}
 
 	@Override
 	public MiddleClassification selectMiddleClassificationByNo(MiddleClassification mlsfc) {

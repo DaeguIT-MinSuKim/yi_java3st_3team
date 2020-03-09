@@ -19,7 +19,7 @@ public class LargeClassificationDaoImpl implements LargeClassificationDao {
 		return instace;
 	}
 
-	public LargeClassificationDaoImpl() {}
+	private LargeClassificationDaoImpl() {}
 
 	@Override
 	public LargeClassification selectLargeClassificationByNo(LargeClassification lclas) {

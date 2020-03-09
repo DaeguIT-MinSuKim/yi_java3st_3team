@@ -37,7 +37,9 @@ public class Book {
 		this.lcNo = lcNo;
 		this.mlNo = mlNo;
 	}
-
+	
+	
+	
 	public Book(String bookCode, String bookName, String authrName, String trnslrName, PublishingCompany pls,
 			Date pblicteYear, int bookPrice, int lendPsbCdt, int totalLeCnt, LargeClassification lcNo,
 			MiddleClassification mlNo, Date registDate, int dsuseCdt) {
@@ -48,6 +50,25 @@ public class Book {
 		this.pls = pls;
 		this.pblicteYear = pblicteYear;
 		this.bookPrice = bookPrice;
+		this.lendPsbCdt = lendPsbCdt;
+		this.totalLeCnt = totalLeCnt;
+		this.lcNo = lcNo;
+		this.mlNo = mlNo;
+		this.registDate = registDate;
+		this.dsuseCdt = dsuseCdt;
+	}
+
+	public Book(String bookCode, String bookName, String authrName, String trnslrName, PublishingCompany pls,
+			Date pblicteYear, int bookPrice, int bookCnt, int lendPsbCdt, int totalLeCnt, LargeClassification lcNo,
+			MiddleClassification mlNo, Date registDate, int dsuseCdt) {
+		this.bookCode = bookCode;
+		this.bookName = bookName;
+		this.authrName = authrName;
+		this.trnslrName = trnslrName;
+		this.pls = pls;
+		this.pblicteYear = pblicteYear;
+		this.bookPrice = bookPrice;
+		this.bookCnt = bookCnt;
 		this.lendPsbCdt = lendPsbCdt;
 		this.totalLeCnt = totalLeCnt;
 		this.lcNo = lcNo;
@@ -311,7 +332,7 @@ public class Book {
 		return String.format(
 				"Book [bookCode=%s, bookName=%s, authrName=%s, trnslrName=%s, pls=%s, pblicteYear=%s, bookPrice=%s, bookCnt=%s, lendPsbCdt=%s, totalLeCnt=%s, bookImg=%s, lcNo=%s, mlNo=%s, registDate=%s, dsuseCdt=%s]",
 				bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, bookCnt, lendPsbCdt, totalLeCnt,
-				bookImg != null ? bookImg.length : null , lcNo, mlNo, registDate, dsuseCdt);
+				bookImg.length != 0 ? bookImg.length : null , lcNo, mlNo, registDate, dsuseCdt);
 	}
 
 	public String toDebug() {

@@ -25,21 +25,49 @@ public class BookDaoImpl implements BookDao {
 	}
 	
 	private BookDaoImpl() {}
+	
+	private Book getBook(ResultSet rs) throws SQLException {
+		String bookCode = rs.getString("b1.book_code");
+		String bookName = rs.getString("b1.book_name");
+		String authrName = rs.getString("b1.authr_name");
+		String trnslrName = rs.getString("b1.trnslr_name");
+		PublishingCompany pls = new PublishingCompany(rs.getInt("b1.pls"));
+		Date pblicteYear = rs.getTimestamp("b1.pblicte_year");
+		int bookPrice = rs.getInt("b1.book_price");
+		int bookCnt = rs.getInt("b2.book_cnt");
+		int lendPsbCdt = rs.getInt("b1.lend_psb_cdt");
+		int totalLeCnt = rs.getInt("b1.total_le_cnt");
+		byte[] bookImg = rs.getBytes("b1.book_img");
+		LargeClassification lcNo = new LargeClassification(rs.getInt("b1.lc_no"));
+		MiddleClassification mlNo = new MiddleClassification(rs.getInt("b1.ml_no"));
+		Date registDate = rs.getTimestamp("b1.regist_date");
+		int dsuseCdt = rs.getInt("b1.dsuse_cdt");
+		
+		Book book = new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, bookCnt, 
+				lendPsbCdt, totalLeCnt, bookImg, lcNo, mlNo, registDate, dsuseCdt);
+
+		return book;
+	}
 
 	@Override
 	public Book selectBookByCode(Book book) {
-		String sql = "select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ," 
-				   + " book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ," 
-				   + " regist_date , dsuse_cdt " 
-				   + "	from book" 
-				   + "	where book_code = ?";
+		String sql = "select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year , " 
+				   + "b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ," 
+				   + "b1.regist_date , b1.dsuse_cdt " 
+				   + "	from book b1, " 
+				   + "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt " 
+				   + "			from book " 
+				   + "			group by book_name, authr_name , pls, pblicte_year , book_price) b2 " 
+				   + "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and "
+				   + "		  b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and " 
+				   + "		  b1.book_code = ?";
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, book.getBookCode());
 			LogUtil.prnLog(pstmt);
 			try(ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
-					return getBook(rs, true);
+					return getBook(rs);
 				}
 			}
 		} catch (SQLException e) {
@@ -48,36 +76,18 @@ public class BookDaoImpl implements BookDao {
 		return null;
 	}
 
-	private Book getBook(ResultSet rs, boolean isImg) throws SQLException {
-		String bookCode = rs.getString("book_code");
-		String bookName = rs.getString("book_name");
-		String authrName = rs.getString("authr_name");
-		String trnslrName = rs.getString("trnslr_name");
-		PublishingCompany pls = new PublishingCompany(rs.getInt("pls"));
-		Date pblicteYear = rs.getTimestamp("pblicte_year");
-		int bookPrice = rs.getInt("book_price");
-		int lendPsbCdt = rs.getInt("lend_psb_cdt");
-		int totalLeCnt = rs.getInt("total_le_cnt");
-		LargeClassification lcNo = new LargeClassification(rs.getInt("lc_no"));
-		MiddleClassification mlNo = new MiddleClassification(rs.getInt("ml_no"));
-		Date registDate = rs.getTimestamp("regist_date");
-		int dsuseCdt = rs.getInt("dsuse_cdt");
-		
-		Book book = new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, 
-				lendPsbCdt, totalLeCnt, lcNo, mlNo, registDate, dsuseCdt);
-		if(isImg) {
-			byte[] bookImg = rs.getBytes("book_img");
-			book.setBookImg(bookImg);
-		}
-		LogUtil.prnLog(book);
-		return book;
-	}
-
 	@Override
 	public List<Book> selectBookByAll() {
-		String sql = "select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ," 
-				   + " book_price , lend_psb_cdt , total_le_cnt , lc_no, ml_no , regist_date , dsuse_cdt " 
-				   + " from book;";
+		String sql = "select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year , " 
+				   + "b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ," 
+				   + "b1.regist_date , b1.dsuse_cdt " 
+				   + "	from book b1, " 
+				   + "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt " 
+				   + "			from book " 
+				   + "			group by book_name, authr_name , pls, pblicte_year , book_price) b2 " 
+				   + "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and "
+				   + "		  b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price "
+				   + "	order by b1.regist_date";
 		List<Book> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -86,13 +96,141 @@ public class BookDaoImpl implements BookDao {
 			if(rs.next()) {
 				list = new ArrayList<>();
 				do {
-					list.add(getBook(rs, false));
+					list.add(getBook(rs));
 				} while (rs.next());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	@Override
+	public List<Book> selectBookByCodeAndCat(Book book) {
+		StringBuilder sql = new StringBuilder("select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year , " 
+											+ "b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no , " 
+											+ "b1.regist_date , b1.dsuse_cdt " 
+											+ "	from book b1, " 
+											+ "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt " 
+											+ "			from book " 
+											+ "			group by book_name, authr_name , pls, pblicte_year , book_price) b2 " 
+											+ "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and "); 
+		if(book.getBookCode() != null) sql.append("b1.book_code like ? and ");
+		if(book.getLcNo() != null) sql.append("b1.lc_no = ? and ");
+		sql.replace(sql.lastIndexOf("and"), sql.length(), " ");
+		
+		List<Book> list = null;
+		
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())){
+			int argCnt = 1;
+			if(book.getBookCode() != null) pstmt.setString(argCnt++, "%" + book.getBookCode()+ "%");
+			if(book.getLcNo() != null) pstmt.setInt(argCnt++, book.getLcNo().getLclasNo());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					list = new ArrayList<>();
+					do {
+						list.add(getBook(rs));
+					} while (rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Book> selectBookByNameAndCat(Book book) {
+		StringBuilder sql = new StringBuilder("select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year , " 
+				+ "b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no , " 
+				+ "b1.regist_date , b1.dsuse_cdt " 
+				+ "	from book b1, " 
+				+ "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt " 
+				+ "			from book " 
+				+ "			group by book_name, authr_name , pls, pblicte_year , book_price) b2 " 
+				+ "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and "); 
+		if(book.getBookName() != null) sql.append("b1.book_name like ? and ");
+		if(book.getLcNo() != null) sql.append("b1.lc_no = ? and ");
+		sql.replace(sql.lastIndexOf("and"), sql.length(), " ");
+		
+		List<Book> list = null;
+		
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())){
+			int argCnt = 1;
+			if(book.getBookName() != null) pstmt.setString(argCnt++, "%" + book.getBookName() + "%");
+			if(book.getLcNo() != null) pstmt.setInt(argCnt++, book.getLcNo().getLclasNo());
+			LogUtil.prnLog(pstmt);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					list = new ArrayList<>();
+					do {
+						list.add(getBook(rs));
+					} while(rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Book> selectBookOnMber(Book book) {
+		StringBuilder sql = new StringBuilder("select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year , " 
+				+ "b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no , " 
+				+ "b1.regist_date , b1.dsuse_cdt " 
+				+ "	from book b1, " 
+				+ "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt " 
+				+ "			from book " 
+				+ "			group by book_name, authr_name , pls, pblicte_year , book_price) b2 " 
+				+ "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and "); 
+		if(book.getBookName() != null) sql.append("b1.book_name like ? and ");
+		if(book.getAuthrName() != null) sql.append("b1.authr_name like ? and ");
+		if(book.getLcNo() != null) sql.append("b1.lc_no = ? and ");
+		sql.replace(sql.lastIndexOf("and"), sql.length(), " ");
+		
+		List<Book> list = null;
+		
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())){
+			int argCnt = 1;
+			if(book.getBookName() != null) pstmt.setString(argCnt++, "%" + book.getBookName() + "%");
+			if(book.getAuthrName() != null) pstmt.setString(argCnt++, book.getAuthrName() + "%");
+			if(book.getLcNo() != null) pstmt.setInt(argCnt++, book.getLcNo().getLclasNo());
+			LogUtil.prnLog(pstmt);
+			
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					list = new ArrayList<>();
+					do {
+						list.add(getBook(rs));
+					} while(rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public String selectBookByLastCode() {
+		String sql = "select book_code from book order by regist_date desc limit 1";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if(rs.next()) {
+				return rs.getString("book_code");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -171,56 +309,14 @@ public class BookDaoImpl implements BookDao {
 		return 0;
 	}
 
-	@Override
-	public int deleteBook(Book book) {
-		String sql = "delete from book where book_code = ?";
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
-			pstmt.setString(1, book.getBookCode());
-			LogUtil.prnLog(pstmt);
-			return pstmt.executeUpdate();					
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-
-	@Override
-	public Book selectBookByName(Book book) {
-		String sql = "select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year , "
-					+ "book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no , regist_date , dsuse_cdt " 
-					+ "from book " 
-					+ "where book_name = ?";
-		
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
-			pstmt.setString(1, book.getBookName());
-			LogUtil.prnLog(pstmt);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if(rs.next()) {
-					return getBook(rs, true);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public String selectBookByLastCode() {
-		String sql = "select max(book_code) from book";
-		try(Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
-			if(rs.next()) {
-				return rs.getString("max(book_code)");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+	/*
+	 * @Override public int deleteBook(Book book) { String sql =
+	 * "delete from book where book_code = ?"; try (Connection con =
+	 * MysqlDataSource.getConnection(); PreparedStatement pstmt =
+	 * con.prepareStatement(sql)){ pstmt.setString(1, book.getBookCode());
+	 * LogUtil.prnLog(pstmt); return pstmt.executeUpdate(); } catch (SQLException e)
+	 * { e.printStackTrace(); } return 0; }
+	 */
 
 }
 

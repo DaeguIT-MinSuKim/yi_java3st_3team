@@ -45,14 +45,16 @@ select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad,
 	where lb_id = '43ojlkjl@book.ff.kr' and lb_name = '원소' 
 		  and lb_birthday = '1961-12-31';
 		  
--- book
+-- book -------------------------------------------------------------------------------
 select * from book where pls = 196;
-select max(book_code) from book;
+select book_code from book order by regist_date desc limit 1;
+
 
 select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,
 	   regist_date , dsuse_cdt 
-	from book;
+	from book
+	order by regist_date;
 
 -- 도서 권수 카운터
 select book_name, count(*) as cnt
@@ -61,12 +63,12 @@ select book_name, count(*) as cnt
 	order by book_code;
 
 -- 보유권수 테스트로 중복 도서 추가
-delete from book where book_code = 'D100201';
-insert into book values 
-('D100201', '북유럽 이야기', '김민주', '', 196, '2014-01-27', 14000, 0, 0, '', 10, 2, '2020-03-04', 0);
+-- delete from book where book_code = 'D100201';
+-- insert into book values ('D100201', '북유럽 이야기', '김민주', '', 196, '2014-01-27', 14000, 0, 0, '', 10, 2, '2020-03-04', 0);
  
 
--- 총관리가, 사서 도서검색
+-- 도서검색
+-- all 
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
 	   b1.regist_date , b1.dsuse_cdt
@@ -75,8 +77,10 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1
 			from book
 			group by book_name, authr_name , pls, pblicte_year , book_price) b2
 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
-			b1.book_price = b2.book_price;
+			b1.book_price = b2.book_price
+	order by b1.regist_date;
 
+-- 도서코드 검색
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
 	   b1.regist_date , b1.dsuse_cdt
@@ -85,8 +89,9 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1
 			from book
 			group by book_name, authr_name , pls, pblicte_year , book_price) b2
 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
-			b1.book_price = b2.book_price and b1.book_code = 'A090101';
+			b1.book_price = b2.book_price and b1.book_code like 'D%' and b1.lc_no = 9;
 		
+-- 도서명 검색
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
 	   b1.regist_date , b1.dsuse_cdt
@@ -95,9 +100,10 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1
 			from book
 			group by book_name, authr_name , pls, pblicte_year , book_price) b2
 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
-			b1.book_price = b2.book_price and b1.book_name = '북유럽 이야기';
+			b1.book_price = b2.book_price and b1.book_name like '%북%' and b1.lc_no = 6;
 
--- 회원 도서 검색
+		
+-- 도서검색 (회원)
 select b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, b1.ml_no ,
 	   b1.regist_date , b1.dsuse_cdt
@@ -106,20 +112,8 @@ select b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls , b1.pblicte_year ,
 			from book
 			group by book_name, authr_name , pls, pblicte_year , book_price) b2
 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
-			b1.book_price = b2.book_price and b1.book_name = '북유럽 이야기'
-	group by b1.book_name;
+			b1.book_price = b2.book_price and b1.book_name like '%북유럽%' and b1.authr_name like '김%' and b1.lc_no = 10;
 
-select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
-	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,
-	   regist_date , dsuse_cdt 
-	from book
-	where book_code = 'A090101';
-
-select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
-	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,
-	   regist_date , dsuse_cdt 
-	from book
-	where book_name = '천년의 질문';
 
 select * from book;
 select * from large_classification;
@@ -139,7 +133,7 @@ update book
 		
 delete 
 	from book 
-	where book_code = 'D090101';
+	where book_code = 'D010104';
 		 
 
 -- 출판사
@@ -232,7 +226,9 @@ update request_book
 		request_book_pls = '한빛미디어', reqst_date = '2020-02-29', wh_cdt = 0
 	where reqst_book_no = 11;
 
-delete from request_book where reqst_book_no = 11;
+delete from request_book where reqst_book_no = 12;
+delete from request_book where reqst_book_no = 13;
+delete from request_book where reqst_book_no = 14;
 
 -- 컬럼값 초기화
 alter table request_book auto_increment = 11;

@@ -20,6 +20,8 @@ public class RecommendationDaoImpl implements RecommendationDao {
 	public static RecommendationDao getInstance() {
 		return instance;
 	}
+	
+	private RecommendationDaoImpl() {}
 
 	@Override
 	public Recommendation selectRecommendationByLastNo() {

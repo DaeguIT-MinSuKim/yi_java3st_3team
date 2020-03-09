@@ -27,6 +27,19 @@ public class Member {
 		this.mberId = mberId;
 	}
 
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg) {
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
+	}
+
 	public Member(String mberId, String mberPass) {
 		this.mberId = mberId;
 		this.mberPass = mberPass;
@@ -122,7 +135,7 @@ public class Member {
 		this.mberZip = mberZip;
 	}
 
-	public String getMberBassAd() {
+	public String getMberBassAd(){
 		return mberBassAd;
 	}
 

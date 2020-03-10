@@ -28,6 +28,10 @@ public class BookUiService {
 		plsDao = PublishingCompanyDaoImpl.getInstance();
 	}
 	
+	public List<Book> showBookListAll() {
+		return bookDao.selectBookByAll();
+	}
+	
 	public List<LargeClassification> showLcList() {
 		return lcDao.selectLargeClassificationByAll();
 	}
@@ -46,5 +50,9 @@ public class BookUiService {
 	
 	public void addBook(Book book) {
 		bookDao.insertBook(book);
+	}
+	
+	public List<Book> searchBookCodeAndCat(Book book) {
+		return bookDao.selectBookByCodeAndCat(book);
 	}
 }

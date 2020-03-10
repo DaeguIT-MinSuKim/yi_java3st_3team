@@ -90,7 +90,7 @@ public abstract class AbsListPanel<T> extends JPanel {
 		model.removeRow(selectedIdx);
 	}
 
-	public abstract void updateRow(T time, int updateIdx);
+	public abstract void updateRow(T item, int updateIdx);
 
 	public void addItem(T item) {
 		model.addRow(toArray(item));

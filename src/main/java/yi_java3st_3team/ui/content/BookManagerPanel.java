@@ -2,6 +2,9 @@ package yi_java3st_3team.ui.content;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JRadioButton;
@@ -14,12 +17,30 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.SystemColor;
+import java.util.List;
+import java.util.Vector;
 
-public class BookManagerPanel extends JPanel {
+import yi_java3st_3team.dto.Book;
+import yi_java3st_3team.dto.LargeClassification;
+import yi_java3st_3team.ui.list.BookTblPanel;
+import yi_java3st_3team.ui.service.BookUiService;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+@SuppressWarnings("serial")
+public class BookManagerPanel extends JPanel implements ActionListener {
 	private JTextField tfSearchBar;
+	private BookTblPanel pBookList;
+	private BookUiService service;
+	private JComboBox<LargeClassification> cmbCat;
+	private JButton btnSearch;
+	private JRadioButton rdoBookCode;
+	private JRadioButton rdoBookName;
+	private ButtonGroup rdoGroup;
+	private JPanel pList;
 
 	public BookManagerPanel() {
-
+		service = new BookUiService();
 		initialize();
 	}
 	private void initialize() {
@@ -34,15 +55,21 @@ public class BookManagerPanel extends JPanel {
 		pSearch.add(pOptions);
 		pOptions.setLayout(new GridLayout(0, 3, 0, 0));
 		
-		JRadioButton rdoBookCode = new JRadioButton("도서코드");
+		rdoGroup = new ButtonGroup();
+		
+		rdoBookCode = new JRadioButton("도서코드");
+		rdoBookCode.setSelected(true);
 		rdoBookCode.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pOptions.add(rdoBookCode);
 		
-		JRadioButton rdoBookName = new JRadioButton("도서명");
+		rdoBookName = new JRadioButton("도서명");
 		rdoBookName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pOptions.add(rdoBookName);
 		
-		JComboBox cmbCat = new JComboBox();
+		rdoGroup.add(rdoBookCode);
+		rdoGroup.add(rdoBookName);
+		
+		cmbCat = new JComboBox<>();
 		cmbCat.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pOptions.add(cmbCat);
 		
@@ -60,16 +87,57 @@ public class BookManagerPanel extends JPanel {
 		pBars.add(pSearchBtns);
 		pSearchBtns.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JButton btnSearch = new JButton("검색");
+		btnSearch = new JButton("검색");
+		btnSearch.addActionListener(this);
 		btnSearch.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		btnSearch.setForeground(Color.BLACK);
 		btnSearch.setBackground(new Color(255, 204, 51));
 		btnSearch.setPreferredSize(new Dimension(57, 20));
 		pSearchBtns.add(btnSearch);
 		
-		JPanel pList = new JPanel();
+		pList = new JPanel();
 		add(pList);
-		pList.setLayout(new BoxLayout(pList, BoxLayout.Y_AXIS));
+		pList.setLayout(new BorderLayout(0, 0));
+		
+		pBookList = new BookTblPanel();
+		pBookList.loadData(service.showBookListAll());
+		pList.add(pBookList, BorderLayout.CENTER);
+		
+		setService(service);
+	}
+	
+	public void setService(BookUiService service) {
+		this.service = service;
+		setCmbLcList(service.showLcList());
+	}
+	
+	public void setCmbLcList(List<LargeClassification> lcList) {
+		DefaultComboBoxModel<LargeClassification> model = new DefaultComboBoxModel<LargeClassification>(
+				new Vector<>(lcList));
+		cmbCat.setModel(model);
+		cmbCat.setSelectedIndex(-1);
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnSearch) {
+			btnSearchActionPerformed(e);
+		}
+	}
+	protected void btnSearchActionPerformed(ActionEvent e) {
+//		pList.remove(pBookList);
+		
+		if(rdoBookCode.isSelected()) {
+			if(cmbCat.getSelectedIndex() > -1) {
+				Book book = new Book();
+				book.setBookCode(tfSearchBar.getText());
+				book.setLcNo((LargeClassification)cmbCat.getSelectedItem());
+				pBookList.loadData(service.searchBookCodeAndCat(book));
+			} else {
+				Book book = new Book();
+				book.setBookCode(tfSearchBar.getText());
+				pBookList.loadData(service.searchBookCodeAndCat(book));
+			}
+		}
+//		pList.add(pBookList);
+	}
 }

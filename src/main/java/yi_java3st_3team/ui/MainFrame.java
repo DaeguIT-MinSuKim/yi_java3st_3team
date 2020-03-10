@@ -80,7 +80,7 @@ public class MainFrame extends JFrame implements ActionListener {
 //			frame1 = new LoginFrame();
 			frame1 = new JFrame();
 			frame1.setTitle("도서등록");
-			frame1.setBounds(100, 100, 1000, 600);
+			frame1.setBounds(50, 50, 1800, 1000);
 			frame1.getContentPane().add(new BookManagerPanel());
 			frame1.setVisible(true);
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -90,7 +90,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			}
 			frame1 = new JFrame();
 			frame1.setTitle("도서등록");
-			frame1.setBounds(100, 100, 1000, 600);
+			frame1.setBounds(50, 50, 1800, 1000);
 			frame1.getContentPane().add(new BookManagerPanel());
 			frame1.setVisible(true);
 		}

@@ -1,21 +1,19 @@
 package yi_java3st_3team.ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.ui.content.BookManagerPanel;
-import yi_java3st_3team.ui.content.BookRegistrationPanel;
 
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;

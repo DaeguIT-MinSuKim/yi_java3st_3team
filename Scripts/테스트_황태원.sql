@@ -38,3 +38,8 @@ select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_
 updete member
 set 
 where mber_id;
+
+
+
+
+

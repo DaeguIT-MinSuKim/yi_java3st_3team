@@ -169,9 +169,9 @@ ALTER TABLE yi_java3st_3team.publishing_company
 
 -- 추천도서
 CREATE TABLE yi_java3st_3team.recommendation (
-	recom_book_no INTEGER      NOT NULL COMMENT '추천도서번호', -- 추천도서번호
-	book_code     CHAR(7)      NOT NULL COMMENT '도서코드', -- 도서코드
-	book_cont     VARCHAR(255) NOT NULL COMMENT '도서소개' -- 도서소개
+	recom_book_no INTEGER       NOT NULL COMMENT '추천도서번호', -- 추천도서번호
+	book_code     CHAR(7)       NOT NULL COMMENT '도서코드', -- 도서코드
+	book_cont     VARCHAR(1050) NOT NULL COMMENT '도서소개' -- 도서소개
 )
 COMMENT '추천도서';
 

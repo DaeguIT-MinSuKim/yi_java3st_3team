@@ -237,6 +237,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		
 		taBookCont = new JTextArea();
 		taBookCont.setBorder(new EmptyBorder(10, 10, 10, 10));
+		taBookCont.setLineWrap(true);
 		taBookCont.setEditable(false);
 		
 		JScrollPane scrollPane = new JScrollPane(taBookCont);

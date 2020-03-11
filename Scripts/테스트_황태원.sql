@@ -40,12 +40,6 @@ where mber_id;
 select *
 from member;
 
-select *
-from title;
-
-select *
-from grade;
-
 delete
 from `member`
 where mber_id = 'bus503@daum.net';

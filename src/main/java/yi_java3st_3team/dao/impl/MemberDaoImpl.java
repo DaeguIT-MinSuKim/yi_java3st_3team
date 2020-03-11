@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +25,13 @@ public class MemberDaoImpl implements MemberDao {
 
 	public static MemberDao getInstance() {
 		return instance;
+	}
+	
+	private String nowTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date time = new Date();
+		String now = sdf.format(time);
+		return now;
 	}
 
 	@Override
@@ -66,7 +74,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int insertMember(Member member) {
-		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into member() values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, member.getMberId());
 			pstmt.setString(2, member.getMberPass());
@@ -76,15 +84,17 @@ public class MemberDaoImpl implements MemberDao {
 			pstmt.setString(6, member.getMberBassAd());
 			pstmt.setString(7, member.getMberDetailAd());
 			pstmt.setString(8, member.getMberTel());
-			if (member.getMberImg() != null) {
+			if (member.getMberImg() != null){
 				pstmt.setBytes(9, member.getMberImg());
 			}
-			pstmt.setInt(10, member.getTotalLeCnt());
-			pstmt.setInt(11, member.getLendBookCnt());
-			pstmt.setInt(12, member.getGrade().getGradeNo());
-			pstmt.setInt(13, member.getLendPsbCdt());
-			pstmt.setTimestamp(14, new Timestamp(member.getJoinDt().getTime()));
-			pstmt.setInt(15, member.getWdrCdt());
+			pstmt.setString(10,nowTime());
+
+//			pstmt.setInt(10, member.getTotalLeCnt());
+//			pstmt.setInt(11, member.getLendBookCnt());
+//			pstmt.setInt(12, member.getGrade().getGradeNo());
+//			pstmt.setInt(13, member.getLendPsbCdt());
+//			pstmt.setTimestamp(14, new Timestamp(member.getJoinDt().getTime()));
+//			pstmt.setInt(15, member.getWdrCdt());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

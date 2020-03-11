@@ -27,6 +27,21 @@ public class Member {
 		this.mberId = mberId;
 	}
 
+	
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, Date joinDt) {
+		super();
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.joinDt = joinDt;
+	}
+
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, byte[] mberImg) {
 		this.mberId = mberId;
@@ -54,6 +69,23 @@ public class Member {
 		this.mberId = mberId;
 		this.mberName = mberName;
 		this.mberBrthdy = mberBrthdy;
+	}
+
+	
+	
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg, Date joinDt) {
+		super();
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
+		this.joinDt = joinDt;
 	}
 
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,

@@ -1,7 +1,5 @@
 package yi_java3st_3team.dao;
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,11 +17,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import com.mysql.jdbc.log.Log;
-
 import yi_java3st_3team.dao.impl.MemberDaoImpl;
 import yi_java3st_3team.dto.Grade;
-import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
 import yi_java3st_3team.util.LogUtil;
@@ -86,7 +81,7 @@ public class MemberDaoTest {
 		Date birthday = new Date(c.getTimeInMillis());
 		Date joinDate = new Date(c.getTimeInMillis());
 		
-		Member member = new Member("bus503@daum.net", "xodnjs", "황태원", birthday, new ZipCode(42457), "대구광역시 북구 태전로", "루존 202호", "010-4245-3825", 100, 2, new Grade(1), 1, joinDate, 1);
+		Member member = new Member("bus503@daum.net", "xodnjs", "황태원", birthday, new ZipCode(42457), "대구광역시 북구 태전로", "루존 202호", "010-4245-3825", joinDate);
 		member.setMberImg(getImage("lyy.jpg"));
 		LogUtil.prnLog(member);
 		int res = dao.insertMember(member);
@@ -102,14 +97,14 @@ public class MemberDaoTest {
 		LogUtil.prnLog(member);
 	}
 
-	@Test
-	public void test05DeleteMember() {
-		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Member member = new Member("bus503@daum.net");
-		int res = dao.deleteMember(member);
-		Assert.assertEquals(1, res);
-		LogUtil.prnLog(member);
-	}
+//	@Test
+//	public void test05DeleteMember() {
+//		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+//		Member member = new Member("bus503@daum.net");
+//		int res = dao.deleteMember(member);
+//		Assert.assertEquals(1, res);
+//		LogUtil.prnLog(member);
+//	}
 	
 	private byte[] getImage(String ImgName) {
 		byte[] image = null;

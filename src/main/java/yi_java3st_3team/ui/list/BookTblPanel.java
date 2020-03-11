@@ -26,7 +26,7 @@ public class BookTblPanel extends AbsListPanel<Book> {
 		String writer;
 		String lendCdt;
 		String imgCdt = item.getBookImg().length != 8706 && item.getBookImg().length > 0? "있음" : "없음";
-		String dsuseCdt = item.getDsuseCdt() == 0 ? "No" : "Yes";
+		String dsuseCdt = item.getDsuseCdt() > 0 ? "Yes" : "No";
 		
 		if(item.getTrnslrName().length() > 0) {
 			writer = String.format("%s/%s", item.getAuthrName().replace("|", ","), item.getTrnslrName().replace("|", ","));

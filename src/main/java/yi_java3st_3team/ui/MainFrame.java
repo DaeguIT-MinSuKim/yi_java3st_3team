@@ -108,7 +108,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		if (frame1 == null) {
 //			frame1 = new LoginFrame();
 			frame1 = new JFrame();
-			frame1.setTitle("도서등록");
+			frame1.setTitle("보유도서 관리");
 			frame1.setBounds(50, 50, 1800, 1000);
 			frame1.getContentPane().add(new BookManagerPanel());
 			frame1.setVisible(true);
@@ -118,7 +118,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				return;
 			}
 			frame1 = new JFrame();
-			frame1.setTitle("도서등록");
+			frame1.setTitle("보유도서 관리");
 			frame1.setBounds(50, 50, 1800, 1000);
 			frame1.getContentPane().add(new BookManagerPanel());
 			frame1.setVisible(true);

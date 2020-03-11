@@ -38,8 +38,22 @@ public class Book {
 		this.mlNo = mlNo;
 	}
 	
-	
-	
+	public Book(String bookCode, String bookName, String authrName, String trnslrName, PublishingCompany pls,
+			Date pblicteYear, int bookPrice, int lendPsbCdt, byte[] bookImg, LargeClassification lcNo,
+			MiddleClassification mlNo) {
+		this.bookCode = bookCode;
+		this.bookName = bookName;
+		this.authrName = authrName;
+		this.trnslrName = trnslrName;
+		this.pls = pls;
+		this.pblicteYear = pblicteYear;
+		this.bookPrice = bookPrice;
+		this.lendPsbCdt = lendPsbCdt;
+		this.bookImg = bookImg;
+		this.lcNo = lcNo;
+		this.mlNo = mlNo;
+	}
+
 	public Book(String bookCode, String bookName, String authrName, String trnslrName, PublishingCompany pls,
 			Date pblicteYear, int bookPrice, int lendPsbCdt, int totalLeCnt, LargeClassification lcNo,
 			MiddleClassification mlNo, Date registDate, int dsuseCdt) {

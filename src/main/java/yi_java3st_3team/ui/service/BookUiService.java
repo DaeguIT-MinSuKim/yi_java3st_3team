@@ -40,6 +40,10 @@ public class BookUiService {
 		return mlDao.selectMiddleClassificationGroupLc(lc);
 	}
 	
+	public List<MiddleClassification> showMlListAll() {
+		return mlDao.selectMiddleClassificationByAll();
+	}
+	
 	public List<PublishingCompany> showPlsList() {
 		return plsDao.selectPublishingCompanyByAll();
 	}
@@ -54,5 +58,13 @@ public class BookUiService {
 	
 	public List<Book> searchBookCodeAndCat(Book book) {
 		return bookDao.selectBookByCodeAndCat(book);
+	}
+	
+	public List<Book> searchBookNameAndCat(Book book) {
+		return bookDao.selectBookByNameAndCat(book);
+	}
+	
+	public void modifyBook(Book book) {
+		bookDao.updateBook(book);
 	}
 }

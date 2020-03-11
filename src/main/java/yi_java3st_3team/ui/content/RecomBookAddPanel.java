@@ -29,7 +29,7 @@ import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.service.RecomUiService;
 
 @SuppressWarnings("serial")
-public class ReComBookAddPanel extends AbsItemPanel<Recommendation> implements ActionListener {
+public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements ActionListener {
 	private Dimension picDimesion = new Dimension(150, 210);
 	private String defaultImg = getClass().getClassLoader().getResource("book-noImg.png").getPath();
 	private String picPath;
@@ -45,7 +45,7 @@ public class ReComBookAddPanel extends AbsItemPanel<Recommendation> implements A
 	private RecomUiService service;
 	
 	
-	public ReComBookAddPanel() {
+	public RecomBookAddPanel() {
 		service = new RecomUiService();
 		initialize();
 	}

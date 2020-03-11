@@ -42,9 +42,9 @@ public class BookListPanel extends JPanel implements ActionListener {
 	private JPanel pList;
 	private JFrame updateFrame;
 	private JFrame disuseFrame;
-	private ReComBookAddPanel reComBookTf;
+	private RecomBookAddPanel reComBookTf;
 
-	public BookListPanel(ReComBookAddPanel reComBookTf) {
+	public BookListPanel(RecomBookAddPanel reComBookTf) {
 		service = new BookUiService();
 		this.reComBookTf = reComBookTf;
 		initialize();

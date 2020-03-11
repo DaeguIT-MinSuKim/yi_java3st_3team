@@ -14,4 +14,8 @@ public class RecomUiService {
 	public void addRecom(Recommendation recom) {
 		recomDao.insertRecommendation(recom);
 	}
+	
+	public Recommendation showRecomBookByLastNo() {
+		return recomDao.selectRecommendationByLastNo();
+	}
 }

@@ -1,7 +1,5 @@
 package yi_java3st_3team.dao;
 
-import static org.junit.Assert.fail;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;

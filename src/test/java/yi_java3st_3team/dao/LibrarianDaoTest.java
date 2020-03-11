@@ -1,7 +1,5 @@
 package yi_java3st_3team.dao;
 
-import static org.junit.Assert.fail;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

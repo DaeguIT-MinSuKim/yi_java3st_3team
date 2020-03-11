@@ -51,7 +51,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionListener {
+public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListener {
 	private Dimension picDimesion = new Dimension(150, 210);
 	private String picPath;
 	private JLabel lblBookImg;
@@ -59,7 +59,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	private JTextField tfAuthr;
 	private JTextField tfTrnslr;
 	private JTextField tfBookPirce;
-	private JDateChooser tfRegistDate;
+	private JDateChooser tfPblicDate;
 	private JComboBox<LargeClassification> cmbLc;
 	private JComboBox<MiddleClassification> cmbMl;
 	private JComboBox<PublishingCompany> cmbPls;
@@ -72,10 +72,13 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	private JPanel pCenter;
 	private JButton btnBookImg;
 	private String defaultImg = getClass().getClassLoader().getResource("book-noImg.png").getPath();
-	private JButton btnCancel;
 	private JButton btnSave;
+	private JLabel lblBookCode;
+	private JTextField tfBookCode;
+	private JRadioButton rdoRental;
+	
 
-	public BookRegistrationPanel() {
+	public BookUpdatePanel() {
 		service = new BookUiService();
 		initialize();
 	}
@@ -87,6 +90,15 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.setBorder(new EmptyBorder(50, 0, 0, 40));
 		add(pCenter, BorderLayout.CENTER);
 		pCenter.setLayout(new GridLayout(0, 2, 10, 10));
+		
+		lblBookCode = new JLabel("도서코드");
+		lblBookCode.setHorizontalAlignment(SwingConstants.CENTER);
+		pCenter.add(lblBookCode);
+		
+		tfBookCode = new JTextField();
+		tfBookCode.setEditable(false);
+		pCenter.add(tfBookCode);
+		tfBookCode.setColumns(10);
 
 		JLabel lblBookName = new JLabel("도서명");
 		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -129,9 +141,11 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCategory.setLayout(new GridLayout(0, 2, 10, 10));
 
 		cmbLc = new JComboBox<>();
+		cmbLc.setEnabled(false);
 		pCategory.add(cmbLc);
 
 		cmbMl = new JComboBox<>();
+		cmbMl.setEnabled(false);
 		pCategory.add(cmbMl);
 
 		JLabel lblPls = new JLabel("출판사");
@@ -145,8 +159,8 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		lblPblicYear.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPblicYear);
 
-		tfRegistDate = new JDateChooser(new Date(), "yyyy-MM-dd");
-		pCenter.add(tfRegistDate);
+		tfPblicDate = new JDateChooser(new Date(), "yyyy-MM-dd");
+		pCenter.add(tfPblicDate);
 
 		JLabel lblLendPsbCdt = new JLabel("대여가능여부");
 		lblLendPsbCdt.setHorizontalAlignment(SwingConstants.CENTER);
@@ -154,19 +168,25 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 
 		pLendPsbCdt = new JPanel();
 		pCenter.add(pLendPsbCdt);
-		pLendPsbCdt.setLayout(new GridLayout(0, 2, 10, 10));
 
 		lendPsbCdtBtnGrp = new ButtonGroup();
+		pLendPsbCdt.setLayout(new GridLayout(0, 3, 0, 0));
 
 		rdoYes = new JRadioButton("대여 가능");
-		rdoYes.setSelected(true);
+		rdoYes.setHorizontalAlignment(SwingConstants.CENTER);
 		pLendPsbCdt.add(rdoYes);
+		
+		rdoRental = new JRadioButton("대여중");
+		rdoRental.setHorizontalAlignment(SwingConstants.CENTER);
+		pLendPsbCdt.add(rdoRental);
 
 		rdoNo = new JRadioButton("대여 불가능");
+		rdoNo.setHorizontalAlignment(SwingConstants.CENTER);
 		pLendPsbCdt.add(rdoNo);
 
 		lendPsbCdtBtnGrp.add(rdoYes);
 		lendPsbCdtBtnGrp.add(rdoNo);
+		lendPsbCdtBtnGrp.add(rdoRental);
 
 		JPanel pEast = new JPanel();
 		pEast.setBorder(new EmptyBorder(50, 0, 0, 50));
@@ -199,21 +219,10 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pSouth.setBorder(new EmptyBorder(30, 0, 30, 0));
 		add(pSouth, BorderLayout.SOUTH);
 
-		btnCancel = new JButton("취소");
-		btnCancel.addActionListener(this);
-		btnCancel.setFocusable(false);
-		btnCancel.setPreferredSize(new Dimension(80, 40));
-		btnCancel.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
-		pSouth.add(btnCancel);
-
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setPreferredSize(new Dimension(10, 0));
-		pSouth.add(lblNewLabel);
-
 		btnSave = new JButton("저장");
 		btnSave.addActionListener(this);
 		btnSave.setFocusable(false);
-		btnSave.setPreferredSize(new Dimension(80, 40));
+		btnSave.setPreferredSize(new Dimension(130, 40));
 		btnSave.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		pSouth.add(btnSave);
 
@@ -256,52 +265,32 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		cmbPls.setSelectedIndex(0);
 	}
 
-	private void setPicStr(String imgPath) {
-		picPath = imgPath;
-		lblBookImg.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage()
-				.getScaledInstance((int) picDimesion.getWidth(), (int) picDimesion.getHeight(), Image.SCALE_DEFAULT)));
-	}
-
 	@Override
 	public Book getItem() {
 		validCheck();
-		LargeClassification lcNo = (LargeClassification) cmbLc.getSelectedItem();
-		MiddleClassification mlNo = (MiddleClassification) cmbMl.getSelectedItem();
 
-		String lcNoStd = String.format("%02d", lcNo.getLclasNo());
-		String mlNoStd = String.format("%02d", mlNo.getMlsfcNo());
-		String lastCode = service.getLastCode();
-		int lastCodeAp = lastCode.substring(0, 1).charAt(0);
-		int lastNum = Integer.parseInt(lastCode.substring(lastCode.length() - 2, lastCode.length()));
-		String bookCode = null;
-
-		if (lastNum == 99) {
-			bookCode = ((char) (lastCodeAp + 1)) + lcNoStd + mlNoStd + String.format("%02d", 1);
-		} else {
-			bookCode = ((char) lastCodeAp) + lcNoStd + mlNoStd + String.format("%02d", (lastNum + 1));
-		}
-
+		String bookCode = tfBookCode.getText().trim();
 		String bookName = tfBookName.getText().trim();
 		String authrName = tfAuthr.getText().trim();
 		String trnslrName = tfTrnslr.getText().trim();
 		PublishingCompany pls = (PublishingCompany) cmbPls.getSelectedItem();
-		Date pblicteYear = tfRegistDate.getDate();
+		Date pblicteYear = tfPblicDate.getDate();
 		int bookPrice = Integer.parseInt(tfBookPirce.getText().trim());
 
 		int lendPsbCdt = 0;
 		if (rdoYes.isSelected()) {
 			lendPsbCdt = 0;
-		} else if (rdoNo.isSelected()) {
+		} else if (rdoRental.isSelected()) {
+			lendPsbCdt = 1;
+		} else {
 			lendPsbCdt = 2;
 		}
 
-		int totalLeCnt = 0;
 		byte[] bookImg = getImge();
-		Date registDate = new Date();
-		int dsuseCdt = 0;
-
-		return new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, lendPsbCdt, totalLeCnt,
-				bookImg, lcNo, mlNo, registDate, dsuseCdt);
+		LargeClassification lcNo = (LargeClassification) cmbLc.getSelectedItem();
+		MiddleClassification mlNo = (MiddleClassification) cmbMl.getSelectedItem();
+		
+		return new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, lendPsbCdt, bookImg, lcNo, mlNo);
 	}
 
 	private byte[] getImge() {
@@ -320,7 +309,43 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	}
 
 	@Override
-	public void setItem(Book item) {}
+	public void setItem(Book item) {
+		tfBookCode.setText(item.getBookCode());
+		tfBookName.setText(item.getBookName());
+		tfAuthr.setText(item.getAuthrName());
+		tfTrnslr.setText(item.getTrnslrName() != null ? item.getTrnslrName() : "");
+		tfBookPirce.setText(item.getBookPrice()+"");
+		cmbLc.setSelectedItem(item.getLcNo());
+		cmbMl.setSelectedItem(item.getMlNo());
+		cmbMl.setSelectedIndex(item.getMlNo().getMlsfcNo()-1);
+		cmbPls.setSelectedItem(item.getPls());
+		tfPblicDate.setDate(item.getPblicteYear());
+		
+		if(item.getLendPsbCdt() == 0) {
+			rdoYes.setSelected(true);
+		} else if (item.getLendPsbCdt() == 1) {
+			rdoRental.setSelected(true);
+		} else {
+			rdoNo.setSelected(true);
+		}
+		
+		if(item.getBookImg() == null || item.getBookImg().length == 0) {
+			setPicStr(defaultImg);
+		} else {
+			setPicByte(item.getBookImg());
+		}
+	}
+
+	private void setPicByte(byte[] bookImg) {
+		lblBookImg.setIcon(new ImageIcon(new ImageIcon(bookImg).getImage().getScaledInstance((int)picDimesion.getWidth(), 
+				(int)picDimesion.getHeight(), Image.SCALE_DEFAULT)));
+	}
+
+	private void setPicStr(String imgPath) {
+		picPath = imgPath;
+		lblBookImg.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage()
+				.getScaledInstance((int) picDimesion.getWidth(), (int) picDimesion.getHeight(), Image.SCALE_DEFAULT)));
+	}
 
 	@Override
 	public void clearTf() {
@@ -331,7 +356,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		cmbLc.setSelectedIndex(-1);
 		cmbMl.setSelectedIndex(-1);
 		cmbPls.setSelectedIndex(-1);
-		tfRegistDate.setDate(new Date());
+		tfPblicDate.setDate(new Date());
 		rdoYes.setSelected(true);
 		setPicStr(defaultImg);
 	}
@@ -348,9 +373,6 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnSave) {
 			btnSaveActionPerformed(e);
-		}
-		if (e.getSource() == btnCancel) {
-			btnCancelActionPerformed(e);
 		}
 		if (e.getSource() == btnBookImg) {
 			btnBookImgActionPerformed(e);
@@ -371,18 +393,13 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		setPicStr(picPath);
 	}
 
-	protected void btnCancelActionPerformed(ActionEvent e) {
-		clearTf();
-	}
-
 	protected void btnSaveActionPerformed(ActionEvent e) {
 		try {
-			Book newBook = getItem();
-			LogUtil.prnLog(newBook.toDebug());
-			service.addBook(newBook);
-			clearTf();
+			Book upBook = getItem();
+			service.modifyBook(upBook);
 			JOptionPane.showMessageDialog(null,
-					String.format("%s[%s] 추가되었습니다.", newBook.getBookName(), newBook.getBookCode()));
+					String.format("%s[%s] 수정 되었습니다.", upBook.getBookName(), upBook.getBookCode()));
+			
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (NumberFormatException e1) {

@@ -99,7 +99,7 @@ public abstract class AbsListPanel<T> extends JPanel {
 	public int getSelectedRowIdx() {
 		int selectedIdx = table.getSelectedRow();
 		if (selectedIdx == -1) {
-			throw new RuntimeException("해당 회원을 선택하세요");
+			throw new RuntimeException("원하는 정보를 선택해주세요.");
 		}
 		return selectedIdx;
 	}

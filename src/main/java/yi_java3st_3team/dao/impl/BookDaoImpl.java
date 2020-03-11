@@ -274,14 +274,14 @@ public class BookDaoImpl implements BookDao {
 		if(book.getTrnslrName() != null) sql.append("trnslr_name = ?, ");
 		if(book.getPls() != null) sql.append("pls = ?, ");
 		if(book.getPblicteYear() != null) sql.append("pblicte_year = ?, ");
-		if(book.getBookPrice() != 0) sql.append("book_price = ?, ");
-		if(book.getLendPsbCdt() != 0) sql.append("lend_psb_cdt = ?, ");
-		if(book.getTotalLeCnt() != 0) sql.append("total_le_cnt = ?, ");
+		if(book.getBookPrice() != -1) sql.append("book_price = ?, ");
+		if(book.getLendPsbCdt() != -1) sql.append("lend_psb_cdt = ?, ");
+		if(book.getTotalLeCnt() != -1) sql.append("total_le_cnt = ?, ");
 		if(book.getBookImg() != null) sql.append("book_img = ?, ");
 		if(book.getLcNo() != null) sql.append("lc_no = ?, ");
 		if(book.getMlNo() != null) sql.append("ml_no = ?, ");
 		if(book.getRegistDate() != null) sql.append("regist_date = ?, ");
-		if(book.getDsuseCdt() != 0) sql.append("dsuse_cdt = ?, ");
+		if(book.getDsuseCdt() != -1) sql.append("dsuse_cdt = ?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append("where book_code = ?");
 		
@@ -293,14 +293,14 @@ public class BookDaoImpl implements BookDao {
 			if(book.getTrnslrName() != null) pstmt.setString(argCnt++, book.getTrnslrName());
 			if(book.getPls() != null) pstmt.setInt(argCnt++, book.getPls().getPlsNo());
 			if(book.getPblicteYear() != null) pstmt.setTimestamp(argCnt++, new Timestamp(book.getPblicteYear().getTime()));
-			if(book.getBookPrice() != 0) pstmt.setInt(argCnt++, book.getBookPrice());
-			if(book.getLendPsbCdt() != 0) pstmt.setInt(argCnt++, book.getLendPsbCdt());
-			if(book.getTotalLeCnt() != 0) pstmt.setInt(argCnt++, book.getTotalLeCnt());
+			if(book.getBookPrice() != -1) pstmt.setInt(argCnt++, book.getBookPrice());
+			if(book.getLendPsbCdt() != -1) pstmt.setInt(argCnt++, book.getLendPsbCdt());
+			if(book.getTotalLeCnt() != -1) pstmt.setInt(argCnt++, book.getTotalLeCnt());
 			if(book.getBookImg() != null) pstmt.setBytes(argCnt++, book.getBookImg());
 			if(book.getLcNo() != null) pstmt.setInt(argCnt++, book.getLcNo().getLclasNo());
 			if(book.getMlNo() != null) pstmt.setInt(argCnt++, book.getMlNo().getMlsfcNo());
 			if(book.getRegistDate() != null) pstmt.setTimestamp(argCnt++, new Timestamp(book.getRegistDate().getTime()));
-			if(book.getDsuseCdt() != 0) pstmt.setInt(argCnt++, book.getDsuseCdt());
+			if(book.getDsuseCdt() != -1) pstmt.setInt(argCnt++, book.getDsuseCdt());
 			pstmt.setString(argCnt++, book.getBookCode());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();

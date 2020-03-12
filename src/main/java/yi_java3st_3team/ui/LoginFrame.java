@@ -40,7 +40,6 @@ import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class LoginFrame extends JFrame implements ActionListener {
-
 	private JPanel contentPane;
 	private JTextField tfLoginId;
 	private JLabel lblRecomImg;

@@ -14,6 +14,10 @@ public class PublishingCompany {
 		this.plsNo = plsNo;
 	}
 
+	public PublishingCompany(String plsName) {
+		this.plsName = plsName;
+	}
+
 	public PublishingCompany(int plsNo, String plsName) {
 		super();
 		this.plsNo = plsNo;
@@ -66,7 +70,7 @@ public class PublishingCompany {
 
 	@Override
 	public String toString() {
-		return "PublishingCompany [plsNo=" + plsNo + ", plsName=" + plsName + "]";
+		return String.format("%s[%02d]", plsName, plsNo);
 	}
 
 }

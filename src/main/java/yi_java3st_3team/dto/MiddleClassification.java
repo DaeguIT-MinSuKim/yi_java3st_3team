@@ -1,25 +1,38 @@
 package yi_java3st_3team.dto;
 
 public class MiddleClassification {
+	private LargeClassification lclasNo;
 	private int mlsfcNo;
 	private String mlsfcName;
-	private LargeClassification lclasNo;
 
 	public MiddleClassification() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
-
-	public MiddleClassification(int mlsfcNo, LargeClassification lclasNo) {
-		super();
+	
+	public MiddleClassification(int mlsfcNo) {
 		this.mlsfcNo = mlsfcNo;
-		this.lclasNo = lclasNo;
 	}
 
-	public MiddleClassification(int mlsfcNo, String mlsfcName, LargeClassification lclasNo) {
-		super();
+	public MiddleClassification(LargeClassification lclasNo, int mlsfcNo) {
+		this.lclasNo = lclasNo;
+		this.mlsfcNo = mlsfcNo;
+	}
+	
+	public MiddleClassification(int mlsfcNo, String mlsfcName) {
 		this.mlsfcNo = mlsfcNo;
 		this.mlsfcName = mlsfcName;
+	}
+
+	public MiddleClassification(LargeClassification lclasNo, int mlsfcNo, String mlsfcName) {
+		this.lclasNo = lclasNo;
+		this.mlsfcNo = mlsfcNo;
+		this.mlsfcName = mlsfcName;
+	}
+
+	public LargeClassification getLclasNo() {
+		return lclasNo;
+	}
+
+	public void setLclasNo(LargeClassification lclasNo) {
 		this.lclasNo = lclasNo;
 	}
 
@@ -37,14 +50,6 @@ public class MiddleClassification {
 
 	public void setMlsfcName(String mlsfcName) {
 		this.mlsfcName = mlsfcName;
-	}
-
-	public LargeClassification getLclasNo() {
-		return lclasNo;
-	}
-
-	public void setLclasNo(LargeClassification lclasNo) {
-		this.lclasNo = lclasNo;
 	}
 
 	@Override
@@ -83,7 +88,7 @@ public class MiddleClassification {
 
 	@Override
 	public String toString() {
-		return "MiddleClassification [mlsfcNo=" + mlsfcNo + ", mlsfcName=" + mlsfcName + ", lclasNo=" + lclasNo + "]";
+		return String.format("%s[%02d]", mlsfcName, mlsfcNo);
 	}
 
 }

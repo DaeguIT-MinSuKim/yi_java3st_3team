@@ -7,6 +7,8 @@ import yi_java3st_3team.dto.Member;
 public interface MemberDao {
 	Member selectMemberByNo(Member member);
 	Member loginMember(Member member);
+	Member findMemberId(Member member);
+	Member findMemberPw(Member member);
 
 	List<Member> selectMemberByAll();
 
@@ -15,6 +17,4 @@ public interface MemberDao {
 	int updateMember(Member member);
 
 	int deleteMember(Member member);
-	
-	
 }

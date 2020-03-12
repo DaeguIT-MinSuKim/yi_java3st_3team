@@ -5,18 +5,22 @@ public class Recommendation {
 	private Book bookCode;
 	private String bookCont;
 
-	public Recommendation() {
-		super();
-		// TODO Auto-generated constructor stub
+	public Recommendation() {}
+	
+	public Recommendation(int recomBookNo) {
+		this.recomBookNo = recomBookNo;
+	}
+	
+	public Recommendation(Book bookCode) {
+		this.bookCode = bookCode;
 	}
 
-	public Recommendation(int recomBookNo) {
-		super();
-		this.recomBookNo = recomBookNo;
+	public Recommendation(Book bookCode, String bookCont) {
+		this.bookCode = bookCode;
+		this.bookCont = bookCont;
 	}
 
 	public Recommendation(int recomBookNo, Book bookCode, String bookCont) {
-		super();
 		this.recomBookNo = recomBookNo;
 		this.bookCode = bookCode;
 		this.bookCont = bookCont;
@@ -82,7 +86,8 @@ public class Recommendation {
 
 	@Override
 	public String toString() {
-		return "Recommendation [recomBookNo=" + recomBookNo + ", bookCode=" + bookCode + ", bookCont=" + bookCont + "]";
+		return String.format("Recommendation [recomBookNo=%s, bookCode=%s, bookCont=%s]", recomBookNo, bookCode,
+				bookCont);
 	}
 
 }

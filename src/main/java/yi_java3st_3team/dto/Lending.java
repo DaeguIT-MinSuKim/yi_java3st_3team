@@ -8,9 +8,9 @@ public class Lending {
 	private Book bookCd;
 	private Date lendDate;
 	private Date rturnDueDate;
-	private boolean rturnPsmCdt;
+	private int rturnPsmCdt;
 	private Date rturnDate;
-	private boolean overdueCdt;
+	private int overdueCdt;
 	private int overdueDate;
 
 	public Lending() {
@@ -23,8 +23,8 @@ public class Lending {
 		this.lendRturnNo = lendRturnNo;
 	}
 
-	public Lending(int lendRturnNo, Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, boolean rturnPsmCdt,
-			Date rturnDate, boolean overdueCdt, int overdueDate) {
+	public Lending(int lendRturnNo, Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt,
+			Date rturnDate, int overdueCdt, int overdueDate) {
 		super();
 		this.lendRturnNo = lendRturnNo;
 		this.mberId = mberId;
@@ -77,11 +77,11 @@ public class Lending {
 		this.rturnDueDate = rturnDueDate;
 	}
 
-	public boolean isRturnPsmCdt() {
+	public int getRturnPsmCdt() {
 		return rturnPsmCdt;
 	}
 
-	public void setRturnPsmCdt(boolean rturnPsmCdt) {
+	public void setRturnPsmCdt(int rturnPsmCdt) {
 		this.rturnPsmCdt = rturnPsmCdt;
 	}
 
@@ -93,11 +93,11 @@ public class Lending {
 		this.rturnDate = rturnDate;
 	}
 
-	public boolean isOverdueCdt() {
+	public int getOverdueCdt() {
 		return overdueCdt;
 	}
 
-	public void setOverdueCdt(boolean overdueCdt) {
+	public void setOverdueCdt(int overdueCdt) {
 		this.overdueCdt = overdueCdt;
 	}
 
@@ -117,11 +117,11 @@ public class Lending {
 		result = prime * result + ((lendDate == null) ? 0 : lendDate.hashCode());
 		result = prime * result + lendRturnNo;
 		result = prime * result + ((mberId == null) ? 0 : mberId.hashCode());
-		result = prime * result + (overdueCdt ? 1231 : 1237);
+		result = prime * result + overdueCdt;
 		result = prime * result + overdueDate;
 		result = prime * result + ((rturnDate == null) ? 0 : rturnDate.hashCode());
 		result = prime * result + ((rturnDueDate == null) ? 0 : rturnDueDate.hashCode());
-		result = prime * result + (rturnPsmCdt ? 1231 : 1237);
+		result = prime * result + rturnPsmCdt;
 		return result;
 	}
 

@@ -18,7 +18,7 @@ CREATE TABLE yi_java3st_3team.book (
 	book_img     LONGBLOB    NULL     COMMENT '도서이미지', -- 도서이미지
 	lc_no        INTEGER     NOT NULL COMMENT '대분류번호', -- 대분류번호
 	ml_no        INTEGER     NOT NULL COMMENT '중분류번호', -- 중분류번호
-	regist_date  DATE        NOT NULL COMMENT '등록일자', -- 등록일자
+	regist_date  DATETIME    NOT NULL COMMENT '등록일자', -- 등록일자
 	dsuse_cdt    TINYINT     NULL     COMMENT '폐기여부' -- 폐기여부
 )
 COMMENT '도서';
@@ -64,10 +64,10 @@ CREATE TABLE yi_java3st_3team.lending (
 	lend_rturn_no  INTEGER     NOT NULL COMMENT '대여반납번호', -- 대여반납번호
 	mber_id        VARCHAR(30) NOT NULL COMMENT '회원ID', -- 회원ID
 	book_cd        CHAR(7)     NOT NULL COMMENT '도서코드', -- 도서코드
-	lend_date      DATE        NOT NULL COMMENT '대여일', -- 대여일
-	rturn_due_date DATE        NOT NULL COMMENT '반납예정일', -- 반납예정일
+	lend_date      DATETIME    NOT NULL COMMENT '대여일', -- 대여일
+	rturn_due_date DATETIME    NOT NULL COMMENT '반납예정일', -- 반납예정일
 	rturn_psm_cdt  TINYINT     NOT NULL COMMENT '반납연기여부', -- 반납연기여부
-	rturn_date     DATE        NULL     COMMENT '반납일', -- 반납일
+	rturn_date     DATETIME    NULL     COMMENT '반납일', -- 반납일
 	overdue_cdt    TINYINT     NOT NULL COMMENT '연체여부', -- 연체여부
 	overdue_date   INTEGER     NULL     COMMENT '연체일' -- 연체일
 )
@@ -80,18 +80,25 @@ ALTER TABLE yi_java3st_3team.lending
 			lend_rturn_no -- 대여반납번호
 		);
 
+ALTER TABLE yi_java3st_3team.lending
+	MODIFY COLUMN lend_rturn_no INTEGER NOT NULL AUTO_INCREMENT COMMENT '대여반납번호';
+
+ALTER TABLE yi_java3st_3team.lending
+	AUTO_INCREMENT = 1;
+
 -- 사서
 CREATE TABLE yi_java3st_3team.librarian (
 	lb_id        VARCHAR(30)  NOT NULL COMMENT '사서ID', -- 사서ID
 	lb_pass      CHAR(41)     NOT NULL COMMENT '사서비밀번호', -- 사서비밀번호
 	lb_name      VARCHAR(50)  NOT NULL COMMENT '사서이름', -- 사서이름
-	lb_birthday  DATE         NULL     COMMENT '사서생년월일', -- 사서생년월일
+	lb_birthday  DATETIME     NULL     COMMENT '사서생년월일', -- 사서생년월일
 	lb_zip       INTEGER      NULL     COMMENT '사서우편번호', -- 사서우편번호
 	lb_bass_ad   VARCHAR(255) NULL     COMMENT '사서기본주소', -- 사서기본주소
 	lb_detail_ad VARCHAR(255) NULL     COMMENT '사서상세주소', -- 사서상세주소
 	lb_tel       VARCHAR(30)  NULL     COMMENT '사서전화번호', -- 사서전화번호
+	lb_img       LONGBLOB     NULL     COMMENT '사서이미지', -- 사서이미지
 	title        INTEGER      NOT NULL COMMENT '직책', -- 직책
-	join_date    DATE         NOT NULL COMMENT '입사일', -- 입사일
+	join_date    DATETIME     NOT NULL COMMENT '입사일', -- 입사일
 	work_cdt     TINYINT      NOT NULL COMMENT '근무여부' -- 근무여부
 )
 COMMENT '사서';
@@ -108,16 +115,17 @@ CREATE TABLE yi_java3st_3team.member (
 	mber_id        VARCHAR(30)  NOT NULL COMMENT '회원ID', -- 회원ID
 	mber_pass      CHAR(41)     NOT NULL COMMENT '회원비밀번호', -- 회원비밀번호
 	mber_name      VARCHAR(50)  NOT NULL COMMENT '회원이름', -- 회원이름
-	mber_brthdy    DATE         NOT NULL COMMENT '회원생년월일', -- 회원생년월일
+	mber_brthdy    DATETIME     NOT NULL COMMENT '회원생년월일', -- 회원생년월일
 	mber_zip       INTEGER      NOT NULL COMMENT '회원우편번호', -- 회원우편번호
 	mber_bass_ad   VARCHAR(255) NULL     COMMENT '회원기본주소', -- 회원기본주소
 	mber_detail_ad VARCHAR(255) NULL     COMMENT '회원상세주소', -- 회원상세주소
 	mber_tel       VARCHAR(30)  NOT NULL COMMENT '회원전화번호', -- 회원전화번호
+	mber_img       LONGBLOB     NULL     COMMENT '회원이미지', -- 회원이미지
 	total_le_cnt   INTEGER      NULL     COMMENT '총대여권수', -- 총대여권수
 	lend_book_cnt  INTEGER      NULL     COMMENT '대여도서권수', -- 대여도서권수
 	grade          INTEGER      NULL     COMMENT '등급', -- 등급
 	lend_psb_cdt   TINYINT      NULL     COMMENT '대여가능여부', -- 대여가능여부
-	join_dt        DATE         NOT NULL COMMENT '가입일', -- 가입일
+	join_dt        DATETIME     NOT NULL COMMENT '가입일', -- 가입일
 	wdr_cdt        TINYINT      NULL     COMMENT '탈퇴여부' -- 탈퇴여부
 )
 COMMENT '회원';
@@ -131,8 +139,8 @@ ALTER TABLE yi_java3st_3team.member
 
 -- 중분류
 CREATE TABLE yi_java3st_3team.middle_classification (
-	mlsfc_no   INTEGER     NOT NULL COMMENT '중분류번호', -- 중분류번호
 	lclas_no   INTEGER     NOT NULL COMMENT '대분류번호', -- 대분류번호
+	mlsfc_no   INTEGER     NOT NULL COMMENT '중분류번호', -- 중분류번호
 	mlsfc_name VARCHAR(50) NOT NULL COMMENT '중분류이름' -- 중분류이름
 )
 COMMENT '중분류';
@@ -141,8 +149,8 @@ COMMENT '중분류';
 ALTER TABLE yi_java3st_3team.middle_classification
 	ADD CONSTRAINT PK_middle_classification -- 중분류 기본키2
 		PRIMARY KEY (
-			mlsfc_no, -- 중분류번호
-			lclas_no  -- 대분류번호
+			lclas_no, -- 대분류번호
+			mlsfc_no  -- 중분류번호
 		);
 
 -- 출판사
@@ -161,9 +169,9 @@ ALTER TABLE yi_java3st_3team.publishing_company
 
 -- 추천도서
 CREATE TABLE yi_java3st_3team.recommendation (
-	recom_book_no INTEGER      NOT NULL COMMENT '추천도서번호', -- 추천도서번호
-	book_code     CHAR(7)      NOT NULL COMMENT '도서코드', -- 도서코드
-	book_cont     VARCHAR(255) NOT NULL COMMENT '도서소개' -- 도서소개
+	recom_book_no INTEGER       NOT NULL COMMENT '추천도서번호', -- 추천도서번호
+	book_code     CHAR(7)       NOT NULL COMMENT '도서코드', -- 도서코드
+	book_cont     VARCHAR(1050) NOT NULL COMMENT '도서소개' -- 도서소개
 )
 COMMENT '추천도서';
 
@@ -174,6 +182,12 @@ ALTER TABLE yi_java3st_3team.recommendation
 			recom_book_no -- 추천도서번호
 		);
 
+ALTER TABLE yi_java3st_3team.recommendation
+	MODIFY COLUMN recom_book_no INTEGER NOT NULL AUTO_INCREMENT COMMENT '추천도서번호';
+
+ALTER TABLE yi_java3st_3team.recommendation
+	AUTO_INCREMENT = 1;
+
 -- 신청도서
 CREATE TABLE yi_java3st_3team.request_book (
 	reqst_book_no     INTEGER     NOT NULL COMMENT '신청도서번호', -- 신청도서번호
@@ -182,7 +196,7 @@ CREATE TABLE yi_java3st_3team.request_book (
 	reqst_book_author VARCHAR(50) NOT NULL COMMENT '신청도서저자', -- 신청도서저자
 	reqst_book_trnslr VARCHAR(50) NULL     COMMENT '신청도서역자', -- 신청도서역자
 	request_book_pls  VARCHAR(50) NOT NULL COMMENT '신청도서출판사', -- 신청도서출판사
-	reqst_date        DATE        NOT NULL COMMENT '신청날짜', -- 신청날짜
+	reqst_date        DATETIME    NOT NULL COMMENT '신청날짜', -- 신청날짜
 	wh_cdt            TINYINT     NULL     COMMENT '입고여부' -- 입고여부
 )
 COMMENT '신청도서';
@@ -193,6 +207,12 @@ ALTER TABLE yi_java3st_3team.request_book
 		PRIMARY KEY (
 			reqst_book_no -- 신청도서번호
 		);
+
+ALTER TABLE yi_java3st_3team.request_book
+	MODIFY COLUMN reqst_book_no INTEGER NOT NULL AUTO_INCREMENT COMMENT '신청도서번호';
+
+ALTER TABLE yi_java3st_3team.request_book
+	AUTO_INCREMENT = 1;
 
 -- 직책
 CREATE TABLE yi_java3st_3team.title (
@@ -271,6 +291,7 @@ ALTER TABLE yi_java3st_3team.request_book
 		REFERENCES yi_java3st_3team.member ( -- 회원
 			mber_id -- 회원ID
 		);
+	
 	
 -- 사용자 추가
 drop user if exists 'java3st'@'localhost';

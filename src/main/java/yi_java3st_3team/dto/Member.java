@@ -1,16 +1,18 @@
 package yi_java3st_3team.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Member {
 	private String mberId;
 	private String mberPass;
 	private String mberName;
-	private Date mberbirthday;
+	private Date mberBrthdy;
 	private ZipCode mberZip;
 	private String mberBassAd;
 	private String mberDetailAd;
 	private String mberTel;
+	private byte[] mberImg;
 	private int totalLeCnt;
 	private int lendBookCnt;
 	private Grade grade;
@@ -22,28 +24,101 @@ public class Member {
 	}
 
 	public Member(String mberId) {
-		super();
 		this.mberId = mberId;
 	}
 
-	public Member(String mberId, String mberPass) {
-		super();
-		this.mberId = mberId;
-		this.mberPass = mberPass;
-	}
-
-	public Member(String mberId, String mberPass, String mberName, Date mberbirthday, ZipCode mberZip,
-			String mberBassAd, String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade,
-			int lendPsbCdt, Date joinDt, int wdrCdt) {
+	
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, Date joinDt) {
 		super();
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 		this.mberName = mberName;
-		this.mberbirthday = mberbirthday;
+		this.mberBrthdy = mberBrthdy;
 		this.mberZip = mberZip;
 		this.mberBassAd = mberBassAd;
 		this.mberDetailAd = mberDetailAd;
 		this.mberTel = mberTel;
+		this.joinDt = joinDt;
+	}
+
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg) {
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
+	}
+
+	public Member(String mberId, String mberPass) {
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+	}
+
+	public Member(String mberName, Date mberBrthdy) {
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+	}
+
+	public Member(String mberId, String mberName, Date mberBrthdy) {
+		this.mberId = mberId;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+	}
+
+	
+	
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg, Date joinDt) {
+		super();
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
+		this.joinDt = joinDt;
+	}
+
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade, int lendPsbCdt,
+			Date joinDt, int wdrCdt) {
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.totalLeCnt = totalLeCnt;
+		this.lendBookCnt = lendBookCnt;
+		this.grade = grade;
+		this.lendPsbCdt = lendPsbCdt;
+		this.joinDt = joinDt;
+		this.wdrCdt = wdrCdt;
+	}
+
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg, int totalLeCnt, int lendBookCnt, Grade grade,
+			int lendPsbCdt, Date joinDt, int wdrCdt) {
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
 		this.totalLeCnt = totalLeCnt;
 		this.lendBookCnt = lendBookCnt;
 		this.grade = grade;
@@ -76,12 +151,12 @@ public class Member {
 		this.mberName = mberName;
 	}
 
-	public Date getMberbirthday() {
-		return mberbirthday;
+	public Date getMberBrthdy() {
+		return mberBrthdy;
 	}
 
-	public void setMberbirthday(Date mberbirthday) {
-		this.mberbirthday = mberbirthday;
+	public void setMberBrthdy(Date mberBrthdy) {
+		this.mberBrthdy = mberBrthdy;
 	}
 
 	public ZipCode getMberZip() {
@@ -92,7 +167,7 @@ public class Member {
 		this.mberZip = mberZip;
 	}
 
-	public String getMberBassAd() {
+	public String getMberBassAd(){
 		return mberBassAd;
 	}
 
@@ -164,6 +239,14 @@ public class Member {
 		this.wdrCdt = wdrCdt;
 	}
 
+	public byte[] getMberImg() {
+		return mberImg;
+	}
+
+	public void setMberImg(byte[] mberImg) {
+		this.mberImg = mberImg;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -173,13 +256,14 @@ public class Member {
 		result = prime * result + lendBookCnt;
 		result = prime * result + lendPsbCdt;
 		result = prime * result + ((mberBassAd == null) ? 0 : mberBassAd.hashCode());
+		result = prime * result + ((mberBrthdy == null) ? 0 : mberBrthdy.hashCode());
 		result = prime * result + ((mberDetailAd == null) ? 0 : mberDetailAd.hashCode());
 		result = prime * result + ((mberId == null) ? 0 : mberId.hashCode());
+		result = prime * result + Arrays.hashCode(mberImg);
 		result = prime * result + ((mberName == null) ? 0 : mberName.hashCode());
 		result = prime * result + ((mberPass == null) ? 0 : mberPass.hashCode());
 		result = prime * result + ((mberTel == null) ? 0 : mberTel.hashCode());
 		result = prime * result + ((mberZip == null) ? 0 : mberZip.hashCode());
-		result = prime * result + ((mberbirthday == null) ? 0 : mberbirthday.hashCode());
 		result = prime * result + totalLeCnt;
 		result = prime * result + wdrCdt;
 		return result;
@@ -213,6 +297,11 @@ public class Member {
 				return false;
 		} else if (!mberBassAd.equals(other.mberBassAd))
 			return false;
+		if (mberBrthdy == null) {
+			if (other.mberBrthdy != null)
+				return false;
+		} else if (!mberBrthdy.equals(other.mberBrthdy))
+			return false;
 		if (mberDetailAd == null) {
 			if (other.mberDetailAd != null)
 				return false;
@@ -222,6 +311,8 @@ public class Member {
 			if (other.mberId != null)
 				return false;
 		} else if (!mberId.equals(other.mberId))
+			return false;
+		if (!Arrays.equals(mberImg, other.mberImg))
 			return false;
 		if (mberName == null) {
 			if (other.mberName != null)
@@ -243,11 +334,6 @@ public class Member {
 				return false;
 		} else if (!mberZip.equals(other.mberZip))
 			return false;
-		if (mberbirthday == null) {
-			if (other.mberbirthday != null)
-				return false;
-		} else if (!mberbirthday.equals(other.mberbirthday))
-			return false;
 		if (totalLeCnt != other.totalLeCnt)
 			return false;
 		if (wdrCdt != other.wdrCdt)
@@ -258,9 +344,9 @@ public class Member {
 	@Override
 	public String toString() {
 		return String.format(
-				"Member [mberId=%s, mberPass=%s, mberName=%s, mberbirthday=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s]",
-				mberId, mberPass, mberName, mberbirthday, mberZip, mberBassAd, mberDetailAd, mberTel, totalLeCnt,
-				lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
+				"Member [mberId=%s, mberPass=%s, mberName=%s, mberBrthdy=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, mberImg=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s]",
+				mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel,
+				Arrays.toString(mberImg), totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
 	}
 
 }

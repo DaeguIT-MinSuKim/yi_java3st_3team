@@ -4,18 +4,17 @@ public class LargeClassification {
 	private int lclasNo;
 	private String lclasName;
 
-	public LargeClassification() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public LargeClassification() {}
 
 	public LargeClassification(int lclasNo) {
-		super();
 		this.lclasNo = lclasNo;
+	}
+	
+	public LargeClassification(String lclasName) {
+		this.lclasName = lclasName;
 	}
 
 	public LargeClassification(int lclasNo, String lclasName) {
-		super();
 		this.lclasNo = lclasNo;
 		this.lclasName = lclasName;
 	}
@@ -66,7 +65,7 @@ public class LargeClassification {
 
 	@Override
 	public String toString() {
-		return "LargeClassification [lclasNo=" + lclasNo + ", lclasName=" + lclasName + "]";
+		return String.format("%s[%02d]", lclasName, lclasNo);
 	}
 
 }

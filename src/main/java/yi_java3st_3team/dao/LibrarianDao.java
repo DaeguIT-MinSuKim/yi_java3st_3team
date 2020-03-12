@@ -6,6 +6,9 @@ import yi_java3st_3team.dto.Librarian;
 
 public interface LibrarianDao {
 	Librarian selectLibrarianByNo(Librarian lib);
+	Librarian loginLibrarian(Librarian lib);
+	Librarian findLibrarianId(Librarian lib);
+	Librarian findLibrarianPw(Librarian lib);
 
 	List<Librarian> selectLibrarianByAll();
 

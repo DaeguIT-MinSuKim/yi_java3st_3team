@@ -1,5 +1,6 @@
 package yi_java3st_3team.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Librarian {
@@ -11,23 +12,35 @@ public class Librarian {
 	private String lbBassAd;
 	private String lbDetailAd;
 	private String lbTel;
+	private byte[] lbImg;
 	private Title title;
 	private Date joinDate;
-	private boolean workCdt;
+	private int workCdt;
 
-	public Librarian() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public Librarian() {}
 
 	public Librarian(String lbId) {
-		super();
 		this.lbId = lbId;
 	}
 
+	public Librarian(String lbId, String lbPass) {
+		this.lbId = lbId;
+		this.lbPass = lbPass;
+	}
+
+	public Librarian(String lbName, Date lbBirthDay) {
+		this.lbName = lbName;
+		this.lbBirthDay = lbBirthDay;
+	}
+	
+	public Librarian(String lbId, String lbName, Date lbBirthDay) {
+		this.lbId = lbId;
+		this.lbName = lbName;
+		this.lbBirthDay = lbBirthDay;
+	}
+
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
-			String lbDetailAd, String lbTel, Title title, Date joinDate, boolean workCdt) {
-		super();
+			String lbDetailAd, String lbTel, Title title, Date joinDate, int workCdt) {
 		this.lbId = lbId;
 		this.lbPass = lbPass;
 		this.lbName = lbName;
@@ -36,6 +49,22 @@ public class Librarian {
 		this.lbBassAd = lbBassAd;
 		this.lbDetailAd = lbDetailAd;
 		this.lbTel = lbTel;
+		this.title = title;
+		this.joinDate = joinDate;
+		this.workCdt = workCdt;
+	}
+	
+	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
+			String lbDetailAd, String lbTel, byte[] lbImg, Title title, Date joinDate, int workCdt) {
+		this.lbId = lbId;
+		this.lbPass = lbPass;
+		this.lbName = lbName;
+		this.lbBirthDay = lbBirthDay;
+		this.lbZip = lbZip;
+		this.lbBassAd = lbBassAd;
+		this.lbDetailAd = lbDetailAd;
+		this.lbTel = lbTel;
+		this.lbImg = lbImg;
 		this.title = title;
 		this.joinDate = joinDate;
 		this.workCdt = workCdt;
@@ -121,12 +150,20 @@ public class Librarian {
 		this.joinDate = joinDate;
 	}
 
-	public boolean isWorkCdt() {
+	public int getWorkCdt() {
 		return workCdt;
 	}
 
-	public void setWorkCdt(boolean workCdt) {
+	public void setWorkCdt(int workCdt) {
 		this.workCdt = workCdt;
+	}
+	
+	public byte[] getLbImg() {
+		return lbImg;
+	}
+
+	public void setLbImg(byte[] lbImg) {
+		this.lbImg = lbImg;
 	}
 
 	@Override
@@ -138,12 +175,12 @@ public class Librarian {
 		result = prime * result + ((lbBirthDay == null) ? 0 : lbBirthDay.hashCode());
 		result = prime * result + ((lbDetailAd == null) ? 0 : lbDetailAd.hashCode());
 		result = prime * result + ((lbId == null) ? 0 : lbId.hashCode());
+		result = prime * result + Arrays.hashCode(lbImg);
 		result = prime * result + ((lbName == null) ? 0 : lbName.hashCode());
 		result = prime * result + ((lbPass == null) ? 0 : lbPass.hashCode());
 		result = prime * result + ((lbTel == null) ? 0 : lbTel.hashCode());
 		result = prime * result + ((lbZip == null) ? 0 : lbZip.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + (workCdt ? 1231 : 1237);
 		return result;
 	}
 
@@ -181,6 +218,8 @@ public class Librarian {
 				return false;
 		} else if (!lbId.equals(other.lbId))
 			return false;
+		if (!Arrays.equals(lbImg, other.lbImg))
+			return false;
 		if (lbName == null) {
 			if (other.lbName != null)
 				return false;
@@ -213,9 +252,10 @@ public class Librarian {
 
 	@Override
 	public String toString() {
-		return "Librarian [lbId=" + lbId + ", lbPass=" + lbPass + ", lbName=" + lbName + ", lbBirthDay=" + lbBirthDay
-				+ ", lbZip=" + lbZip + ", lbBassAd=" + lbBassAd + ", lbDetailAd=" + lbDetailAd + ", lbTel=" + lbTel
-				+ ", title=" + title + ", joinDate=" + joinDate + ", workCdt=" + workCdt + "]";
+		return String.format(
+				"Librarian [lbId=%s, lbPass=%s, lbName=%s, lbBirthDay=%s, lbZip=%s, lbBassAd=%s, lbDetailAd=%s, lbTel=%s, lbImg=%s, title=%s, joinDate=%s, workCdt=%s]",
+				lbId, lbPass, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, Arrays.toString(lbImg), title,
+				joinDate, workCdt);
 	}
 
 }

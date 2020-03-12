@@ -10,10 +10,11 @@ insert into grade values
 
 -- member 회원
 desc member;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/member.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/member.csv'
 into table yi_java3st_3team.member
 character set 'utf8'
-fields terminated by ',';
+fields terminated by ','
+ignore 1 lines;
 
 
 -- request_book 신청도서
@@ -41,14 +42,18 @@ ignore 1 lines;
 
 
 -- lending 대여/반납
+-- truncate table lending; -- lending 데이터 전체 삭제
+-- select * from lending;
 desc lending;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending.csv'
 into table yi_java3st_3team.lending 
 character set 'utf8'
-fields terminated by ',';
+fields terminated by ','
+ignore 1 lines;
 
 
 -- publishing_company 출판사
+-- truncate table publishing_company;
 desc publishing_company;
 load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/pls_data.csv'
 into table yi_java3st_3team.publishing_company
@@ -100,20 +105,28 @@ insert into middle_classification(mlsfc_no, mlsfc_name, lclas_no) values
 -- title 직책
 desc title;
 insert into title values
-(1,'총관리자'),
-(2,'사서'),
-(3,'회원');
+(0,'총관리자'),
+(1,'사서');
 
 -- librarian 사서
 desc librarian;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/librarian.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/librarian.csv'
 into table yi_java3st_3team.librarian 
 character set 'utf8'
-fields terminated by ',';
+fields terminated by ','
+ignore 1 lines;
 
 -- zip_code 우편번호
+-- truncate table zip_code; -- zip_code 전체 삭제
+-- select * from zip_code;
 desc zip_code;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/경북,대구.txt'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/경북,대구.csv'
 into table yi_java3st_3team.zip_code
 character set 'utf8'
-fields terminated by ',';
+fields terminated by ','
+ignore 1 lines;
+
+-- recommendation 추천도서
+desc recommendation;
+insert into recommendation(book_code, book_cont) values ('A090101', '도서소개 테스트....!!!');
+-- insert into recommendation(book_code, book_cont) values ('A090102', '도서소개 테스트2....!!!');

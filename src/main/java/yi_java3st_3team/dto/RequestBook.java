@@ -10,21 +10,28 @@ public class RequestBook {
 	private String requestBookTrnslr;
 	private String requestBookPls;
 	private Date requestDate;
-	private boolean WhCdt;
+	private int whCdt;
 
 	public RequestBook() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public RequestBook(int requestBookNo) {
-		super();
 		this.requestBookNo = requestBookNo;
+	}
+	
+	public RequestBook(Member requestMbId, String requestBookName, String requestBookAuthor, String requestBookTrnslr,
+			String requestBookPls, Date requestDate, int whCdt) {
+		this.requestMbId = requestMbId;
+		this.requestBookName = requestBookName;
+		this.requestBookAuthor = requestBookAuthor;
+		this.requestBookTrnslr = requestBookTrnslr;
+		this.requestBookPls = requestBookPls;
+		this.requestDate = requestDate;
+		this.whCdt = whCdt;
 	}
 
 	public RequestBook(int requestBookNo, Member requestMbId, String requestBookName, String requestBookAuthor,
-			String requestBookTrnslr, String requestBookPls, Date requestDate, boolean whCdt) {
-		super();
+			String requestBookTrnslr, String requestBookPls, Date requestDate, int whCdt) {
 		this.requestBookNo = requestBookNo;
 		this.requestMbId = requestMbId;
 		this.requestBookName = requestBookName;
@@ -32,7 +39,7 @@ public class RequestBook {
 		this.requestBookTrnslr = requestBookTrnslr;
 		this.requestBookPls = requestBookPls;
 		this.requestDate = requestDate;
-		WhCdt = whCdt;
+		this.whCdt = whCdt;
 	}
 
 	public int getRequestBookNo() {
@@ -91,19 +98,18 @@ public class RequestBook {
 		this.requestDate = requestDate;
 	}
 
-	public boolean isWhCdt() {
-		return WhCdt;
+	public int getWhCdt() {
+		return whCdt;
 	}
 
-	public void setWhCdt(boolean whCdt) {
-		WhCdt = whCdt;
+	public void setWhCdt(int whCdt) {
+		this.whCdt = whCdt;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (WhCdt ? 1231 : 1237);
 		result = prime * result + ((requestBookAuthor == null) ? 0 : requestBookAuthor.hashCode());
 		result = prime * result + ((requestBookName == null) ? 0 : requestBookName.hashCode());
 		result = prime * result + requestBookNo;
@@ -111,6 +117,7 @@ public class RequestBook {
 		result = prime * result + ((requestBookTrnslr == null) ? 0 : requestBookTrnslr.hashCode());
 		result = prime * result + ((requestDate == null) ? 0 : requestDate.hashCode());
 		result = prime * result + ((requestMbId == null) ? 0 : requestMbId.hashCode());
+		result = prime * result + whCdt;
 		return result;
 	}
 
@@ -123,8 +130,6 @@ public class RequestBook {
 		if (getClass() != obj.getClass())
 			return false;
 		RequestBook other = (RequestBook) obj;
-		if (WhCdt != other.WhCdt)
-			return false;
 		if (requestBookAuthor == null) {
 			if (other.requestBookAuthor != null)
 				return false;
@@ -157,15 +162,17 @@ public class RequestBook {
 				return false;
 		} else if (!requestMbId.equals(other.requestMbId))
 			return false;
+		if (whCdt != other.whCdt)
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "RequestBook [requestBookNo=" + requestBookNo + ", requestMbId=" + requestMbId + ", requestBookName="
-				+ requestBookName + ", requestBookAuthor=" + requestBookAuthor + ", requestBookTrnslr="
-				+ requestBookTrnslr + ", requestBookPls=" + requestBookPls + ", requestDate=" + requestDate + ", WhCdt="
-				+ WhCdt + "]";
+		return String.format(
+				"RequestBook [requestBookNo=%s, requestMbId=%s, requestBookName=%s, requestBookAuthor=%s, requestBookTrnslr=%s, requestBookPls=%s, requestDate=%s, whCdt=%s]",
+				requestBookNo, requestMbId, requestBookName, requestBookAuthor, requestBookTrnslr, requestBookPls,
+				requestDate, whCdt);
 	}
 
 }

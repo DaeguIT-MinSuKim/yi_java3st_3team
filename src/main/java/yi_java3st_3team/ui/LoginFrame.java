@@ -349,8 +349,9 @@ public class LoginFrame extends JFrame implements ActionListener {
 		findPwDlog.setVisible(true);
 	}
 
-	private JFrame test;
-	private MemberUseCdtPanel muc = new MemberUseCdtPanel();
+	// 회원 이용 현황 test
+//	private JFrame test;
+//	private MemberUseCdtPanel muc = new MemberUseCdtPanel();
 	protected void btnNewButtonActionPerformed(ActionEvent e) {
 		try {
 			validCheck();
@@ -374,16 +375,21 @@ public class LoginFrame extends JFrame implements ActionListener {
 			}
 
 			if (loginMber != null) {
-				if (test == null) {
-					test = new JFrame();
-					test.setTitle("이용 현황");
-					test.setBounds(100, 100, 1200, 800);
-					test.getContentPane().add(muc);
-					muc.setLogingFrame(this);
-				}
-				dispose();
-				muc.setItem();
-				test.setVisible(true);
+				// 회원 이용 현황 test
+//				if (test == null) {
+//					test = new JFrame();
+//					test.setTitle("이용 현황");
+//					test.setBounds(100, 100, 1200, 800);
+//					test.getContentPane().add(muc);
+//					muc.setLogingFrame(this);
+//				}
+//				dispose();
+//				muc.setItem();
+//				test.setVisible(true);
+				
+				JOptionPane.showMessageDialog(null, "회원 로그인 [테스트용]");
+				clearTf();
+				
 				return;
 			}
 

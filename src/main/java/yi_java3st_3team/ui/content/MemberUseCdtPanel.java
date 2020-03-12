@@ -108,7 +108,7 @@ public class MemberUseCdtPanel extends JPanel {
 		JPanel pCenter = new JPanel();
 		pCenter.setBorder(new EmptyBorder(0, 50, 0, 0));
 		add(pCenter, BorderLayout.CENTER);
-		pCenter.setLayout(new GridLayout(0, 1, 10, 10));
+		pCenter.setLayout(new BoxLayout(pCenter, BoxLayout.Y_AXIS));
 		
 		JPanel pLendList = new JPanel();
 		pCenter.add(pLendList);
@@ -119,12 +119,10 @@ public class MemberUseCdtPanel extends JPanel {
 		pLendList.add(lblLendTitle, BorderLayout.NORTH);
 		
 		JPanel pLendTbl = new JPanel();
-		pLendTbl.setBackground(Color.WHITE);
 		pLendList.add(pLendTbl, BorderLayout.CENTER);
 		pLendTbl.setLayout(new BorderLayout(0, 0));
 		
 		pLendTblList = new MemberUseCdtTblPanel();
-		pLendTblList.setBackground(Color.WHITE);
 		pLendTbl.add(pLendTblList, BorderLayout.CENTER);
 		
 		JPanel pTotalList = new JPanel();
@@ -136,12 +134,10 @@ public class MemberUseCdtPanel extends JPanel {
 		pTotalList.add(lblTotalTitle, BorderLayout.NORTH);
 		
 		JPanel pTotalTbl = new JPanel();
-		pTotalTbl.setBackground(Color.WHITE);
 		pTotalList.add(pTotalTbl, BorderLayout.CENTER);
 		pTotalTbl.setLayout(new BorderLayout(0, 0));
 		
 		pTotalTblList = new MemberUseCdtTblPanel();
-		pTotalTblList.setBackground(Color.WHITE);
 		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
 		
 	}

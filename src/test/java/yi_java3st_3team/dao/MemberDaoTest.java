@@ -97,14 +97,14 @@ public class MemberDaoTest {
 		LogUtil.prnLog(member);
 	}
 
-//	@Test
-//	public void test05DeleteMember() {
-//		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-//		Member member = new Member("bus503@daum.net");
-//		int res = dao.deleteMember(member);
-//		Assert.assertEquals(1, res);
-//		LogUtil.prnLog(member);
-//	}
+	@Test
+	public void test05DeleteMember() {
+		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Member member = new Member("bus503@daum.net");
+		int res = dao.deleteMember(member);
+		Assert.assertEquals(1, res);
+		LogUtil.prnLog(member);
+	}
 	
 	private byte[] getImage(String ImgName) {
 		byte[] image = null;

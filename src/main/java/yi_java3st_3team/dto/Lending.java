@@ -11,24 +11,20 @@ public class Lending {
 	private int rturnPsmCdt;
 	private Date rturnDate;
 	private int overdueCdt;
-	private int overdueDate;
 
 	public Lending() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Lending(int lendRturnNo) {
-		super();
 		this.lendRturnNo = lendRturnNo;
 	}
-	
+
 	public Lending(Member mberId) {
 		this.mberId = mberId;
 	}
 
 	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt, Date rturnDate,
-			int overdueCdt, int overdueDate) {
+			int overdueCdt) {
 		this.mberId = mberId;
 		this.bookCd = bookCd;
 		this.lendDate = lendDate;
@@ -36,11 +32,10 @@ public class Lending {
 		this.rturnPsmCdt = rturnPsmCdt;
 		this.rturnDate = rturnDate;
 		this.overdueCdt = overdueCdt;
-		this.overdueDate = overdueDate;
 	}
 
 	public Lending(int lendRturnNo, Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt,
-			Date rturnDate, int overdueCdt, int overdueDate) {
+			Date rturnDate, int overdueCdt) {
 		super();
 		this.lendRturnNo = lendRturnNo;
 		this.mberId = mberId;
@@ -50,7 +45,6 @@ public class Lending {
 		this.rturnPsmCdt = rturnPsmCdt;
 		this.rturnDate = rturnDate;
 		this.overdueCdt = overdueCdt;
-		this.overdueDate = overdueDate;
 	}
 
 	public int getLendRturnNo() {
@@ -117,14 +111,6 @@ public class Lending {
 		this.overdueCdt = overdueCdt;
 	}
 
-	public int getOverdueDate() {
-		return overdueDate;
-	}
-
-	public void setOverdueDate(int overdueDate) {
-		this.overdueDate = overdueDate;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -134,7 +120,6 @@ public class Lending {
 		result = prime * result + lendRturnNo;
 		result = prime * result + ((mberId == null) ? 0 : mberId.hashCode());
 		result = prime * result + overdueCdt;
-		result = prime * result + overdueDate;
 		result = prime * result + ((rturnDate == null) ? 0 : rturnDate.hashCode());
 		result = prime * result + ((rturnDueDate == null) ? 0 : rturnDueDate.hashCode());
 		result = prime * result + rturnPsmCdt;
@@ -169,8 +154,6 @@ public class Lending {
 			return false;
 		if (overdueCdt != other.overdueCdt)
 			return false;
-		if (overdueDate != other.overdueDate)
-			return false;
 		if (rturnDate == null) {
 			if (other.rturnDate != null)
 				return false;
@@ -188,9 +171,9 @@ public class Lending {
 
 	@Override
 	public String toString() {
-		return "Lending [lendRturnNo=" + lendRturnNo + ", mberId=" + mberId + ", bookCd=" + bookCd + ", lendDate="
-				+ lendDate + ", rturnDueDate=" + rturnDueDate + ", rturnPsmCdt=" + rturnPsmCdt + ", rturnDate="
-				+ rturnDate + ", overdueCdt=" + overdueCdt + ", overdueDate=" + overdueDate + "]";
+		return String.format(
+				"Lending [lendRturnNo=%s, mberId=%s, bookCd=%s, lendDate=%s, rturnDueDate=%s, rturnPsmCdt=%s, rturnDate=%s, overdueCdt=%s]",
+				lendRturnNo, mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
 	}
 
 }

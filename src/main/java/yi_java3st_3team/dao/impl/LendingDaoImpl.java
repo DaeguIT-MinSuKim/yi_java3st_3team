@@ -57,17 +57,15 @@ public class LendingDaoImpl implements LendingDao {
 		int rturnPsmCdt = rs.getInt("rturn_psm_cdt");
 		Date rturnDate = rs.getTimestamp("rturn_date");
 		int overdueCdt = rs.getInt("overdue_cdt");
-		int overdueDate = rs.getInt("overdue_date");
 
-		Lending lending = new Lending(lendRturnNo, mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate,
-				overdueCdt, overdueDate);
+		Lending lending = new Lending(lendRturnNo, mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
 		LogUtil.prnLog(lending);
 		return lending;
 	}
 
 	@Override
 	public List<Lending> selectLendingByAll() {
-		String sql = "select lend_rturn_no , mber_id , book_cd , lend_date , rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt ,overdue_date "
+		String sql = "select lend_rturn_no , mber_id , book_cd , lend_date , rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt "
 				+ "	from lending ";
 		List<Lending> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
@@ -88,7 +86,7 @@ public class LendingDaoImpl implements LendingDao {
 
 	@Override
 	public int insertLending(Lending lending) {
-		String sql = "insert into lending(lend_rturn_no , mber_id , book_cd , lend_date , rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt ,overdue_date) values"
+		String sql = "insert into lending(lend_rturn_no , mber_id , book_cd , lend_date , rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt) values"
 				+ "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, lending.getLendRturnNo());
@@ -99,7 +97,6 @@ public class LendingDaoImpl implements LendingDao {
 			pstmt.setInt(6, lending.getRturnPsmCdt());
 			pstmt.setTimestamp(7, new Timestamp(lending.getRturnDate().getTime()));
 			pstmt.setInt(8, lending.getOverdueCdt());
-			pstmt.setInt(9, lending.getOverdueDate());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -136,9 +133,6 @@ public class LendingDaoImpl implements LendingDao {
 		if (lending.getOverdueCdt() != 0) {
 			sql.append("overdue_cdt = ?, ");
 		}
-		if (lending.getOverdueDate() != 0) {
-			sql.append("overdue_date = ?, ");
-		}
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append("where lend_rturn_no = ?");
 
@@ -160,8 +154,6 @@ public class LendingDaoImpl implements LendingDao {
 				pstmt.setTimestamp(argCnt++, new Timestamp(lending.getRturnDate().getTime()));
 			if (lending.getOverdueCdt() != 0)
 				pstmt.setInt(argCnt++, lending.getOverdueCdt());
-			if (lending.getOverdueDate() != 0)
-				pstmt.setInt(argCnt++, lending.getOverdueDate());
 
 			pstmt.setInt(argCnt++, lending.getLendRturnNo());
 			LogUtil.prnLog(pstmt);
@@ -188,7 +180,7 @@ public class LendingDaoImpl implements LendingDao {
 	@Override
 	public List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending) {
 		String sql = "select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
-				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date \r\n"
+				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt \r\n"
 				+ "	from lending l left join book b on l.book_cd = b.book_code \r\n"
 				+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n"
 				+ "				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no \r\n"
@@ -217,7 +209,7 @@ public class LendingDaoImpl implements LendingDao {
 	@Override
 	public List<Lending> selectLendingByMberIdAndLendBookAll(Lending lending) {
 		String sql = "select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
-				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date \r\n"
+				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt \r\n"
 				+ "	from lending l left join book b on l.book_cd = b.book_code \r\n"
 				+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n"
 				+ "				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no \r\n"
@@ -260,7 +252,7 @@ public class LendingDaoImpl implements LendingDao {
 		int overdueCdt = rs.getInt("overdue_cdt");
 		int overdueDate = rs.getInt("overdue_date");
 
-		return new Lending(mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt, overdueDate);
+		return new Lending(mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
 	}
 
 	public List<Lending> showMemberRentalList(Member mem) {

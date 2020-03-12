@@ -11,14 +11,14 @@ public class MemberUseCdtTblPanel extends AbsListPanel<Lending> {
 
 	@Override
 	protected void setTblWidthAlign() {
-		tableSetWidth(150, 100, 100, 100, 100, 100, 100, 100, 100, 80, 80);
-		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+		tableSetWidth(150, 100, 100, 100, 100, 100, 100, 100, 100, 80);
+		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 	}
 
 	@Override
 	protected String[] getColNames() {
 		return new String[] {
-				"도서명", "저자/역자", "분류", "출판사", "출간일", "대여일", "반납예정일", "반납일", "반납연기여부", "연체여부", "연체일"
+				"도서명", "저자/역자", "분류", "출판사", "출간일", "대여일", "반납예정일", "반납일", "반납연기여부", "연체여부"
 		};
 	}
 
@@ -51,7 +51,6 @@ public class MemberUseCdtTblPanel extends AbsListPanel<Lending> {
 				rturnDate,
 				item.getRturnPsmCdt() > 0 ? "Yes" : "No",
 				item.getOverdueCdt() > 0 ? "Yes" : "No",
-				item.getOverdueDate()
 		};
 	}
 

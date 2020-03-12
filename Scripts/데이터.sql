@@ -51,6 +51,11 @@ character set 'utf8'
 fields terminated by ','
 ignore 1 lines;
 
+-- 반납일 null 처리
+update lending 
+	set rturn_date = null 
+	where rturn_date = 00-00-00;
+
 
 -- publishing_company 출판사
 -- truncate table publishing_company;

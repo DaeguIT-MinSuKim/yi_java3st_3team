@@ -3,15 +3,22 @@ package yi_java3st_3team.ui.content;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.JLabel;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class MemberUserCdtPanel extends JPanel {
+	private Dimension picDimesion = new Dimension(150, 200);
+	private String defaultImg = getClass().getClassLoader().getResource("no-image.png").getPath();
+	private JLabel lblMbmImg;
+	private String picPath;
 
 	public MemberUserCdtPanel() {
 
@@ -28,21 +35,27 @@ public class MemberUserCdtPanel extends JPanel {
 		JPanel pMbmImg = new JPanel();
 		pMbmImg.setBorder(new EmptyBorder(0, 0, 10, 0));
 		pWest.add(pMbmImg);
-		pMbmImg.setLayout(new BorderLayout(0, 0));
+		pMbmImg.setLayout(new BoxLayout(pMbmImg, BoxLayout.Y_AXIS));
 		
 		JPanel pImgNorth = new JPanel();
-		pImgNorth.setBorder(new EmptyBorder(0, 0, 10, 0));
-		pMbmImg.add(pImgNorth, BorderLayout.NORTH);
+		pImgNorth.setBorder(new EmptyBorder(0, 0, 0, 0));
+		pMbmImg.add(pImgNorth);
 		
-		JLabel lblMbmImg = new JLabel("img");
+		lblMbmImg = new JLabel();
 		lblMbmImg.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMbmImg.setPreferredSize(new Dimension(150, 200));
-		pImgNorth.add(lblMbmImg, BorderLayout.CENTER);
+		lblMbmImg.setPreferredSize(picDimesion);
+		lblMbmImg.setSize(picDimesion);
+		setPicStr(defaultImg);
+		pImgNorth.setLayout(new GridLayout(0, 1, 0, 0));
+		pImgNorth.add(lblMbmImg);
+		
+		JPanel pGrade = new JPanel();
+		pMbmImg.add(pGrade);
 		
 		JLabel lblGrade = new JLabel("등급");
 		lblGrade.setFont(new Font("맑은 고딕", Font.BOLD, 16));
 		lblGrade.setHorizontalAlignment(SwingConstants.CENTER);
-		pMbmImg.add(lblGrade, BorderLayout.SOUTH);
+		pGrade.add(lblGrade);
 		
 		JPanel pLendBookCnt = new JPanel();
 		pLendBookCnt.setBorder(new EmptyBorder(50, 0, 30, 0));
@@ -102,4 +115,15 @@ public class MemberUserCdtPanel extends JPanel {
 		pTotalList.add(pTotlaTblList, BorderLayout.CENTER);
 	}
 
+	
+	private void setPicByte(byte[] bookImg) {
+		lblMbmImg.setIcon(new ImageIcon(new ImageIcon(bookImg).getImage().getScaledInstance((int)picDimesion.getWidth(), 
+				(int)picDimesion.getHeight(), Image.SCALE_DEFAULT)));
+	}
+
+	private void setPicStr(String imgPath) {
+		picPath = imgPath;
+		lblMbmImg.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage()
+				.getScaledInstance((int) picDimesion.getWidth(), (int) picDimesion.getHeight(), Image.SCALE_DEFAULT)));
+	}
 }

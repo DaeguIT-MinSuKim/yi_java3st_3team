@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.ui.content.BookManagerPanel;
+import yi_java3st_3team.ui.content.MemberUserCdtPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
 import yi_java3st_3team.ui.content.RecomPanel;
 
@@ -112,7 +113,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			frame1 = new JFrame();
 			frame1.setTitle("추천도서 등록");
 			frame1.setBounds(50, 50, 1000, 700);
-			frame1.getContentPane().add(new RecomPanel());
+			frame1.getContentPane().add(new BookManagerPanel());
 			frame1.setVisible(true);
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		} else {
@@ -123,7 +124,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			frame1 = new JFrame();
 			frame1.setTitle("추천도서 등록");
 			frame1.setBounds(50, 50, 1000, 700);
-			frame1.getContentPane().add(new RecomPanel());
+			frame1.getContentPane().add(new BookManagerPanel());
 			frame1.setVisible(true);
 		}
 	}

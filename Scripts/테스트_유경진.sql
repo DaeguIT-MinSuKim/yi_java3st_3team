@@ -235,9 +235,6 @@ delete from request_book where reqst_book_no = 14;
 -- 컬럼값 초기화
 alter table request_book auto_increment = 11;
 
-
-
-
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year , 
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no, 
 	   b1.regist_date , b1.dsuse_cdt 
@@ -246,4 +243,71 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.p
 		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,
 		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and b1.book_code like '%D%' and b1.lc_no = 9  order by b1.regist_date
 
+		
+		
+-- 회원 이용 현황 ---------------------------------------------------------------------
 
+select * from `member` where mber_id = 'fivestar@nate.com';
+
+-- 도서 이용 현황
+select mber_id, mber_name, grade, lend_book_cnt, total_le_cnt from `member` where mber_id = 'fivestar@nate.com';		
+
+-- 대여/반납 데이터 반영 업데이트
+update `member` 
+	set lend_book_cnt = 2, total_le_cnt = 4
+	where mber_id = 'fivestar@nate.com';
+
+select * 
+from lending 
+where mber_id = 'fivestar@nate.com' and rturn_date = 00-00-00
+union 
+select * 
+from lending
+where mber_id = 'fivestar@nate.com' and rturn_date is null;
+
+
+-- 전체 대여 도서
+select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , 
+	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date
+	from lending l left join book b on l.book_cd = b.book_code 
+				   left join large_classification lc on lc.lclas_no = b.lc_no 
+				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no
+				   left join publishing_company pls on pls.pls_no = b.pls 
+	where mber_id = 'fivestar@nate.com';
+
+-- 대여 중 도서
+-- select l.mber_id , l.book_cd, b.book_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , b.pls, pls.pls_name , b.pblicte_year ,
+-- 	   lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date
+-- 	from lending l left join book b on l.book_cd = b.book_code 
+-- 				   left join large_classification lc on lc.lclas_no = b.lc_no 
+-- 				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no
+-- 				   left join publishing_company pls on pls.pls_no = b.pls 
+-- 	where mber_id = 'fivestar@nate.com' and rturn_date = 00-00-00
+-- union 
+select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , 
+	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date
+	from lending l left join book b on l.book_cd = b.book_code 
+				   left join large_classification lc on lc.lclas_no = b.lc_no 
+				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no
+				   left join publishing_company pls on pls.pls_no = b.pls 
+	where mber_id = 'fivestar@nate.com' and rturn_date is null;
+
+
+select * from lending where rturn_date = 00-00-00;
+select * from lending where rturn_date <=> null;
+
+select * from lending;
+
+select length(rturn_date) from lending;
+		
+-- null 값 인식 테스트
+insert into lending(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, overdue_cdt, overdue_date) values
+('fivestar@nate.com', 'A090101', '2020-03-12', '2020-03-27', 0, 0, 0);
+
+select * from lending where rturn_date is null;
+		
+		
+		
+		
+		
+		

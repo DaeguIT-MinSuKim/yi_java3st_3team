@@ -12,6 +12,8 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.ui.content.BookManagerPanel;
+import yi_java3st_3team.ui.content.BookRegistrationPanel;
+import yi_java3st_3team.ui.content.MemberUseCdtPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
 import yi_java3st_3team.ui.content.RecomPanel;
 
@@ -23,6 +25,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JFrame frame1;
 	private JButton btnTest3;
 	private JFrame frame3;
+	private JButton btnTest2;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,7 +65,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		btnTest1.addActionListener(this);
 		contentPane.add(btnTest1);
 
-		JButton btnTest2 = new JButton("상원 TEST");
+		btnTest2 = new JButton("상원 TEST");
 		contentPane.add(btnTest2);
 
 		btnTest3 = new JButton("태원 TEST");
@@ -108,22 +111,23 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	protected void btnTest1ActionPerformed(ActionEvent e) {
 		if (frame1 == null) {
-//			frame1 = new LoginFrame();
-			frame1 = new JFrame();
-			frame1.setTitle("추천도서 등록");
-			frame1.setBounds(50, 50, 1000, 700);
-			frame1.getContentPane().add(new RecomPanel());
-			frame1.setVisible(true);
+			frame1 = new LoginFrame();
+//			frame1 = new JFrame();
+//			frame1.setTitle("추천도서 등록");
+//			frame1.setBounds(50, 50, 1000, 700);
+//			frame1.getContentPane().add(new MemberUserCdtPanel());
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frame1.setVisible(true);
 		} else {
 			if (frame1.isVisible()) {
 				return;
 			}
-//			frame1 = new LoginFrame();
-			frame1 = new JFrame();
-			frame1.setTitle("추천도서 등록");
-			frame1.setBounds(50, 50, 1000, 700);
-			frame1.getContentPane().add(new RecomPanel());
+			frame1 = new LoginFrame();
+//			frame1 = new JFrame();
+//			frame1.setTitle("추천도서 등록");
+//			frame1.setBounds(50, 50, 1000, 700);
+//			frame1.getContentPane().add(new MemberUserCdtPanel());
+			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame1.setVisible(true);
 		}
 	}

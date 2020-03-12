@@ -125,6 +125,10 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 		disuseItem.addActionListener(myPopMenuListener);
 		popMenu.add(disuseItem);
 		
+		JMenuItem deleteItem = new JMenuItem("도서삭제");
+		deleteItem.addActionListener(myPopMenuListener);
+		popMenu.add(deleteItem);
+		
 		return popMenu;
 	}
 	
@@ -165,6 +169,21 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 						
 						pBookList.loadData(service.showBookListAll());
 					} 
+				}
+				
+				if(e.getActionCommand().contentEquals("도서삭제")) {
+					Book deleteBook = pBookList.getSelectedItem();
+					
+					int result = JOptionPane.showConfirmDialog(null, "선택된 도서 데이터를 삭제하겠습니까?", "도서삭제확인", JOptionPane.YES_NO_OPTION);
+						
+					if(result == JOptionPane.CLOSED_OPTION) {
+						
+					} else if (result == JOptionPane.YES_OPTION) {
+						service.removeBook(deleteBook);
+						pBookList.loadData(service.showBookListAll());
+					} else {
+						
+					}
 				}
 			} catch (RuntimeException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());

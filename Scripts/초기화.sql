@@ -68,8 +68,7 @@ CREATE TABLE yi_java3st_3team.lending (
 	rturn_due_date DATETIME    NOT NULL COMMENT '반납예정일', -- 반납예정일
 	rturn_psm_cdt  TINYINT     NOT NULL COMMENT '반납연기여부', -- 반납연기여부
 	rturn_date     DATETIME    NULL     COMMENT '반납일', -- 반납일
-	overdue_cdt    TINYINT     NOT NULL COMMENT '연체여부', -- 연체여부
-	overdue_date   INTEGER     NULL     COMMENT '연체일' -- 연체일
+	overdue_cdt    TINYINT     NOT NULL COMMENT '연체여부' -- 연체여부
 )
 COMMENT '대여/반납';
 
@@ -125,6 +124,7 @@ CREATE TABLE yi_java3st_3team.member (
 	lend_book_cnt  INTEGER      NULL     COMMENT '대여도서권수', -- 대여도서권수
 	grade          INTEGER      NULL     COMMENT '등급', -- 등급
 	lend_psb_cdt   TINYINT      NULL     COMMENT '대여가능여부', -- 대여가능여부
+	od_cnt         INTEGER      NULL     COMMENT '연체횟수', -- 연체횟수
 	join_dt        DATETIME     NOT NULL COMMENT '가입일', -- 가입일
 	wdr_cdt        TINYINT      NULL     COMMENT '탈퇴여부' -- 탈퇴여부
 )

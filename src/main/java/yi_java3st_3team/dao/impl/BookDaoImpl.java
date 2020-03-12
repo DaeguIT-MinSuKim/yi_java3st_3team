@@ -310,14 +310,20 @@ public class BookDaoImpl implements BookDao {
 		return 0;
 	}
 
-	/*
-	 * @Override public int deleteBook(Book book) { String sql =
-	 * "delete from book where book_code = ?"; try (Connection con =
-	 * MysqlDataSource.getConnection(); PreparedStatement pstmt =
-	 * con.prepareStatement(sql)){ pstmt.setString(1, book.getBookCode());
-	 * LogUtil.prnLog(pstmt); return pstmt.executeUpdate(); } catch (SQLException e)
-	 * { e.printStackTrace(); } return 0; }
-	 */
+	
+	@Override
+	public int deleteBook(Book book) {
+		String sql = "delete from book where book_code = ?";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, book.getBookCode());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	 
 
 }
 

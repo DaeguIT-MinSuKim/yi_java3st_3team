@@ -67,4 +67,8 @@ public class BookUiService {
 	public void modifyBook(Book book) {
 		bookDao.updateBook(book);
 	}
+	
+	public void removeBook(Book book) {
+		bookDao.deleteBook(book);
+	}
 }

@@ -264,5 +264,24 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return null;
 	}
+	
+	public Member selectLendingMemberByNo(Member member) {
+		String sql = "select m.mber_id , m.mber_name , g.grad_name , m.lend_psb_cdt , (g.book_le_cnt - count(l.rturn_date)) as 'lend_book_cdt'\r\n" + 
+				"	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no \r\n" + 
+				"	where m.mber_id = ? and l.rturn_date = '0000-00-00 00:00:00';";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setString(1, member.getMberId());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return getMember(rs, true);
+				}
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

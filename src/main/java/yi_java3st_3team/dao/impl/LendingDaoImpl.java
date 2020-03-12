@@ -182,4 +182,22 @@ public class LendingDaoImpl implements LendingDao {
 		return 0;
 	}
 
+	@Override
+	public List<Lending> showMemberRentalList(Member mem) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Lending> showMemberReturnList(Member mem) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Lending> selectLendingByOverDueCdt() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

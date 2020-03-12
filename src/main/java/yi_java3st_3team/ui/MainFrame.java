@@ -23,6 +23,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JFrame frame1;
 	private JButton btnTest3;
 	private JFrame frame3;
+	private JButton btnTest2;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,7 +63,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		btnTest1.addActionListener(this);
 		contentPane.add(btnTest1);
 
-		JButton btnTest2 = new JButton("상원 TEST");
+		btnTest2 = new JButton("상원 TEST");
 		contentPane.add(btnTest2);
 
 		btnTest3 = new JButton("태원 TEST");

@@ -80,11 +80,11 @@ ALTER TABLE yi_java3st_3team.lending
 			lend_rturn_no -- 대여반납번호
 		);
 
-ALTER TABLE yi_java3st_3team.lending
+/*ALTER TABLE yi_java3st_3team.lending
 	MODIFY COLUMN lend_rturn_no INTEGER NOT NULL AUTO_INCREMENT COMMENT '대여반납번호';
 
 ALTER TABLE yi_java3st_3team.lending
-	AUTO_INCREMENT = 1;
+	AUTO_INCREMENT = 1;*/
 
 -- 사서
 CREATE TABLE yi_java3st_3team.librarian (

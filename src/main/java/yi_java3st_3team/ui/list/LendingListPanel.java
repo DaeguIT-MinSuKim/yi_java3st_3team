@@ -27,11 +27,21 @@ public class LendingListPanel extends AbsListPanel<Lending> {
 		return new Object[] { item.getBookCd().getBookCode(), item.getBookCd().getBookName(),
 				String.format("%s/%s", item.getBookCd().getAuthrName(), item.getBookCd().getTrnslrName()),
 				item.getBookCd().getRegistDate(), item.getBookCd().getPls(), item.getLendDate(), item.getRturnDueDate(),
-				item.getOverdueDate(), chBox = new JCheckBox() };
+				item.getOverdueDate(), chBox = new JCheckBox("") };
 	}
 
 	@Override
-	public void updateRow(Lending time, int updateIdx) {
+	public void updateRow(Lending item, int updateIdx) {
+		JCheckBox chBox;
+		model.setValueAt(item.getBookCd().getBookCode(), updateIdx, 0);
+		model.setValueAt(item.getBookCd().getBookName(), updateIdx, 1);
+		model.setValueAt(String.format("%s/%s", item.getBookCd().getAuthrName(), item.getBookCd().getTrnslrName()), updateIdx, 2);
+		model.setValueAt(item.getBookCd().getRegistDate(), updateIdx, 3);
+		model.setValueAt(item.getBookCd().getPls(), updateIdx, 4);
+		model.setValueAt(item.getLendDate(), updateIdx, 5);
+		model.setValueAt(item.getRturnDueDate(), updateIdx, 6);
+		model.setValueAt(item.getOverdueDate(), updateIdx, 7);
+		model.setValueAt(chBox = new JCheckBox(""), updateIdx, 8);
 	}
 
 }

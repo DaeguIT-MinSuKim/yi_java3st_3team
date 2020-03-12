@@ -188,7 +188,8 @@ public class MainFrame_ex extends JFrame {
 		pMain.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("D:\\workspace_gradle\\yi_java3st_3team\\images\\mainLogo.png"));
+		String imgPath = System.getProperty("user.dir") + "\\images\\mainLogo.png";
+		lblNewLabel.setIcon(new ImageIcon(imgPath));
 		pMain.add(lblNewLabel);
 		
 		pGreeting = new JPanel();

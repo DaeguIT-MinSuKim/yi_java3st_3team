@@ -20,10 +20,9 @@ import yi_java3st_3team.util.LogUtil;
 public class MemberDaoImpl implements MemberDao {
 	private static final MemberDaoImpl instance = new MemberDaoImpl();
 
-	public MemberDaoImpl() {
-	}
+	private MemberDaoImpl() {}
 
-	public static MemberDao getInstance() {
+	public static MemberDaoImpl getInstance() {
 		return instance;
 	}
 	
@@ -74,7 +73,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int insertMember(Member member) {
-		String sql = "insert into member() values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into member(mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, join_dt) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, member.getMberId());
 			pstmt.setString(2, member.getMberPass());
@@ -88,7 +87,6 @@ public class MemberDaoImpl implements MemberDao {
 				pstmt.setBytes(9, member.getMberImg());
 			}
 			pstmt.setString(10,nowTime());
-
 //			pstmt.setInt(10, member.getTotalLeCnt());
 //			pstmt.setInt(11, member.getLendBookCnt());
 //			pstmt.setInt(12, member.getGrade().getGradeNo());

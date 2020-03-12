@@ -44,12 +44,14 @@ ignore 1 lines;
 -- lending 대여/반납
 -- truncate table lending; -- lending 데이터 전체 삭제
 -- select * from lending;
+set autocommit = false;
 desc lending;
 load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending.csv'
 into table yi_java3st_3team.lending 
 character set 'utf8'
 fields terminated by ','
 ignore 1 lines;
+set autocommit = true;
 
 -- 반납일 null 처리
 update lending 

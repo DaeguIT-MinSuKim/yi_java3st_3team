@@ -124,9 +124,9 @@ CREATE TABLE yi_java3st_3team.member (
 	lend_book_cnt  INTEGER      NULL     COMMENT '대여도서권수', -- 대여도서권수
 	grade          INTEGER      NULL     COMMENT '등급', -- 등급
 	lend_psb_cdt   TINYINT      NULL     COMMENT '대여가능여부', -- 대여가능여부
-	od_cnt         INTEGER      NULL     COMMENT '연체횟수', -- 연체횟수
 	join_dt        DATETIME     NOT NULL COMMENT '가입일', -- 가입일
-	wdr_cdt        TINYINT      NULL     COMMENT '탈퇴여부' -- 탈퇴여부
+	wdr_cdt        TINYINT      NULL     COMMENT '탈퇴여부', -- 탈퇴여부
+	od_cnt         INTEGER      NULL     COMMENT '연체횟수' -- 연체횟수
 )
 COMMENT '회원';
 

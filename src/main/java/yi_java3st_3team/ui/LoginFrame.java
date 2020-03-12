@@ -374,6 +374,11 @@ public class LoginFrame extends JFrame implements ActionListener {
 			}
 
 			if (loginMber != null) {
+				
+				JOptionPane.showMessageDialog(null, "회원 로그인 [테스트용]");
+				clearTf();
+				
+				
 				// 회원 이용 현황 test
 //				if (test == null) {
 //					test = new JFrame();
@@ -385,13 +390,10 @@ public class LoginFrame extends JFrame implements ActionListener {
 //				dispose();
 //				muc.setItem();
 //				test.setVisible(true);
-				
-				JOptionPane.showMessageDialog(null, "회원 로그인 [테스트용]");
-				clearTf();
-				
 				return;
 			}
 
+			
 			JOptionPane.showMessageDialog(null, "아이디 혹은 패스워드가 틀렸습니다.");
 
 		} catch (InvalidCheckException e1) {

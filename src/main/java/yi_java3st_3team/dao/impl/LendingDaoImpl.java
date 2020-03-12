@@ -250,7 +250,6 @@ public class LendingDaoImpl implements LendingDao {
 		int rturnPsmCdt = rs.getInt("rturn_psm_cdt");
 		Date rturnDate = rs.getTimestamp("rturn_date");
 		int overdueCdt = rs.getInt("overdue_cdt");
-		int overdueDate = rs.getInt("overdue_date");
 
 		return new Lending(mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
 	}

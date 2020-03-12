@@ -23,6 +23,10 @@ public class Lending {
 		this.lendRturnNo = lendRturnNo;
 	}
 	
+	public Lending(Member mberId) {
+		this.mberId = mberId;
+	}
+
 	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt, Date rturnDate,
 			int overdueCdt, int overdueDate) {
 		this.mberId = mberId;

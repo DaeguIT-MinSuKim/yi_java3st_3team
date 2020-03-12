@@ -33,9 +33,19 @@ public class LendingUiService {
 	public List<Lending> showMemberReturnList(Member mem) {
 		return lendingDao.showMemberReturnList(mem);
 	}
-	public List<Lending> showOverDueList(){
+
+	public List<Lending> showOverDueList() {
 		return lendingDao.selectLendingByOverDueCdt();
 	}
+
+	public List<Lending> showMemberLendBookTotlaList(Lending lending) {
+		return lendingDao.selectLendingByMberIdAndLendBookTotalAll(lending);
+	}
+
+	public List<Lending> showMemberLendBookList(Lending lending) {
+		return lendingDao.selectLendingByMberIdAndLendBookAll(lending);
+	}
+
 	public void modifyLending(Lending lending) {
 		lendingDao.updateLending(lending);
 	}

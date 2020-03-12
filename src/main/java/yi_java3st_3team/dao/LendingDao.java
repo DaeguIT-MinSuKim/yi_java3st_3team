@@ -9,7 +9,7 @@ public interface LendingDao {
 	Lending selectLendingByNo(Lending lending);
 
 	List<Lending> selectLendingByAll();
-	List<Lending> selectLendingByMberIdAll(Lending lending);
+	List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending);
 	List<Lending> selectLendingByMberIdAndLendBookAll(Lending lending);
 
 	int insertLending(Lending lending);

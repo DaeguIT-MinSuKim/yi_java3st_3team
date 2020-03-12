@@ -29,10 +29,11 @@ import javax.swing.border.LineBorder;
 import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.Recommendation;
-import yi_java3st_3team.ui.content.MemberUserCdtPanel;
+import yi_java3st_3team.ui.content.MemberUseCdtPanel;
 import yi_java3st_3team.ui.dialog.FindIdDialog;
 import yi_java3st_3team.ui.dialog.FindPwDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
+import yi_java3st_3team.ui.service.LendingUiService;
 import yi_java3st_3team.ui.service.LoginUiService;
 import javax.swing.JEditorPane;
 import javax.swing.JPasswordField;
@@ -349,7 +350,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 	}
 
 	private JFrame test;
-	private MemberUserCdtPanel muc = new MemberUserCdtPanel();
+	private MemberUseCdtPanel muc = new MemberUseCdtPanel();
 	protected void btnNewButtonActionPerformed(ActionEvent e) {
 		try {
 			validCheck();
@@ -376,14 +377,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 				if (test == null) {
 					test = new JFrame();
 					test.setTitle("이용 현황");
-					test.setBounds(100, 100, 800, 600);
+					test.setBounds(100, 100, 1200, 800);
 					test.getContentPane().add(muc);
 					muc.setLogingFrame(this);
 				}
 				dispose();
 				muc.setItem();
 				test.setVisible(true);
-				System.out.println(test.isVisible());
 				return;
 			}
 

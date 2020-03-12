@@ -5,18 +5,20 @@ import javax.swing.SwingConstants;
 import yi_java3st_3team.dto.Lending;
 
 @SuppressWarnings("serial")
-public class MemberUserCdtTblPanel extends AbsListPanel<Lending> {
+public class MemberUseCdtTblPanel extends AbsListPanel<Lending> {
+	public MemberUseCdtTblPanel() {
+	}
 
 	@Override
 	protected void setTblWidthAlign() {
-		tableSetWidth(150, 100, 100, 100, 100, 100, 100, 100, 80, 80);
-		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		tableSetWidth(150, 100, 100, 100, 100, 100, 100, 100, 100, 80, 80);
+		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 	}
 
 	@Override
 	protected String[] getColNames() {
 		return new String[] {
-				"도서명", "저자/역자", "분류", "출판사", "출간일", "대여일", "반납예정일", "반납일", "연체여부", "연체일"
+				"도서명", "저자/역자", "분류", "출판사", "출간일", "대여일", "반납예정일", "반납일", "반납연기여부", "연체여부", "연체일"
 		};
 	}
 
@@ -32,7 +34,7 @@ public class MemberUserCdtTblPanel extends AbsListPanel<Lending> {
 		}
 		
 		
-		if(item.getBookCd().getTrnslrName().length() > 0) {
+		if(item.getBookCd().getTrnslrName() != null) {
 			writer = String.format("%s/%s", item.getBookCd().getAuthrName().replace("|", ","), item.getBookCd().getTrnslrName().replace("|", ","));
 		} else {
 			writer = item.getBookCd().getAuthrName();
@@ -47,6 +49,7 @@ public class MemberUserCdtTblPanel extends AbsListPanel<Lending> {
 				String.format("%tF", item.getLendDate()),
 				String.format("%tF", item.getRturnDueDate()),
 				rturnDate,
+				item.getRturnPsmCdt() > 0 ? "Yes" : "No",
 				item.getOverdueCdt() > 0 ? "Yes" : "No",
 				item.getOverdueDate()
 		};

@@ -11,26 +11,35 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.EmptyBorder;
 
+import yi_java3st_3team.dto.Lending;
+import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.LoginFrame;
+import yi_java3st_3team.ui.service.LendingUiService;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
-public class MemberUserCdtPanel extends JPanel {
+public class MemberUseCdtPanel extends JPanel {
 	private Dimension picDimesion = new Dimension(150, 200);
 	private String defaultImg = getClass().getClassLoader().getResource("no-image.png").getPath();
 	private JLabel lblMbmImg;
 	private String picPath;
 	private MemberUIService service;
+	private LendingUiService lendService;
 	private LoginFrame loginFrame;
 	private JLabel lblGrade;
 	private JLabel lblLendCnt;
 	private JLabel lblTotlaCnt;
+	private MemberUseCdtTblPanel pTotalTblList;
+	private MemberUseCdtTblPanel pLendTblList;
 
-	public MemberUserCdtPanel() {
+	public MemberUseCdtPanel() {
 		service = new MemberUIService();
+		lendService = new LendingUiService();
 		initialize();
 	}
 	private void initialize() {
@@ -109,8 +118,14 @@ public class MemberUserCdtPanel extends JPanel {
 		lblLendTitle.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		pLendList.add(lblLendTitle, BorderLayout.NORTH);
 		
-		JPanel pLendTblList = new JPanel();
-		pLendList.add(pLendTblList, BorderLayout.CENTER);
+		JPanel pLendTbl = new JPanel();
+		pLendTbl.setBackground(Color.WHITE);
+		pLendList.add(pLendTbl, BorderLayout.CENTER);
+		pLendTbl.setLayout(new BorderLayout(0, 0));
+		
+		pLendTblList = new MemberUseCdtTblPanel();
+		pLendTblList.setBackground(Color.WHITE);
+		pLendTbl.add(pLendTblList, BorderLayout.CENTER);
 		
 		JPanel pTotalList = new JPanel();
 		pCenter.add(pTotalList);
@@ -120,10 +135,23 @@ public class MemberUserCdtPanel extends JPanel {
 		lblTotalTitle.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		pTotalList.add(lblTotalTitle, BorderLayout.NORTH);
 		
-		JPanel pTotlaTblList = new JPanel();
-		pTotalList.add(pTotlaTblList, BorderLayout.CENTER);
+		JPanel pTotalTbl = new JPanel();
+		pTotalTbl.setBackground(Color.WHITE);
+		pTotalList.add(pTotalTbl, BorderLayout.CENTER);
+		pTotalTbl.setLayout(new BorderLayout(0, 0));
+		
+		pTotalTblList = new MemberUseCdtTblPanel();
+		pTotalTblList.setBackground(Color.WHITE);
+		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
+		
 	}
 
+	public void setService(LendingUiService lendService) {
+		this.lendService = lendService;
+		Lending lending = new Lending(new Member(LoginFrame.loginMber.getMberId()));
+		pTotalTblList.loadData(lendService.showMemberLendBookTotlaList(lending));
+		pLendTblList.loadData(lendService.showMemberLendBookList(lending));
+	}
 	
 	private void setPicByte(byte[] bookImg) {
 		lblMbmImg.setIcon(new ImageIcon(new ImageIcon(bookImg).getImage().getScaledInstance((int)picDimesion.getWidth(), 
@@ -150,5 +178,6 @@ public class MemberUserCdtPanel extends JPanel {
 		lblGrade.setText(LoginFrame.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원");
 		lblLendCnt.setText(String.format("%d권", LoginFrame.loginMber.getLendBookCnt()));
 		lblTotlaCnt.setText(String.format("%d권", LoginFrame.loginMber.getTotalLeCnt()));
+		setService(lendService);
 	}
 }

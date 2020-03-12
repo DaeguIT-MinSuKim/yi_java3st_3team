@@ -186,40 +186,38 @@ public class LendingDaoImpl implements LendingDao {
 	}
 
 	@Override
-	public List<Lending> selectLendingByMberIdAll(Lending lending) {
-		String sql = "select l.mber_id , l.book_cd, b.book_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , b.pls, pls.pls_name , b.pblicte_year ,\r\n" 
-					+ "	   lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date \r\n" 
-					+ "	from lending l left join book b on l.book_cd = b.book_code \r\n" 
-					+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n" 
-					+ "				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no \r\n" 
-					+ "				   left join publishing_company pls on pls.pls_no = b.pls \r\n" 
-					+ "	where mber_id = ?";
-				
-				List<Lending> list= null;
-				
-				try (Connection con = MysqlDataSource.getConnection();
-						PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
-					pstmt.setString(1, lending.getMberId().getMberId());
-					LogUtil.prnLog(pstmt);
-					try (ResultSet rs = pstmt.executeQuery()) {
-						if(rs.next()) {
-							list = new ArrayList<Lending>();
-							do {
-								list.add(getUseJoinLendgin(rs));
-							} while (rs.next());
-						}
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
+	public List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending) {
+		String sql = "select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
+				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date \r\n"
+				+ "	from lending l left join book b on l.book_cd = b.book_code \r\n"
+				+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n"
+				+ "				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no \r\n"
+				+ "				   left join publishing_company pls on pls.pls_no = b.pls \r\n" + "	where mber_id = ?";
+
+		List<Lending> list = null;
+
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, lending.getMberId().getMberId());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					list = new ArrayList<Lending>();
+					do {
+						list.add(getUseJoinLendgin(rs));
+					} while (rs.next());
 				}
-				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return list;
 	}
 
 	@Override
 	public List<Lending> selectLendingByMberIdAndLendBookAll(Lending lending) {
-		String sql = "select l.mber_id , l.book_cd, b.book_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , b.pls, pls.pls_name , b.pblicte_year ,\r\n"
-				+ "	   lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date \r\n"
+		String sql = "select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
+				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date \r\n"
 				+ "	from lending l left join book b on l.book_cd = b.book_code \r\n"
 				+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n"
 				+ "				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no \r\n"
@@ -228,8 +226,7 @@ public class LendingDaoImpl implements LendingDao {
 
 		List<Lending> list = null;
 
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, lending.getMberId().getMberId());
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {

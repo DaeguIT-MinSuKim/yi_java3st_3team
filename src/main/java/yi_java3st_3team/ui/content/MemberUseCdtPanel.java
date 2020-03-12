@@ -21,9 +21,16 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
 import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.FlowLayout;
+import javax.swing.JCheckBox;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class MemberUseCdtPanel extends JPanel {
+public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	private Dimension picDimesion = new Dimension(150, 200);
 	private String defaultImg = getClass().getClassLoader().getResource("no-image.png").getPath();
 	private JLabel lblMbmImg;
@@ -36,6 +43,7 @@ public class MemberUseCdtPanel extends JPanel {
 	private JLabel lblTotlaCnt;
 	private MemberUseCdtTblPanel pTotalTblList;
 	private MemberUseCdtTblPanel pLendTblList;
+	private JButton btnRturnPsmCdt;
 
 	public MemberUseCdtPanel() {
 		service = new MemberUIService();
@@ -43,6 +51,7 @@ public class MemberUseCdtPanel extends JPanel {
 		initialize();
 	}
 	private void initialize() {
+		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(10, 30, 10, 30));
 		setLayout(new BorderLayout(0, 0));
 		
@@ -51,6 +60,7 @@ public class MemberUseCdtPanel extends JPanel {
 		pWest.setLayout(new BoxLayout(pWest, BoxLayout.Y_AXIS));
 		
 		JPanel pMbmImg = new JPanel();
+		pMbmImg.setBackground(Color.WHITE);
 		pMbmImg.setBorder(new EmptyBorder(0, 0, 10, 0));
 		pWest.add(pMbmImg);
 		pMbmImg.setLayout(new BoxLayout(pMbmImg, BoxLayout.Y_AXIS));
@@ -68,6 +78,7 @@ public class MemberUseCdtPanel extends JPanel {
 		pImgNorth.add(lblMbmImg);
 		
 		JPanel pGrade = new JPanel();
+		pGrade.setBackground(Color.WHITE);
 		pMbmImg.add(pGrade);
 		
 		lblGrade = new JLabel("등급");
@@ -76,6 +87,7 @@ public class MemberUseCdtPanel extends JPanel {
 		pGrade.add(lblGrade);
 		
 		JPanel pLendBookCnt = new JPanel();
+		pLendBookCnt.setBackground(Color.WHITE);
 		pLendBookCnt.setBorder(new EmptyBorder(50, 0, 30, 0));
 		pWest.add(pLendBookCnt);
 		pLendBookCnt.setLayout(new BorderLayout(0, 0));
@@ -91,6 +103,7 @@ public class MemberUseCdtPanel extends JPanel {
 		pLendBookCnt.add(lblLendCnt, BorderLayout.CENTER);
 		
 		JPanel pLendTotalCnt = new JPanel();
+		pLendTotalCnt.setBackground(Color.WHITE);
 		pLendTotalCnt.setBorder(new EmptyBorder(30, 0, 50, 0));
 		pWest.add(pLendTotalCnt);
 		pLendTotalCnt.setLayout(new BorderLayout(0, 0));
@@ -106,15 +119,18 @@ public class MemberUseCdtPanel extends JPanel {
 		pLendTotalCnt.add(lblTotlaCnt, BorderLayout.CENTER);
 		
 		JPanel pCenter = new JPanel();
+		pCenter.setBackground(Color.WHITE);
 		pCenter.setBorder(new EmptyBorder(0, 50, 0, 0));
 		add(pCenter, BorderLayout.CENTER);
 		pCenter.setLayout(new BoxLayout(pCenter, BoxLayout.Y_AXIS));
 		
 		JPanel pLendList = new JPanel();
+		pLendList.setBackground(Color.WHITE);
 		pCenter.add(pLendList);
 		pLendList.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblLendTitle = new JLabel("대여도서리스트");
+		lblLendTitle.setBackground(Color.WHITE);
 		lblLendTitle.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		pLendList.add(lblLendTitle, BorderLayout.NORTH);
 		
@@ -122,10 +138,24 @@ public class MemberUseCdtPanel extends JPanel {
 		pLendList.add(pLendTbl, BorderLayout.CENTER);
 		pLendTbl.setLayout(new BorderLayout(0, 0));
 		
-		pLendTblList = new MemberUseCdtTblPanel();
+		pLendTblList = new MemberUseCdtTblPanel(this);
+		pLendTblList.setBackground(Color.WHITE);
 		pLendTbl.add(pLendTblList, BorderLayout.CENTER);
 		
+		JPanel pRturnPsmCdt = new JPanel();
+		FlowLayout fl_pRturnPsmCdt = (FlowLayout) pRturnPsmCdt.getLayout();
+		fl_pRturnPsmCdt.setAlignment(FlowLayout.RIGHT);
+		pRturnPsmCdt.setBackground(Color.WHITE);
+		pLendList.add(pRturnPsmCdt, BorderLayout.SOUTH);
+		
+		btnRturnPsmCdt = new JButton("반납연기신청");
+		btnRturnPsmCdt.addActionListener(this);
+		btnRturnPsmCdt.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+		pRturnPsmCdt.add(btnRturnPsmCdt);
+		
 		JPanel pTotalList = new JPanel();
+		pTotalList.setBorder(new EmptyBorder(20, 0, 0, 0));
+		pTotalList.setBackground(Color.WHITE);
 		pCenter.add(pTotalList);
 		pTotalList.setLayout(new BorderLayout(0, 0));
 		
@@ -137,7 +167,8 @@ public class MemberUseCdtPanel extends JPanel {
 		pTotalList.add(pTotalTbl, BorderLayout.CENTER);
 		pTotalTbl.setLayout(new BorderLayout(0, 0));
 		
-		pTotalTblList = new MemberUseCdtTblPanel();
+		pTotalTblList = new MemberUseCdtTblPanel(this);
+		pTotalTblList.setBackground(Color.WHITE);
 		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
 		
 	}
@@ -175,5 +206,17 @@ public class MemberUseCdtPanel extends JPanel {
 		lblLendCnt.setText(String.format("%d권", LoginFrame.loginMber.getLendBookCnt()));
 		lblTotlaCnt.setText(String.format("%d권", LoginFrame.loginMber.getTotalLeCnt()));
 		setService(lendService);
+	}
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnRturnPsmCdt) {
+			btnRturnPsmCdtActionPerformed(e);
+		}
+	}
+	protected void btnRturnPsmCdtActionPerformed(ActionEvent e) {
+		int[] selCnt = pLendTblList.selCnt();
+		for(int sc : selCnt) {
+			System.out.println(sc);
+			
+		}
 	}
 }

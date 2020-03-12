@@ -268,7 +268,7 @@ where mber_id = 'fivestar@nate.com' and rturn_date is null;
 
 -- 전체 대여 도서
 select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , 
-	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date
+	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt
 	from lending l left join book b on l.book_cd = b.book_code 
 				   left join large_classification lc on lc.lclas_no = b.lc_no 
 				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no
@@ -285,7 +285,7 @@ select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_n
 -- 	where mber_id = 'fivestar@nate.com' and rturn_date = 00-00-00
 -- union 
 select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , 
-	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt, overdue_date
+	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt
 	from lending l left join book b on l.book_cd = b.book_code 
 				   left join large_classification lc on lc.lclas_no = b.lc_no 
 				   left join middle_classification ml on ml.mlsfc_no = b.ml_no and lc.lclas_no = ml.lclas_no
@@ -301,8 +301,8 @@ select * from lending;
 select length(rturn_date) from lending;
 		
 -- null 값 인식 테스트
-insert into lending(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, overdue_cdt, overdue_date) values
-('fivestar@nate.com', 'A090101', '2020-03-12', '2020-03-27', 0, 0, 0);
+insert into lending(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, overdue_cdt) values
+('fivestar@nate.com', 'A090101', '2020-03-12', '2020-03-27', 0, 0);
 
 select * from lending where rturn_date is null;
 		

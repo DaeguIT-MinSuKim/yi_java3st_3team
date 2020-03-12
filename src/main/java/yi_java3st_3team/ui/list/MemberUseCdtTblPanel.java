@@ -3,10 +3,13 @@ package yi_java3st_3team.ui.list;
 import javax.swing.SwingConstants;
 
 import yi_java3st_3team.dto.Lending;
+import yi_java3st_3team.ui.content.MemberUseCdtPanel;
 
 @SuppressWarnings("serial")
-public class MemberUseCdtTblPanel extends AbsListPanel<Lending> {
-	public MemberUseCdtTblPanel() {
+public class MemberUseCdtTblPanel extends AbsListMultSelectPanel<Lending> {
+	
+	public MemberUseCdtTblPanel(MemberUseCdtPanel mberUsePnel) {
+		
 	}
 
 	@Override
@@ -50,12 +53,17 @@ public class MemberUseCdtTblPanel extends AbsListPanel<Lending> {
 				String.format("%tF", item.getRturnDueDate()),
 				rturnDate,
 				item.getRturnPsmCdt() > 0 ? "Yes" : "No",
-				item.getOverdueCdt() > 0 ? "Yes" : "No",
+				item.getOverdueCdt() > 0 ? "Yes" : "No"
 		};
 	}
 
 	@Override
 	public void updateRow(Lending item, int updateIdx) {
+		model.setValueAt(item.getRturnDueDate(), updateIdx, 6);
+	}
+	
+	public int[] selCnt() {
+		return table.getSelectedRows();
 	}
 
 }

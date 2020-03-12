@@ -16,5 +16,7 @@ public class MemberUIService {
 	public Member IDCheckMember(Member mem) {
 		return MemDao.selectMemberByNo(mem);
 	}
-	
+	 public Member SelectedByNo(Member mem) {
+		 return null;
+	 }
 }

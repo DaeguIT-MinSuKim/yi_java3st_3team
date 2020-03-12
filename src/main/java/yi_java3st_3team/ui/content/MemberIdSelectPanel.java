@@ -1,28 +1,66 @@
 package yi_java3st_3team.ui.content;
 
-import javax.swing.JPanel;
+import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.GridBagLayout;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import yi_java3st_3team.dao.impl.MemberDaoImpl;
-import yi_java3st_3team.dto.Member;
-
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 @SuppressWarnings("serial")
-public class MemberIdSelectPanel extends JPanel implements ActionListener {
+public class MemberIdSelectPanel extends JPanel {
 	private JTextField tfMberId;
 	private JTextField tfLendPsbCdt;
 	private JTextField tfMberName;
 	private JTextField tfLendBookCdt;
 	private JTextField tfGrade;
 	private JButton btnMberId;
+
+	public JTextField getTfMberId() {
+		return tfMberId;
+	}
+
+	public void setTfMberId(JTextField tfMberId) {
+		this.tfMberId = tfMberId;
+	}
+
+	public JTextField getTfLendPsbCdt() {
+		return tfLendPsbCdt;
+	}
+
+	public void setTfLendPsbCdt(JTextField tfLendPsbCdt) {
+		this.tfLendPsbCdt = tfLendPsbCdt;
+	}
+
+	public JTextField getTfMberName() {
+		return tfMberName;
+	}
+
+	public void setTfMberName(JTextField tfMberName) {
+		this.tfMberName = tfMberName;
+	}
+
+	public JTextField getTfLendBookCdt() {
+		return tfLendBookCdt;
+	}
+
+	public void setTfLendBookCdt(JTextField tfLendBookCdt) {
+		this.tfLendBookCdt = tfLendBookCdt;
+	}
+
+	public JTextField getTfGrade() {
+		return tfGrade;
+	}
+
+	public void setTfGrade(JTextField tfGrade) {
+		this.tfGrade = tfGrade;
+	}
+
+	public JButton getBtnMberId() {
+		return btnMberId;
+	}
 
 	public MemberIdSelectPanel() {
 
@@ -58,7 +96,6 @@ public class MemberIdSelectPanel extends JPanel implements ActionListener {
 		tfMberId.setColumns(10);
 
 		btnMberId = new JButton("검색");
-		btnMberId.addActionListener(this);
 		pMberId.add(btnMberId);
 
 		JPanel pMberName = new JPanel();
@@ -114,17 +151,4 @@ public class MemberIdSelectPanel extends JPanel implements ActionListener {
 		tfLendBookCdt.setColumns(10);
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnMberId) {
-			do_btnMberId_actionPerformed(e);
-		}
-	}
-
-	protected void do_btnMberId_actionPerformed(ActionEvent e) {
-		String mberId;
-		mberId = tfMberId.getText();
-		Member member = new Member(mberId);
-		
-		
-	}
 }

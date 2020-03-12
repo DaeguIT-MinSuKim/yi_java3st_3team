@@ -33,15 +33,21 @@ public class LendingUiService {
 	public List<Lending> showMemberReturnList(Member mem) {
 		return lendingDao.showMemberReturnList(mem);
 	}
-	public List<Lending> showOverDueList(){
+
+	public List<Lending> showOverDueList() {
 		return lendingDao.selectLendingByOverDueCdt();
 	}
+
 	public void modifyLending(Lending lending) {
 		lendingDao.updateLending(lending);
 	}
 
 	public void addLending(Lending lending) {
 		lendingDao.insertLending(lending);
+	}
+
+	public Member showLendingMemberId(Member member) {
+		return memberDao.selectLendingMemberByNo(member);
 	}
 
 }

@@ -26,7 +26,7 @@ public class MemberDaoImpl implements MemberDao {
 	public static MemberDao getInstance() {
 		return instance;
 	}
-	
+
 	private String nowTime() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date time = new Date();
@@ -84,10 +84,10 @@ public class MemberDaoImpl implements MemberDao {
 			pstmt.setString(6, member.getMberBassAd());
 			pstmt.setString(7, member.getMberDetailAd());
 			pstmt.setString(8, member.getMberTel());
-			if (member.getMberImg() != null){
+			if (member.getMberImg() != null) {
 				pstmt.setBytes(9, member.getMberImg());
 			}
-			pstmt.setString(10,nowTime());
+			pstmt.setString(10, nowTime());
 
 //			pstmt.setInt(10, member.getTotalLeCnt());
 //			pstmt.setInt(11, member.getLendBookCnt());
@@ -139,21 +139,35 @@ public class MemberDaoImpl implements MemberDao {
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
 			int argCnt = 1;
-			
-			if(member.getMberPass()!=null) pstmt.setString(argCnt++, member.getMberPass());
-			if(member.getMberName()!=null)pstmt.setString(argCnt++, member.getMberName());
-			if(member.getMberBrthdy()!=null)pstmt.setTimestamp(argCnt++, new Timestamp(member.getMberBrthdy().getTime()));
-			if(member.getMberZip()!=null)pstmt.setInt(argCnt++, member.getMberZip().getZipCode());
-			if(member.getMberBassAd()!=null)pstmt.setString(argCnt++, member.getMberBassAd());
-			if(member.getMberDetailAd()!=null)pstmt.setString(argCnt++, member.getMberDetailAd());
-			if(member.getMberTel()!=null)pstmt.setString(argCnt++, member.getMberTel());
-			if (member.getMberImg()!= null)pstmt.setBytes(argCnt++, member.getMberImg());
-			if(member.getTotalLeCnt()!=0)pstmt.setInt(argCnt++, member.getTotalLeCnt());
-			if(member.getLendBookCnt()!=0)pstmt.setInt(argCnt++, member.getLendBookCnt());
-			if(member.getGrade()!=null)pstmt.setInt(argCnt++, member.getGrade().getGradeNo());
-			if(member.getLendPsbCdt()!=0)pstmt.setInt(argCnt++, member.getLendPsbCdt());
-			if(member.getJoinDt()!=null)pstmt.setTimestamp(argCnt++, new Timestamp(member.getJoinDt().getTime()));
-			if(member.getWdrCdt()!=0)	pstmt.setInt(argCnt++, member.getWdrCdt());
+
+			if (member.getMberPass() != null)
+				pstmt.setString(argCnt++, member.getMberPass());
+			if (member.getMberName() != null)
+				pstmt.setString(argCnt++, member.getMberName());
+			if (member.getMberBrthdy() != null)
+				pstmt.setTimestamp(argCnt++, new Timestamp(member.getMberBrthdy().getTime()));
+			if (member.getMberZip() != null)
+				pstmt.setInt(argCnt++, member.getMberZip().getZipCode());
+			if (member.getMberBassAd() != null)
+				pstmt.setString(argCnt++, member.getMberBassAd());
+			if (member.getMberDetailAd() != null)
+				pstmt.setString(argCnt++, member.getMberDetailAd());
+			if (member.getMberTel() != null)
+				pstmt.setString(argCnt++, member.getMberTel());
+			if (member.getMberImg() != null)
+				pstmt.setBytes(argCnt++, member.getMberImg());
+			if (member.getTotalLeCnt() != 0)
+				pstmt.setInt(argCnt++, member.getTotalLeCnt());
+			if (member.getLendBookCnt() != 0)
+				pstmt.setInt(argCnt++, member.getLendBookCnt());
+			if (member.getGrade() != null)
+				pstmt.setInt(argCnt++, member.getGrade().getGradeNo());
+			if (member.getLendPsbCdt() != 0)
+				pstmt.setInt(argCnt++, member.getLendPsbCdt());
+			if (member.getJoinDt() != null)
+				pstmt.setTimestamp(argCnt++, new Timestamp(member.getJoinDt().getTime()));
+			if (member.getWdrCdt() != 0)
+				pstmt.setInt(argCnt++, member.getWdrCdt());
 			pstmt.setString(argCnt++, member.getMberId());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
@@ -167,8 +181,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int deleteMember(Member member) {
 		String sql = "delete from member where mber_id=?";
-		try(Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, member.getMberId());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
@@ -225,6 +238,18 @@ public class MemberDaoImpl implements MemberDao {
 		return mber;
 	}
 
+	private Member getMember(ResultSet rs) throws SQLException {
+		String mberId = rs.getString("mber_id");
+		String mberName = rs.getString("mber_name");
+		Grade grade = new Grade(rs.getInt("grade"));
+		int lendBookCnt = rs.getInt("lend_book_cnt");
+		int lendPsbCdt = rs.getInt("lend_psb_cdt");
+		Member mber = new Member(mberId, mberName, lendBookCnt, grade, lendPsbCdt);
+
+		LogUtil.prnLog("getMember => " + mber);
+		return mber;
+	}
+
 	@Override
 	public Member findMemberId(Member member) {
 		String sql = "select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad , mber_detail_ad , mber_tel , total_le_cnt , "
@@ -266,17 +291,17 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return null;
 	}
-	
+
 	public Member selectLendingMemberByNo(Member member) {
-		String sql = "select m.mber_id , m.mber_name , g.grad_name , m.lend_psb_cdt , (g.book_le_cnt - count(l.rturn_date)) as 'lend_book_cdt'\r\n" + 
-				"	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no \r\n" + 
-				"	where m.mber_id = ? and l.rturn_date = '0000-00-00 00:00:00';";
+		String sql = "select m.mber_id , m.mber_name , g.grad_name , m.lend_psb_cdt , (g.book_le_cnt - count(l.rturn_date)) as 'lend_book_cdt'\r\n"
+				+ "	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no \r\n"
+				+ "	where m.mber_id = ? and l.rturn_date = '0000-00-00 00:00:00';";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, member.getMberId());
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					return getMember(rs, true);
+					return getMember(rs);
 				}
 			}
 		} catch (SQLException e) {

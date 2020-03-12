@@ -11,12 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import yi_java3st_3team.ui.content.BookManagerPanel;
-import yi_java3st_3team.ui.content.BookRegistrationPanel;
-import yi_java3st_3team.ui.content.MemberUserCdtPanel;
-import yi_java3st_3team.ui.content.RecomBookAddPanel;
-import yi_java3st_3team.ui.content.RecomPanel;
-
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
 
@@ -26,6 +20,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JButton btnTest3;
 	private JFrame frame3;
 	private JButton btnTest2;
+	private JFrame frame2;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -66,6 +61,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		contentPane.add(btnTest1);
 
 		btnTest2 = new JButton("상원 TEST");
+		btnTest2.addActionListener(this);
 		contentPane.add(btnTest2);
 
 		btnTest3 = new JButton("태원 TEST");
@@ -74,6 +70,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnTest2) {
+			do_btnTest2_actionPerformed(e);
+		}
 		if (e.getSource() == btnTest1) {
 			btnTest1ActionPerformed(e);
 		}
@@ -104,9 +103,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		JFrame frame = new JFrame();
 		frame.setBounds(50, 50, 850, 600);
 		MemberJoinUIPanel memberUI = new MemberJoinUIPanel();
-		frame.add(memberUI);
+		frame.getContentPane().add(memberUI);
 		frame.setVisible(true);
-		
+
 	}
 
 	protected void btnTest1ActionPerformed(ActionEvent e) {
@@ -129,6 +128,35 @@ public class MainFrame extends JFrame implements ActionListener {
 //			frame1.getContentPane().add(new MemberUserCdtPanel());
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame1.setVisible(true);
+		}
+	}
+
+	protected void do_btnTest2_actionPerformed(ActionEvent e) {
+		if (frame2 == null) {
+			frame2 = new JFrame();
+			frame2.setBounds(50, 50, 850, 600);
+//			frame1 = new JFrame();
+//			frame1.setTitle("추천도서 등록");
+//			frame1.setBounds(50, 50, 1000, 700);
+//			frame1.getContentPane().add(new MemberUserCdtPanel());
+			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			LendingPanel Lendings = new LendingPanel();
+			frame2.getContentPane().add(Lendings);
+			frame2.setVisible(true);
+		} else {
+			if (frame2.isVisible()) {
+				return;
+			}
+			frame2 = new JFrame();
+			frame2.setBounds(50, 50, 850, 600);
+//			frame1 = new JFrame();
+//			frame1.setTitle("추천도서 등록");
+//			frame1.setBounds(50, 50, 1000, 700);
+//			frame1.getContentPane().add(new MemberUserCdtPanel());
+			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			LendingPanel Lendings = new LendingPanel();
+			frame2.getContentPane().add(Lendings);
+			frame2.setVisible(true);
 		}
 	}
 }

@@ -17,4 +17,6 @@ public interface MemberDao {
 	int updateMember(Member member);
 
 	int deleteMember(Member member);
+	
+	Member selectLendingMemberByNo(Member member);
 }

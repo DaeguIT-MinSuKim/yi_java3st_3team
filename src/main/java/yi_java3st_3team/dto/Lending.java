@@ -22,6 +22,18 @@ public class Lending {
 		super();
 		this.lendRturnNo = lendRturnNo;
 	}
+	
+	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt, Date rturnDate,
+			int overdueCdt, int overdueDate) {
+		this.mberId = mberId;
+		this.bookCd = bookCd;
+		this.lendDate = lendDate;
+		this.rturnDueDate = rturnDueDate;
+		this.rturnPsmCdt = rturnPsmCdt;
+		this.rturnDate = rturnDate;
+		this.overdueCdt = overdueCdt;
+		this.overdueDate = overdueDate;
+	}
 
 	public Lending(int lendRturnNo, Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt,
 			Date rturnDate, int overdueCdt, int overdueDate) {

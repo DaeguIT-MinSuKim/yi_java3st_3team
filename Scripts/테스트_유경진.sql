@@ -297,6 +297,8 @@ select * from lending where rturn_date = 00-00-00;
 select * from lending where rturn_date <=> null;
 
 select * from lending;
+
+select length(rturn_date) from lending;
 		
 -- null 값 인식 테스트
 insert into lending(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, overdue_cdt, overdue_date) values

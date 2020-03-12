@@ -10,6 +10,10 @@ import java.awt.Dimension;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.EmptyBorder;
+
+import yi_java3st_3team.ui.LoginFrame;
+import yi_java3st_3team.ui.service.MemberUIService;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 
@@ -19,9 +23,14 @@ public class MemberUserCdtPanel extends JPanel {
 	private String defaultImg = getClass().getClassLoader().getResource("no-image.png").getPath();
 	private JLabel lblMbmImg;
 	private String picPath;
+	private MemberUIService service;
+	private LoginFrame loginFrame;
+	private JLabel lblGrade;
+	private JLabel lblLendCnt;
+	private JLabel lblTotlaCnt;
 
 	public MemberUserCdtPanel() {
-
+		service = new MemberUIService();
 		initialize();
 	}
 	private void initialize() {
@@ -52,7 +61,7 @@ public class MemberUserCdtPanel extends JPanel {
 		JPanel pGrade = new JPanel();
 		pMbmImg.add(pGrade);
 		
-		JLabel lblGrade = new JLabel("등급");
+		lblGrade = new JLabel("등급");
 		lblGrade.setFont(new Font("맑은 고딕", Font.BOLD, 16));
 		lblGrade.setHorizontalAlignment(SwingConstants.CENTER);
 		pGrade.add(lblGrade);
@@ -67,7 +76,7 @@ public class MemberUserCdtPanel extends JPanel {
 		lblTitleLend.setHorizontalAlignment(SwingConstants.CENTER);
 		pLendBookCnt.add(lblTitleLend, BorderLayout.NORTH);
 		
-		JLabel lblLendCnt = new JLabel("0권");
+		lblLendCnt = new JLabel("0권");
 		lblLendCnt.setFont(new Font("맑은 고딕", Font.BOLD, 40));
 		lblLendCnt.setHorizontalAlignment(SwingConstants.CENTER);
 		pLendBookCnt.add(lblLendCnt, BorderLayout.CENTER);
@@ -82,7 +91,7 @@ public class MemberUserCdtPanel extends JPanel {
 		lblTitleTotla.setHorizontalAlignment(SwingConstants.CENTER);
 		pLendTotalCnt.add(lblTitleTotla, BorderLayout.NORTH);
 		
-		JLabel lblTotlaCnt = new JLabel("0권");
+		lblTotlaCnt = new JLabel("0권");
 		lblTotlaCnt.setFont(new Font("맑은 고딕", Font.BOLD, 40));
 		lblTotlaCnt.setHorizontalAlignment(SwingConstants.CENTER);
 		pLendTotalCnt.add(lblTotlaCnt, BorderLayout.CENTER);
@@ -125,5 +134,21 @@ public class MemberUserCdtPanel extends JPanel {
 		picPath = imgPath;
 		lblMbmImg.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage()
 				.getScaledInstance((int) picDimesion.getWidth(), (int) picDimesion.getHeight(), Image.SCALE_DEFAULT)));
+	}
+	
+	public void setLogingFrame(LoginFrame loginFrame) {
+		this.loginFrame = loginFrame;
+	}
+	
+	public void setItem() {
+		if(LoginFrame.loginMber.getMberImg() == null || LoginFrame.loginMber.getMberImg().length == 0) {
+			setPicStr(defaultImg);
+		} else {
+			setPicByte(LoginFrame.loginMber.getMberImg());
+		}
+		
+		lblGrade.setText(LoginFrame.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원");
+		lblLendCnt.setText(String.format("%d권", LoginFrame.loginMber.getLendBookCnt()));
+		lblTotlaCnt.setText(String.format("%d권", LoginFrame.loginMber.getTotalLeCnt()));
 	}
 }

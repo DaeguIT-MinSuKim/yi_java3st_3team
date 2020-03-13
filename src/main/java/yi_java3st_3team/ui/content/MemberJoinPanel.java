@@ -225,7 +225,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 
 		tfZip = new JTextField();
 		//tfZip.setText("");
-		tfZip.setHorizontalAlignment(SwingConstants.RIGHT);
+		tfZip.setHorizontalAlignment(SwingConstants.LEFT);
 		tfZip.setColumns(7);
 		pZip.add(tfZip);
 
@@ -383,13 +383,18 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				zipDialog.setDetailAd(zipDialog.getTfDetailAd().getText());
+				zipDialog.setZipCode(zipDialog.getTfZipCode().getText());
+				tfZip.setText(zipDialog.getZipCode());
 				tfAddress.setText(zipDialog.getAddrFull());
 				tfDetailAdress.setText(zipDialog.getDetailAd());
 				zipDialog.dispose();
+				
 			}
 		});
+		
 		zipDialog.setBounds(50, 50, 350, 550);
 		zipDialog.setVisible(true);
+		
 		//pResult = new JPanel();
 		//pResult.setBounds(100, 100, 100, 100);
 		//zipDialog.getContentPane().add(pResult,BorderLayout.SOUTH);
@@ -398,10 +403,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		//btnAdd.addActionListener(this);
 		//btnAdd.setBounds(100, 100, 100, 100);
 		//pResult.add(btnAdd);
-		
-	
 	}
-
 
 	private void btnIDCheckAction(ActionEvent e) {
 		String userID = tfID.getText();

@@ -59,4 +59,9 @@ where ctprvn ='경상북도' and signgu='경산시' and road_name = '압독로' 
 select *
 from zip_code;
 
+select *
+from member;
+
+
+
 

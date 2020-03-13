@@ -40,6 +40,7 @@ public class ZipDialog extends JDialog implements ActionListener  {
 	private JLabel label_2;
 	private String addrFull;
 	private String DetailAd;
+	private String zipCode;
 
 	public ZipDialog(JFrame member,String title) {
 		super(member, title, true);
@@ -156,14 +157,30 @@ public class ZipDialog extends JDialog implements ActionListener  {
 		return addrFull;
 	}
 
+//	public void setAddrFull(String addrFull) {
+//		this.addrFull = addrFull;
+//	}
+	public String getDetailAd() {
+		return DetailAd;
+	}
 
-	public void setAddrFull(String addrFull) {
-		this.addrFull = addrFull;
+	public String getZipCode() {
+		return zipCode;
 	}
 
 
-	public String getDetailAd() {
-		return DetailAd;
+	public JTextField getTfZipCode() {
+		return tfZipCode;
+	}
+
+
+	public void setTfZipCode(JTextField tfZipCode) {
+		this.tfZipCode = tfZipCode;
+	}
+
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 
 
@@ -174,7 +191,7 @@ public class ZipDialog extends JDialog implements ActionListener  {
 	public JButton getBtnAdd() {
 		return btnAdd;
 	}
-
+	
 	public JTextField getTfDetailAd() {
 		return tfDetailAd;
 	}

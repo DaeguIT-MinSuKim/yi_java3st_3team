@@ -16,6 +16,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
 	private JPanel contentPane;
@@ -36,6 +39,8 @@ public class MainFrame_ex extends JFrame {
 	private JPanel pLogout;
 	private JPanel pWest;
 	private JPanel pCenter;
+	private JFXPanel pChartCenter;
+	private static MainFrame_ex frame;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -48,7 +53,7 @@ public class MainFrame_ex extends JFrame {
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 //					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 
-					MainFrame_ex frame = new MainFrame_ex();
+					frame = new MainFrame_ex();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -274,6 +279,11 @@ public class MainFrame_ex extends JFrame {
 								chkLabel.setForeground(Color.white);
 								switch(chkLabel.getText()) {
 								case "대여/반납 통계":
+									contentPane.remove(pCenter);
+									pChartCenter = new BookInfoPanelBarChart();
+									contentPane.add(pChartCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
 									break;
 								case "도서보유현황":
 									break;

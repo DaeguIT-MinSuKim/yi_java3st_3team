@@ -323,6 +323,54 @@ public class BookDaoImpl implements BookDao {
 		}
 		return 0;
 	}
+
+	@Override
+	public int selectLendableBooks() {
+		String sql = "select count(book_code) as 'lendableBooks' from book where lend_psb_cdt = 1";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				return rs.getInt("lendableBooks");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int selectDuringLendBooks() {
+		String sql = "select count(book_code) as 'duringLendBooks' from book where lend_psb_cdt = 1";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				return rs.getInt("duringLendBooks");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int selectTotalBooks() {
+		String sql = "select count(book_code) as 'totalBooks' from book";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				return rs.getInt("totalBooks");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
 	 
 
 }

@@ -173,3 +173,8 @@ from zip_code;
 select * 
 from recommendation;
 select b.book_code,b.book_name,b.authr_name,b.pblicte_year,p.pls_name,l.lend_date,l.rturn_date from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no;
+
+select count(book_code) from book; #전체 책권수
+select count(book_code) from book where lend_psb_cdt = 1; #대여가능권수
+select count(book_code)-(select count(book_code) from book where lend_psb_cdt = 1) from book; #대여중인권수
+select avg(date(rturn_date)-date(lend_date)) from lending; #평균 대여일

@@ -311,4 +311,20 @@ public class LendingDaoImpl implements LendingDao {
 		return null;
 	}
 
+	@Override
+	public int selectAvgRendDate() {
+		String sql = "select avg(date(rturn_date)-date(lend_date)) as 'avgLendDate' from lending";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				return rs.getInt("avgLendDate");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 }

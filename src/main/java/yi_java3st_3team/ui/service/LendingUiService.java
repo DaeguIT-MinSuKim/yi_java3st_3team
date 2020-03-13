@@ -46,5 +46,4 @@ public class LendingUiService {
 	public List<Lending> selectLendingByAllTest() {
 		return lendingDao.selectLendingByAllTest();
 	}
-
 }

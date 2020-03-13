@@ -25,4 +25,5 @@ public interface LendingDao {
 	List<Lending> selectLendingByOverDueCdt();
 
 	List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending);
+	int selectAvgRendDate();
 }

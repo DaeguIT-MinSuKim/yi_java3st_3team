@@ -71,7 +71,8 @@ public class MemberDaoTest {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		List<Member> list = dao.selectMemberByAll();
 		Assert.assertNotEquals(0, list.size());
-		LogUtil.prnLog(list);
+		for(Member m : list) 
+			LogUtil.prnLog(m);
 	}
 
 	@Test

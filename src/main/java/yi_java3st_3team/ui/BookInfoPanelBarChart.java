@@ -1,12 +1,10 @@
 package yi_java3st_3team.ui;
 
-import javax.swing.JPanel;
+import java.awt.Font;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
-import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -27,11 +25,6 @@ public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 	public BarChart<String, Number> getBarChart() {
 		return barChart;
 	}
-
-	public void initFX(JFXPanel fxPanel) {
-		Scene scene = createScene();
-		fxPanel.setScene(scene);
-	}
 	@Override
 	public Scene createScene() {
 		Group root = new Group();
@@ -39,18 +32,16 @@ public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 		
 		//막 대형 차트의 X 축과 Y 축을 정의하고 레이블을 설정
 		CategoryAxis xAxis = new CategoryAxis();
-		xAxis.setLabel("대여/반납통계");
-
 		NumberAxis yAxis = new NumberAxis();
-		yAxis.setLabel("권수");
-
+		javafx.scene.text.Font font = new javafx.scene.text.Font(16);
+		xAxis.tickLabelFontProperty().set(font);
+		yAxis.tickLabelFontProperty().set(font);
 		barChart = new BarChart<>(xAxis, yAxis);
 		barChart.setLegendVisible(false);
 		barChart.setTitle("대여 반납 통계");
-		
+		barChart.setStyle("-fx-font-size: " + 25 + "px;");;
 		barChart.setPrefSize(900, 600);
 		barChart.setData(getChartData());
-		
 		root.getChildren().add(barChart);
 
 		return scene;

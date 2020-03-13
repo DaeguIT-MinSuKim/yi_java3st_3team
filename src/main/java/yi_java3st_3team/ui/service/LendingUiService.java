@@ -33,9 +33,11 @@ public class LendingUiService {
 	public List<Lending> showMemberReturnList(Member mem) {
 		return lendingDao.showMemberReturnList(mem);
 	}
-	public List<Lending> showOverDueList(){
+
+	public List<Lending> showOverDueList() {
 		return lendingDao.selectLendingByOverDueCdt();
 	}
+
 	public void modifyLending(Lending lending) {
 		lendingDao.updateLending(lending);
 	}
@@ -45,6 +47,10 @@ public class LendingUiService {
 	}
 	public List<Lending> selectLendingByAllTest() {
 		return lendingDao.selectLendingByAllTest();
+	}
+
+	public Member showLendingMemberId(Member member) {
+		return memberDao.selectLendingMemberByNo(member);
 	}
 
 }

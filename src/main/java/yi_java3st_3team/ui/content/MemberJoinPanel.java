@@ -217,7 +217,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 
 		tfZip = new JTextField();
 		//tfZip.setText("");
-		tfZip.setHorizontalAlignment(SwingConstants.RIGHT);
+		tfZip.setHorizontalAlignment(SwingConstants.LEFT);
 		tfZip.setColumns(7);
 		pZip.add(tfZip);
 
@@ -366,8 +366,43 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	}
 
 	private void btnZipAction(ActionEvent e) {
+<<<<<<< HEAD
+=======
+		//ZipDialog zipP = new ZipDialog(member, picPath);
+		zipDialog = new ZipDialog(member, "우편번호 검색");
+		zipDialog.getBtnAdd().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				zipDialog.setDetailAd(zipDialog.getTfDetailAd().getText());
+				zipDialog.setZipCode(zipDialog.getTfZipCode().getText());
+				tfZip.setText(zipDialog.getZipCode());
+				tfAddress.setText(zipDialog.getAddrFull());
+				tfDetailAdress.setText(zipDialog.getDetailAd());
+				zipDialog.dispose();
+				
+			}
+		});
 		
+		zipDialog.setBounds(50, 50, 350, 550);
+		zipDialog.setVisible(true);
+		
+		//pResult = new JPanel();
+		//pResult.setBounds(100, 100, 100, 100);
+		//zipDialog.getContentPane().add(pResult,BorderLayout.SOUTH);
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
+		
+<<<<<<< HEAD
+=======
+		//btnAdd = new JButton("     등 록      ");
+		//btnAdd.addActionListener(this);
+		//btnAdd.setBounds(100, 100, 100, 100);
+		//pResult.add(btnAdd);
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 	private void btnIDCheckAction(ActionEvent e) {
 		String userID = tfID.getText();
 		findMber = service.IDCheckMember(new Member(userID));

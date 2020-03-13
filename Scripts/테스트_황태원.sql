@@ -46,4 +46,9 @@ where mber_id = 'bus503@daum.net';
 
 
 
+select *
+from member;
+
+
+
 

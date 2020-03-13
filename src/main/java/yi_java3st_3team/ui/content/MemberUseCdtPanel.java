@@ -19,7 +19,7 @@ import yi_java3st_3team.ui.service.MemberUIService;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
+//import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.FlowLayout;
@@ -41,8 +41,8 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	private JLabel lblGrade;
 	private JLabel lblLendCnt;
 	private JLabel lblTotlaCnt;
-	private MemberUseCdtTblPanel pTotalTblList;
-	private MemberUseCdtTblPanel pLendTblList;
+//	private MemberUseCdtTblPanel pTotalTblList;
+//	private MemberUseCdtTblPanel pLendTblList;
 	private JButton btnRturnPsmCdt;
 
 	public MemberUseCdtPanel() {
@@ -138,9 +138,9 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		pLendList.add(pLendTbl, BorderLayout.CENTER);
 		pLendTbl.setLayout(new BorderLayout(0, 0));
 		
-		pLendTblList = new MemberUseCdtTblPanel(this);
-		pLendTblList.setBackground(Color.WHITE);
-		pLendTbl.add(pLendTblList, BorderLayout.CENTER);
+//		pLendTblList = new MemberUseCdtTblPanel(this);
+//		pLendTblList.setBackground(Color.WHITE);
+//		pLendTbl.add(pLendTblList, BorderLayout.CENTER);
 		
 		JPanel pRturnPsmCdt = new JPanel();
 		FlowLayout fl_pRturnPsmCdt = (FlowLayout) pRturnPsmCdt.getLayout();
@@ -167,17 +167,17 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		pTotalList.add(pTotalTbl, BorderLayout.CENTER);
 		pTotalTbl.setLayout(new BorderLayout(0, 0));
 		
-		pTotalTblList = new MemberUseCdtTblPanel(this);
-		pTotalTblList.setBackground(Color.WHITE);
-		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
+//		pTotalTblList = new MemberUseCdtTblPanel(this);
+//		pTotalTblList.setBackground(Color.WHITE);
+//		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
 		
 	}
 
 	public void setService(LendingUiService lendService) {
 		this.lendService = lendService;
-		Lending lending = new Lending(new Member(LoginFrame.loginMber.getMberId()));
-		pTotalTblList.loadData(lendService.showMemberLendBookTotlaList(lending));
-		pLendTblList.loadData(lendService.showMemberLendBookList(lending));
+//		Lending lending = new Lending(new Member(LoginFrame.loginMber.getMberId()));
+//		pTotalTblList.loadData(lendService.showMemberLendBookTotlaList(lending));
+//		pLendTblList.loadData(lendService.showMemberLendBookList(lending));
 	}
 	
 	private void setPicByte(byte[] bookImg) {
@@ -212,11 +212,12 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 			btnRturnPsmCdtActionPerformed(e);
 		}
 	}
+	
 	protected void btnRturnPsmCdtActionPerformed(ActionEvent e) {
-		int[] selCnt = pLendTblList.selCnt();
-		for(int sc : selCnt) {
-			System.out.println(sc);
-			
-		}
+//		int[] selCnt = pLendTblList.selCnt();
+//		for(int sc : selCnt) {
+//			System.out.println(sc);
+//			
+//		}
 	}
 }

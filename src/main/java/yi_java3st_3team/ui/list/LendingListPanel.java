@@ -13,21 +13,26 @@ public class LendingListPanel extends AbsListPanel<Lending> {
 	@Override
 	protected void setTblWidthAlign() {
 		tableSetWidth(50, 250, 100, 50, 50, 50, 50, 50, 50);
-		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7, 8);
+		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7);
 	}
 
 	@Override
 	protected String[] getColNames() {
-		return new String[] { "도서코드", "도서명", "저자/역자", "발행년도", "출판사", "대여일", "반납예정일", "연체일수", "선택" };
+		return new String[] { "도서코드", "도서명", "저자/역자", "발행년도", "출판사", "대여일", "반납예정일", "선택" };
 	}
 
 	@Override
 	protected Object[] toArray(Lending item) {
 		JCheckBox chBox;
-		return new Object[] { item.getBookCd().getBookCode(), item.getBookCd().getBookName(),
+		return new Object[] { 
+				item.getBookCd().getBookCode(), 
+				item.getBookCd().getBookName(),
 				String.format("%s/%s", item.getBookCd().getAuthrName(), item.getBookCd().getTrnslrName()),
-				item.getBookCd().getRegistDate(), item.getBookCd().getPls(), item.getLendDate(), item.getRturnDueDate(),
-				item.getOverdueDate(), chBox = new JCheckBox("") };
+				item.getBookCd().getRegistDate(), 
+				item.getBookCd().getPls(), 
+				item.getLendDate(), 
+				item.getRturnDueDate(),
+				chBox = new JCheckBox("") };
 	}
 
 	@Override
@@ -40,8 +45,7 @@ public class LendingListPanel extends AbsListPanel<Lending> {
 		model.setValueAt(item.getBookCd().getPls(), updateIdx, 4);
 		model.setValueAt(item.getLendDate(), updateIdx, 5);
 		model.setValueAt(item.getRturnDueDate(), updateIdx, 6);
-		model.setValueAt(item.getOverdueDate(), updateIdx, 7);
-		model.setValueAt(chBox = new JCheckBox(""), updateIdx, 8);
+		model.setValueAt(chBox = new JCheckBox(""), updateIdx, 7);
 	}
 
 }

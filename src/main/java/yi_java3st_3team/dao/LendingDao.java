@@ -23,4 +23,6 @@ public interface LendingDao {
 	List<Lending> showMemberReturnList(Member mem);
 
 	List<Lending> selectLendingByOverDueCdt();
+
+	List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending);
 }

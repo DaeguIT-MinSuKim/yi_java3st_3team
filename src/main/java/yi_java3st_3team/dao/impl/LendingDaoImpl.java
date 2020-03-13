@@ -313,7 +313,6 @@ public class LendingDaoImpl implements LendingDao {
 		return null;
 	}
 
-<<<<<<< HEAD
 	@Override
 	public int selectAvgRendDate() {
 		String sql = "select avg(date(rturn_date)-date(lend_date)) as 'avgLendDate' from lending";
@@ -331,6 +330,3 @@ public class LendingDaoImpl implements LendingDao {
 	}
 
 }
-=======
-}
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git

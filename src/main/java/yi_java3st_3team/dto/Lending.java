@@ -19,6 +19,10 @@ public class Lending {
 		super();
 		this.lendRturnNo = lendRturnNo;
 	}
+	
+	public Lending(Member mberId) {
+		this.mberId = mberId;
+	}
 
 	public Lending(Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt, Date rturnDate, int overdueCdt) {
 		this.bookCd = bookCd;

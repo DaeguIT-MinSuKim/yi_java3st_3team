@@ -239,6 +239,8 @@ public class LendingDaoImpl implements LendingDao {
 		Member mberId = new Member(rs.getString("l.mber_id"));
 		Book bookCd = new Book(rs.getString("l.book_cd"));
 		bookCd.setBookName(rs.getString("b.book_name"));
+		bookCd.setAuthrName(rs.getString("b.authr_name"));
+		bookCd.setTrnslrName(rs.getString("b.trnslr_name"));
 		bookCd.setLcNo(new LargeClassification(rs.getInt("b.lc_no"), rs.getString("lc.lclas_name")));
 		bookCd.setMlNo(new MiddleClassification(new LargeClassification(rs.getInt("b.lc_no")), rs.getInt("b.ml_no"),
 				rs.getString("ml.mlsfc_name")));

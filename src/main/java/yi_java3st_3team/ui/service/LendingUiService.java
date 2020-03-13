@@ -58,6 +58,6 @@ public class LendingUiService {
 	}
 
 	public Member showLendingMemberId(Member member) {
-		return memberDao.selectLendingMemberByNo(member);
+		return memberDao.selectMemberByNo(member);
 	}
 }

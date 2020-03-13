@@ -39,7 +39,7 @@ public class MemberDaoImpl implements MemberDao {
 		String sql = "select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, lend_psb_cdt, join_dt, wdr_cdt from member where mber_id = ?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, member.getMberId());
-			LogUtil.prnLog(pstmt);
+//			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					return getMember(rs, true);
@@ -238,18 +238,6 @@ public class MemberDaoImpl implements MemberDao {
 		return mber;
 	}
 
-	private Member getMember(ResultSet rs) throws SQLException {
-		String mberId = rs.getString("mber_id");
-		String mberName = rs.getString("mber_name");
-		Grade grade = new Grade(rs.getInt("grade"));
-		int lendBookCnt = rs.getInt("lend_book_cnt");
-		int lendPsbCdt = rs.getInt("lend_psb_cdt");
-		Member mber = new Member(mberId, mberName, lendBookCnt, grade, lendPsbCdt);
-
-		LogUtil.prnLog("getMember => " + mber);
-		return mber;
-	}
-
 	@Override
 	public Member findMemberId(Member member) {
 		String sql = "select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad , mber_detail_ad , mber_tel , total_le_cnt , "
@@ -292,23 +280,40 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
-	public Member selectLendingMemberByNo(Member member) {
-		String sql = "select m.mber_id , m.mber_name , g.grad_name , m.lend_psb_cdt , (g.book_le_cnt - count(l.rturn_date)) as 'lend_book_cdt'\r\n"
-				+ "	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no \r\n"
-				+ "	where m.mber_id = ? and l.rturn_date = '0000-00-00 00:00:00';";
-		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
-			pstmt.setString(1, member.getMberId());
-			LogUtil.prnLog(pstmt);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					return getMember(rs);
-				}
-			}
-		} catch (SQLException e) {
 
-			e.printStackTrace();
-		}
-		return null;
-	}
 
+//	public Member selectLendingMemberByNo(Member member) {
+////		String sql = "select m.mber_id , m.mber_name , g.grad_name , m.lend_psb_cdt , (g.book_le_cnt - count(l.rturn_date)) as 'lend_book_cnt'\r\n"
+////				+ "	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no \r\n"
+////				+ "	where m.mber_id = ? and l.rturn_date = '0000-00-00 00:00:00'";
+//		String sql = "select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,total_le_cnt,lend_book_cnt,grade ,lend_psb_cdt ,join_dt ,wdr_cdt ,od_cnt \r\n" + 
+//				"	from member\r\n" + 
+//				"	where mber_id = ?";
+//		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+//			pstmt.setString(1, member.getMberId());
+//			LogUtil.prnLog(pstmt);
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					return getMember(rs, isImg);
+//				}
+//			}
+//		} catch (SQLException e) {
+//
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+
+//	private Member getMember(ResultSet rs) throws SQLException {
+//		String mberId = rs.getString("mber_id");
+//		String mberName = rs.getString("mber_name");
+//		int lendPsbCdt = rs.getInt("lend_psb_cdt");
+//		int lendBookCnt = rs.getInt("lend_book_cnt");
+////		Grade grade = new Grade();
+////		grade.setGradeName(rs.getString("grad_name"));
+//		Grade grade = new Grade(rs.getInt("grade"));
+//		Member mber = new Member(mberId, mberName, lendBookCnt, grade, lendPsbCdt);
+//		LogUtil.prnLog("getMember => " + mber);
+//		return mber;
+//	}
 }

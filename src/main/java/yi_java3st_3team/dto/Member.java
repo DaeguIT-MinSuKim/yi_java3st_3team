@@ -19,6 +19,7 @@ public class Member {
 	private int lendPsbCdt;
 	private Date joinDt;
 	private int wdrCdt;
+	private int odCnt;
 
 	public Member() {
 	}
@@ -27,7 +28,6 @@ public class Member {
 		this.mberId = mberId;
 	}
 
-	
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, Date joinDt) {
 		super();
@@ -71,8 +71,6 @@ public class Member {
 		this.mberBrthdy = mberBrthdy;
 	}
 
-	
-	
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, byte[] mberImg, Date joinDt) {
 		super();
@@ -127,6 +125,27 @@ public class Member {
 		this.wdrCdt = wdrCdt;
 	}
 
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg, int totalLeCnt, int lendBookCnt, Grade grade,
+			int lendPsbCdt, Date joinDt, int wdrCdt, int odCnt) {
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
+		this.totalLeCnt = totalLeCnt;
+		this.lendBookCnt = lendBookCnt;
+		this.grade = grade;
+		this.lendPsbCdt = lendPsbCdt;
+		this.joinDt = joinDt;
+		this.wdrCdt = wdrCdt;
+		this.odCnt = odCnt;
+	}
+
 	public String getMberId() {
 		return mberId;
 	}
@@ -167,7 +186,7 @@ public class Member {
 		this.mberZip = mberZip;
 	}
 
-	public String getMberBassAd(){
+	public String getMberBassAd() {
 		return mberBassAd;
 	}
 
@@ -247,6 +266,14 @@ public class Member {
 		this.mberImg = mberImg;
 	}
 
+	public int getOdCnt() {
+		return odCnt;
+	}
+
+	public void setOdCnt(int odCnt) {
+		this.odCnt = odCnt;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -264,6 +291,7 @@ public class Member {
 		result = prime * result + ((mberPass == null) ? 0 : mberPass.hashCode());
 		result = prime * result + ((mberTel == null) ? 0 : mberTel.hashCode());
 		result = prime * result + ((mberZip == null) ? 0 : mberZip.hashCode());
+		result = prime * result + odCnt;
 		result = prime * result + totalLeCnt;
 		result = prime * result + wdrCdt;
 		return result;
@@ -334,6 +362,8 @@ public class Member {
 				return false;
 		} else if (!mberZip.equals(other.mberZip))
 			return false;
+		if (odCnt != other.odCnt)
+			return false;
 		if (totalLeCnt != other.totalLeCnt)
 			return false;
 		if (wdrCdt != other.wdrCdt)
@@ -344,9 +374,9 @@ public class Member {
 	@Override
 	public String toString() {
 		return String.format(
-				"Member [mberId=%s, mberPass=%s, mberName=%s, mberBrthdy=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, mberImg=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s]",
+				"Member [mberId=%s, mberPass=%s, mberName=%s, mberBrthdy=%s, mberZip=%s, mberBassAd=%s, mberDetailAd=%s, mberTel=%s, mberImg=%s, totalLeCnt=%s, lendBookCnt=%s, grade=%s, lendPsbCdt=%s, joinDt=%s, wdrCdt=%s, odCnt=%s]",
 				mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel,
-				Arrays.toString(mberImg), totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
+				Arrays.toString(mberImg), totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt, odCnt);
 	}
 
 }

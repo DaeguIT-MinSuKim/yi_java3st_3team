@@ -102,8 +102,8 @@ public class MainFrame extends JFrame implements ActionListener {
 //		}
 		JFrame frame = new JFrame();
 		frame.setBounds(50, 50, 850, 600);
-		MemberJoinUIPanel memberUI = new MemberJoinUIPanel();
-		frame.getContentPane().add(memberUI);
+		MemberSelectUIPanel selectUI = new MemberSelectUIPanel();
+		frame.getContentPane().add(selectUI);
 		frame.setVisible(true);
 
 	}

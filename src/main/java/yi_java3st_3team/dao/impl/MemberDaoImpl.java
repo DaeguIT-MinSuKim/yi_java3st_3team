@@ -54,7 +54,8 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public List<Member> selectMemberByAll() {
-		String sql = "select * from member";
+		String sql = "select mber_id, mber_name, mber_brthdy, mber_bass_ad, mber_detail_ad, mber_tel, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt\r\n" + 
+					  "from member";
 		List<Member> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -63,7 +64,7 @@ public class MemberDaoImpl implements MemberDao {
 			if (rs.next()) {
 				list = new ArrayList<>();
 				do {
-					list.add(getMember(rs, true));
+					list.add(getMember(rs, false));
 				} while (rs.next());
 			}
 		} catch (SQLException e) {

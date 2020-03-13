@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.MemberJoinPanel;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
+import yi_java3st_3team.ui.list.MemberTblPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")

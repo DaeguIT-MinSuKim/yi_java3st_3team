@@ -30,7 +30,7 @@ public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 		Group root = new Group();
 		Scene scene = new Scene(root, Color.ALICEBLUE);
 		
-		//막 대형 차트의 X 축과 Y 축을 정의하고 레이블을 설정
+		막 대형 차트의 X 축과 Y 축을 정의하고 레이블을 설정
 		CategoryAxis xAxis = new CategoryAxis();
 		NumberAxis yAxis = new NumberAxis();
 		javafx.scene.text.Font font = new javafx.scene.text.Font(16);

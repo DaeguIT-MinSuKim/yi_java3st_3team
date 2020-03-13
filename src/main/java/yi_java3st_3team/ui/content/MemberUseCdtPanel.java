@@ -14,6 +14,9 @@ import javax.swing.border.EmptyBorder;
 import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.LoginFrame;
+import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
+import yi_java3st_3team.ui.list.MemberUseCdtTotalTblPanel;
+import yi_java3st_3team.ui.list.tableChkBoxTest;
 import yi_java3st_3team.ui.service.LendingUiService;
 import yi_java3st_3team.ui.service.MemberUIService;
 
@@ -41,8 +44,8 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	private JLabel lblGrade;
 	private JLabel lblLendCnt;
 	private JLabel lblTotlaCnt;
-//	private MemberUseCdtTblPanel pTotalTblList;
-//	private MemberUseCdtTblPanel pLendTblList;
+	private MemberUseCdtTotalTblPanel pTotalTblList;
+	private MemberUseCdtTblPanel pLendTblList;
 	private JButton btnRturnPsmCdt;
 
 	public MemberUseCdtPanel() {
@@ -138,11 +141,12 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		pLendList.add(pLendTbl, BorderLayout.CENTER);
 		pLendTbl.setLayout(new BorderLayout(0, 0));
 		
-//		pLendTblList = new MemberUseCdtTblPanel(this);
-//		pLendTblList.setBackground(Color.WHITE);
-//		pLendTbl.add(pLendTblList, BorderLayout.CENTER);
+		pLendTblList = new MemberUseCdtTblPanel();
+		pLendTblList.setBackground(Color.WHITE);
+		pLendTbl.add(pLendTblList, BorderLayout.CENTER);
 		
 		JPanel pRturnPsmCdt = new JPanel();
+		pRturnPsmCdt.setBorder(new EmptyBorder(10, 0, 10, 0));
 		FlowLayout fl_pRturnPsmCdt = (FlowLayout) pRturnPsmCdt.getLayout();
 		fl_pRturnPsmCdt.setAlignment(FlowLayout.RIGHT);
 		pRturnPsmCdt.setBackground(Color.WHITE);
@@ -150,7 +154,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		
 		btnRturnPsmCdt = new JButton("반납연기신청");
 		btnRturnPsmCdt.addActionListener(this);
-		btnRturnPsmCdt.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+		btnRturnPsmCdt.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		pRturnPsmCdt.add(btnRturnPsmCdt);
 		
 		JPanel pTotalList = new JPanel();
@@ -167,17 +171,17 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		pTotalList.add(pTotalTbl, BorderLayout.CENTER);
 		pTotalTbl.setLayout(new BorderLayout(0, 0));
 		
-//		pTotalTblList = new MemberUseCdtTblPanel(this);
-//		pTotalTblList.setBackground(Color.WHITE);
-//		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
+		pTotalTblList = new MemberUseCdtTotalTblPanel();
+		pTotalTblList.setBackground(Color.WHITE);
+		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
 		
 	}
 
 	public void setService(LendingUiService lendService) {
 		this.lendService = lendService;
-//		Lending lending = new Lending(new Member(LoginFrame.loginMber.getMberId()));
-//		pTotalTblList.loadData(lendService.showMemberLendBookTotlaList(lending));
-//		pLendTblList.loadData(lendService.showMemberLendBookList(lending));
+		Lending lending = new Lending(new Member(LoginFrame.loginMber.getMberId()));
+		pTotalTblList.loadData(lendService.showMemberLendBookTotlaList(lending));
+		pLendTblList.loadDate(lendService.showMenberLendBookList(lending));
 	}
 	
 	private void setPicByte(byte[] bookImg) {
@@ -202,7 +206,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 			setPicByte(LoginFrame.loginMber.getMberImg());
 		}
 		
-		lblGrade.setText(LoginFrame.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원");
+		lblGrade.setText(LoginFrame.loginMber.getMberName() + "님 / " + (LoginFrame.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원"));
 		lblLendCnt.setText(String.format("%d권", LoginFrame.loginMber.getLendBookCnt()));
 		lblTotlaCnt.setText(String.format("%d권", LoginFrame.loginMber.getTotalLeCnt()));
 		setService(lendService);
@@ -214,10 +218,6 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	}
 	
 	protected void btnRturnPsmCdtActionPerformed(ActionEvent e) {
-//		int[] selCnt = pLendTblList.selCnt();
-//		for(int sc : selCnt) {
-//			System.out.println(sc);
-//			
-//		}
+		
 	}
 }

@@ -33,9 +33,11 @@ public class LendingUiService {
 	public List<Lending> showMemberReturnList(Member mem) {
 		return lendingDao.showMemberReturnList(mem);
 	}
-	public List<Lending> showOverDueList(){
+
+	public List<Lending> showOverDueList() {
 		return lendingDao.selectLendingByOverDueCdt();
 	}
+
 	public void modifyLending(Lending lending) {
 		lendingDao.updateLending(lending);
 	}
@@ -43,7 +45,24 @@ public class LendingUiService {
 	public void addLending(Lending lending) {
 		lendingDao.insertLending(lending);
 	}
+
 	public List<Lending> selectLendingByAllTest() {
 		return lendingDao.selectLendingByAllTest();
 	}
+<<<<<<< HEAD
+=======
+	
+	public List<Lending> showMemberLendBookTotlaList(Lending lending) {
+		return lendingDao.selectLendingByMberIdAndLendBookTotalAll(lending);
+	}
+	
+	public List<Lending> showMenberLendBookList(Lending lending) {
+		return lendingDao.selectLendingByMberIdAndLendBookAll(lending);
+	}
+
+	public Member showLendingMemberId(Member member) {
+		return memberDao.selectLendingMemberByNo(member);
+	}
+
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 }

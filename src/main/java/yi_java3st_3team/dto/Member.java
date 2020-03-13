@@ -71,6 +71,14 @@ public class Member {
 		this.mberBrthdy = mberBrthdy;
 	}
 
+	public Member(String mberId, String mberName, int lendBookCnt, Grade grade, int lendPsbCdt) {
+		this.mberId = mberId;
+		this.mberName = mberName;
+		this.lendBookCnt = lendBookCnt;
+		this.grade = grade;
+		this.lendPsbCdt = lendPsbCdt;
+	}
+
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, byte[] mberImg, Date joinDt) {
 		super();

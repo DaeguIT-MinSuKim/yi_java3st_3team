@@ -9,9 +9,13 @@ public interface LendingDao {
 	Lending selectLendingByNo(Lending lending);
 
 	List<Lending> selectLendingByAll();
+
 	List<Lending> selectLendingByAllTest();
+
 	List<Lending> selectLendingByMberIdAll(Lending lending);
+
 	List<Lending> selectLendingByMberIdAndLendBookAll(Lending lending);
+
 	int insertLending(Lending lending);
 
 	int updateLending(Lending lending);
@@ -25,5 +29,6 @@ public interface LendingDao {
 	List<Lending> selectLendingByOverDueCdt();
 
 	List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending);
+
 	int selectAvgRendDate();
 }

@@ -58,4 +58,8 @@ public class LendingUiService {
 		return lendingDao.selectLendingByMberIdAndLendBookAll(lending);
 	}
 
+	public Member showLendingMemberId(Member member) {
+		return memberDao.selectLendingMemberByNo(member);
+	}
+
 }

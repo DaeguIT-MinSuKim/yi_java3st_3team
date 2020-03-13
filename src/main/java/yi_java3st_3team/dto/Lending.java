@@ -23,6 +23,15 @@ public class Lending {
 		this.lendRturnNo = lendRturnNo;
 	}
 	
+	public Lending(Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt, Date rturnDate, int overdueCdt) {
+		this.bookCd = bookCd;
+		this.lendDate = lendDate;
+		this.rturnDueDate = rturnDueDate;
+		this.rturnPsmCdt = rturnPsmCdt;
+		this.rturnDate = rturnDate;
+		this.overdueCdt = overdueCdt;
+	}
+
 	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt, Date rturnDate,
 			int overdueCdt, int overdueDate) {
 		this.mberId = mberId;

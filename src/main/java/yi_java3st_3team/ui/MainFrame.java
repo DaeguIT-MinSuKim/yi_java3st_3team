@@ -11,12 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import yi_java3st_3team.ui.content.BookManagerPanel;
-import yi_java3st_3team.ui.content.BookRegistrationPanel;
-import yi_java3st_3team.ui.content.MemberUserCdtPanel;
-import yi_java3st_3team.ui.content.RecomBookAddPanel;
-import yi_java3st_3team.ui.content.RecomPanel;
-
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ActionListener {
 

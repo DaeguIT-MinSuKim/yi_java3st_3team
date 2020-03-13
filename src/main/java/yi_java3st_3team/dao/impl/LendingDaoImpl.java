@@ -57,7 +57,6 @@ public class LendingDaoImpl implements LendingDao {
 		int rturnPsmCdt = rs.getInt("rturn_psm_cdt");
 		Date rturnDate = rs.getTimestamp("rturn_date");
 		int overdueCdt = rs.getInt("overdue_cdt");
-
 		Lending lending = new Lending(lendRturnNo, mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
 		LogUtil.prnLog(lending);
 		return lending;
@@ -254,6 +253,47 @@ public class LendingDaoImpl implements LendingDao {
 		return new Lending(mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
 	}
 
+	@Override
+	public List<Lending> selectLendingByAllTest() {
+		String sql = "select b.book_code,b.book_name,b.authr_name,b.pblicte_year,p.pls_name,l.lend_date,l.rturn_date from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no";
+		List<Lending> list = null;
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			LogUtil.prnLog(pstmt);
+			if (rs.next()) {
+				list = new ArrayList<>();
+				do {
+					list.add(getLendingByAllTest(rs));
+				} while (rs.next());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	private Lending getLendingByAllTest(ResultSet rs) throws SQLException {
+		Lending lending = new Lending();
+		Book book = new Book(rs.getString("b.book_code"));
+		book.setBookName(rs.getString("b.book_name"));
+		book.setAuthrName(rs.getString("b.authr_name"));
+		book.setPblicteYear(rs.getTimestamp("b.pblicate_year"));
+		PublishingCompany pCompany = new PublishingCompany(rs.getString("p.pls_name"));
+		book.setPls(pCompany);
+		lending.setBookCd(book);
+		lending.setLendDate(rs.getTimestamp("l.lend_date"));
+		lending.setRturnDate(rs.getTimestamp("l.rturn_date"));
+		return lending;
+	}
+
+	@Override
+	public List<Lending> selectLendingByMberIdAll(Lending lending) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public List<Lending> showMemberRentalList(Member mem) {
 		// TODO Auto-generated method stub
 		return null;

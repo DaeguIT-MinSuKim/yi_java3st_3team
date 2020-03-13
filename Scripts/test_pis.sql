@@ -173,3 +173,4 @@ from zip_code;
 select * 
 from recommendation;
 
+select b.book_code,b.book_name,b.authr_name,b.pblicte_year,p.pls_name,l.lend_date,l.rturn_date from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no;

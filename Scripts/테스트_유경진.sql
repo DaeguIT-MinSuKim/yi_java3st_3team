@@ -267,7 +267,7 @@ where mber_id = 'fivestar@nate.com' and rturn_date is null;
 
 
 -- 전체 대여 도서
-select l.mber_id , l.book_cd, b.book_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , b.pls, pls.pls_name , b.pblicte_year ,
+select l.mber_id , b.book_code , b.book_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , b.pls, pls.pls_name , b.pblicte_year ,
 	   lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt
 	from lending l left join book b on l.book_cd = b.book_code 
 				   left join large_classification lc on lc.lclas_no = b.lc_no 
@@ -307,12 +307,13 @@ insert into lending(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, 
 select * from lending where rturn_date is null;
 
 select * from lending where book_cd = 'A090253' and mber_id = 'fivestar@nate.com' and rturn_date is null;
+select * from lending where mber_id = 'fivestar@nate.com'; 
 select * from lending where mber_id = 'fivestar@nate.com' and rturn_date is null; 
 select * from lending where book_cd = 'A090253' and mber_id = 'fivestar@nate.com' and rturn_date is null; 
 
 update lending 
-	set book_cd = 'A090253', rturn_psm_cdt = 0
-	where book_cd = 'A090253' and mber_id = 'fivestar@nate.com';
+	set rturn_psm_cdt = 0
+	where mber_id = 'fivestar@nate.com' and rturn_date is null;
 		
 		
 		

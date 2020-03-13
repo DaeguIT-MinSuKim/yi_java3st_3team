@@ -50,8 +50,8 @@ public class MemberUseCdtTotalTblPanel extends AbsListPanel<Lending> {
 				String.format("%tF", item.getLendDate()),
 				String.format("%tF", item.getRturnDueDate()),
 				rturnDate,
-				item.getRturnPsmCdt() > 0 ? "Yes" : "No",
-				item.getOverdueCdt() > 0 ? "Yes" : "No",
+				item.getRturnPsmCdt() > 0 ? "O" : "X",
+				item.getOverdueCdt() > 0 ? "O" : "X",
 		};
 	}
 

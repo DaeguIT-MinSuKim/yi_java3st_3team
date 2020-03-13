@@ -178,7 +178,7 @@ public class LendingDaoImpl implements LendingDao {
 
 	@Override
 	public List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending) {
-		String sql = "select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
+		String sql = "select l.mber_id , b.book_code, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
 				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt \r\n"
 				+ "	from lending l left join book b on l.book_cd = b.book_code \r\n"
 				+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n"
@@ -207,7 +207,7 @@ public class LendingDaoImpl implements LendingDao {
 
 	@Override
 	public List<Lending> selectLendingByMberIdAndLendBookAll(Lending lending) {
-		String sql = "select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
+		String sql = "select l.mber_id , b.book_code, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
 				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt \r\n"
 				+ "	from lending l left join book b on l.book_cd = b.book_code \r\n"
 				+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n"
@@ -237,7 +237,7 @@ public class LendingDaoImpl implements LendingDao {
 
 	private Lending getUseJoinLendgin(ResultSet rs) throws SQLException {
 		Member mberId = new Member(rs.getString("l.mber_id"));
-		Book bookCd = new Book(rs.getString("l.book_cd"));
+		Book bookCd = new Book(rs.getString("b.book_code"));
 		bookCd.setBookName(rs.getString("b.book_name"));
 		bookCd.setAuthrName(rs.getString("b.authr_name"));
 		bookCd.setTrnslrName(rs.getString("b.trnslr_name"));
@@ -331,33 +331,13 @@ public class LendingDaoImpl implements LendingDao {
 
 	@Override
 	public int updateLendingByCodeAndMberId(Lending lending) {
-		StringBuilder sql = new StringBuilder("update lending set ");
-
-		if (lending.getLendRturnNo() != 0) sql.append("lend_rturn_no = ?, ");
-		if (lending.getMberId() != null) sql.append("mber_id = ?, ");
-		if (lending.getBookCd() != null) sql.append("book_cd = ?, ");
-		if (lending.getLendDate() != null) sql.append("lend_date = ?, ");
-		if (lending.getRturnDueDate() != null) sql.append("rturn_due_date = ?, ");
-		if (lending.getRturnPsmCdt() > -1) sql.append("rturn_psm_cdt = ?, ");
-		if (lending.getRturnDate() != null) sql.append("rturn_date = ?, ");
-		if (lending.getOverdueCdt() > -1 ) sql.append("overdue_cdt = ?, ");
-		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
-		sql.append("where book_cd = ? and mber_id = ? and rturn_date is null");
+		String sql = "update lending  set rturn_psm_cdt = ? where book_cd = ? and mber_id = ? and rturn_date is null";
 
 		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
-			int argCnt = 1;
-
-			if (lending.getMberId() != null) pstmt.setString(argCnt++, lending.getMberId().getMberId());
-			if (lending.getBookCd() != null) pstmt.setString(argCnt++, lending.getBookCd().getBookCode());
-			if (lending.getLendDate() != null) pstmt.setTimestamp(argCnt++, new Timestamp(lending.getLendDate().getTime()));
-			if (lending.getRturnDueDate() != null) pstmt.setTimestamp(argCnt++, new Timestamp(lending.getRturnDueDate().getTime()));
-			if (lending.getRturnPsmCdt() > -1) pstmt.setInt(argCnt++, lending.getRturnPsmCdt());
-			if (lending.getRturnDate() != null) pstmt.setTimestamp(argCnt++, new Timestamp(lending.getRturnDate().getTime()));
-			if (lending.getOverdueCdt() > -1) pstmt.setInt(argCnt++, lending.getOverdueCdt());
-
-			pstmt.setString(argCnt++, lending.getBookCd().getBookCode());
-			pstmt.setString(argCnt++, lending.getMberId().getMberId());
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, lending.getRturnPsmCdt());
+			pstmt.setString(2, lending.getBookCd().getBookCode());
+			pstmt.setString(3, lending.getMberId().getMberId());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {

@@ -1,12 +1,13 @@
 package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
@@ -36,21 +37,21 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		initialize();
 	}
 	private void initialize() {
-		setBorder(new EmptyBorder(50, 50, 50, 50));
+		setBorder(new EmptyBorder(50, 0, 50, 0));
 		setLayout(new GridLayout(9, 0, 0, 0));
-		
+		setBackground(new Color(240,240,240));
 		panel1 = new JPanel();
-		panel1.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel1.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel1);
 		panel1.setLayout(new BorderLayout(0, 0));
-		
+	
 		lbl1 = new JLabel("");
 		lbl1.setFont(new Font("굴림", Font.BOLD, 15));
 		lbl1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel1.add(lbl1, BorderLayout.CENTER);
 		
 		panel2 = new JPanel();
-		panel2.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel2.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel2);
 		panel2.setLayout(new BorderLayout(0, 0));
 		
@@ -60,7 +61,7 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		panel2.add(lbl2, BorderLayout.CENTER);
 		
 		panel3 = new JPanel();
-		panel3.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel3.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel3);
 		panel3.setLayout(new BorderLayout(0, 0));
 		
@@ -70,7 +71,7 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		panel3.add(lbl3, BorderLayout.CENTER);
 		
 		panel4 = new JPanel();
-		panel4.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel4.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel4);
 		panel4.setLayout(new BorderLayout(0, 0));
 		
@@ -80,7 +81,7 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		panel4.add(lbl4, BorderLayout.CENTER);
 		
 		panel5 = new JPanel();
-		panel5.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel5.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel5);
 		panel5.setLayout(new BorderLayout(0, 0));
 		
@@ -90,7 +91,7 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		panel5.add(lbl5, BorderLayout.CENTER);
 		
 		panel6 = new JPanel();
-		panel6.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel6.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel6);
 		panel6.setLayout(new BorderLayout(0, 0));
 		
@@ -100,7 +101,7 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		panel6.add(lbl6, BorderLayout.CENTER);
 		
 		panel7 = new JPanel();
-		panel7.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel7.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel7);
 		panel7.setLayout(new BorderLayout(0, 0));
 		
@@ -110,7 +111,7 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		panel7.add(lbl7, BorderLayout.CENTER);
 		
 		panel8 = new JPanel();
-		panel8.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel8.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel8);
 		panel8.setLayout(new BorderLayout(0, 0));
 		
@@ -120,7 +121,7 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		panel8.add(lbl8, BorderLayout.CENTER);
 		
 		panel9 = new JPanel();
-		panel9.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel9.setBorder(new EmptyBorder(5, 50, 5, 50));
 		add(panel9);
 		panel9.setLayout(new BorderLayout(0, 0));
 		
@@ -128,5 +129,23 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		lbl9.setFont(new Font("굴림", Font.BOLD, 15));
 		lbl9.setHorizontalAlignment(SwingConstants.CENTER);
 		panel9.add(lbl9, BorderLayout.CENTER);
+		
+		panel1.setBackground(new Color(240,240,240));
+		panel2.setBackground(new Color(240,240,240));
+		panel3.setBackground(new Color(240,240,240));
+		panel4.setBackground(new Color(240,240,240));
+		panel5.setBackground(new Color(240,240,240));
+		panel6.setBackground(new Color(240,240,240));
+		panel7.setBackground(new Color(240,240,240));
+		panel8.setBackground(new Color(240,240,240));
+		panel9.setBackground(new Color(240,240,240));
 	}
+	protected void initLabelText(JLabel...jLabels) {
+		String[] texts = getTexts();
+		for(int i=0;i<jLabels.length;i++) {
+			jLabels[i].setText(texts[i]);
+			jLabels[i].setFont(new Font("굴림",Font.BOLD,16));
+		}
+	}
+	protected abstract String[] getTexts();
 }

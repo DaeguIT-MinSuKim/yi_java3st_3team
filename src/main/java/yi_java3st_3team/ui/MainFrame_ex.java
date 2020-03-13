@@ -1,31 +1,20 @@
 package yi_java3st_3team.ui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-
-import yi_java3st_3team.ui.content.BookManagerPanel;
-import yi_java3st_3team.ui.content.BookRegistrationPanel;
-import yi_java3st_3team.ui.content.MemberUserCdtPanel;
-import yi_java3st_3team.ui.content.RecomBookAddPanel;
-import yi_java3st_3team.ui.content.RecomPanel;
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Component;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -46,7 +35,7 @@ public class MainFrame_ex extends JFrame {
 	private JPanel pStatistic;
 	private JPanel pLogout;
 	private JPanel pWest;
-	private JPanel pGreeting;
+	private JPanel pCenter;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -192,16 +181,9 @@ public class MainFrame_ex extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(imgPath));
 		pMain.add(lblNewLabel);
 		
-		pGreeting = new JPanel();
-		pGreeting.setBackground(Color.WHITE);
-		pGreeting.setBorder(new EmptyBorder(50, 50, 50, 50));
-		contentPane.add(pGreeting, BorderLayout.CENTER);
-		pGreeting.setLayout(new BorderLayout(0, 0));
+		pCenter = getHomeMenuPanel();
+		contentPane.add(pCenter, BorderLayout.CENTER);
 		
-		JLabel lblGreeting = new JLabel("박인선님 환영합니다");
-		lblGreeting.setFont(new Font("굴림", Font.BOLD, 65));
-		lblGreeting.setHorizontalAlignment(SwingConstants.CENTER);
-		pGreeting.add(lblGreeting, BorderLayout.CENTER);
 		
 		pWest = new JPanel();
 		contentPane.add(pWest, BorderLayout.WEST);
@@ -213,6 +195,19 @@ public class MainFrame_ex extends JFrame {
 		pChkOutRtn.addMouseListener(menuAdapter);
 		pEmpMgn.addMouseListener(menuAdapter);
 		pStatistic.addMouseListener(menuAdapter);
+	}
+
+	private JPanel getHomeMenuPanel() {
+		//HomeMenu를 만드는 패널을 리턴
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout(0, 0));
+		panel.setBackground(Color.WHITE);
+		panel.setBorder(new EmptyBorder(50, 50, 50, 50));
+		JLabel lblGreeting = new JLabel("박인선님 환영합니다");
+		lblGreeting.setFont(new Font("굴림", Font.BOLD, 65));
+		lblGreeting.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblGreeting, BorderLayout.CENTER);
+		return panel;
 	}
 
 	private MouseAdapter getMouseAdapter() {
@@ -242,6 +237,12 @@ public class MainFrame_ex extends JFrame {
 				JLabel label = (JLabel)chkPanel.getComponent(0);
 				switch(label.getText()) {
 				case "HOME":
+					contentPane.remove(pCenter);
+					contentPane.remove(pWest);
+					pCenter = getHomeMenuPanel();
+					contentPane.add(pCenter,BorderLayout.CENTER);
+					repaint();
+					revalidate();
 					break;
 				case "도서관리":
 					break;
@@ -253,11 +254,36 @@ public class MainFrame_ex extends JFrame {
 					break;
 				case "통계조회":
 					contentPane.remove(pWest);
-					contentPane.remove(pGreeting);
-					pGreeting = new JPanel();
-					pGreeting.setBackground(Color.white);
+					contentPane.remove(pCenter);
+					pCenter = new JPanel();
+					pCenter.setBackground(Color.white);
 					pWest = new WestStatisticPanel();
-					contentPane.add(pGreeting,BorderLayout.CENTER);
+					JPanel[] panels = ((WestStatisticPanel) pWest).getPanels();
+					for(JPanel panel : panels) {
+						panel.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								for(JPanel panel : panels) {
+									JLabel label = (JLabel)panel.getComponent(0);
+									panel.setBackground(new Color(240,240,240));
+									label.setForeground(Color.black);
+								}
+								JPanel chkPanel = (JPanel)e.getSource();
+								JLabel chkLabel = (JLabel)chkPanel.getComponent(0);
+								chkPanel.setBackground(new Color(52,147,221));
+								chkLabel.setForeground(Color.white);
+								switch(chkLabel.getText()) {
+								case "대여/반납 통계":
+									break;
+								case "도서보유현황":
+									break;
+								case "이용자 현황":
+									break;
+								}
+							}
+						});
+					}
+					contentPane.add(pCenter,BorderLayout.CENTER);
 					contentPane.add(pWest,BorderLayout.WEST);
 					repaint();
 					revalidate();

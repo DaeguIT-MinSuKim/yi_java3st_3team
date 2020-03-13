@@ -146,6 +146,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		pLendTbl.add(pLendTblList, BorderLayout.CENTER);
 		
 		JPanel pRturnPsmCdt = new JPanel();
+		pRturnPsmCdt.setBorder(new EmptyBorder(10, 0, 10, 0));
 		FlowLayout fl_pRturnPsmCdt = (FlowLayout) pRturnPsmCdt.getLayout();
 		fl_pRturnPsmCdt.setAlignment(FlowLayout.RIGHT);
 		pRturnPsmCdt.setBackground(Color.WHITE);
@@ -153,7 +154,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		
 		btnRturnPsmCdt = new JButton("반납연기신청");
 		btnRturnPsmCdt.addActionListener(this);
-		btnRturnPsmCdt.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+		btnRturnPsmCdt.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		pRturnPsmCdt.add(btnRturnPsmCdt);
 		
 		JPanel pTotalList = new JPanel();
@@ -217,10 +218,6 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	}
 	
 	protected void btnRturnPsmCdtActionPerformed(ActionEvent e) {
-//		int[] selCnt = pLendTblList.selCnt();
-//		for(int sc : selCnt) {
-//			System.out.println(sc);
-//			
-//		}
+		
 	}
 }

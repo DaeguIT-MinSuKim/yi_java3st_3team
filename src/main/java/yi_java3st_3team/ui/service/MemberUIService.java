@@ -14,7 +14,7 @@ public class MemberUIService {
 	private ZipCodeDao ZipDao;
 	public MemberUIService() {
 		MemDao = MemberDaoImpl.getInstance();
-//		ZipDao = ZipCodeDaoImpl.getInstance();
+		ZipDao = ZipCodeDaoImpl.getInstance();
 	}
 	public void addMember(Member mem) {
 		MemDao.insertMember(mem);

@@ -20,6 +20,7 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,10 +32,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
-import yi_java3st_3team.dao.MemberDao;
-import yi_java3st_3team.dao.impl.MemberDaoImpl;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
+import yi_java3st_3team.ui.dialog.ZipDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.listener.MyDocumentListener;
 import yi_java3st_3team.ui.service.MemberUIService;
@@ -59,9 +59,13 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	private JButton btnIDCheck;
 	private JButton btnZip;
 	private MemberUIService service;
-	private MemberDao dao = new MemberDaoImpl();
+	private ZipDialog zipDialog;
+	private JFrame member;
+	private JButton btnAdd;
+	private JPanel pResult;
 
 	public MemberJoinPanel() {
+		service = new MemberUIService();
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pEast = new JPanel();
@@ -222,6 +226,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		pZip.add(tfZip);
 
 		btnZip = new JButton("우편번호 검색");
+		btnZip.addActionListener(this);
 		btnZip.setFont(new Font("굴림", Font.PLAIN, 12));
 		pZip.add(btnZip);
 
@@ -245,8 +250,6 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	public void setService(MemberUIService service) {
 		this.service = service;
 	}
-	
-
 
 	DocumentListener docListener = new MyDocumentListener() {
 		@Override
@@ -366,8 +369,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	}
 
 	private void btnZipAction(ActionEvent e) {
-<<<<<<< HEAD
-=======
+
 		//ZipDialog zipP = new ZipDialog(member, picPath);
 		zipDialog = new ZipDialog(member, "우편번호 검색");
 		zipDialog.getBtnAdd().addActionListener(new ActionListener() {
@@ -379,39 +381,32 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 				tfAddress.setText(zipDialog.getAddrFull());
 				tfDetailAdress.setText(zipDialog.getDetailAd());
 				zipDialog.dispose();
-				
 			}
 		});
 		
 		zipDialog.setBounds(50, 50, 350, 550);
 		zipDialog.setVisible(true);
+	
 		
 		//pResult = new JPanel();
 		//pResult.setBounds(100, 100, 100, 100);
 		//zipDialog.getContentPane().add(pResult,BorderLayout.SOUTH);
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
-		
-<<<<<<< HEAD
-=======
+
 		//btnAdd = new JButton("     등 록      ");
 		//btnAdd.addActionListener(this);
 		//btnAdd.setBounds(100, 100, 100, 100);
 		//pResult.add(btnAdd);
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 	private void btnIDCheckAction(ActionEvent e) {
 		String userID = tfID.getText();
 		findMber = service.IDCheckMember(new Member(userID));
-		if(userID.length() == 0){
+		if(userID.equals("이메일입력")){
 			JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.");
 		}
-		if(userID.length()!=0 && findMber == null) {
+		if(!userID.equals("이메일입력") && findMber == null) {
 			JOptionPane.showMessageDialog(null, "사용 가능한 아이디입니다.");
-		}else if(userID.length()!=0 && findMber!=null){
+		}else if(!userID.equals("이메일입력") && findMber!=null){
 			JOptionPane.showMessageDialog(null, "중복된 아이디입니다.");
 			clearTf();
 			return;

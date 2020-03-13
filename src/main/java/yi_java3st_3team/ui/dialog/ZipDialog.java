@@ -42,6 +42,7 @@ public class ZipDialog extends JDialog implements ActionListener  {
 	private String DetailAd;
 	private String zipCode;
 
+
 	public ZipDialog(JFrame member,String title) {
 		super(member, title, true);
 		service = new MemberUIService();

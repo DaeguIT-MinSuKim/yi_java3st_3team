@@ -71,7 +71,7 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 		try{
 			Member newMem = pMember.getItem();
 			service.addMember(newMem);
-			pMemberList.addItem(newMem);
+		//	pMemberList.addItem(newMem);
 			pMember.clearTf();
 			JOptionPane.showMessageDialog(null, String.format("%s님 회원가입이 완료되었습니다.", newMem.getMberId()));
 		}catch(InvalidCheckException e1) {

@@ -329,4 +329,41 @@ public class LendingDaoImpl implements LendingDao {
 		return 0;
 	}
 
+	@Override
+	public int updateLendingByCodeAndMberId(Lending lending) {
+		StringBuilder sql = new StringBuilder("update lending set ");
+
+		if (lending.getLendRturnNo() != 0) sql.append("lend_rturn_no = ?, ");
+		if (lending.getMberId() != null) sql.append("mber_id = ?, ");
+		if (lending.getBookCd() != null) sql.append("book_cd = ?, ");
+		if (lending.getLendDate() != null) sql.append("lend_date = ?, ");
+		if (lending.getRturnDueDate() != null) sql.append("rturn_due_date = ?, ");
+		if (lending.getRturnPsmCdt() > -1) sql.append("rturn_psm_cdt = ?, ");
+		if (lending.getRturnDate() != null) sql.append("rturn_date = ?, ");
+		if (lending.getOverdueCdt() > -1 ) sql.append("overdue_cdt = ?, ");
+		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
+		sql.append("where book_cd = ? and mber_id = ? and rturn_date is null");
+
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+			int argCnt = 1;
+
+			if (lending.getMberId() != null) pstmt.setString(argCnt++, lending.getMberId().getMberId());
+			if (lending.getBookCd() != null) pstmt.setString(argCnt++, lending.getBookCd().getBookCode());
+			if (lending.getLendDate() != null) pstmt.setTimestamp(argCnt++, new Timestamp(lending.getLendDate().getTime()));
+			if (lending.getRturnDueDate() != null) pstmt.setTimestamp(argCnt++, new Timestamp(lending.getRturnDueDate().getTime()));
+			if (lending.getRturnPsmCdt() > -1) pstmt.setInt(argCnt++, lending.getRturnPsmCdt());
+			if (lending.getRturnDate() != null) pstmt.setTimestamp(argCnt++, new Timestamp(lending.getRturnDate().getTime()));
+			if (lending.getOverdueCdt() > -1) pstmt.setInt(argCnt++, lending.getOverdueCdt());
+
+			pstmt.setString(argCnt++, lending.getBookCd().getBookCode());
+			pstmt.setString(argCnt++, lending.getMberId().getMberId());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 }

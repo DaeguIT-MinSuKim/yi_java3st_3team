@@ -31,4 +31,6 @@ public interface LendingDao {
 	List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending);
 
 	int selectAvgRendDate();
+	
+	int updateLendingByCodeAndMberId(Lending lending);
 }

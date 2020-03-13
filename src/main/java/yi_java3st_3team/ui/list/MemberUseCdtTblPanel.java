@@ -1,7 +1,11 @@
 package yi_java3st_3team.ui.list;
 
 import java.awt.BorderLayout;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -13,18 +17,22 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Lending;
+import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
 public class MemberUseCdtTblPanel extends JPanel {
-//	private static MemberUseCdtTblPanel test = new MemberUseCdtTblPanel();
 	private JTable table;
-	private LendingUiService service;
 	private TestTabelModel model;
+	private LendingUiService service;
+	
+	private List<Lending> lists;
+	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	private Calendar cal = Calendar.getInstance();
 
 	public MemberUseCdtTblPanel() {
-		service = new LendingUiService();
 		initialize();
 	}
 
@@ -37,10 +45,12 @@ public class MemberUseCdtTblPanel extends JPanel {
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-	
+		
 	}
 	
 	public void loadDate(List<Lending> list) {
+		lists = list;
+		
 		model = new TestTabelModel();
 		
 		for (Lending lending : list) {	
@@ -53,12 +63,13 @@ public class MemberUseCdtTblPanel extends JPanel {
 			}
 			
 			model.addRow(new Object[] {
+					
 					lending.getBookCd().getBookName().replace("|", ","),
 					writer,
-					lending.getBookCd().getPblicteYear(),
+					String.format("%tF", lending.getBookCd().getPblicteYear()),
 					lending.getBookCd().getPls().getPlsName(),
 					new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
-					lending.getRturnDate()==null?"":String.format("%s",new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate())),	
+					String.format("%tF", lending.getRturnDueDate()),
 					lending.getRturnPsmCdt() > 0 ? "신청완료" : "신청가능",
 					false
 			});
@@ -68,6 +79,32 @@ public class MemberUseCdtTblPanel extends JPanel {
 		table.setModel(model);
 		tableSetWidth(150, 100, 100, 100, 100, 100, 100, 100);
 		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6);
+	}
+	
+	public void getSelectedItem() {
+		
+		for(int i=0; i<table.getRowCount(); i++) {
+			Boolean checkCdt = (Boolean) table.getValueAt(i, 7);
+			
+			if(checkCdt && lists.get(i).getRturnPsmCdt() == 0) {
+				Date date = lists.get(i).getRturnDueDate();
+				int cdt = lists.get(i).getRturnPsmCdt();
+				cal.setTime(date);
+				cal.add(Calendar.DATE, 10);
+				Date rturnDate = cal.getTime();
+				System.out.println(rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
+						+ lists.get(i).getMberId().getMberId());
+//				System.out.println(lists.get(i).getBookCd().getBookCode());
+//				Lending lending = new Lending();				
+//				lending.setBookCd(new Book(lists.get(i).getBookCd().getBookCode()));
+//				lending.setMberId(new Member(lists.get(i).getMberId().getMberId()));
+//				lending.setRturnPsmCdt(1);
+//				lending.setRturnDueDate(rturnDate);
+//				System.out.println(lending.toString());
+//				service.modifyLendingByCodeAndMberId(lending);
+			}
+		}
+		
 	}
 	
 	protected void tableCellAlign(int align, int... idx) {

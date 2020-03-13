@@ -305,7 +305,14 @@ insert into lending(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, 
 ('fivestar@nate.com', 'A090101', '2020-03-12', '2020-03-27', 0, 0, 0);
 
 select * from lending where rturn_date is null;
-		
+
+select * from lending where book_cd = 'A090253' and mber_id = 'fivestar@nate.com' and rturn_date is null;
+select * from lending where mber_id = 'fivestar@nate.com' and rturn_date is null; 
+select * from lending where book_cd = 'A090253' and mber_id = 'fivestar@nate.com' and rturn_date is null; 
+
+update lending 
+	set book_cd = 'A090253', rturn_psm_cdt = 0
+	where book_cd = 'A090253' and mber_id = 'fivestar@nate.com';
 		
 		
 		

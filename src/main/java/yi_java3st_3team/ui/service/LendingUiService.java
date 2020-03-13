@@ -60,4 +60,8 @@ public class LendingUiService {
 	public Member showLendingMemberId(Member member) {
 		return memberDao.selectMemberByNo(member);
 	}
+	
+	public void modifyLendingByCodeAndMberId(Lending lending) {
+		lendingDao.updateLendingByCodeAndMberId(lending);
+	}
 }

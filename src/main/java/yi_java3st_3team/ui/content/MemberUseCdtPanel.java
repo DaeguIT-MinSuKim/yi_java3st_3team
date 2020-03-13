@@ -218,6 +218,8 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	}
 	
 	protected void btnRturnPsmCdtActionPerformed(ActionEvent e) {
-		
+		pLendTblList.getSelectedItem();
+//		Lending lending = new Lending(new Member(LoginFrame.loginMber.getMberId()));
+//		pLendTblList.loadDate(lendService.showMenberLendBookList(lending));
 	}
 }

@@ -135,10 +135,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		if (frame2 == null) {
 			frame2 = new JFrame();
 			frame2.setBounds(50, 50, 850, 600);
-//			frame1 = new JFrame();
-//			frame1.setTitle("추천도서 등록");
-//			frame1.setBounds(50, 50, 1000, 700);
-//			frame1.getContentPane().add(new MemberUserCdtPanel());
 			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			LendingPanel Lendings = new LendingPanel();
 			frame2.getContentPane().add(Lendings);
@@ -149,12 +145,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			}
 			frame2 = new JFrame();
 			frame2.setBounds(50, 50, 850, 600);
-//			frame1 = new JFrame();
-//			frame1.setTitle("추천도서 등록");
-//			frame1.setBounds(50, 50, 1000, 700);
-//			frame1.getContentPane().add(new MemberUserCdtPanel());
 			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			LendingPanel Lendings = new LendingPanel();
+			LendingPanel2 Lendings = new LendingPanel2();
 			frame2.getContentPane().add(Lendings);
 			frame2.setVisible(true);
 		}

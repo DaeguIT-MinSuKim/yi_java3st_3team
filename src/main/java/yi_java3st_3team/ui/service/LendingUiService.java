@@ -45,12 +45,13 @@ public class LendingUiService {
 	public void addLending(Lending lending) {
 		lendingDao.insertLending(lending);
 	}
+
 	public List<Lending> selectLendingByAllTest() {
 		return lendingDao.selectLendingByAllTest();
 	}
 
 	public Member showLendingMemberId(Member member) {
-		return memberDao.selectLendingMemberByNo(member);
+		return memberDao.selectMemberByNo(member);
 	}
 
 }

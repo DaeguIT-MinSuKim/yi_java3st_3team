@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class MemberIdSelectPanel extends JPanel {
@@ -68,6 +70,7 @@ public class MemberIdSelectPanel extends JPanel {
 	}
 
 	private void initialize() {
+		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel p1 = new JPanel();

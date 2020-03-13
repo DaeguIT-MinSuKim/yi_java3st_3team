@@ -31,3 +31,9 @@ select l.book_cd , b.book_name , if(b.trnslr_name = null, b.authr_name, concat(b
 
 select *
 	from `member`;
+
+desc `member`;
+
+select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,total_le_cnt,lend_book_cnt,grade ,lend_psb_cdt ,join_dt ,wdr_cdt ,od_cnt 
+	from member
+	where mber_id = 'daddystop@gmail.com';

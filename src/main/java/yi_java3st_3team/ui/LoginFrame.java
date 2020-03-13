@@ -33,6 +33,7 @@ import yi_java3st_3team.ui.content.MemberUseCdtPanel;
 import yi_java3st_3team.ui.dialog.FindIdDialog;
 import yi_java3st_3team.ui.dialog.FindPwDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
+import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
 import yi_java3st_3team.ui.service.LendingUiService;
 import yi_java3st_3team.ui.service.LoginUiService;
 import javax.swing.JEditorPane;
@@ -385,7 +386,6 @@ public class LoginFrame extends JFrame implements ActionListener {
 					test.setTitle("이용 현황");
 					test.setBounds(100, 100, 1200, 800);
 					test.getContentPane().add(muc);
-					muc.setLogingFrame(this);
 				}
 				dispose();
 				muc.setItem();

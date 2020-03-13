@@ -17,6 +17,23 @@
 				"url": "jdbc:mysql://localhost:3306/",
 				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
 <<<<<<< HEAD
+				"type": "dev"
+			}
+		},
+		"mysql5-170d34b3755-5ad5932979a87cba": {
+			"provider": "mysql",
+			"driver": "mysql5",
+			"name": "MySQL - yi_java3st_3team",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"database": "yi_java3st_3team",
+				"url": "jdbc:mysql://localhost:3306/yi_java3st_3team",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
+=======
+<<<<<<< HEAD
 =======
 				"type": "dev",
 				"handlers": {}
@@ -35,6 +52,7 @@
 				"url": "jdbc:mysql://localhost:3306/yi_java3st_3team",
 				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
 >>>>>>> refs/heads/hotfix_Lee3
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 				"type": "dev",
 				"handlers": {}
 			}

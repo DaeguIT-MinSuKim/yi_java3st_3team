@@ -278,7 +278,7 @@ public class LendingDaoImpl implements LendingDao {
 		Book book = new Book(rs.getString("b.book_code"));
 		book.setBookName(rs.getString("b.book_name"));
 		book.setAuthrName(rs.getString("b.authr_name"));
-		book.setPblicteYear(rs.getTimestamp("b.pblicate_year"));
+		book.setPblicteYear(rs.getTimestamp("b.pblicte_year"));
 		PublishingCompany pCompany = new PublishingCompany(rs.getString("p.pls_name"));
 		book.setPls(pCompany);
 		lending.setBookCd(book);

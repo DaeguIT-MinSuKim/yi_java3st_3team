@@ -59,7 +59,7 @@ public abstract class AbsListInCheckBoxPanel<T> extends JPanel {
 		setTblWidthAlign();
 
 		RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-		table.setRowSorter(sorter);
+//		table.setRowSorter(sorter);
 		
 		table.getColumnModel().getColumn(10).setCellRenderer(new TableCell());
 		table.getColumnModel().getColumn(10).setCellEditor(new TableCell());

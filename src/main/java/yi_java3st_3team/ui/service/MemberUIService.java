@@ -1,11 +1,8 @@
 package yi_java3st_3team.ui.service;
 
-import javax.swing.JOptionPane;
-
 import yi_java3st_3team.dao.MemberDao;
 import yi_java3st_3team.dao.ZipCodeDao;
 import yi_java3st_3team.dao.impl.MemberDaoImpl;
-import yi_java3st_3team.dao.impl.ZipCodeDaoImpl;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
 

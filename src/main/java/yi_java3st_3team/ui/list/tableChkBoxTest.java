@@ -2,11 +2,13 @@ package yi_java3st_3team.ui.list;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -52,15 +54,16 @@ public class tableChkBoxTest extends JPanel {
 		
 		TestTabelModel model = new TestTabelModel();
 		List<Lending> list = service.selectLendingByAllTest();
+		
 		for(Lending lending : list) {
-			model.addRow(new Object[] {lending.getBookCd().getBookCode(),lending.getBookCd().getBookName(),lending.getBookCd().getAuthrName(),lending.getBookCd().getPblicteYear(),lending.getBookCd().getPls().getPlsName(),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(lending.getLendDate()),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(lending.getRturnDate()),false});
+			model.addRow(new Object[] {lending.getBookCd().getBookCode(),lending.getBookCd().getBookName(),lending.getBookCd().getAuthrName(),lending.getBookCd().getPblicteYear(),lending.getBookCd().getPls().getPlsName(),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(lending.getLendDate()),lending.getRturnDate()==null?"":String.format("%s",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(lending.getLendDate())),false});
 		}
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
 	}
 	public class TestTabelModel extends DefaultTableModel {
 		public TestTabelModel() {
-			super(new String[] {"도서코드", "도서명", "저자/역자", "발행년도", "출판사", "대여일", "반납예정일", "연체일수","선택"},0);
+			super(new String[] {"도서코드", "도서명", "저자/역자", "발행년도", "출판사", "대여일", "반납예정일","선택"},0);
 		}
 
 		@Override
@@ -89,7 +92,6 @@ public class tableChkBoxTest extends JPanel {
 				rowData.set(7, (boolean)aValue);
 				fireTableCellUpdated(row, column);
 			}
-		}
-		
+		}	
 	}
 }

@@ -1,13 +1,12 @@
 package yi_java3st_3team.ui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
+import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -19,18 +18,21 @@ import javafx.scene.paint.Color;
 import yi_java3st_3team.ui.service.StatisticUIService;
 
 @SuppressWarnings("serial")
-public class BookInfoPanelBarChart extends JFXPanel {
+public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 	private StatisticUIService service;
 	private BarChart<String, Number> barChart;
 	public BookInfoPanelBarChart() {
-		final JFXPanel fxPanel = new JFXPanel();
-		Platform.runLater(() -> initFX(fxPanel));
+
 	}
+	public BarChart<String, Number> getBarChart() {
+		return barChart;
+	}
+
 	public void initFX(JFXPanel fxPanel) {
 		Scene scene = createScene();
 		fxPanel.setScene(scene);
-		
 	}
+	@Override
 	public Scene createScene() {
 		Group root = new Group();
 		Scene scene = new Scene(root, Color.ALICEBLUE);
@@ -43,9 +45,10 @@ public class BookInfoPanelBarChart extends JFXPanel {
 		yAxis.setLabel("권수");
 
 		barChart = new BarChart<>(xAxis, yAxis);
+		barChart.setLegendVisible(false);
 		barChart.setTitle("대여 반납 통계");
 		
-		barChart.setPrefSize(600, 600);
+		barChart.setPrefSize(900, 600);
 		barChart.setData(getChartData());
 		
 		root.getChildren().add(barChart);

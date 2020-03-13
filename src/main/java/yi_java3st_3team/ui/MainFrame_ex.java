@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -39,8 +40,7 @@ public class MainFrame_ex extends JFrame {
 	private JPanel pLogout;
 	private JPanel pWest;
 	private JPanel pCenter;
-	private JFXPanel pChartCenter;
-	private static MainFrame_ex frame;
+	private BookInfoPanelBarChart bookInfoChart;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -52,8 +52,7 @@ public class MainFrame_ex extends JFrame {
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 //					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-
-					frame = new MainFrame_ex();
+					JFrame frame = new MainFrame_ex();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -280,8 +279,9 @@ public class MainFrame_ex extends JFrame {
 								switch(chkLabel.getText()) {
 								case "대여/반납 통계":
 									contentPane.remove(pCenter);
-									pChartCenter = new BookInfoPanelBarChart();
-									contentPane.add(pChartCenter,BorderLayout.CENTER);
+									bookInfoChart = new BookInfoPanelBarChart();
+									contentPane.add(bookInfoChart,BorderLayout.CENTER);
+									Platform.runLater(() -> initFX(bookInfoChart));
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;
@@ -302,5 +302,10 @@ public class MainFrame_ex extends JFrame {
 			}	
 		};
 		return menuAdapter;
+	}
+	public void initFX(InitScene fxPanel) {
+		Scene scene = fxPanel.createScene();
+		JFXPanel panel = (JFXPanel) fxPanel;
+		panel.setScene(scene);
 	}
 }

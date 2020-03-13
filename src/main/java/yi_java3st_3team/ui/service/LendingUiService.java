@@ -49,9 +49,6 @@ public class LendingUiService {
 	public List<Lending> selectLendingByAllTest() {
 		return lendingDao.selectLendingByAllTest();
 	}
-<<<<<<< HEAD
-=======
-	
 	public List<Lending> showMemberLendBookTotlaList(Lending lending) {
 		return lendingDao.selectLendingByMberIdAndLendBookTotalAll(lending);
 	}
@@ -63,6 +60,4 @@ public class LendingUiService {
 	public Member showLendingMemberId(Member member) {
 		return memberDao.selectLendingMemberByNo(member);
 	}
-
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 }

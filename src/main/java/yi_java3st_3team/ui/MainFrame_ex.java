@@ -19,6 +19,9 @@ import javax.swing.border.EmptyBorder;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import yi_java3st_3team.ui.content.BookManagerPanel;
+import yi_java3st_3team.ui.content.BookRegistrationPanel;
+import yi_java3st_3team.ui.content.RecomBookAddPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -41,6 +44,9 @@ public class MainFrame_ex extends JFrame {
 	private JPanel pWest;
 	private JPanel pCenter;
 	private BookInfoPanelBarChart bookInfoChart;
+	private BookRegistrationPanel bookReqst;
+	private BookManagerPanel bookMgn;
+	private RecomBookAddPanel recomBookAdd;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -249,6 +255,59 @@ public class MainFrame_ex extends JFrame {
 					revalidate();
 					break;
 				case "도서관리":
+					contentPane.remove(pWest);
+					contentPane.remove(pCenter);
+					pCenter = new JPanel();
+					pCenter.setBackground(Color.white);
+					pWest = new WestBookManagementPanel();
+					JPanel[] pBook = ((WestBookManagementPanel) pWest).getPanels();
+					for(JPanel panel : pBook) {
+						panel.addMouseListener(new MouseAdapter() {
+
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								for(JPanel panel : pBook) {
+									JLabel label = (JLabel)panel.getComponent(0);
+									panel.setBackground(new Color(240, 240, 240));
+									label.setForeground(Color.black);
+								}
+								JPanel chkPanel = (JPanel) e.getSource();
+								JLabel chkLabel = (JLabel) chkPanel.getComponent(0);
+								chkPanel.setBackground(new Color(52,147,221));
+								chkLabel.setForeground(Color.white);
+								switch(chkLabel.getText()) {
+								case "도서등록" :
+									contentPane.remove(pCenter);
+									bookReqst = new BookRegistrationPanel();
+									contentPane.add(bookReqst,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+									break;
+								case "보유도서 관리" :
+									contentPane.remove(pCenter);
+									bookMgn = new BookManagerPanel();
+									contentPane.add(bookMgn,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+									break;
+								case "추천도서 등록" :
+									contentPane.remove(pCenter);
+									recomBookAdd = new RecomBookAddPanel();
+									contentPane.add(recomBookAdd,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+									break;
+								case "출판사/분류 관리" :
+									break;
+								}
+							}
+							
+						});
+					}
+					contentPane.add(pCenter, BorderLayout.CENTER);
+					contentPane.add(pWest, BorderLayout.WEST);
+					repaint();
+					revalidate();
 					break;
 				case "회원관리":
 					break;

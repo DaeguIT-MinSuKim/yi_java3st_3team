@@ -52,17 +52,14 @@ public class MainFrame_ex extends JFrame {
 	private MemberInfoPanelPieChart memInfoChart;
 	private BookRegistrationPanel bookReqst;
 	private BookManagerPanel bookMgn;
-<<<<<<< HEAD
-	private RecomBookAddPanel recomBookAdd;
 	private MemberJoinUIPanel memberJoin;
 	private MemberSelectUIPanel memberSelect;
-	
-=======
+
 	private RecomBookAddPanel recomBookAdd;
 	private BookPlsManageMentPanel bookPlsMgn;
 	private Thread chartThread;
 	private JLabel lblGreeting;
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -219,7 +216,7 @@ public class MainFrame_ex extends JFrame {
 		pMemMgn.addMouseListener(menuAdapter);
 		pChkOutRtn.addMouseListener(menuAdapter);
 		pEmpMgn.addMouseListener(menuAdapter);
-<<<<<<< HEAD
+
 		pStatistic.addMouseListener(menuAdapter);
 		
 		Thread initPanelThread = new Thread(new Runnable() {
@@ -234,13 +231,11 @@ public class MainFrame_ex extends JFrame {
 				memberSelect = new MemberSelectUIPanel();
 			}
 		});
-=======
+
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		chartThread = initChartThread();
 		chartThread.run();
-		Thread initPanelThread = initPanelThread();
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 		initPanelThread.run();
 	}
 	

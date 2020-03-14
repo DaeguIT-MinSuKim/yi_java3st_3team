@@ -1,20 +1,25 @@
 package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import yi_java3st_3team.dto.Member;
+import yi_java3st_3team.ui.dialog.MemberUpdateDialog;
 import yi_java3st_3team.ui.list.MemberTblPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
-import java.awt.FlowLayout;
 
 @SuppressWarnings("serial")
 public class MemberSelectUIPanel extends JPanel implements ActionListener {
@@ -25,6 +30,7 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 	private JRadioButton radioBtnID;
 	private JRadioButton radioBtnName;
 	private JRadioButton radioBtnBirthday;
+	private MemberUpdateDialog updateDialog;
 
 	public MemberSelectUIPanel() {
 		service = new MemberUIService();
@@ -65,9 +71,9 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 		pList.setLayout(new BorderLayout(0, 0));
 		
 		pMemberList = new MemberTblPanel();
+		pMemberList.loadData(service.showMemberListAll());
 		pMemberList.setPopupMenu(createPop());
 		pList.add(pMemberList, BorderLayout.CENTER);
-		//pMemberList.setLayout(new BorderLayout(0, 0));
 	}
 
 	private JPopupMenu createPop() {
@@ -85,15 +91,29 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 		authorityItem.addActionListener(myPopMenuListener);
 		popMenu.add(authorityItem);
 		
-		
 		return popMenu;
 	}
 	
 	
 	ActionListener myPopMenuListener = new ActionListener() {
+		private JFrame updateFrame;
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			try {
+				if(e.getActionCommand().contentEquals("수정")) {
+					
+					updateDialog = new MemberUpdateDialog(updateFrame, "회원정보 수정");
+					//updateDialog.setBounds(100,100,454,430);
+					updateDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					updateDialog.setVisible(true);
+					
+					pMemberList.loadData(service.showMemberListAll());
+				
+				}
+			}catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	};
 

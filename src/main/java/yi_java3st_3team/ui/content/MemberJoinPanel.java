@@ -69,14 +69,17 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pEast = new JPanel();
+		pEast.setBackground(Color.WHITE);
 		add(pEast, BorderLayout.EAST);
 		pEast.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JPanel pLeft = new JPanel();
+		pLeft.setBackground(Color.WHITE);
 		pEast.add(pLeft);
 		pLeft.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pContent = new JPanel();
+		pContent.setBackground(Color.WHITE);
 		pEast.add(pContent);
 		
 		lblPic = new JLabel();
@@ -88,6 +91,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		pContent.add(lblPic);
 		
 		JPanel pBtn = new JPanel();
+		pBtn.setBackground(Color.WHITE);
 		pContent.add(pBtn);
 		
 		btnPic = new JButton("증명사진");
@@ -96,9 +100,11 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		pBtn.add(btnPic, BorderLayout.NORTH);
 		
 		JPanel pRight = new JPanel();
+		pRight.setBackground(Color.WHITE);
 		pEast.add(pRight);
 
 		JPanel pCenter = new JPanel();
+		pCenter.setBackground(Color.WHITE);
 		add(pCenter, BorderLayout.CENTER);
 		pCenter.setLayout(new GridLayout(0, 2, 0, 15));
 
@@ -108,6 +114,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		pCenter.add(lblID);
 		
 		JPanel pID = new JPanel();
+		pID.setBackground(Color.WHITE);
 		pCenter.add(pID);
 		pID.setLayout(new GridLayout(0, 2, 20, 0));
 		
@@ -166,6 +173,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		pCenter.add(pfPW2);
 		
 		JPanel pAir2 = new JPanel();
+		pAir2.setBackground(Color.WHITE);
 		pCenter.add(pAir2);
 		
 		lblPWCheck = new JLabel("비밀번호 중복확인");
@@ -216,6 +224,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		pCenter.add(lblZip);
 
 		JPanel pZip = new JPanel();
+		pZip.setBackground(Color.WHITE);
 		pCenter.add(pZip);
 		pZip.setLayout(new GridLayout(0, 2, 20, 0));
 
@@ -240,6 +249,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		tfAddress.setColumns(10);
 
 		JPanel pGarbage = new JPanel();
+		pGarbage.setBackground(Color.WHITE);
 		pCenter.add(pGarbage);
 
 		tfDetailAdress = new JTextField();

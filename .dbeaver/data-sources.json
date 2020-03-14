@@ -1,7 +1,26 @@
 {
 	"folders": {},
 	"connections": {
+<<<<<<< HEAD
+		"mysql5-170d7a03683-27ec671173580ceb": {
+			"provider": "mysql",
+			"driver": "mysql5",
+			"name": "MySQL - localhost",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "3306",
+				"url": "jdbc:mysql://localhost:3306/",
+				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
+				"type": "dev",
+				"handlers": {}
+			}
+		},
+		"mysql5-170d7a0b548-4d9cd756b184cd58": {
+=======
 		"mysql5-170d79a66b8-e9c7e3ac8377445": {
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 			"provider": "mysql",
 			"driver": "mysql5",
 			"name": "MySQL - yi_java3st_3team",

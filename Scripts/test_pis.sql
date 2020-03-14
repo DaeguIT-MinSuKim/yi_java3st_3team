@@ -189,3 +189,9 @@ select (select count(book_code) from book where lc_no = 1) as 'cate1',
 	   (select count(book_code) from book where lc_no = 8) as 'cate8',
 	   (select count(book_code) from book where lc_no = 9) as 'cate9',
 	   (select count(book_code) from book where lc_no = 10) as 'cate10';
+select (select count(mber_id) from member) as 'totalmember',
+	   (select count(mber_id) from member where total_le_cnt < 100) as 'normember',
+	   (select count(mber_id) from member where total_le_cnt >= 100) as 'vipmember';
+
+select lb_id,lb_pass from librarian where title = 1;
+select mber_id,mber_pass from member;

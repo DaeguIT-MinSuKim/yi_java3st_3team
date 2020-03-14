@@ -40,7 +40,7 @@ public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 		barChart.setLegendVisible(false);
 		barChart.setTitle("대여 반납 통계");
 		barChart.setStyle("-fx-font-size: " + 25 + "px;");;
-		barChart.setPrefSize(900, 600);
+		barChart.setPrefSize(900, 800);
 		barChart.setData(getChartData());
 		root.getChildren().add(barChart);
 

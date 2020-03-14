@@ -54,7 +54,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public List<Member> selectMemberByAll() {
-		String sql = "select mber_id, mber_name, mber_brthdy, mber_bass_ad, mber_detail_ad, mber_tel, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt\r\n" + 
+		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt \r\n" + 
 					  "from member";
 		List<Member> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
@@ -64,13 +64,35 @@ public class MemberDaoImpl implements MemberDao {
 			if (rs.next()) {
 				list = new ArrayList<>();
 				do {
-					list.add(getMember(rs, false));
+					list.add(getMemberByAll(rs));
 				} while (rs.next());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	private Member getMemberByAll(ResultSet rs) throws SQLException {
+		String mberId = rs.getString("mber_id");
+		String mberName = rs.getString("mber_name");
+		Date mberBrthdy = rs.getTimestamp("mber_brthdy");
+		ZipCode mberZip = new ZipCode(rs.getInt("mber_zip"));
+		String mberBassAd = rs.getString("mber_bass_ad");
+		String mberDetailAd = rs.getString("mber_detail_ad");
+		String mberTel = rs.getString("mber_tel");
+		int totalLeCnt = rs.getInt("total_le_cnt");
+		int lendBookCnt = rs.getInt("lend_book_cnt");
+		Grade grade = new Grade(rs.getInt("grade"));
+		
+		Date joinDt = rs.getTimestamp("join_dt");
+		int wdrCdt = rs.getInt("wdr_cdt");
+		int lendPsbCdt = rs.getInt("lend_psb_cdt");
+		int odCnt = rs.getInt("od_cnt");
+		
+		Member mber = new Member(mberId, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt, odCnt);
+		LogUtil.prnLog("getMember => " + mber);
+		return mber;
 	}
 
 	@Override
@@ -279,6 +301,27 @@ public class MemberDaoImpl implements MemberDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public int[] selectMemberCounts() {
+		int [] members = new int[3];
+		String sql = "select (select count(mber_id) from member) as 'totalmember',\r\n" + 
+				"	   (select count(mber_id) from member where total_le_cnt < 100) as 'normalmember',\r\n" + 
+				"	   (select count(mber_id) from member where total_le_cnt >= 100) as 'vipmember'";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				members[0] = rs.getInt("totalmember");
+				members[1] = rs.getInt("normalmember");
+				members[2] = rs.getInt("vipmember");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return members;
 	}
 
 

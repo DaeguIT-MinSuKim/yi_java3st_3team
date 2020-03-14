@@ -18,6 +18,7 @@ import yi_java3st_3team.ui.service.MemberUIService;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class MemberJoinUIPanel extends JPanel implements ActionListener{
@@ -27,14 +28,6 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 	
 	private JButton btnAdd;
 	private JButton btnCancel;
-	private JPanel panel;
-	private JPanel panel_1;
-	private JPanel panel_2;
-	private JPanel panel_3;
-	private JPanel panel_4;
-	private JPanel panel_5;
-	private JPanel panel_6;
-	private JPanel panel_7;
 
 	public MemberJoinUIPanel() {
 		service = new MemberUIService();
@@ -42,16 +35,8 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 	}
 
 	private void initialize() {
+		setBorder(new EmptyBorder(40, 40, 40, 40));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
-		panel = new JPanel();
-		add(panel);
-		
-		panel_2 = new JPanel();
-		add(panel_2);
-		
-		panel_4 = new JPanel();
-		add(panel_4);
 		
 		JPanel pContent = new JPanel();
 		add(pContent);
@@ -60,12 +45,6 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 		pMember = new MemberJoinPanel();
 		pMember.setService(service);
 		pContent.add(pMember, BorderLayout.CENTER);
-		
-		panel_6 = new JPanel();
-		add(panel_6);
-		
-		panel_7 = new JPanel();
-		add(panel_7);
 		
 		JPanel pBtns = new JPanel();
 		add(pBtns);
@@ -78,15 +57,6 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 		btnCancel = new JButton("취소");
 		btnCancel.addActionListener(this);
 		pBtns.add(btnCancel);
-		
-		panel_1 = new JPanel();
-		add(panel_1);
-		
-		panel_3 = new JPanel();
-		add(panel_3);
-		
-		panel_5 = new JPanel();
-		add(panel_5);
 	}
 
 	@Override

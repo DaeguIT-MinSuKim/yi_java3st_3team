@@ -208,6 +208,8 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	
 
 	public void setItem(Member item) {
+		
+		
 		return;
 		
 	}
@@ -232,7 +234,6 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		dispose();
 	}
 	protected void btnUpdateActionPerformed(ActionEvent e) {
-		
 		
 	}
 }

@@ -2,12 +2,15 @@ package yi_java3st_3team.ui.service;
 
 import java.util.List;
 
+import yi_java3st_3team.dao.BookDao;
 import yi_java3st_3team.dao.GradeDao;
 import yi_java3st_3team.dao.LendingDao;
 import yi_java3st_3team.dao.MemberDao;
+import yi_java3st_3team.dao.impl.BookDaoImpl;
 import yi_java3st_3team.dao.impl.GradeDaoImpl;
 import yi_java3st_3team.dao.impl.LendingDaoImpl;
 import yi_java3st_3team.dao.impl.MemberDaoImpl;
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
 
@@ -15,11 +18,13 @@ public class LendingUiService {
 	private LendingDao lendingDao;
 	private GradeDao gradeDao;
 	private MemberDao memberDao;
+	private BookDao bookDao;
 
 	public LendingUiService() {
 		lendingDao = LendingDaoImpl.getInstance();
 		gradeDao = GradeDaoImpl.getInstance();
 		memberDao = MemberDaoImpl.getInstance();
+		bookDao = BookDaoImpl.getInstance();
 	}
 
 	public List<Lending> showLendingList() {
@@ -64,5 +69,9 @@ public class LendingUiService {
 
 	public void modifyLendingByCodeAndMberId(Lending lending) {
 		lendingDao.updateLendingByCodeAndMberId(lending);
+	}
+
+	public Book showLendingBookCode(Book book) {
+		return lendingDao.showLendingByBookCode(book);
 	}
 }

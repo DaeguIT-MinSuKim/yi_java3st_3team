@@ -51,3 +51,6 @@ select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_p
 select * 
 	from book
 	where book_code = 'A090101';
+select book_code ,book_name ,authr_name ,trnslr_name , concat() as 'pls', pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt 
+	from book b left join publishing_company p on b.pls = p.pls_no 
+	where book_code = 'A090101';

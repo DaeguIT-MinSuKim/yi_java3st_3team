@@ -410,8 +410,9 @@ public class BookDaoImpl implements BookDao {
 	@Override
 
 	public Book LendingBookByCode(Book book) {
-		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n"
-				+ "	from book\r\n" + "	where book_code = ?";
+		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n" + 
+				"	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + 
+				"	where book_code = ?";
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, book.getBookCode());

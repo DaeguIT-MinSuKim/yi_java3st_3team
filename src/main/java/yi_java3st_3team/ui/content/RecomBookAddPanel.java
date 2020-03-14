@@ -53,6 +53,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel pList = new JPanel();
+		pList.setBackground(Color.WHITE);
 		pList.setPreferredSize(new Dimension(10, 150));
 		add(pList);
 		pList.setLayout(new BorderLayout(0, 0));
@@ -62,11 +63,13 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		pList.add(pBookList);
 		
 		JPanel pTf = new JPanel();
+		pTf.setBackground(Color.WHITE);
 		pTf.setBorder(new EmptyBorder(30, 10, 20, 10));
 		add(pTf);
 		pTf.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pWest = new JPanel();
+		pWest.setBackground(Color.WHITE);
 		pTf.add(pWest, BorderLayout.WEST);
 		pWest.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -78,11 +81,13 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		pWest.add(lblBookImg);
 		
 		JPanel pCenter = new JPanel();
+		pCenter.setBackground(Color.WHITE);
 		pCenter.setBorder(new EmptyBorder(0, 10, 0, 10));
 		pTf.add(pCenter, BorderLayout.CENTER);
 		pCenter.setLayout(new BoxLayout(pCenter, BoxLayout.Y_AXIS));
 		
 		JPanel pBox1 = new JPanel();
+		pBox1.setBackground(Color.WHITE);
 		pBox1.setBorder(new EmptyBorder(10, 10, 10, 10));
 		pCenter.add(pBox1);
 		pBox1.setLayout(new GridLayout(0, 4, 0, 10));
@@ -136,11 +141,13 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		pBox1.add(tfPls);
 		
 		JPanel pBox2 = new JPanel();
+		pBox2.setBackground(Color.WHITE);
 		pBox2.setBorder(new EmptyBorder(10, 0, 0, 0));
 		pCenter.add(pBox2);
 		pBox2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pPost = new JPanel();
+		pPost.setBackground(Color.WHITE);
 		pPost.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(192, 192, 192)));
 		pBox2.add(pPost, BorderLayout.NORTH);
 		pPost.setLayout(new BorderLayout(0, 0));
@@ -151,6 +158,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		pPost.add(lblPost);
 		
 		JPanel pTa = new JPanel();
+		pTa.setBackground(Color.WHITE);
 		pTa.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pBox2.add(pTa, BorderLayout.CENTER);
 		pTa.setLayout(new BorderLayout(0, 0));
@@ -161,6 +169,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		pTa.add(taPost);
 		
 		JPanel pBox3 = new JPanel();
+		pBox3.setBackground(Color.WHITE);
 		pCenter.add(pBox3);
 		
 		btnCancel = new JButton("취소");

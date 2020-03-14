@@ -14,4 +14,6 @@ public interface LargeClassificationDao {
 	int updateLargeClassification(LargeClassification lclas);
 
 	int deleteLargeClassification(LargeClassification lclas);
+	
+	int selectLaseCode();
 }

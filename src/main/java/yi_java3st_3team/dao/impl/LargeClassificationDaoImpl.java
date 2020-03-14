@@ -109,4 +109,20 @@ public class LargeClassificationDaoImpl implements LargeClassificationDao {
 		return 0;
 	}
 
+	@Override
+	public int selectLaseCode() {
+		String sql = "select max(lclas_no) from large_classification";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {
+				return pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 }

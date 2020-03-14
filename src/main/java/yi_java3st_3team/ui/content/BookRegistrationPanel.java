@@ -49,6 +49,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionListener {
@@ -84,11 +85,13 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		setLayout(new BorderLayout(0, 0));
 
 		pCenter = new JPanel();
+		pCenter.setBackground(Color.WHITE);
 		pCenter.setBorder(new EmptyBorder(50, 0, 0, 40));
 		add(pCenter, BorderLayout.CENTER);
 		pCenter.setLayout(new GridLayout(0, 2, 10, 10));
 
 		JLabel lblBookName = new JLabel("도서명");
+		lblBookName.setBackground(Color.WHITE);
 		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblBookName);
 
@@ -153,27 +156,32 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(lblLendPsbCdt);
 
 		pLendPsbCdt = new JPanel();
+		pLendPsbCdt.setBackground(Color.WHITE);
 		pCenter.add(pLendPsbCdt);
 		pLendPsbCdt.setLayout(new GridLayout(0, 2, 10, 10));
 
 		lendPsbCdtBtnGrp = new ButtonGroup();
 
 		rdoYes = new JRadioButton("대여 가능");
+		rdoYes.setBackground(Color.WHITE);
 		rdoYes.setSelected(true);
 		pLendPsbCdt.add(rdoYes);
 
 		rdoNo = new JRadioButton("대여 불가능");
+		rdoNo.setBackground(Color.WHITE);
 		pLendPsbCdt.add(rdoNo);
 
 		lendPsbCdtBtnGrp.add(rdoYes);
 		lendPsbCdtBtnGrp.add(rdoNo);
 
 		JPanel pEast = new JPanel();
+		pEast.setBackground(Color.WHITE);
 		pEast.setBorder(new EmptyBorder(50, 0, 0, 50));
 		add(pEast, BorderLayout.EAST);
 		pEast.setLayout(new BorderLayout(0, 0));
 
 		JPanel pBookImg = new JPanel();
+		pBookImg.setBackground(Color.WHITE);
 		pBookImg.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pEast.add(pBookImg, BorderLayout.NORTH);
 
@@ -186,6 +194,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pBookImg.add(lblBookImg);
 
 		JPanel pBookImgBtn = new JPanel();
+		pBookImgBtn.setBackground(Color.WHITE);
 		pEast.add(pBookImgBtn);
 
 		btnBookImg = new JButton("도서이미지");
@@ -196,6 +205,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pBookImgBtn.add(btnBookImg);
 
 		JPanel pSouth = new JPanel();
+		pSouth.setBackground(Color.WHITE);
 		pSouth.setBorder(new EmptyBorder(30, 0, 30, 0));
 		add(pSouth, BorderLayout.SOUTH);
 

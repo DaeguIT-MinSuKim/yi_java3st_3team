@@ -54,10 +54,12 @@ public class BookListPanel extends JPanel implements ActionListener {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pSearch = new JPanel();
+		pSearch.setBackground(Color.WHITE);
 		add(pSearch, BorderLayout.NORTH);
 		pSearch.setLayout(new GridLayout(0, 2, 10, 10));
 
 		JPanel pOptions = new JPanel();
+		pOptions.setBackground(Color.WHITE);
 		pOptions.setBorder(new EmptyBorder(20, 130, 20, 0));
 		pSearch.add(pOptions);
 		pOptions.setLayout(new GridLayout(0, 3, 0, 0));
@@ -65,11 +67,13 @@ public class BookListPanel extends JPanel implements ActionListener {
 		rdoGroup = new ButtonGroup();
 
 		rdoBookCode = new JRadioButton("도서코드");
+		rdoBookCode.setBackground(Color.WHITE);
 		rdoBookCode.setSelected(true);
 		rdoBookCode.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pOptions.add(rdoBookCode);
 
 		rdoBookName = new JRadioButton("도서명");
+		rdoBookName.setBackground(Color.WHITE);
 		rdoBookName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pOptions.add(rdoBookName);
 
@@ -81,6 +85,7 @@ public class BookListPanel extends JPanel implements ActionListener {
 		pOptions.add(cmbCat);
 
 		JPanel pBars = new JPanel();
+		pBars.setBackground(Color.WHITE);
 		pBars.setBorder(new EmptyBorder(20, 0, 20, 100));
 		pSearch.add(pBars);
 		pBars.setLayout(new BoxLayout(pBars, BoxLayout.X_AXIS));
@@ -102,10 +107,13 @@ public class BookListPanel extends JPanel implements ActionListener {
 		pSearchBtns.add(btnSearch);
 
 		pList = new JPanel();
+		pList.setBackground(Color.WHITE);
+		pList.setBorder(new EmptyBorder(10, 20, 10, 20));
 		add(pList);
 		pList.setLayout(new BorderLayout(0, 0));
 
 		pBookList = new BookTblPanel();
+		pBookList.setBackground(Color.WHITE);
 		pBookList.loadData(service.showBookListAll());
 		pBookList.setPopupMenu(createPopupMenu());
 		pList.add(pBookList, BorderLayout.CENTER);

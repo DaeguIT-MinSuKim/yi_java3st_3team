@@ -143,6 +143,12 @@ public class LendingPanel extends JPanel implements ActionListener {
 		Book id = new Book(tfBookCode.getText());
 		Book book = bookService.LendingBookByCode(id);
 		JOptionPane.showMessageDialog(null, book.toString());
+		pLengingList.testting(book);
+		tfBookCode.setText("");
+//		lendingService.showLendingBookCode(book);
+//		pLengingList.addLending(book);
+//		pLengingList.revalidate();
+//		pLengingList.repaint();
 //		pLengingList.addItem(item);
 	}
 
@@ -169,6 +175,7 @@ public class LendingPanel extends JPanel implements ActionListener {
 			pMember.getTfLendPsbCdt().setText("가능");
 		} else {
 			pMember.getTfLendPsbCdt().setText("불가능");
+			JOptionPane.showMessageDialog(null, "대출하실 수 없습니다.");
 		}
 		int LendBookCnt = member.getLendBookCnt();
 		int BookLeCnt = member.getGrade().getBookLeCnt();

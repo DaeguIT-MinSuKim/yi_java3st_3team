@@ -2,6 +2,7 @@ package yi_java3st_3team.dao;
 
 import java.util.List;
 
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
 
@@ -33,4 +34,6 @@ public interface LendingDao {
 	int selectAvgRendDate();
 	
 	int updateLendingByCodeAndMberId(Lending lending);
+
+	Book showLendingByBookCode(Book book);
 }

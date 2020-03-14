@@ -16,7 +16,11 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
 import yi_java3st_3team.ui.content.BookManagerPanel;
+import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
 
@@ -42,13 +46,23 @@ public class MainFrame_ex extends JFrame {
 	private JPanel pCenter;
 	private JPanel chartBookInfo;
 	private JPanel chartBookCateInfo;
+	private JPanel chartMemberInfo;
 	private BookInfoPanelBarChart bookInfoChart;
+	private BookInfoCatePanelBarChart bookInfoCafeChart;
+	private MemberInfoPanelPieChart memInfoChart;
 	private BookRegistrationPanel bookReqst;
 	private BookManagerPanel bookMgn;
+<<<<<<< HEAD
 	private RecomBookAddPanel recomBookAdd;
 	private MemberJoinUIPanel memberJoin;
 	private MemberSelectUIPanel memberSelect;
 	
+=======
+	private RecomBookAddPanel recomBookAdd;
+	private BookPlsManageMentPanel bookPlsMgn;
+	private Thread chartThread;
+	private JLabel lblGreeting;
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -205,6 +219,7 @@ public class MainFrame_ex extends JFrame {
 		pMemMgn.addMouseListener(menuAdapter);
 		pChkOutRtn.addMouseListener(menuAdapter);
 		pEmpMgn.addMouseListener(menuAdapter);
+<<<<<<< HEAD
 		pStatistic.addMouseListener(menuAdapter);
 		
 		Thread initPanelThread = new Thread(new Runnable() {
@@ -219,7 +234,18 @@ public class MainFrame_ex extends JFrame {
 				memberSelect = new MemberSelectUIPanel();
 			}
 		});
+=======
+		pStatistic.addMouseListener(menuAdapter);
+		pLogout.addMouseListener(menuAdapter);
+		chartThread = initChartThread();
+		chartThread.run();
+		Thread initPanelThread = initPanelThread();
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 		initPanelThread.run();
+	}
+	
+	public JLabel getLblGreeting() {
+		return lblGreeting;
 	}
 
 	private JPanel getHomeMenuPanel() {
@@ -228,7 +254,7 @@ public class MainFrame_ex extends JFrame {
 		panel.setLayout(new BorderLayout(0, 0));
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new EmptyBorder(50, 50, 50, 50));
-		JLabel lblGreeting = new JLabel("박인선님 환영합니다");
+		lblGreeting = new JLabel("박인선님 환영합니다");
 		lblGreeting.setFont(new Font("굴림", Font.BOLD, 65));
 		lblGreeting.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblGreeting, BorderLayout.CENTER);
@@ -280,7 +306,6 @@ public class MainFrame_ex extends JFrame {
 					JPanel[] pBook = ((WestBookManagementPanel) pWest).getPanels();
 					for(JPanel panel : pBook) {
 						panel.addMouseListener(new MouseAdapter() {
-
 							@Override
 							public void mouseClicked(MouseEvent e) {
 								for(JPanel panel : pBook) {
@@ -314,7 +339,14 @@ public class MainFrame_ex extends JFrame {
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;
-								case "출판사/분류 관리" :
+								case "출판사 관리" :
+									contentPane.remove(pCenter);
+									pCenter = bookPlsMgn;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+									break;
+								case "도서분류 관리" :
 									break;
 								}
 							}
@@ -419,6 +451,11 @@ public class MainFrame_ex extends JFrame {
 									revalidate();
 									break;
 								case "이용자 현황":
+									contentPane.remove(pCenter);
+									pCenter = chartMemberInfo;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
 									break;
 								}
 							}
@@ -429,9 +466,53 @@ public class MainFrame_ex extends JFrame {
 					repaint();
 					revalidate();
 					break;
+				case "로그아웃":
+					dispose();
+					break;
 				}
+				chartThread.interrupt();
+				chartThread.run();
 			}	
 		};
 		return menuAdapter;
+	}
+	public void initFX(InitScene fxPanel) {
+		Scene scene = fxPanel.createScene();
+		JFXPanel panel = (JFXPanel) fxPanel;
+		panel.setScene(scene);
+	}
+	private Thread initChartThread() {
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				bookInfoChart = new BookInfoPanelBarChart();
+				bookInfoCafeChart = new BookInfoCatePanelBarChart();
+				memInfoChart = new MemberInfoPanelPieChart();
+				Platform.runLater(() -> initFX((InitScene) bookInfoChart));
+				Platform.runLater(() -> initFX((InitScene) bookInfoCafeChart));
+				Platform.runLater(() -> initFX((InitScene) memInfoChart));
+			}
+		});
+		return thread;
+	}
+	private Thread initPanelThread() {
+		return new Thread(new Runnable() {
+			@Override
+			public void run() {
+				bookReqst = new BookRegistrationPanel();
+				bookMgn = new BookManagerPanel();
+				recomBookAdd = new RecomBookAddPanel();
+				bookPlsMgn = new BookPlsManageMentPanel();
+				chartBookInfo = new BookInfoUIPanel();
+				chartBookCateInfo = new BookInfoCateInfoPanel();
+				
+				chartBookCateInfo = new BookCafeInfoUIPanel();
+				chartBookInfo = new BookInfoUIPanel();
+				chartMemberInfo = new MemberInfoUIPanel();
+				chartBookCateInfo.add(bookInfoCafeChart,BorderLayout.CENTER);
+				chartBookInfo.add(bookInfoChart,BorderLayout.CENTER);
+				chartMemberInfo.add(memInfoChart,BorderLayout.CENTER);
+			}
+		});
 	}
 }

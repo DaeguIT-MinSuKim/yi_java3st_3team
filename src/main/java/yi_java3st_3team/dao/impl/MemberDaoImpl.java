@@ -303,6 +303,27 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
+	@Override
+	public int[] selectMemberCounts() {
+		int [] members = new int[3];
+		String sql = "select (select count(mber_id) from member) as 'totalmember',\r\n" + 
+				"	   (select count(mber_id) from member where total_le_cnt < 100) as 'normalmember',\r\n" + 
+				"	   (select count(mber_id) from member where total_le_cnt >= 100) as 'vipmember'";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				members[0] = rs.getInt("totalmember");
+				members[1] = rs.getInt("normalmember");
+				members[2] = rs.getInt("vipmember");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return members;
+	}
+
 
 
 //	public Member selectLendingMemberByNo(Member member) {

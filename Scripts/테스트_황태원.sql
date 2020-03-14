@@ -39,7 +39,7 @@ where mber_id;
 
 delete
 from `member`
-where mber_id = 'xodnjs';
+where mber_id = 'bus503@daum.net';
 
 select *
 from member;
@@ -57,6 +57,11 @@ from book b1
 where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price 
 order by b1.regist_date;
 
+select *
+from member;
+
+select mber_id, mber_name, mber_brthdy, mber_bass_ad, mber_detail_ad, mber_tel, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt 
+from member;
 
 
 

@@ -27,6 +27,29 @@ public class Member {
 	public Member(String mberId) {
 		this.mberId = mberId;
 	}
+	
+	
+
+	public Member(String mberId, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, int totalLeCnt, int lendBookCnt, Grade grade, int lendPsbCdt,
+			Date joinDt, int wdrCdt, int odCnt) {
+		super();
+		this.mberId = mberId;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.totalLeCnt = totalLeCnt;
+		this.lendBookCnt = lendBookCnt;
+		this.grade = grade;
+		this.lendPsbCdt = lendPsbCdt;
+		this.joinDt = joinDt;
+		this.wdrCdt = wdrCdt;
+		this.odCnt = odCnt;
+	}
+
 
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, Date joinDt) {

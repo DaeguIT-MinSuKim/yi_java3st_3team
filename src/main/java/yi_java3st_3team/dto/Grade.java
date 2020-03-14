@@ -7,7 +7,6 @@ public class Grade {
 
 	public Grade() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Grade(int gradeNo) {
@@ -79,7 +78,7 @@ public class Grade {
 
 	@Override
 	public String toString() {
-		return "Grade [gradeNo=" + gradeNo + ", gradeName=" + gradeName + ", bookLeCnt=" + bookLeCnt + "]";
+		return String.format("%s", gradeName);
 	}
 
 }

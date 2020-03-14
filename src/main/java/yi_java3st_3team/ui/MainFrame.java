@@ -103,15 +103,14 @@ public class MainFrame extends JFrame implements ActionListener {
 //		}
 		JFrame frame = new JFrame();
 		frame.setBounds(50, 50, 850, 600);
-		MemberSelectUIPanel selectUI = new MemberSelectUIPanel();
+		MemberJoinUIPanel selectUI = new MemberJoinUIPanel();
 		frame.getContentPane().add(selectUI);
 		frame.setVisible(true);
-
 	}
 
 	protected void btnTest1ActionPerformed(ActionEvent e) {
 		if (frame1 == null) {
-			frame1 = new LoginFrame();
+			frame1 = new MainFrame_ex();
 //			frame1 = new JFrame();
 //			frame1.setTitle("추천도서 등록");
 //			frame1.setBounds(50, 50, 1000, 700);
@@ -122,7 +121,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			if (frame1.isVisible()) {
 				return;
 			}
-			frame1 = new LoginFrame();
+			frame1 = new MainFrame_ex();
 //			frame1 = new JFrame();
 //			frame1.setTitle("추천도서 등록");
 //			frame1.setBounds(50, 50, 1000, 700);

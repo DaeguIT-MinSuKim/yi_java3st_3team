@@ -408,6 +408,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
+
 	public Book LendingBookByCode(Book book) {
 		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n"
 				+ "	from book\r\n" + "	where book_code = ?";
@@ -447,5 +448,60 @@ public class BookDaoImpl implements BookDao {
 
 		return book;
 	}
+
+	public int[] selectCountByCate() {
+		int[] cateCounts = new int[10];
+		String sql = "select (select count(book_code) from book where lc_no = 1) as 'cate1', \r\n" + 
+				"	   (select count(book_code) from book where lc_no = 2) as 'cate2',\r\n" + 
+				"	   (select count(book_code) from book where lc_no = 3) as 'cate3',\r\n" + 
+				"	   (select count(book_code) from book where lc_no = 4) as 'cate4',\r\n" + 
+				"	   (select count(book_code) from book where lc_no = 5) as 'cate5',\r\n" + 
+				"	   (select count(book_code) from book where lc_no = 6) as 'cate6',\r\n" + 
+				"	   (select count(book_code) from book where lc_no = 7) as 'cate7',\r\n" + 
+				"	   (select count(book_code) from book where lc_no = 8) as 'cate8',\r\n" + 
+				"	   (select count(book_code) from book where lc_no = 9) as 'cate9',\r\n" + 
+				"	   (select count(book_code) from book where lc_no = 10) as 'cate10'";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				cateCounts = getCateCounts(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cateCounts;
+	}
+
+	private int[] getCateCounts(ResultSet rs) throws SQLException {
+		int cate1 = rs.getInt("cate1");
+		int cate2 = rs.getInt("cate2");
+		int cate3 = rs.getInt("cate3");
+		int cate4 = rs.getInt("cate4");
+		int cate5 = rs.getInt("cate5");
+		int cate6 = rs.getInt("cate6");
+		int cate7 = rs.getInt("cate7");
+		int cate8 = rs.getInt("cate8");
+		int cate9 = rs.getInt("cate9");
+		int cate10 = rs.getInt("cate10");
+		return new int[] {cate1,cate2,cate3,cate4,cate5,cate6,cate7,cate8,cate9,cate10};
+	}
+
+	@Override
+	public int selectDisposalBooks() {
+		String sql = "select count(book_code) as 'disposalbooks' from book where dsuse_cdt = 1";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				return rs.getInt("disposalbooks");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	 
+
 
 }

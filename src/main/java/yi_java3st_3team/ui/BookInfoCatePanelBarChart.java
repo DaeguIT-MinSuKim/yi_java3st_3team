@@ -1,7 +1,5 @@
 package yi_java3st_3team.ui;
 
-import java.awt.Font;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
@@ -16,10 +14,10 @@ import javafx.scene.paint.Color;
 import yi_java3st_3team.ui.service.StatisticUIService;
 
 @SuppressWarnings("serial")
-public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
+public class BookInfoCatePanelBarChart extends JFXPanel implements InitScene {
 	private StatisticUIService service;
 	private BarChart<String, Number> barChart;
-	public BookInfoPanelBarChart() {
+	public BookInfoCatePanelBarChart() {
 
 	}
 	public BarChart<String, Number> getBarChart() {
@@ -38,30 +36,33 @@ public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 		yAxis.tickLabelFontProperty().set(font);
 		barChart = new BarChart<>(xAxis, yAxis);
 		barChart.setLegendVisible(false);
-		barChart.setTitle("대여 반납 통계");
-		barChart.setStyle("-fx-font-size: " + 25 + "px;");;
-		barChart.setPrefSize(900, 600);
+		barChart.setTitle("카테고리별 보유도서 현황");
+		barChart.setStyle("-fx-font-size: " + 25 + "px;");
+		barChart.setPrefSize(900, 700);
 		barChart.setData(getChartData());
 		root.getChildren().add(barChart);
 
 		return scene;
 	}
-	public XYChart.Series<String, Number> getChartData(int data1,int data2, int data3, int data4) {
+	public XYChart.Series<String, Number> getChartData(int[] cateCounts) {
 		XYChart.Series<String, Number> dataSeries = new Series<String, Number>();
-		dataSeries.getData().add(new XYChart.Data<>("대여가능",data1));
-		dataSeries.getData().add(new XYChart.Data<>("대여중", data2));
-		dataSeries.getData().add(new XYChart.Data<>("전체", data3));
-		dataSeries.getData().add(new XYChart.Data<>("평균대여일", data4));
+		dataSeries.getData().add(new XYChart.Data<>("지식학문",cateCounts[0]));
+		dataSeries.getData().add(new XYChart.Data<>("철학", cateCounts[1]));
+		dataSeries.getData().add(new XYChart.Data<>("종교", cateCounts[2]));
+		dataSeries.getData().add(new XYChart.Data<>("사회과학", cateCounts[3]));
+		dataSeries.getData().add(new XYChart.Data<>("자연과학", cateCounts[4]));
+		dataSeries.getData().add(new XYChart.Data<>("기술과학", cateCounts[5]));
+		dataSeries.getData().add(new XYChart.Data<>("예술", cateCounts[6]));
+		dataSeries.getData().add(new XYChart.Data<>("언어", cateCounts[7]));
+		dataSeries.getData().add(new XYChart.Data<>("문학", cateCounts[8]));
+		dataSeries.getData().add(new XYChart.Data<>("역사", cateCounts[9]));
 		return dataSeries;
 	}
 	private ObservableList<XYChart.Series<String, Number>> getChartData() {
 		service = new StatisticUIService();
 		ObservableList<XYChart.Series<String, Number>> list = FXCollections.observableArrayList();
-		int data1 = service.selectLendableBooks();
-		int data2 = service.selectDuringLendBooks();
-		int data3 = service.selectTotalBooks();
-		int data4 = service.selectAvgRendDate();
-		list.add(getChartData(data1,data2,data3,data4));
+		int[] cateCounts = service.selectCountByCate();
+		list.add(getChartData(cateCounts));
 		return list;
 	}
 }

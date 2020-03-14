@@ -400,12 +400,12 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	private void btnIDCheckAction(ActionEvent e) {
 		String userID = tfID.getText();
 		findMber = service.IDCheckMember(new Member(userID));
-		if(userID.equals("이메일입력")){
+		if(userID.equals("이메일 입력") || userID.length()==0){
 			JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.");
 		}
-		if(!userID.equals("이메일입력") && findMber == null) {
+		if(!userID.equals("이메일 입력") && findMber == null) {
 			JOptionPane.showMessageDialog(null, "사용 가능한 아이디입니다.");
-		}else if(!userID.equals("이메일입력") && findMber!=null){
+		}else if(!userID.equals("이메일 입력") && findMber!=null){
 			JOptionPane.showMessageDialog(null, "중복된 아이디입니다.");
 			clearTf();
 			return;

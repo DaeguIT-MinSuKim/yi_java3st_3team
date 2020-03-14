@@ -46,6 +46,9 @@ public class MainFrame_ex extends JFrame {
 	private BookRegistrationPanel bookReqst;
 	private BookManagerPanel bookMgn;
 	private RecomBookAddPanel recomBookAdd;
+	private MemberJoinUIPanel memberJoin;
+	private MemberSelectUIPanel memberSelect;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -212,6 +215,8 @@ public class MainFrame_ex extends JFrame {
 				recomBookAdd = new RecomBookAddPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartBookCateInfo = new BookInfoCateInfoPanel();		
+				memberJoin = new MemberJoinUIPanel();
+				memberSelect = new MemberSelectUIPanel();
 			}
 		});
 		initPanelThread.run();
@@ -264,6 +269,8 @@ public class MainFrame_ex extends JFrame {
 					repaint();
 					revalidate();
 					break;
+					
+					
 				case "도서관리":
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
@@ -319,12 +326,63 @@ public class MainFrame_ex extends JFrame {
 					repaint();
 					revalidate();
 					break;
+					
+					
 				case "회원관리":
+					contentPane.remove(pWest);
+					contentPane.remove(pCenter);
+					pCenter = new JPanel();
+					pCenter.setBackground(Color.white);
+					pWest = new WestMemberManagementPanel();
+					JPanel[] pMember = ((WestMemberManagementPanel) pWest).getPanels();
+					for(JPanel panel : pMember) {
+						panel.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								for(JPanel panel : pMember) {
+									JLabel label = (JLabel)panel.getComponent(0);
+									panel.setBackground(new Color(240,240,240));
+									label.setForeground(Color.black);
+								}
+								JPanel chkPanel = (JPanel) e.getSource();
+								JLabel chkLabel = (JLabel) chkPanel.getComponent(0);
+								chkPanel.setBackground(new Color(52,147,221));
+								chkLabel.setForeground(Color.white);
+								switch(chkLabel.getText()) {
+								case "회원등록" :
+									contentPane.remove(pCenter);
+									pCenter = memberJoin; 
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+									break;
+								case "회원 조회/수정" :
+									contentPane.remove(pCenter);
+									pCenter = memberSelect; 
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+									break;
+								}
+							}
+							
+						});
+					}
+					contentPane.add(pCenter, BorderLayout.CENTER);
+					contentPane.add(pWest, BorderLayout.WEST);
+					repaint();
+					revalidate();
 					break;
+					
+					
 				case "대여/반납":
 					break;
+					
+					
 				case "직원관리":
 					break;
+					
+					
 				case "통계조회":
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);

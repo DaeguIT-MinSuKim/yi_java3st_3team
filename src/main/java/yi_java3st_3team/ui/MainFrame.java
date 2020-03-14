@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -108,7 +109,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	protected void btnTest1ActionPerformed(ActionEvent e) {
 		if (frame1 == null) {
-			frame1 = new LoginFrame();
+			frame1 = new MainFrame_ex();
 //			frame1 = new JFrame();
 //			frame1.setTitle("추천도서 등록");
 //			frame1.setBounds(50, 50, 1000, 700);
@@ -119,7 +120,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			if (frame1.isVisible()) {
 				return;
 			}
-			frame1 = new LoginFrame();
+			frame1 = new MainFrame_ex();
 //			frame1 = new JFrame();
 //			frame1.setTitle("추천도서 등록");
 //			frame1.setBounds(50, 50, 1000, 700);

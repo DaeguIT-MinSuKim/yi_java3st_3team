@@ -17,15 +17,12 @@ import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
 public class RentListPanel extends JPanel {
-
-	public RentListPanel() {
-		initialize();
-	}
-
 	private static RentListPanel test = new RentListPanel();
 	private JTable table;
 	private LendingUiService service;
-
+	/**
+	 * Create the panel.
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -33,7 +30,7 @@ public class RentListPanel extends JPanel {
 					JFrame frame = new JFrame();
 					frame.setLayout(new BorderLayout());
 					frame.setBounds(0, 0, 900, 400);
-					frame.add(test, BorderLayout.CENTER);
+					frame.add(test,BorderLayout.CENTER);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,30 +38,41 @@ public class RentListPanel extends JPanel {
 			}
 		});
 	}
-
+	public RentListPanel() {
+		initialize();
+	}
 	private void initialize() {
 		service = new LendingUiService();
 		setLayout(new BorderLayout(0, 0));
-
+		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, BorderLayout.CENTER);
-
+		
 		TestTabelModel model = new TestTabelModel();
 		List<Lending> list = service.selectLendingByAllTest();
-
+		
+		for(Lending lending : list) {
+			model.addRow(new Object[] {
+					lending.getBookCd().getBookCode(),
+					lending.getBookCd().getBookName(),
+					lending.getBookCd().getAuthrName(),
+					new SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
+//					lending.getBookCd().getPblicteYear(),
+					lending.getBookCd().getPls().getPlsName(),
+					new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),lending.getRturnDate()==null?"":String.format("%s",new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate())),false});
+		}
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
 	}
-
 	public class TestTabelModel extends DefaultTableModel {
 		public TestTabelModel() {
-			super(new String[] { "도서코드", "도서명", "저자/역자", "발행년도", "출판사", "대여일", "반납예정일", "선택" }, 0);
+			super(new String[] {"도서코드", "도서명", "저자/역자", "발행년도", "출판사", "대여일", "반납예정일","선택"},0);
 		}
 
 		@Override
 		public Class<?> getColumnClass(int columnIndex) {
 			Class clazz = String.class;
-			switch (columnIndex) {
+			switch(columnIndex) {
 			case 0:
 				clazz = Integer.class;
 				break;
@@ -82,11 +90,11 @@ public class RentListPanel extends JPanel {
 
 		@Override
 		public void setValueAt(Object aValue, int row, int column) {
-			if (aValue instanceof Boolean && column == 7) {
-				Vector rowData = (Vector) getDataVector().get(row);
-				rowData.set(7, (boolean) aValue);
+			if(aValue instanceof Boolean && column == 7) {
+				Vector rowData = (Vector)getDataVector().get(row);
+				rowData.set(7, (boolean)aValue);
 				fireTableCellUpdated(row, column);
 			}
-		}
+		}	
 	}
 }

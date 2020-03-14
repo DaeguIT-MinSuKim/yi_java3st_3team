@@ -142,6 +142,7 @@ delete
 select * from publishing_company;
 select pls_no , pls_name from publishing_company;
 select pls_no , pls_name from publishing_company where pls_no = 1;
+select max(pls_no) from publishing_company;
 
 insert into publishing_company values(69, '테스트');
 update publishing_company set pls_name = '테스트출판사' where pls_no = 69;
@@ -152,6 +153,7 @@ delete from publishing_company where pls_no = 69;
 select * from large_classification;
 select lclas_no , lclas_name from large_classification;
 select lclas_no , lclas_name from large_classification where lclas_no = 5;
+select max(lclas_no) from large_classification;
 
 insert into large_classification values (11, '테스트');
 update large_classification set lclas_name = '테스트대분류' where lclas_no = 11;
@@ -161,6 +163,7 @@ delete from large_classification where lclas_no = 11;
 select * from middle_classification;
 select lclas_no , mlsfc_no , mlsfc_name from middle_classification;
 select lclas_no , mlsfc_no , mlsfc_name from middle_classification where lclas_no = 6 and mlsfc_no = 1;
+select max(mlsfc_no) from middle_classification where lclas_no = 2;
 
 insert into middle_classification values(10, 3, '테스트분류');
 update middle_classification set mlsfc_name = '테스트중분류' where lclas_no = 10 and mlsfc_no = 3;

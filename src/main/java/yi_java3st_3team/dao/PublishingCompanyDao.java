@@ -14,4 +14,6 @@ public interface PublishingCompanyDao {
 	int updatePublishingCompany(PublishingCompany pc);
 
 	int deletePublishingCompany(PublishingCompany pc);
+	
+	int selectLastCode();
 }

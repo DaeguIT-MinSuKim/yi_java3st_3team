@@ -138,4 +138,22 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 		return 0;
 	}
 
+	@Override
+	public int selectLastCode(LargeClassification lc) {
+		String sql = "select max(mlsfc_no) from middle_classification where lclas_no = ?";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, lc.getLclasNo());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return pstmt.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 }

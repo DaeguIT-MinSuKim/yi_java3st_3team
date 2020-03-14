@@ -89,11 +89,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 590);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 2, 0, 0));
 
 		JPanel pLoginArea = new JPanel();
+		pLoginArea.setBackground(Color.WHITE);
 		pLoginArea.setBorder(new EmptyBorder(100, 30, 100, 30));
 		contentPane.add(pLoginArea);
 		pLoginArea.setLayout(new BoxLayout(pLoginArea, BoxLayout.Y_AXIS));
@@ -154,16 +156,19 @@ public class LoginFrame extends JFrame implements ActionListener {
 		pLoginLbl.add(btnNewJoin);
 
 		JPanel pContent = new JPanel();
+		pContent.setBackground(Color.WHITE);
 		pContent.setBorder(new EmptyBorder(30, 0, 50, 40));
 		contentPane.add(pContent);
 		pContent.setLayout(new BoxLayout(pContent, BoxLayout.Y_AXIS));
 
 		JPanel pRecomBook = new JPanel();
+		pRecomBook.setBackground(Color.WHITE);
 		pRecomBook.setBorder(new EmptyBorder(33, 0, 20, 0));
 		pContent.add(pRecomBook);
 		pRecomBook.setLayout(new BoxLayout(pRecomBook, BoxLayout.Y_AXIS));
 
 		JPanel pTitle = new JPanel();
+		pTitle.setBackground(Color.WHITE);
 		FlowLayout flowLayout = (FlowLayout) pTitle.getLayout();
 		pRecomBook.add(pTitle);
 
@@ -173,11 +178,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 		pTitle.add(lblTitle);
 
 		JPanel pRecomArea = new JPanel();
+		pRecomArea.setBackground(Color.WHITE);
 		pRecomArea.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
 		pRecomBook.add(pRecomArea);
 		pRecomArea.setLayout(new BoxLayout(pRecomArea, BoxLayout.Y_AXIS));
 
 		JPanel pRecomInfo = new JPanel();
+		pRecomInfo.setBackground(Color.WHITE);
 		pRecomInfo.setBorder(new EmptyBorder(5, 10, 10, 10));
 		pRecomArea.add(pRecomInfo);
 		pRecomInfo.setLayout(new BoxLayout(pRecomInfo, BoxLayout.X_AXIS));
@@ -190,11 +197,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 		pRecomInfo.add(lblRecomImg);
 
 		JPanel pRecomRight = new JPanel();
+		pRecomRight.setBackground(Color.WHITE);
 		pRecomRight.setBorder(new EmptyBorder(0, 10, 0, 0));
 		pRecomInfo.add(pRecomRight);
 		pRecomRight.setLayout(new BorderLayout(0, 0));
 
 		JPanel pRecomTitle = new JPanel();
+		pRecomTitle.setBackground(Color.WHITE);
 		pRecomRight.add(pRecomTitle, BorderLayout.WEST);
 		pRecomTitle.setLayout(new GridLayout(0, 1, 5, 0));
 
@@ -214,6 +223,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		pRecomTitle.add(lblPlsTit);
 
 		pRecomContent = new JPanel();
+		pRecomContent.setBackground(Color.WHITE);
 		pRecomContent.setBorder(new EmptyBorder(0, 10, 0, 0));
 		pRecomRight.add(pRecomContent, BorderLayout.CENTER);
 		pRecomContent.setLayout(new GridLayout(0, 1, 5, 0));
@@ -239,11 +249,13 @@ public class LoginFrame extends JFrame implements ActionListener {
 		pRecomContent.add(lblPlsCon);
 
 		taBookCont = new JTextArea();
+		taBookCont.setBackground(new Color(255, 255, 224));
 		taBookCont.setBorder(new EmptyBorder(10, 10, 10, 10));
 		taBookCont.setLineWrap(true);
 		taBookCont.setEditable(false);
 
 		JScrollPane scrollPane = new JScrollPane(taBookCont);
+		scrollPane.setBackground(Color.WHITE);
 		scrollPane.setBorder(new EmptyBorder(0, 10, 10, 10));
 		scrollPane.setPreferredSize(new Dimension(6, 100));
 		scrollPane.setSize(new Dimension(0, 100));
@@ -257,7 +269,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 
 		JPanel pLibrary = new JPanel();
 		pLibrary.setBorder(new EmptyBorder(10, 10, 10, 10));
-		pLibrary.setBackground(Color.WHITE);
+		pLibrary.setBackground(new Color(255, 204, 102));
 		pLibraryInfo.add(pLibrary);
 		pLibrary.setLayout(new BoxLayout(pLibrary, BoxLayout.X_AXIS));
 
@@ -269,7 +281,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		pLibrary.add(lblLibraryIcon);
 
 		JPanel pLibraryLbls = new JPanel();
-		pLibraryLbls.setBackground(Color.WHITE);
+		pLibraryLbls.setBackground(new Color(255, 204, 102));
 		pLibraryLbls.setBorder(new EmptyBorder(0, 30, 0, 0));
 		pLibrary.add(pLibraryLbls);
 		pLibraryLbls.setLayout(new GridLayout(0, 1, 5, 5));

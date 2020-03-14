@@ -17,6 +17,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.ui.content.BookManagerPanel;
+import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
 
@@ -46,6 +47,8 @@ public class MainFrame_ex extends JFrame {
 	private BookRegistrationPanel bookReqst;
 	private BookManagerPanel bookMgn;
 	private RecomBookAddPanel recomBookAdd;
+	private BookPlsManageMentPanel bookPlsMgn;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -210,8 +213,9 @@ public class MainFrame_ex extends JFrame {
 				bookReqst = new BookRegistrationPanel();
 				bookMgn = new BookManagerPanel();
 				recomBookAdd = new RecomBookAddPanel();
+				bookPlsMgn = new BookPlsManageMentPanel();
 				chartBookInfo = new BookInfoUIPanel();
-				chartBookCateInfo = new BookInfoCateInfoPanel();		
+				chartBookCateInfo = new BookInfoCateInfoPanel();	
 			}
 		});
 		initPanelThread.run();
@@ -307,7 +311,14 @@ public class MainFrame_ex extends JFrame {
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;
-								case "출판사/분류 관리" :
+								case "출판사 관리" :
+									contentPane.remove(pCenter);
+									pCenter = bookPlsMgn;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+									break;
+								case "도서분류 관리" :
 									break;
 								}
 							}

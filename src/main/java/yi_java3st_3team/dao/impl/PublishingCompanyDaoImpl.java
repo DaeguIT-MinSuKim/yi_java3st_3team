@@ -111,4 +111,20 @@ public class PublishingCompanyDaoImpl implements PublishingCompanyDao {
 		return 0;
 	}
 
+	@Override
+	public int selectLastCode() {
+		String sql = "select max(pls_no) from publishing_company";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {
+				return rs.getInt("max(pls_no)");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return 0;
+	}
+
 }

@@ -1,8 +1,7 @@
 package yi_java3st_3team.ui;
 
-import java.util.Iterator;
+import java.awt.Font;
 
-import chart_project.dto.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
@@ -14,66 +13,55 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.paint.Color;
+import yi_java3st_3team.ui.service.StatisticUIService;
 
 @SuppressWarnings("serial")
-public class BookInfoPanelBarChart extends JFXPanel implements InitScene{
-	public BookInfoPanelBarChart() {
-	}
-
+public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
+	private StatisticUIService service;
 	private BarChart<String, Number> barChart;
-	
+	public BookInfoPanelBarChart() {
+
+	}
+	public BarChart<String, Number> getBarChart() {
+		return barChart;
+	}
 	@Override
 	public Scene createScene() {
 		Group root = new Group();
 		Scene scene = new Scene(root, Color.ALICEBLUE);
-		root.setAutoSizeChildren(true);
 		
-		막 대형 차트의 X 축과 Y 축을 정의하고 레이블을 설정
+		//막 대형 차트의 X 축과 Y 축을 정의하고 레이블을 설정
 		CategoryAxis xAxis = new CategoryAxis();
-		xAxis.setLabel("대여/반납통계");
-
 		NumberAxis yAxis = new NumberAxis();
-		yAxis.setLabel("권수");
-
+		javafx.scene.text.Font font = new javafx.scene.text.Font(16);
+		xAxis.tickLabelFontProperty().set(font);
+		yAxis.tickLabelFontProperty().set(font);
 		barChart = new BarChart<>(xAxis, yAxis);
+		barChart.setLegendVisible(false);
 		barChart.setTitle("대여 반납 통계");
-		
-		barChart.setPrefSize(600, 600);
+		barChart.setStyle("-fx-font-size: " + 25 + "px;");;
+		barChart.setPrefSize(900, 600);
 		barChart.setData(getChartData());
-		
 		root.getChildren().add(barChart);
 
 		return scene;
 	}
-	/** getChartData() 를 이용하여 학생정보추가
-	 * @param std
-	 */
-	public void addChartData() {
-		barChart.getData().add(getChartData());
-	}
-	
-	/**
-	 * @param std
-	 * @return
-	 */
-	public XYChart.Series<String, Number> getChartData() {
+	public XYChart.Series<String, Number> getChartData(int data1,int data2, int data3, int data4) {
 		XYChart.Series<String, Number> dataSeries = new Series<String, Number>();
-		dataSeries.setName(std.getStdName());
-		dataSeries.getData().add(new XYChart.Data<>("국어", std.getKorScore()));
-		dataSeries.getData().add(new XYChart.Data<>("영어", std.getEngScore()));
-		dataSeries.getData().add(new XYChart.Data<>("수학", std.getMathScore()));
+		dataSeries.getData().add(new XYChart.Data<>("대여가능",data1));
+		dataSeries.getData().add(new XYChart.Data<>("대여중", data2));
+		dataSeries.getData().add(new XYChart.Data<>("전체", data3));
+		dataSeries.getData().add(new XYChart.Data<>("평균대여일", data4));
 		return dataSeries;
 	}
-	
 	private ObservableList<XYChart.Series<String, Number>> getChartData() {
+		service = new StatisticUIService();
 		ObservableList<XYChart.Series<String, Number>> list = FXCollections.observableArrayList();
-		Student std = new Student("S001", "현빈", 90, 60,70);
-		Student std2 = new Student("S002", "박신혜", 60, 55,88);
-		
-		list.add(getChartData(std));
-		list.add(getChartData(std2));
-		
+		int data1 = service.selectLendableBooks();
+		int data2 = service.selectDuringLendBooks();
+		int data3 = service.selectTotalBooks();
+		int data4 = service.selectAvgRendDate();
+		list.add(getChartData(data1,data2,data3,data4));
 		return list;
 	}
-
 }

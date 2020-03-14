@@ -1,5 +1,7 @@
 package yi_java3st_3team.ui.service;
 
+import java.util.List;
+
 import yi_java3st_3team.dao.MemberDao;
 import yi_java3st_3team.dao.ZipCodeDao;
 import yi_java3st_3team.dao.impl.MemberDaoImpl;
@@ -30,6 +32,10 @@ public class MemberUIService {
 
 	public Member SelectedByNo(Member mem) {
 		return null;
+	}
+
+	public List<Member> showMemberListAll() {
+		return MemDao.selectMemberByAll();
 	}
 
 }

@@ -19,7 +19,7 @@ public class Lending {
 		super();
 		this.lendRturnNo = lendRturnNo;
 	}
-	
+
 	public Lending(Member mberId) {
 		this.mberId = mberId;
 	}

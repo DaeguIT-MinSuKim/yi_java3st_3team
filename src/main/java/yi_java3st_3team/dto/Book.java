@@ -37,7 +37,7 @@ public class Book {
 		this.lcNo = lcNo;
 		this.mlNo = mlNo;
 	}
-	
+
 	public Book(String bookCode, String bookName, String authrName, String trnslrName, PublishingCompany pls,
 			Date pblicteYear, int bookPrice, int lendPsbCdt, byte[] bookImg, LargeClassification lcNo,
 			MiddleClassification mlNo) {
@@ -346,14 +346,14 @@ public class Book {
 		return String.format(
 				"Book [bookCode=%s, bookName=%s, authrName=%s, trnslrName=%s, pls=%s, pblicteYear=%s, bookPrice=%s, bookCnt=%s, lendPsbCdt=%s, totalLeCnt=%s, bookImg=%s, lcNo=%s, mlNo=%s, registDate=%s, dsuseCdt=%s]",
 				bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, bookCnt, lendPsbCdt, totalLeCnt,
-				bookImg.length != 0 ? bookImg.length : null , lcNo, mlNo, registDate, dsuseCdt);
+				Arrays.toString(bookImg), lcNo, mlNo, registDate, dsuseCdt);
 	}
 
 	public String toDebug() {
 		return String.format(
 				"code: %s, name: %s, authr: %s, trnslr: %s, pls: %s,  pblicteYear: %s, price: %s, cnt: %s, %n"
-				+ "lendCdt: %s, totalLeCnt: %s, bookImg: %s, lcNo: %s, mlNo: %s, registDate: %s, dsuseCdt: %s", 
-				bookCode, bookName, authrName, trnslrName, pls.getPlsName(), pblicteYear, bookPrice, bookCnt, 
+						+ "lendCdt: %s, totalLeCnt: %s, bookImg: %s, lcNo: %s, mlNo: %s, registDate: %s, dsuseCdt: %s",
+				bookCode, bookName, authrName, trnslrName, pls.getPlsName(), pblicteYear, bookPrice, bookCnt,
 				lendPsbCdt, totalLeCnt, bookImg, lcNo.getLclasName(), mlNo.getMlsfcName(), registDate, dsuseCdt);
 	}
 }

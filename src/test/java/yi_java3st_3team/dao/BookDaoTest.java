@@ -171,7 +171,8 @@ public class BookDaoTest {
 //		Book book = new Book("D090101", "먼 바다", "공지영", "", new PublishingCompany(2), pblicteYear, 15800, 1, 1, 
 //				getImg("먼 바다.jpg"), new LargeClassification(9), new MiddleClassification(1), registDate, 0);
 //		int res = dao.updateBook(book);
-//		Assert.assertEquals(1, res);
+//		
+
 //		LogUtil.prnLog(dao.selectBookByCode(new Book("D090101")));
 //	}
 

@@ -178,7 +178,7 @@ public class LendingDaoImpl implements LendingDao {
 
 	@Override
 	public List<Lending> selectLendingByMberIdAndLendBookTotalAll(Lending lending) {
-		String sql = "select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
+		String sql = "select l.mber_id , b.book_code, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
 				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt \r\n"
 				+ "	from lending l left join book b on l.book_cd = b.book_code \r\n"
 				+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n"
@@ -207,7 +207,7 @@ public class LendingDaoImpl implements LendingDao {
 
 	@Override
 	public List<Lending> selectLendingByMberIdAndLendBookAll(Lending lending) {
-		String sql = "select l.mber_id , l.book_cd, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
+		String sql = "select l.mber_id , b.book_code, b.book_name , b.authr_name , b.trnslr_name, b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
 				+ "	   b.pls, pls.pls_name , b.pblicte_year , lend_date , rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt \r\n"
 				+ "	from lending l left join book b on l.book_cd = b.book_code \r\n"
 				+ "				   left join large_classification lc on lc.lclas_no = b.lc_no \r\n"
@@ -237,7 +237,7 @@ public class LendingDaoImpl implements LendingDao {
 
 	private Lending getUseJoinLendgin(ResultSet rs) throws SQLException {
 		Member mberId = new Member(rs.getString("l.mber_id"));
-		Book bookCd = new Book(rs.getString("l.book_cd"));
+		Book bookCd = new Book(rs.getString("b.book_code"));
 		bookCd.setBookName(rs.getString("b.book_name"));
 		bookCd.setAuthrName(rs.getString("b.authr_name"));
 		bookCd.setTrnslrName(rs.getString("b.trnslr_name"));
@@ -311,6 +311,39 @@ public class LendingDaoImpl implements LendingDao {
 	public List<Lending> selectLendingByOverDueCdt() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int selectAvgRendDate() {
+		String sql = "select avg(date(rturn_date)-date(lend_date)) as 'avgLendDate' from lending";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while(rs.next()) {
+				return rs.getInt("avgLendDate");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int updateLendingByCodeAndMberId(Lending lending) {
+		String sql = "update lending  set rturn_psm_cdt = ? where book_cd = ? and mber_id = ? and rturn_date is null";
+
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, lending.getRturnPsmCdt());
+			pstmt.setString(2, lending.getBookCd().getBookCode());
+			pstmt.setString(3, lending.getMberId().getMberId());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 }

@@ -18,4 +18,7 @@ public interface BookDao {
 	int insertBook(Book book);
 	int updateBook(Book book);
 	int deleteBook(Book book);
+	int selectLendableBooks();
+	int selectDuringLendBooks();
+	int selectTotalBooks();
 }

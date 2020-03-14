@@ -117,7 +117,7 @@ public class LargeClassificationDaoImpl implements LargeClassificationDao {
 				ResultSet rs = pstmt.executeQuery()){
 			LogUtil.prnLog(pstmt);
 			if(rs.next()) {
-				return pstmt.executeUpdate();
+				return rs.getInt("max(lclas_no)");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

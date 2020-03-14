@@ -52,7 +52,8 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 
 	@Override
 	public List<MiddleClassification> selectMiddleClassificationByAll() {
-		String sql = "select lclas_no , mlsfc_no , mlsfc_name from middle_classification";
+		String sql = "select lc.lclas_no , lc.lclas_name , ml.mlsfc_no , ml.mlsfc_name "
+				+ "from middle_classification ml join large_classification lc on ml.lclas_no = lc.lclas_no ;";
 		List<MiddleClassification> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -61,7 +62,7 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 			if(rs.next()) {
 				list = new ArrayList<>();
 				do {
-					list.add(getMlsfc(rs));
+					list.add(getLcMljoin(rs));
 				} while(rs.next());
 			}
 		} catch (SQLException e) {
@@ -70,6 +71,14 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 		return list;
 	}
 	
+	private MiddleClassification getLcMljoin(ResultSet rs) throws SQLException {
+		LargeClassification lclasNo = new LargeClassification(rs.getInt("lc.lclas_no"));
+		lclasNo.setLclasName(rs.getString("lc.lclas_name"));
+		int mlsfcNo = rs.getInt("ml.mlsfc_no");
+		String mlsfcName = rs.getString("ml.mlsfc_name");
+		return new MiddleClassification(lclasNo, mlsfcNo, mlsfcName);
+	}
+
 	@Override
 	public List<MiddleClassification> selectMiddleClassificationGroupLc(LargeClassification lc) {
 		String sql = "select lclas_no , mlsfc_no , mlsfc_name from middle_classification where lclas_no = ?";
@@ -147,7 +156,7 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
-					return pstmt.executeUpdate();
+					return rs.getInt("max(mlsfc_no)");
 				}
 			}
 		} catch (SQLException e) {

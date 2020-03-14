@@ -8,12 +8,15 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -22,9 +25,15 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
+import yi_java3st_3team.dto.Grade;
+import yi_java3st_3team.dto.Member;
+
+@SuppressWarnings("serial")
 public class MemberUpdateDialog extends JDialog implements ActionListener {
 
+	
 	private final JPanel contentPanel = new JPanel();
+	private static JFrame frame;
 	private JButton btnCancel;
 	private JTextField tfID;
 	private JTextField tfName;
@@ -35,18 +44,22 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	private JLabel lblPic;
 	private Dimension picDimension = new Dimension(100, 150);
 	private String picPath;
+	private JButton btnUpdate;
+	private JComboBox<Grade> cmbGrade;
+	
 
-	public static void main(String[] args) {
-		try {
-			MemberUpdateDialog dialog = new MemberUpdateDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			MemberUpdateDialog dialog = new MemberUpdateDialog(frame, "실험");
+//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//			dialog.setVisible(true);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
-	public MemberUpdateDialog() {
+	public MemberUpdateDialog(JFrame frame, String title) {
+		super(frame, title, true);
 		setBounds(100, 100, 454, 430);
 		BorderLayout borderLayout = new BorderLayout();
 		borderLayout.setHgap(10);
@@ -132,8 +145,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 				pUpdate.add(lblGrade);
 			}
 			{
-				JComboBox cmbGrade = new JComboBox();
-				cmbGrade.setModel(new DefaultComboBoxModel(new String[] {"일반", "우수"}));
+				cmbGrade = new JComboBox();
 				pUpdate.add(cmbGrade);
 			}
 		}
@@ -168,13 +180,14 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnUpdate = new JButton("수정");
+				btnUpdate = new JButton("  수정  ");
+				btnUpdate.addActionListener(this);
 				btnUpdate.setActionCommand("OK");
 				buttonPane.add(btnUpdate);
 				getRootPane().setDefaultButton(btnUpdate);
 			}
 			{
-				btnCancel = new JButton("취소");
+				btnCancel = new JButton("  취소  ");
 				btnCancel.addActionListener(this);
 				btnCancel.setActionCommand("Cancel");
 				buttonPane.add(btnCancel);
@@ -193,13 +206,33 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 				(int) picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
 	
+
+	public void setItem(Member item) {
+		return;
+		
+	}
+	
+	public void setCmbList(List<Grade> gradeList){
+		DefaultComboBoxModel<Grade> model = new DefaultComboBoxModel<Grade>();
+		new Vector<>(gradeList);
+		cmbGrade.setModel(model);
+		cmbGrade.setSelectedIndex(-1);
+	}
+	
 	
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnUpdate) {
+			btnUpdateActionPerformed(e);
+		}
 		if (e.getSource() == btnCancel) {
 			btnCancelActionPerformed(e);
 		}
 	}
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		dispose();
+	}
+	protected void btnUpdateActionPerformed(ActionEvent e) {
+		
+		
 	}
 }

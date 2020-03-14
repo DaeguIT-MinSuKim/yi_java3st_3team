@@ -73,8 +73,19 @@ public class LendingPanel extends JPanel {
 				Member id = new Member(pMember.getTfMberId().getText());
 				Member member = service.showLendingMemberId(id);
 				pMember.getTfMberName().setText(member.getMberName());
-				pMember.getTfGrade().setText(member.getGrade().getGradeName());
-//				pMember.getTfLendPsbCdt().setText(mem);
+//				JOptionPane.showMessageDialog(null, member.getGrade().getGradeName());
+				if(member.getGrade().getGradeNo() == 1)
+				pMember.getTfGrade().setText(member.getGrade().getGradeNo()+"");
+				if(member.getLendPsbCdt() == 0) {
+					pMember.getTfLendPsbCdt().setText("가능");
+				}
+				else {
+					pMember.getTfLendPsbCdt().setText("불가능");
+				}
+				int LendBookCnt = member.getLendBookCnt();
+				int BookLeCnt = member.getGrade().getBookLeCnt();
+				int res = BookLeCnt - LendBookCnt;
+				pMember.getTfLendBookCdt().setText(res+"");
 			}
 		});
 

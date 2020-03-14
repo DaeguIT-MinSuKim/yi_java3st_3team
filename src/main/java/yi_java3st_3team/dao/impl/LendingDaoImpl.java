@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,8 @@ public class LendingDaoImpl implements LendingDao {
 		int rturnPsmCdt = rs.getInt("rturn_psm_cdt");
 		Date rturnDate = rs.getTimestamp("rturn_date");
 		int overdueCdt = rs.getInt("overdue_cdt");
-		Lending lending = new Lending(lendRturnNo, mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
+		Lending lending = new Lending(lendRturnNo, mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate,
+				overdueCdt);
 		LogUtil.prnLog(lending);
 		return lending;
 	}
@@ -316,10 +318,10 @@ public class LendingDaoImpl implements LendingDao {
 	@Override
 	public int selectAvgRendDate() {
 		String sql = "select avg(date(rturn_date)-date(lend_date)) as 'avgLendDate' from lending";
-		try(Connection con = MysqlDataSource.getConnection();
+		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
-			while(rs.next()) {
+			while (rs.next()) {
 				return rs.getInt("avgLendDate");
 			}
 		} catch (SQLException e) {
@@ -333,8 +335,7 @@ public class LendingDaoImpl implements LendingDao {
 	public int updateLendingByCodeAndMberId(Lending lending) {
 		String sql = "update lending  set rturn_psm_cdt = ? where book_cd = ? and mber_id = ? and rturn_date is null";
 
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, lending.getRturnPsmCdt());
 			pstmt.setString(2, lending.getBookCd().getBookCode());
 			pstmt.setString(3, lending.getMberId().getMberId());
@@ -344,6 +345,36 @@ public class LendingDaoImpl implements LendingDao {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	@Override
+	public Book showLendingByBookCode(Book book) {
+		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n"
+				+ "	from book\r\n" + "	where book_code = ?";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, book.getBookCode());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return getBook(rs);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private Book getBook(ResultSet rs) throws SQLException {
+		String bookCode = rs.getString("book_code");
+		String bookName = rs.getString("book_name");
+		String authrName = String.format("%s", rs.getString("authr_name"), rs.getString("trnslr_name"));
+		PublishingCompany pls = new PublishingCompany(rs.getInt("pls"));
+		pls.getPlsName();
+		Date pblicteYear = rs.getTimestamp("pblicte_year");// rs.getDate()로 작성시 시간표시가 00:00:00으로 세팅됨.
+		Book book = new Book(bookCode, bookName, authrName, pls, pblicteYear);
+		LogUtil.prnLog(book);
+		return book;
 	}
 
 }

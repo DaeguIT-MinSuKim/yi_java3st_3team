@@ -37,3 +37,20 @@ desc `member`;
 select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,total_le_cnt,lend_book_cnt,grade ,lend_psb_cdt ,join_dt ,wdr_cdt ,od_cnt 
 	from member
 	where mber_id = 'daddystop@gmail.com';
+
+select *
+	from lending
+	where rturn_date is null;
+
+select *
+	from lending;
+
+select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt 
+	from book
+	where book_code = 'A090101';
+select * 
+	from book
+	where book_code = 'A090101';
+select book_code ,book_name ,authr_name ,trnslr_name , concat() as 'pls', pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt 
+	from book b left join publishing_company p on b.pls = p.pls_no 
+	where book_code = 'A090101';

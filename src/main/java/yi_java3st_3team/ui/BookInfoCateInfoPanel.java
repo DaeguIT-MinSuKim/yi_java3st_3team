@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import yi_java3st_3team.ui.service.StatisticUIService;
 
 import java.awt.Color;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class BookInfoCateInfoPanel extends JPanel {
@@ -23,9 +24,12 @@ public class BookInfoCateInfoPanel extends JPanel {
 		initialize();
 	}
 	private void initialize() {
+		setBackground(Color.WHITE);
+		setBorder(new EmptyBorder(20, 20, 20, 20));
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.setBackground(Color.WHITE);
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setHgap(50);
@@ -41,6 +45,7 @@ public class BookInfoCateInfoPanel extends JPanel {
 		panel.add(lblDisposalBooks);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel_1.setBackground(Color.WHITE);
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
 		flowLayout_1.setVgap(0);

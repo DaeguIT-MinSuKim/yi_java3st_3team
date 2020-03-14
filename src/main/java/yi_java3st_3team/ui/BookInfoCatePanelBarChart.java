@@ -38,7 +38,7 @@ public class BookInfoCatePanelBarChart extends JFXPanel implements InitScene {
 		barChart.setLegendVisible(false);
 		barChart.setTitle("카테고리별 보유도서 현황");
 		barChart.setStyle("-fx-font-size: " + 25 + "px;");
-		barChart.setPrefSize(900, 700);
+		barChart.setPrefSize(900, 650);
 		barChart.setData(getChartData());
 		root.getChildren().add(barChart);
 

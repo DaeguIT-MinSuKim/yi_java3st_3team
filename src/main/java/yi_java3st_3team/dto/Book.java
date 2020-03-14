@@ -27,6 +27,15 @@ public class Book {
 		this.bookCode = bookCode;
 	}
 
+	public Book(String bookCode, String bookName, String authrName, PublishingCompany pls, Date pblicteYear) {
+		super();
+		this.bookCode = bookCode;
+		this.bookName = bookName;
+		this.authrName = authrName;
+		this.pls = pls;
+		this.pblicteYear = pblicteYear;
+	}
+
 	public Book(String bookName, String authrName, String trnslrName, PublishingCompany pls, byte[] bookImg,
 			LargeClassification lcNo, MiddleClassification mlNo) {
 		this.bookName = bookName;

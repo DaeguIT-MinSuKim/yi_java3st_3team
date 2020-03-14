@@ -2,32 +2,35 @@ package yi_java3st_3team.ui.service;
 
 import java.util.List;
 
+import yi_java3st_3team.dao.GradeDao;
 import yi_java3st_3team.dao.MemberDao;
 import yi_java3st_3team.dao.ZipCodeDao;
 import yi_java3st_3team.dao.impl.MemberDaoImpl;
 import yi_java3st_3team.dao.impl.ZipCodeDaoImpl;
+import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
 
 public class MemberUIService {
-	private MemberDao MemDao;
-	private ZipCodeDao ZipDao;
+	private MemberDao memDao;
+	private ZipCodeDao zipDao;
+	private GradeDao gradeDao;
 
 	public MemberUIService() {
-		MemDao = MemberDaoImpl.getInstance();
-		ZipDao = ZipCodeDaoImpl.getInstance();
+		memDao = MemberDaoImpl.getInstance();
+		zipDao = ZipCodeDaoImpl.getInstance();
 	}
 
 	public void addMember(Member mem) {
-		MemDao.insertMember(mem);
+		memDao.insertMember(mem);
 	}
 
 	public Member IDCheckMember(Member mem) {
-		return MemDao.selectMemberByNo(mem);
+		return memDao.selectMemberByNo(mem);
 	}
 
 	public ZipCode zipCodeCheck(ZipCode zip) {
-		return ZipDao.selectZipCodeByNo(zip);
+		return zipDao.selectZipCodeByNo(zip);
 	}
 
 	public Member SelectedByNo(Member mem) {
@@ -35,7 +38,11 @@ public class MemberUIService {
 	}
 
 	public List<Member> showMemberListAll() {
-		return MemDao.selectMemberByAll();
+		return memDao.selectMemberByAll();
 	}
 
+	public List<Grade> showGradeList(){
+		return gradeDao.selectGradeByAll();
+	}
+	
 }

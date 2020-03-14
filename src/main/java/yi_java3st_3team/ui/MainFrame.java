@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -33,10 +34,9 @@ public class MainFrame extends JFrame implements ActionListener {
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 //					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-
 					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
-				} catch (Exception e) {
+				} catch (Exception e){
 					e.printStackTrace();
 				}
 			}
@@ -101,8 +101,8 @@ public class MainFrame extends JFrame implements ActionListener {
 //			frame3.setVisible(true);
 //		}
 		JFrame frame = new JFrame();
-		frame.setBounds(50, 50, 850, 600);
-		MemberJoinUIPanel selectUI = new MemberJoinUIPanel();
+		frame.setBounds(50, 50, 1200, 750);
+		MemberSelectUIPanel selectUI = new MemberSelectUIPanel();
 		frame.getContentPane().add(selectUI);
 		frame.setVisible(true);
 	}

@@ -216,26 +216,11 @@ public class MainFrame_ex extends JFrame {
 		pMemMgn.addMouseListener(menuAdapter);
 		pChkOutRtn.addMouseListener(menuAdapter);
 		pEmpMgn.addMouseListener(menuAdapter);
-
-		pStatistic.addMouseListener(menuAdapter);
-		
-		Thread initPanelThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				bookReqst = new BookRegistrationPanel();
-				bookMgn = new BookManagerPanel();
-				recomBookAdd = new RecomBookAddPanel();
-				chartBookInfo = new BookInfoUIPanel();
-				chartBookCateInfo = new BookInfoCateInfoPanel();		
-				memberJoin = new MemberJoinUIPanel();
-				memberSelect = new MemberSelectUIPanel();
-			}
-		});
-
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		chartThread = initChartThread();
 		chartThread.run();
+		Thread initPanelThread = initPanelThread();
 		initPanelThread.run();
 	}
 	
@@ -500,6 +485,9 @@ public class MainFrame_ex extends JFrame {
 				bookPlsMgn = new BookPlsManageMentPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartBookCateInfo = new BookInfoCateInfoPanel();
+						
+				memberJoin = new MemberJoinUIPanel();
+				memberSelect = new MemberSelectUIPanel();
 				
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();

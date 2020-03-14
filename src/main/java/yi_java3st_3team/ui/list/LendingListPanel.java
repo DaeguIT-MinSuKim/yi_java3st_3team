@@ -47,5 +47,5 @@ public class LendingListPanel extends AbsListPanel<Lending> {
 		model.setValueAt(item.getRturnDueDate(), updateIdx, 6);
 		model.setValueAt(chBox = new JCheckBox(""), updateIdx, 7);
 	}
-
+	
 }

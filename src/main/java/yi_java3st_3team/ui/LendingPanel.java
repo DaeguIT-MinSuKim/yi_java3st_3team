@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import yi_java3st_3team.ui.list.LendingListPanel;
+import yi_java3st_3team.ui.list.RentListPanel;
+import yi_java3st_3team.ui.list.tableChkBoxTest;
 import yi_java3st_3team.ui.service.LendingUiService;
 import yi_java3st_3team.dao.MemberDao;
 import yi_java3st_3team.dao.impl.MemberDaoImpl;
@@ -22,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class LendingPanel extends JPanel {
+public class LendingPanel extends JPanel implements ActionListener {
 	private JTextField tfBookCode;
 	private MemberIdSelectPanel pMember;
 	private JPanel pList;
@@ -35,7 +37,8 @@ public class LendingPanel extends JPanel {
 	private JPanel p03;
 	private JPanel p04;
 	private JButton btnCk;
-	private LendingListPanel pLengingList;
+//	private LendingListPanel pLengingList;
+	private RentListPanel pLengingList;
 	private JPanel pBtn;
 	private JPanel p05;
 	private JPanel p06;
@@ -74,18 +77,21 @@ public class LendingPanel extends JPanel {
 				Member member = service.showLendingMemberId(id);
 				pMember.getTfMberName().setText(member.getMberName());
 //				JOptionPane.showMessageDialog(null, member.getGrade().getGradeName());
-				if(member.getGrade().getGradeNo() == 1)
-				pMember.getTfGrade().setText(member.getGrade().getGradeNo()+"");
-				if(member.getLendPsbCdt() == 0) {
-					pMember.getTfLendPsbCdt().setText("가능");
+				if (member.getGrade().getGradeNo() == 1) {
+					pMember.getTfGrade().setText("일반");
+				} else {
+					pMember.getTfGrade().setText("우수");
 				}
-				else {
+//				pMember.getTfGrade().setText(member.getGrade().getGradeNo()+"");
+				if (member.getLendPsbCdt() == 0) {
+					pMember.getTfLendPsbCdt().setText("가능");
+				} else {
 					pMember.getTfLendPsbCdt().setText("불가능");
 				}
 				int LendBookCnt = member.getLendBookCnt();
 				int BookLeCnt = member.getGrade().getBookLeCnt();
 				int res = BookLeCnt - LendBookCnt;
-				pMember.getTfLendBookCdt().setText(res+"");
+				pMember.getTfLendBookCdt().setText(res + "");
 			}
 		});
 
@@ -118,6 +124,7 @@ public class LendingPanel extends JPanel {
 		tfBookCode.setColumns(10);
 
 		btnSearch = new JButton("검색");
+		btnSearch.addActionListener(this);
 		pLendingLbl.add(btnSearch);
 
 		pAllCk = new JPanel();
@@ -131,9 +138,11 @@ public class LendingPanel extends JPanel {
 		pAllCk.add(p04);
 
 		btnCk = new JButton("모두 선택");
+		btnCk.addActionListener(this);
 		pAllCk.add(btnCk);
 
-		pLengingList = new LendingListPanel();
+//		pLengingList = new LendingListPanel();
+		pLengingList = new RentListPanel();
 		pList.add(pLengingList, BorderLayout.CENTER);
 
 		pBtn = new JPanel();
@@ -147,9 +156,38 @@ public class LendingPanel extends JPanel {
 		pBtn.add(p06);
 
 		btnCancel = new JButton("취소");
+		btnCancel.addActionListener(this);
 		p06.add(btnCancel);
 
 		btnLending = new JButton("대여");
+		btnLending.addActionListener(this);
 		p06.add(btnLending);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnLending) {
+			do_btnLending_actionPerformed(e);
+		}
+		if (e.getSource() == btnCancel) {
+			do_btnCancel_actionPerformed(e);
+		}
+		if (e.getSource() == btnCk) {
+			do_btnCk_actionPerformed(e);
+		}
+		if (e.getSource() == btnSearch) {
+			do_btnSearch_actionPerformed(e);
+		}
+	}
+
+	protected void do_btnSearch_actionPerformed(ActionEvent e) {
+	}
+
+	protected void do_btnCk_actionPerformed(ActionEvent e) {
+	}
+
+	protected void do_btnCancel_actionPerformed(ActionEvent e) {
+	}
+
+	protected void do_btnLending_actionPerformed(ActionEvent e) {
 	}
 }

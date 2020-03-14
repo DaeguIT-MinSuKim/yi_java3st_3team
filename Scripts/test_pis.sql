@@ -174,7 +174,18 @@ select *
 from recommendation;
 select b.book_code,b.book_name,b.authr_name,b.pblicte_year,p.pls_name,l.lend_date,l.rturn_date from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no;
 
+select count(book_code) from book where dsuse_cdt = 1;
 select count(book_code) from book; #전체 책권수
 select count(book_code) from book where lend_psb_cdt = 1; #대여가능권수
 select count(book_code)-(select count(book_code) from book where lend_psb_cdt = 1) from book; #대여중인권수
 select avg(date(rturn_date)-date(lend_date)) from lending; #평균 대여일
+select (select count(book_code) from book where lc_no = 1) as 'cate1', 
+	   (select count(book_code) from book where lc_no = 2) as 'cate2',
+	   (select count(book_code) from book where lc_no = 3) as 'cate3',
+	   (select count(book_code) from book where lc_no = 4) as 'cate4',
+	   (select count(book_code) from book where lc_no = 5) as 'cate5',
+	   (select count(book_code) from book where lc_no = 6) as 'cate6',
+	   (select count(book_code) from book where lc_no = 7) as 'cate7',
+	   (select count(book_code) from book where lc_no = 8) as 'cate8',
+	   (select count(book_code) from book where lc_no = 9) as 'cate9',
+	   (select count(book_code) from book where lc_no = 10) as 'cate10';

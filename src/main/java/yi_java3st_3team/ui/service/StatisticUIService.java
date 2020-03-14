@@ -24,5 +24,11 @@ public class StatisticUIService {
 	public int selectTotalBooks() {
 		return bookDao.selectTotalBooks();
 	}
+	public int selectDisposalBooks() {
+		return bookDao.selectDisposalBooks();
+	}
+	public int[] selectCountByCate() {
+		return bookDao.selectCountByCate();
+	}
 }
 

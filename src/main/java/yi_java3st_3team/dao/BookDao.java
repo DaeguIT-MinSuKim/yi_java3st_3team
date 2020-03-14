@@ -21,4 +21,6 @@ public interface BookDao {
 	int selectLendableBooks();
 	int selectDuringLendBooks();
 	int selectTotalBooks();
+	int selectDisposalBooks();
+	int[] selectCountByCate();
 }

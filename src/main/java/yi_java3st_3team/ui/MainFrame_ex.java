@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import yi_java3st_3team.ui.service.StatisticUIService;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -40,7 +41,8 @@ public class MainFrame_ex extends JFrame {
 	private JPanel pLogout;
 	private JPanel pWest;
 	private JPanel pCenter;
-	private BookInfoPanelBarChart bookInfoChart;
+	private JPanel chartBookInfo;
+	private JPanel chartBookCateInfo;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -192,13 +194,25 @@ public class MainFrame_ex extends JFrame {
 		pWest = new JPanel();
 		contentPane.add(pWest, BorderLayout.WEST);
 		pWest.setLayout(new BorderLayout(0, 0));
-		
 		pHome.addMouseListener(menuAdapter);
 		pBookMgn.addMouseListener(menuAdapter);
 		pMemMgn.addMouseListener(menuAdapter);
 		pChkOutRtn.addMouseListener(menuAdapter);
 		pEmpMgn.addMouseListener(menuAdapter);
 		pStatistic.addMouseListener(menuAdapter);
+		
+		Thread initChartThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				if(chartBookInfo == null) {
+					chartBookInfo = new BookInfoUIPanel();
+				}
+				if(chartBookCateInfo == null) {
+					chartBookCateInfo = new BookInfoCateInfoPanel();
+				}		
+			}
+		});
+		initChartThread.run();
 	}
 
 	private JPanel getHomeMenuPanel() {
@@ -214,7 +228,7 @@ public class MainFrame_ex extends JFrame {
 		return panel;
 	}
 
-	private MouseAdapter getMouseAdapter() {
+	private synchronized MouseAdapter getMouseAdapter() {
 		MouseAdapter menuAdapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -279,13 +293,17 @@ public class MainFrame_ex extends JFrame {
 								switch(chkLabel.getText()) {
 								case "대여/반납 통계":
 									contentPane.remove(pCenter);
-									bookInfoChart = new BookInfoPanelBarChart();
-									contentPane.add(bookInfoChart,BorderLayout.CENTER);
-									Platform.runLater(() -> initFX(bookInfoChart));
-									contentPane.repaint();
-									contentPane.revalidate();
+									pCenter = chartBookInfo;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
 									break;
 								case "도서보유현황":
+									contentPane.remove(pCenter);
+									pCenter = chartBookCateInfo;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
 									break;
 								case "이용자 현황":
 									break;
@@ -302,10 +320,5 @@ public class MainFrame_ex extends JFrame {
 			}	
 		};
 		return menuAdapter;
-	}
-	public void initFX(InitScene fxPanel) {
-		Scene scene = fxPanel.createScene();
-		JFXPanel panel = (JFXPanel) fxPanel;
-		panel.setScene(scene);
 	}
 }

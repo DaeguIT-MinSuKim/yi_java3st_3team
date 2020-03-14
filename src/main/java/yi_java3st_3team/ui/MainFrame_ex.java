@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,10 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import yi_java3st_3team.ui.service.StatisticUIService;
+
 import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
@@ -206,18 +204,17 @@ public class MainFrame_ex extends JFrame {
 		pEmpMgn.addMouseListener(menuAdapter);
 		pStatistic.addMouseListener(menuAdapter);
 		
-		Thread initChartThread = new Thread(new Runnable() {
+		Thread initPanelThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				if(chartBookInfo == null) {
-					chartBookInfo = new BookInfoUIPanel();
-				}
-				if(chartBookCateInfo == null) {
-					chartBookCateInfo = new BookInfoCateInfoPanel();
-				}		
+				bookReqst = new BookRegistrationPanel();
+				bookMgn = new BookManagerPanel();
+				recomBookAdd = new RecomBookAddPanel();
+				chartBookInfo = new BookInfoUIPanel();
+				chartBookCateInfo = new BookInfoCateInfoPanel();		
 			}
 		});
-		initChartThread.run();
+		initPanelThread.run();
 	}
 
 	private JPanel getHomeMenuPanel() {
@@ -291,22 +288,22 @@ public class MainFrame_ex extends JFrame {
 								switch(chkLabel.getText()) {
 								case "도서등록" :
 									contentPane.remove(pCenter);
-									bookReqst = new BookRegistrationPanel();
-									contentPane.add(bookReqst,BorderLayout.CENTER);
+									pCenter = bookReqst; 
+									contentPane.add(pCenter,BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;
 								case "보유도서 관리" :
 									contentPane.remove(pCenter);
-									bookMgn = new BookManagerPanel();
-									contentPane.add(bookMgn,BorderLayout.CENTER);
+									pCenter = bookMgn; 
+									contentPane.add(pCenter,BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;
 								case "추천도서 등록" :
 									contentPane.remove(pCenter);
-									recomBookAdd = new RecomBookAddPanel();
-									contentPane.add(recomBookAdd,BorderLayout.CENTER);
+									pCenter = recomBookAdd;
+									contentPane.add(pCenter,BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;

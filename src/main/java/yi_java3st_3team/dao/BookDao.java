@@ -6,19 +6,29 @@ import yi_java3st_3team.dto.Book;
 
 public interface BookDao {
 	Book selectBookByCode(Book book);
-	
+
 	List<Book> selectBookByAll();
+
 	List<Book> selectBookByCodeAndCat(Book book);
+
 	List<Book> selectBookByNameAndCat(Book book);
-	
+
 	List<Book> selectBookOnMber(Book book);
-	
+
 	String selectBookByLastCode();
-	
+
+	Book LendingBookByCode(Book book);
+
 	int insertBook(Book book);
+
 	int updateBook(Book book);
+
 	int deleteBook(Book book);
+
 	int selectLendableBooks();
+
 	int selectDuringLendBooks();
+
 	int selectTotalBooks();
+
 }

@@ -49,10 +49,11 @@ public class LendingUiService {
 	public List<Lending> selectLendingByAllTest() {
 		return lendingDao.selectLendingByAllTest();
 	}
+
 	public List<Lending> showMemberLendBookTotlaList(Lending lending) {
 		return lendingDao.selectLendingByMberIdAndLendBookTotalAll(lending);
 	}
-	
+
 	public List<Lending> showMenberLendBookList(Lending lending) {
 		return lendingDao.selectLendingByMberIdAndLendBookAll(lending);
 	}
@@ -60,7 +61,7 @@ public class LendingUiService {
 	public Member showLendingMemberId(Member member) {
 		return memberDao.selectMemberByNo(member);
 	}
-	
+
 	public void modifyLendingByCodeAndMberId(Lending lending) {
 		lendingDao.updateLendingByCodeAndMberId(lending);
 	}

@@ -12,6 +12,7 @@ import yi_java3st_3team.dao.impl.MiddleClassificationDaoImpl;
 import yi_java3st_3team.dao.impl.PublishingCompanyDaoImpl;
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.LargeClassification;
+import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.MiddleClassification;
 import yi_java3st_3team.dto.PublishingCompany;
 
@@ -27,47 +28,53 @@ public class BookUiService {
 		mlDao = MiddleClassificationDaoImpl.getInstance();
 		plsDao = PublishingCompanyDaoImpl.getInstance();
 	}
-	
+
 	public List<Book> showBookListAll() {
 		return bookDao.selectBookByAll();
 	}
-	
+
 	public List<LargeClassification> showLcList() {
 		return lcDao.selectLargeClassificationByAll();
 	}
-	
+
 	public List<MiddleClassification> showMlList(LargeClassification lc) {
 		return mlDao.selectMiddleClassificationGroupLc(lc);
 	}
-	
+
 	public List<MiddleClassification> showMlListAll() {
 		return mlDao.selectMiddleClassificationByAll();
 	}
-	
+
 	public List<PublishingCompany> showPlsList() {
 		return plsDao.selectPublishingCompanyByAll();
 	}
-	
+
 	public String getLastCode() {
 		return bookDao.selectBookByLastCode();
 	}
-	
+
 	public void addBook(Book book) {
 		bookDao.insertBook(book);
 	}
-	
+
 	public List<Book> searchBookCodeAndCat(Book book) {
 		return bookDao.selectBookByCodeAndCat(book);
 	}
-	
+
 	public List<Book> searchBookNameAndCat(Book book) {
 		return bookDao.selectBookByNameAndCat(book);
 	}
-	
+
+	public Book showBookByCode(Book book) {
+		return bookDao.selectBookByCode(book);
+	}
+	public Book LendingBookByCode(Book book) {
+		return bookDao.LendingBookByCode(book);
+	}
 	public void modifyBook(Book book) {
 		bookDao.updateBook(book);
 	}
-	
+
 	public void removeBook(Book book) {
 		bookDao.deleteBook(book);
 	}

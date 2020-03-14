@@ -2,6 +2,8 @@ package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -10,18 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import yi_java3st_3team.ui.list.LendingListPanel;
-import yi_java3st_3team.ui.list.RentListPanel;
-import yi_java3st_3team.ui.list.tableChkBoxTest;
-import yi_java3st_3team.ui.service.LendingUiService;
-import yi_java3st_3team.dao.MemberDao;
-import yi_java3st_3team.dao.impl.MemberDaoImpl;
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.MemberIdSelectPanel;
-import yi_java3st_3team.ui.exception.InvalidCheckException;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import yi_java3st_3team.ui.list.RentListPanel;
+import yi_java3st_3team.ui.service.BookUiService;
+import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
 public class LendingPanel extends JPanel implements ActionListener {
@@ -37,17 +33,18 @@ public class LendingPanel extends JPanel implements ActionListener {
 	private JPanel p03;
 	private JPanel p04;
 	private JButton btnCk;
-//	private LendingListPanel pLengingList;
 	private RentListPanel pLengingList;
 	private JPanel pBtn;
 	private JPanel p05;
 	private JPanel p06;
 	private JButton btnCancel;
 	private JButton btnLending;
-	private LendingUiService service;
+	private LendingUiService lendingService;
+	private BookUiService bookService;
 
 	public LendingPanel() {
-		service = new LendingUiService();
+		lendingService = new LendingUiService();
+		bookService = new BookUiService();
 		initialize();
 	}
 
@@ -55,46 +52,7 @@ public class LendingPanel extends JPanel implements ActionListener {
 		setLayout(new BorderLayout(0, 0));
 
 		pMember = new MemberIdSelectPanel();
-		pMember.getBtnMberId().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				/*
-				 * JTextField mberId2 = pMember.getTfMberId(); pMember.setTfMberId(new
-				 * JTextField("")); String mberId = mberId2.getText(); Member member = new
-				 * Member(mberId); Member member2 = service.showLendingMemberId(member);
-				 * pMember.setTfMberId(new JTextField(member2.getMberId()));
-				 * pMember.setTfMberName(new JTextField(member2.getMberName()));
-				 * pMember.setTfGrade(new JTextField(member2.getGrade().getGradeName())); if
-				 * (member2.getLendPsbCdt() == 1) { pMember.setTfLendPsbCdt(new
-				 * JTextField("불가능")); } else { pMember.setTfLendPsbCdt(new JTextField("가가능"));
-				 * } int LendBookCnt = member2.getLendBookCnt(); int BookLeCnt =
-				 * member2.getGrade().getBookLeCnt(); int res = BookLeCnt - LendBookCnt;
-				 * pMember.setTfLendBookCdt(new JTextField(res));
-				 * 
-				 * pMember.revalidate(); pMember.repaint();
-				 */
-				Member id = new Member(pMember.getTfMberId().getText());
-				Member member = service.showLendingMemberId(id);
-				pMember.getTfMberName().setText(member.getMberName());
-//				JOptionPane.showMessageDialog(null, member.getGrade().getGradeName());
-				if (member.getGrade().getGradeNo() == 1) {
-					pMember.getTfGrade().setText("일반");
-				} else {
-					pMember.getTfGrade().setText("우수");
-				}
-//				pMember.getTfGrade().setText(member.getGrade().getGradeNo()+"");
-				if (member.getLendPsbCdt() == 0) {
-					pMember.getTfLendPsbCdt().setText("가능");
-				} else {
-					pMember.getTfLendPsbCdt().setText("불가능");
-				}
-				int LendBookCnt = member.getLendBookCnt();
-				int BookLeCnt = member.getGrade().getBookLeCnt();
-				int res = BookLeCnt - LendBookCnt;
-				pMember.getTfLendBookCdt().setText(res + "");
-			}
-		});
-
+		pMember.getBtnMberId().addActionListener(this);
 		add(pMember, BorderLayout.NORTH);
 		pMember.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -141,7 +99,6 @@ public class LendingPanel extends JPanel implements ActionListener {
 		btnCk.addActionListener(this);
 		pAllCk.add(btnCk);
 
-//		pLengingList = new LendingListPanel();
 		pLengingList = new RentListPanel();
 		pList.add(pLengingList, BorderLayout.CENTER);
 
@@ -165,6 +122,9 @@ public class LendingPanel extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == pMember.getBtnMberId()) {
+			do_pMemberBtnMberId_actionPerformed(e);
+		}
 		if (e.getSource() == btnLending) {
 			do_btnLending_actionPerformed(e);
 		}
@@ -180,6 +140,10 @@ public class LendingPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnSearch_actionPerformed(ActionEvent e) {
+		Book id = new Book(tfBookCode.getText());
+		Book book = bookService.LendingBookByCode(id);
+		JOptionPane.showMessageDialog(null, book.toString());
+//		pLengingList.addItem(item);
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
@@ -189,5 +153,26 @@ public class LendingPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
+	}
+
+	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {
+		Member id = new Member(pMember.getTfMberId().getText());
+		Member member = lendingService.showLendingMemberId(id);
+		pMember.getTfMberName().setText(member.getMberName());
+		if (member.getGrade().getGradeNo() == 1) {
+			pMember.getTfGrade().setText("일반");
+		} else {
+			pMember.getTfGrade().setText("우수");
+		}
+
+		if (member.getLendPsbCdt() == 0) {
+			pMember.getTfLendPsbCdt().setText("가능");
+		} else {
+			pMember.getTfLendPsbCdt().setText("불가능");
+		}
+		int LendBookCnt = member.getLendBookCnt();
+		int BookLeCnt = member.getGrade().getBookLeCnt();
+		int res = BookLeCnt - LendBookCnt;
+		pMember.getTfLendBookCdt().setText(res + "");
 	}
 }

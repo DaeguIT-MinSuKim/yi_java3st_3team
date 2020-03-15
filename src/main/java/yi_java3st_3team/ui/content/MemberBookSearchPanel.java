@@ -108,21 +108,21 @@ public class MemberBookSearchPanel extends JPanel implements ActionListener {
 		pBtns.setBackground(Color.WHITE);
 		pNorth.add(pBtns);
 
-		btnSearch = new JButton("검색");
-		btnSearch.addActionListener(this);
-		btnSearch.setPreferredSize(new Dimension(150, 40));
-		btnSearch.setFont(new Font("맑은 고딕", Font.BOLD, 18));
-		pBtns.add(btnSearch);
-
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setPreferredSize(new Dimension(10, 0));
-		pBtns.add(lblNewLabel);
-
 		button = new JButton("상세보기");
 		button.addActionListener(this);
 		button.setPreferredSize(new Dimension(150, 40));
 		button.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		pBtns.add(button);
+
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setPreferredSize(new Dimension(10, 0));
+		pBtns.add(lblNewLabel);
+
+		btnSearch = new JButton("검색");
+		btnSearch.addActionListener(this);
+		btnSearch.setPreferredSize(new Dimension(150, 40));
+		btnSearch.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+		pBtns.add(btnSearch);
 
 		JPanel pList = new JPanel();
 		pList.setBackground(Color.WHITE);
@@ -189,36 +189,36 @@ public class MemberBookSearchPanel extends JPanel implements ActionListener {
 
 	protected void btnSearchActionPerformed(ActionEvent e) {
 		Book book = new Book();
-		
+
 		try {
-			if(tfName.getText().length() != 0) {
+			if (tfName.getText().length() != 0) {
 				book.setBookName(tfName.getText());
-				
-				if(tfAuthr.getText().length() != 0) {
+
+				if (tfAuthr.getText().length() != 0) {
 					book.setAuthrName(tfAuthr.getText());
 				}
-				
-				if(cmbCat.getSelectedIndex() > -1) {
+
+				if (cmbCat.getSelectedIndex() > -1) {
 					book.setLcNo((LargeClassification) cmbCat.getSelectedItem());
 				}
-				
+
 				pBookList.loadData(service.searchBookOnMber(book));
 			}
-			
-			if(tfName.getText().length() == 0) {
+
+			if (tfName.getText().length() == 0) {
 				book.setBookName(tfName.getText());
-				
-				if(tfAuthr.getText().length() != 0) {
+
+				if (tfAuthr.getText().length() != 0) {
 					book.setAuthrName(tfAuthr.getText());
 				}
-				
-				if(cmbCat.getSelectedIndex() > -1) {
+
+				if (cmbCat.getSelectedIndex() > -1) {
 					book.setLcNo((LargeClassification) cmbCat.getSelectedItem());
 				}
-				
+
 				pBookList.loadData(service.searchBookOnMber(book));
 			}
-			
+
 			cmbCat.setSelectedIndex(-1);
 		} catch (NullPointerException e1) {
 			JOptionPane.showMessageDialog(null, "찾는 도서가 없습니다");

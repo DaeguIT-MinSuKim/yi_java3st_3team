@@ -201,7 +201,7 @@ public class BookDaoImpl implements BookDao {
 		if (book.getLcNo() != null)
 			sql.append("b1.lc_no = ? and ");
 		sql.replace(sql.lastIndexOf("and"), sql.length(), " ");
-		sql.append("order by b1.regist_date");
+		sql.append("order by b1.book_name");
 
 		List<Book> list = null;
 
@@ -223,6 +223,37 @@ public class BookDaoImpl implements BookDao {
 						list.add(getBook(rs));
 					} while (rs.next());
 				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Book> selectBookAllOnMber() {
+		String sql = "select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year ,\r\n" 
+					+ "	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no, m.mlsfc_name,\r\n" 
+					+ "	   b1.regist_date , b1.dsuse_cdt\r\n" 
+					+ "	from book b1 \r\n" 
+					+ "		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no \r\n" 
+					+ "		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,\r\n" 
+					+ "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2\r\n" 
+					+ "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and \r\n" 
+					+ "			b1.book_price = b2.book_price\r\n" 
+					+ "	order by b1.book_name";
+
+		List<Book> list = null;
+
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			LogUtil.prnLog(pstmt);
+			if (rs.next()) {
+				list = new ArrayList<>();
+				do {
+					list.add(getBook(rs));
+				} while (rs.next());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -502,7 +533,5 @@ public class BookDaoImpl implements BookDao {
 		}
 		return 0;
 	}
-	 
-
 
 }

@@ -78,4 +78,12 @@ public class BookUiService {
 	public void removeBook(Book book) {
 		bookDao.deleteBook(book);
 	}
+	
+	public List<Book> searchBookOnMber(Book book) {
+		return bookDao.selectBookOnMber(book);
+	}
+	
+	public List<Book> showBookAllOnMber() {
+		return bookDao.selectBookAllOnMber();
+	}
 }

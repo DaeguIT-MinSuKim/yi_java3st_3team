@@ -14,6 +14,8 @@ public interface BookDao {
 	List<Book> selectBookByNameAndCat(Book book);
 
 	List<Book> selectBookOnMber(Book book);
+	
+	List<Book> selectBookAllOnMber();
 
 	String selectBookByLastCode();
 

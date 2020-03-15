@@ -53,7 +53,7 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 	@Override
 	public List<MiddleClassification> selectMiddleClassificationByAll() {
 		String sql = "select lc.lclas_no , lc.lclas_name , ml.mlsfc_no , ml.mlsfc_name "
-				+ "from middle_classification ml join large_classification lc on ml.lclas_no = lc.lclas_no ;";
+				+ "from middle_classification ml left join large_classification lc on ml.lclas_no = lc.lclas_no ;";
 		List<MiddleClassification> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -134,11 +134,11 @@ public class MiddleClassificationDaoImpl implements MiddleClassificationDao {
 
 	@Override
 	public int deleteMiddleClassification(MiddleClassification mlsfc) {
-		String sql = "delete from middle_classification where lclas_no = ? and mlsfc_no = ?";
+		String sql = "delete from middle_classification where mlsfc_no = ? and mlsfc_name = ?";
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, mlsfc.getLclasNo().getLclasNo());
-			pstmt.setInt(2, mlsfc.getMlsfcNo());
+			pstmt.setInt(1, mlsfc.getMlsfcNo());
+			pstmt.setString(2, mlsfc.getMlsfcName());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {

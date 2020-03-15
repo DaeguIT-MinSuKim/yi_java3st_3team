@@ -5,11 +5,15 @@ import yi_java3st_3team.dto.MiddleClassification;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 
@@ -137,7 +141,8 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		lblNewLabel_5.setPreferredSize(new Dimension(10, 0));
 		pSouth.add(lblNewLabel_5);
 
-		btnAdd = new JButton("등록");
+		btnAdd = new JButton("추가");
+		btnAdd.addActionListener(this);
 		btnAdd.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		pSouth.add(btnAdd);
 
@@ -150,12 +155,64 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 
 		pLcMlList = new BookLcAndMlTblPanel();
 		pLcMlList.setBackground(Color.WHITE);
-		pLcMlList.loadData(service.showListAll());
 		pLcMlList.setBorder(new EmptyBorder(20, 20, 20, 20));
+		pLcMlList.loadData(service.showListAll());
+		pLcMlList.setPopupMenu(createPopupMenu());
 		pList.add(pLcMlList, BorderLayout.CENTER);
 
 		setLcList(bookService);
 	}
+
+	private JPopupMenu createPopupMenu() {
+		JPopupMenu popMenu = new JPopupMenu();
+		
+		JMenuItem updateItem = new JMenuItem("수정");
+		updateItem.addActionListener(myPopMenuListener);
+		popMenu.add(updateItem);
+		
+		JMenuItem deleteItem = new JMenuItem("삭제");
+		deleteItem.addActionListener(myPopMenuListener);
+		popMenu.add(deleteItem);
+		
+		return popMenu;
+	}
+	
+	ActionListener myPopMenuListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				if(e.getActionCommand().contentEquals("수정")) {
+					MiddleClassification updateItem = pLcMlList.getSelectedItem();
+					
+					if(updateItem.getLclasNo().getLclasNo() == 0) {
+						JOptionPane.showMessageDialog(null, "구분되는 대분류가 없습니다. 중분류 데이터를 삭제하고 새로 등록해주세요");
+					}
+					
+					setItem(updateItem);
+					btnAdd.setText("수정");
+				}
+				if(e.getActionCommand().contentEquals("삭제")) {
+					MiddleClassification deleteItem = pLcMlList.getSelectedItem();
+					
+					int result = JOptionPane.showConfirmDialog(null, "선택된 중분류 데이터를 삭제하겠습니까?", "삭제확인",
+							JOptionPane.YES_NO_OPTION);
+
+					if (result == JOptionPane.CLOSED_OPTION) {
+					} else if (result == JOptionPane.YES_OPTION) {
+						service.removeMl(deleteItem);
+						pLcMlList.loadData(service.showListAll());
+						clearTf();
+						JOptionPane.showMessageDialog(null, "삭제되었습니다");
+					} else {
+					}
+				}
+			} catch (RuntimeException e1){
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+			
+		}
+	};
 
 	public void setLcList(BookUiService bookService) {
 		this.bookService = bookService;
@@ -188,7 +245,7 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 
 	@Override
 	public void setItem(MiddleClassification item) {
-		cmbLc.setSelectedItem(item.getLclasNo().getLclasNo());
+		cmbLc.setSelectedItem(item.getLclasNo());
 		tfMlCode.setText(item.getMlsfcNo() + "");
 		tfMlName.setText(item.getMlsfcName());
 	}
@@ -209,6 +266,13 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAdd) {
+			if(e.getActionCommand().contentEquals("수정")) {
+				updateActionPerformed(e);
+			} else {				
+				btnAddActionPerformed(e);
+			}
+		}
 		if (e.getSource() == btnLcAdd) {
 			btnLcAddActionPerformed(e);
 		}
@@ -217,9 +281,22 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		}
 	}
 
+	private void updateActionPerformed(ActionEvent e) {
+		try {
+			MiddleClassification updateMl = getItem();
+			service.modifyMl(updateMl);
+			pLcMlList.loadData(service.showListAll());
+			clearTf();
+			JOptionPane.showMessageDialog(null, "수정되었습니다");
+			btnAdd.setText("추가");
+		} catch (InvalidCheckException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+	}
+
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		clearTf();
-		btnAdd.setText("등록");
+		btnAdd.setText("추가");
 	}
 
 	protected void btnLcAddActionPerformed(ActionEvent e) {
@@ -227,7 +304,27 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		lcMgnDlg.setBounds(100, 100, 300, 500);
 		lcMgnDlg.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		lcMgnDlg.setVisible(true);
-		
+
 		setCmbLcList(bookService.showLcList());
+	}
+
+	protected void btnAddActionPerformed(ActionEvent e) {
+		try {
+			MiddleClassification newMl = getItem();
+			service.addMl(newMl);
+			pLcMlList.loadData(service.showListAll());
+			clearTf();
+			JOptionPane.showMessageDialog(null, "추가되었습니다");
+		} catch (InvalidCheckException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		} catch (Exception e1) {
+			SQLException e2 = (SQLException) e1;
+			if (e2.getErrorCode() == 1062) {
+				JOptionPane.showMessageDialog(null, "코드 중복");
+				System.err.println(e2.getMessage());
+				return;
+			}
+			e1.printStackTrace();
+		}
 	}
 }

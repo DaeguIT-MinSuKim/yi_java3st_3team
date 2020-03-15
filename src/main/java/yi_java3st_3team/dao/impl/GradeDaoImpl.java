@@ -24,7 +24,7 @@ public class GradeDaoImpl implements GradeDao {
 
 	@Override
 	public Grade selectGradeByNo(Grade grade) {
-		String sql = "select grade_no, grade_name, book_le_cnt from grade where grade_no=?";
+		String sql = "select grade_no, grad_name, book_le_cnt from grade where grade_no=?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			LogUtil.prnLog(pstmt);
 			pstmt.setInt(1, grade.getGradeNo());
@@ -41,7 +41,7 @@ public class GradeDaoImpl implements GradeDao {
 
 	@Override
 	public List<Grade> selectGradeByAll() {
-		String sql = "select grade_no, grade_name, book_le_cnt from grade";
+		String sql = "select grad_name from grade";
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -74,7 +74,7 @@ public class GradeDaoImpl implements GradeDao {
 
 	@Override
 	public int updateGrade(Grade grade) {
-		String sql = "update grade set grade_name=? book_le_cnt=? where grade_no=?";
+		String sql = "update grade set grad_name=? book_le_cnt=? where grade_no=?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, grade.getGradeName());
 			pstmt.setInt(2, grade.getBookLeCnt());
@@ -101,9 +101,9 @@ public class GradeDaoImpl implements GradeDao {
 	}
 
 	private Grade getGrade(ResultSet rs) throws SQLException {
-		int gradeNo = rs.getInt("grade_no");
-		String gradeName = rs.getString("grade_name");
-		int bookLeCnt = rs.getInt("book_le_cnt");
-		return new Grade(gradeNo, gradeName, bookLeCnt);
+		//int gradeNo = rs.getInt("grade_no");
+		String gradeName = rs.getString("grad_name");
+		//int bookLeCnt = rs.getInt("book_le_cnt");
+		return new Grade(gradeName);
 	}
 }

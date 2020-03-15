@@ -135,6 +135,7 @@ ALTER TABLE yi_java3st_3team.member
 	ADD CONSTRAINT PK_member -- 회원 기본키
 		PRIMARY KEY (
 			mber_id -- 회원ID
+			
 		);
 
 -- 중분류

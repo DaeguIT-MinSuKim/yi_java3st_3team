@@ -53,7 +53,7 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 		
 		if(item.getGrade().getGradeNo() == 1) {
 			grade = "일반";
-		}else if(item.getGrade().getGradeNo() == 1) {
+		}else if(item.getGrade().getGradeNo() == 2) {
 			grade="우수";
 		}else {
 			grade = "일반";

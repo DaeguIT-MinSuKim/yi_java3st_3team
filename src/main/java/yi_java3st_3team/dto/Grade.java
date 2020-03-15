@@ -14,6 +14,11 @@ public class Grade {
 		this.gradeNo = gradeNo;
 	}
 
+	
+	public Grade(String gradeName) {
+		this.gradeName = gradeName;
+	}
+
 	public Grade(int gradeNo, String gradeName, int bookLeCnt) {
 		super();
 		this.gradeNo = gradeNo;

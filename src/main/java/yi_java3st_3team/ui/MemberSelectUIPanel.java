@@ -16,6 +16,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.dialog.MemberUpdateDialog;
 import yi_java3st_3team.ui.list.MemberTblPanel;
@@ -34,6 +35,7 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 	private JRadioButton radioBtnBirthday;
 	private MemberUpdateDialog updateDialog;
 	private JFrame updateFrame;
+	private Member member;
 
 	public MemberSelectUIPanel() {
 		service = new MemberUIService();
@@ -86,15 +88,15 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 	private JPopupMenu createPop() {
 		JPopupMenu popMenu = new JPopupMenu();
 		
-		JMenuItem updateItem = new JMenuItem("수정");
+		JMenuItem updateItem = new JMenuItem("회원정보 수정");
 		updateItem.addActionListener(myPopMenuListener);
 		popMenu.add(updateItem);
 		
-		JMenuItem deleteItem = new JMenuItem("삭제");
+		JMenuItem deleteItem = new JMenuItem("탈퇴여부 설정");
 		deleteItem.addActionListener(myPopMenuListener);
 		popMenu.add(deleteItem);
 		
-		JMenuItem authorityItem = new JMenuItem("권한변경");
+		JMenuItem authorityItem = new JMenuItem("대여권한 설정");
 		authorityItem.addActionListener(myPopMenuListener);
 		popMenu.add(authorityItem);
 		
@@ -106,14 +108,35 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				if(e.getActionCommand().contentEquals("수정")) {
+				if(e.getActionCommand().contentEquals("회원정보 수정")) {
 					Member upMember = pMemberList.getSelectedItem();
-					updateDialog.setItem(upMember);
+					
+				
 					updateDialog = new MemberUpdateDialog(updateFrame, "회원정보 수정");
+					updateDialog.setItem(upMember);
+					updateDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					updateDialog.setVisible(true);
 					
+					pMemberList.loadData(service.showMemberListAll());
 					
+				}
+				
+				if(e.getActionCommand().contentEquals("탈퇴여부 설정")) {
+					Member upMember = pMemberList.getSelectedItem();
 					
+					int result = JOptionPane.showConfirmDialog(null, "탈퇴상태로 바꾸시겠습니까?", "탈퇴여부 설정", JOptionPane.YES_NO_OPTION);
+					
+					if(result == JOptionPane.CLOSED_OPTION) {
+						pMemberList.loadData(service.showMemberListAll());
+					} else if(result == JOptionPane.YES_OPTION) {
+						member = new Member();
+						service.updateByWdrCdt(upMember);
+						
+						//pMemberList.loadData(service.showMemberListAll());
+						
+					} else {
+						pMemberList.loadData(service.showMemberListAll());
+					} 
 				}
 			}catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());

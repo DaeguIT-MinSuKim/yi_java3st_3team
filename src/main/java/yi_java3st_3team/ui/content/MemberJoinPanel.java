@@ -321,7 +321,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	@Override
 	public void validCheck() {
 		if(tfID.getText().equals("") || pfPW1.getPassword().equals("") || tfName.getText().equals("") || tfZip.getText().equals("") 
-				|| tfAddress.getText().equals("") || tfDetailAdress.getText().equals("") || tfTel.getText().equals("") || tfBirthday.getDate()==new Date()){
+				|| tfAddress.getText().equals("") || tfTel.getText().equals("") || tfBirthday.getDate()==new Date()){
 					throw new InvalidCheckException();
 				}
 	}

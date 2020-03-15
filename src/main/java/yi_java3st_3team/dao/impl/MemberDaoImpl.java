@@ -326,6 +326,7 @@ public class MemberDaoImpl implements MemberDao {
 
 
 
+
 //	public Member selectLendingMemberByNo(Member member) {
 ////		String sql = "select m.mber_id , m.mber_name , g.grad_name , m.lend_psb_cdt , (g.book_le_cnt - count(l.rturn_date)) as 'lend_book_cnt'\r\n"
 ////				+ "	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no \r\n"

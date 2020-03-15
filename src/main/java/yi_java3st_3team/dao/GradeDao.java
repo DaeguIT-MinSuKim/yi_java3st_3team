@@ -8,7 +8,7 @@ public interface GradeDao {
 	Grade selectGradeByNo(Grade grade);
 
 	List<Grade> selectGradeByAll();
-
+	
 	int insertGrade(Grade grade);
 
 	int updateGrade(Grade grade);

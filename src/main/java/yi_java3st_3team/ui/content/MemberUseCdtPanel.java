@@ -1,36 +1,31 @@
 package yi_java3st_3team.ui.content;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
+//import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
-import java.awt.Dimension;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
-import yi_java3st_3team.ui.LoginFrame;
+import yi_java3st_3team.ui.LoginFrame_ex;
 import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
 import yi_java3st_3team.ui.list.MemberUseCdtTotalTblPanel;
-import yi_java3st_3team.ui.list.tableChkBoxTest;
 import yi_java3st_3team.ui.service.LendingUiService;
 import yi_java3st_3team.ui.service.MemberUIService;
-
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-//import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
-import java.awt.Color;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.JCheckBox;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class MemberUseCdtPanel extends JPanel implements ActionListener {
@@ -40,7 +35,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	private String picPath;
 	private MemberUIService service;
 	private LendingUiService lendService;
-	private LoginFrame loginFrame;
+	private LoginFrame_ex loginFrame;
 	private JLabel lblGrade;
 	private JLabel lblLendCnt;
 	private JLabel lblTotlaCnt;
@@ -175,11 +170,12 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		pTotalTblList.setBackground(Color.WHITE);
 		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
 		
+		setItem();
 	}
 
 	public void setService(LendingUiService lendService) {
 		this.lendService = lendService;
-		Lending lending = new Lending(new Member(LoginFrame.loginMber.getMberId()));
+		Lending lending = new Lending(new Member(LoginFrame_ex.loginMber.getMberId()));
 		pTotalTblList.loadData(lendService.showMemberLendBookTotlaList(lending));
 		pLendTblList.loadDate(lendService.showMenberLendBookList(lending));
 	}
@@ -195,20 +191,20 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 				.getScaledInstance((int) picDimesion.getWidth(), (int) picDimesion.getHeight(), Image.SCALE_DEFAULT)));
 	}
 	
-	public void setLogingFrame(LoginFrame loginFrame) {
+	public void setLogingFrame(LoginFrame_ex loginFrame) {
 		this.loginFrame = loginFrame;
 	}
 	
 	public void setItem() {
-		if(LoginFrame.loginMber.getMberImg() == null || LoginFrame.loginMber.getMberImg().length == 0) {
+		if(LoginFrame_ex.loginMber.getMberImg() == null || LoginFrame_ex.loginMber.getMberImg().length == 0) {
 			setPicStr(defaultImg);
 		} else {
-			setPicByte(LoginFrame.loginMber.getMberImg());
+			setPicByte(LoginFrame_ex.loginMber.getMberImg());
 		}
 		
-		lblGrade.setText(LoginFrame.loginMber.getMberName() + "님 / " + (LoginFrame.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원"));
-		lblLendCnt.setText(String.format("%d권", LoginFrame.loginMber.getLendBookCnt()));
-		lblTotlaCnt.setText(String.format("%d권", LoginFrame.loginMber.getTotalLeCnt()));
+		lblGrade.setText(LoginFrame_ex.loginMber.getMberName() + "님 / " + (LoginFrame_ex.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원"));
+		lblLendCnt.setText(String.format("%d권", LoginFrame_ex.loginMber.getLendBookCnt()));
+		lblTotlaCnt.setText(String.format("%d권", LoginFrame_ex.loginMber.getTotalLeCnt()));
 		setService(lendService);
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -219,7 +215,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	
 	protected void btnRturnPsmCdtActionPerformed(ActionEvent e) {
 		pLendTblList.getSelectedItem();
-		Lending lending = new Lending(new Member(LoginFrame.loginMber.getMberId()));
+		Lending lending = new Lending(new Member(LoginFrame_ex.loginMber.getMberId()));
 		pLendTblList.loadDate(lendService.showMenberLendBookList(lending));
 		pTotalTblList.loadData(lendService.showMemberLendBookTotlaList(lending));
 	}

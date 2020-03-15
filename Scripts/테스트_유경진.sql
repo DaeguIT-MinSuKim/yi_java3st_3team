@@ -316,7 +316,7 @@ insert into lending(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, 
 select * from lending where rturn_date is null;
 
 select * from lending where book_cd = 'A090253' and mber_id = 'fivestar@nate.com' and rturn_date is null;
-select * from lending where mber_id = 'fivestar@nate.com'; 
+
 select * from lending where mber_id = 'fivestar@nate.com' and rturn_date is null; 
 select * from lending where book_cd = 'A090253' and mber_id = 'fivestar@nate.com' and rturn_date is null; 
 
@@ -324,7 +324,12 @@ update lending
 	set rturn_psm_cdt = 0
 	where mber_id = 'fivestar@nate.com' and rturn_date is null;
 		
-		
-		
+select count(*) from lending where mber_id = 'fivestar@nate.com' and rturn_date is null; 
+select count(*) from lending where mber_id = 'fivestar@nate.com'; 
+
+select * from lending where mber_id = 'daddystop@gmail.com'; 
+update lending 
+	set rturn_psm_cdt = 0
+	where mber_id = 'daddystop@gmail.com' and rturn_date is null;
 		
 		

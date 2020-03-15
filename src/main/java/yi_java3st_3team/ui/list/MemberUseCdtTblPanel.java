@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -87,22 +88,26 @@ public class MemberUseCdtTblPanel extends JPanel {
 		for(int i=0; i<table.getRowCount(); i++) {
 			Boolean checkCdt = (Boolean) table.getValueAt(i, 8);
 			
-			if(checkCdt && lists.get(i).getRturnPsmCdt() == 0) {
-				Date date = lists.get(i).getRturnDueDate();
-				int cdt = lists.get(i).getRturnPsmCdt();
-				cal.setTime(date);
-				cal.add(Calendar.DATE, 10);
-				Date rturnDate = cal.getTime();
-				System.out.println(rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
-						+ lists.get(i).getMberId().getMberId());
-				
-
-				Lending lending = new Lending();				
-				lending.setBookCd(new Book(lists.get(i).getBookCd().getBookCode()));
-				lending.setMberId(new Member(lists.get(i).getMberId().getMberId()));
-				lending.setRturnPsmCdt(1);
-				lending.setRturnDueDate(rturnDate);
-				service.modifyLendingByCodeAndMberId(lending);
+			if(checkCdt) {
+				if (lists.get(i).getRturnPsmCdt() == 0) {					
+					Date date = lists.get(i).getRturnDueDate();
+					int cdt = lists.get(i).getRturnPsmCdt();
+					cal.setTime(date);
+					cal.add(Calendar.DATE, 10);
+					Date rturnDate = cal.getTime();
+					System.out.println(rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
+							+ lists.get(i).getMberId().getMberId());
+					
+					
+					Lending lending = new Lending();				
+					lending.setBookCd(new Book(lists.get(i).getBookCd().getBookCode()));
+					lending.setMberId(new Member(lists.get(i).getMberId().getMberId()));
+					lending.setRturnPsmCdt(1);
+					lending.setRturnDueDate(rturnDate);
+					service.modifyLendingByCodeAndMberId(lending);
+				} else if( lists.get(i).getRturnPsmCdt() > 0){
+					JOptionPane.showMessageDialog(null, "이미 반납신청 되었습니다.\n(반납연기신청은 1회만 가능합니다.)");
+				}
 			}
 		}
 		

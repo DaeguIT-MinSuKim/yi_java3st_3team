@@ -236,7 +236,7 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
-	private Member getMember(ResultSet rs, boolean isImg) throws SQLException {
+	private Member getMember2(ResultSet rs, boolean isImg) throws SQLException {
 		String mberId = rs.getString("mber_id");
 		String mberPass = rs.getString("mber_pass");
 		String mberName = rs.getString("mber_name");
@@ -248,6 +248,31 @@ public class MemberDaoImpl implements MemberDao {
 		int totalLeCnt = rs.getInt("total_le_cnt");
 		int lendBookCnt = rs.getInt("lend_book_cnt");
 		Grade grade = new Grade(rs.getInt("grade"), rs.getString("grad_name"), rs.getInt("book_le_cnt"));
+		int lendPsbCdt = rs.getInt("lend_psb_cdt");
+		Date joinDt = rs.getTimestamp("join_dt");
+		int wdrCdt = rs.getInt("wdr_cdt");
+		Member mber = new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel,
+				totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
+		if (isImg) {
+			byte[] mberImg = rs.getBytes("mber_img");
+			mber.setMberImg(mberImg);
+		}
+		LogUtil.prnLog("getMember => " + mber);
+		return mber;
+	}
+	
+	private Member getMember(ResultSet rs, boolean isImg) throws SQLException {
+		String mberId = rs.getString("mber_id");
+		String mberPass = rs.getString("mber_pass");
+		String mberName = rs.getString("mber_name");
+		Date mberBrthdy = rs.getTimestamp("mber_brthdy");
+		ZipCode mberZip = new ZipCode(rs.getInt("mber_zip"));
+		String mberBassAd = rs.getString("mber_bass_ad");
+		String mberDetailAd = rs.getString("mber_detail_ad");
+		String mberTel = rs.getString("mber_tel");
+		int totalLeCnt = rs.getInt("total_le_cnt");
+		int lendBookCnt = rs.getInt("lend_book_cnt");
+		Grade grade = new Grade(rs.getInt("grade"));
 		int lendPsbCdt = rs.getInt("lend_psb_cdt");
 		Date joinDt = rs.getTimestamp("join_dt");
 		int wdrCdt = rs.getInt("wdr_cdt");

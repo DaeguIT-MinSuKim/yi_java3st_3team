@@ -366,6 +366,7 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		return null;
 	}
+	@Override
 	public Member selectMemberByNo3(Member member) {
 		String sql = "select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, grad_name, book_le_cnt, lend_psb_cdt, join_dt, wdr_cdt from member m left join grade g on m.grade = g.grade_no where mber_id = ?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
@@ -382,7 +383,7 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 	@Override
-	public Member searchMemberByID(Member member) {
+	public List<Member> searchMemberByID(Member member) {
 		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt\r\n" + 
 				"from member\r\n" + 
 				"where mber_id =?";
@@ -390,7 +391,6 @@ public class MemberDaoImpl implements MemberDao {
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);){
 			pstmt.setString(1, member.getMberId());
-<<<<<<< HEAD
 				try(ResultSet rs = pstmt.executeQuery()){
 					if (rs.next()) {
 						list = new ArrayList<>();
@@ -398,22 +398,13 @@ public class MemberDaoImpl implements MemberDao {
 							list.add(getMemberByAll(rs));
 						} while (rs.next());
 					}
-=======
-			try (ResultSet rs = pstmt.executeQuery()) {
-<<<<<<< HEAD
-				if (rs.next()) {
-//					return getMember(rs, true);
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
-=======
-				if (rs.next()) {
-					return getMember(rs, true);
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
+
 		
 
 	@Override
@@ -443,7 +434,7 @@ public class MemberDaoImpl implements MemberDao {
 	public List<Member> searchMemberByBirtyday(Member member) {
 		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt from member where date(mber_brthdy) = ?";
 		
-<<<<<<< HEAD
+
 		List<Member> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);){
@@ -460,10 +451,7 @@ public class MemberDaoImpl implements MemberDao {
 			e.printStackTrace();
 		}
 		return list;
-=======
 
-		return null;
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 	}
 
 	@Override

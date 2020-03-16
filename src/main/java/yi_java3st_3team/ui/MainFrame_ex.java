@@ -403,11 +403,7 @@ public class MainFrame_ex extends JFrame {
 					revalidate();
 					break;
 					
-				case "대여/반납":
-<<<<<<< HEAD
-					break;
-					
-=======
+				case "대여/반납":	
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
 					pCenter = new JPanel();
@@ -449,7 +445,6 @@ public class MainFrame_ex extends JFrame {
 					contentPane.add(pWest, BorderLayout.WEST);
 					repaint();
 					revalidate();
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 				case "직원관리":
 					break;
 				case "통계조회":

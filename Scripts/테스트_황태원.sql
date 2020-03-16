@@ -81,3 +81,5 @@ delete from member where mber_id='daddystop@gmail.com';
 delete from member 
 where mber_name ='이전';
 
+
+

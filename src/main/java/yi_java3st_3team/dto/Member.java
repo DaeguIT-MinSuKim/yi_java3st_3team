@@ -20,7 +20,7 @@ public class Member {
 	private Date joinDt;
 	private int wdrCdt;
 	private int odCnt;
-
+	private String mberBrthStr;
 	public Member() {
 	}
 
@@ -101,7 +101,7 @@ public class Member {
 	}
 
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
-			String mberDetailAd, String mberTel, byte[] mberImg) {
+			String mberDetailAd, String mberTel, byte[] mberImg, int wdrCdt) {
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 		this.mberName = mberName;
@@ -111,6 +111,7 @@ public class Member {
 		this.mberDetailAd = mberDetailAd;
 		this.mberTel = mberTel;
 		this.mberImg = mberImg;
+		this.wdrCdt = wdrCdt;
 	}
 
 	public Member(String mberId, String mberPass) {
@@ -445,4 +446,7 @@ public class Member {
 				Arrays.toString(mberImg), totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt, odCnt);
 	}
 
+	public void getMberBrthStr(String mberBrthStr) {
+		this.mberBrthStr = mberBrthStr;
+	}	
 }

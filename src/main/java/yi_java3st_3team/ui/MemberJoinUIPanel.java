@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Dimension;
 
 @SuppressWarnings("serial")
 public class MemberJoinUIPanel extends JPanel implements ActionListener{
@@ -35,6 +37,7 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 	}
 
 	private void initialize() {
+		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(40, 40, 40, 40));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -47,14 +50,18 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 		pContent.add(pMember, BorderLayout.CENTER);
 		
 		JPanel pBtns = new JPanel();
+		pBtns.setBorder(new EmptyBorder(10, 0, 0, 0));
+		pBtns.setBackground(Color.WHITE);
 		add(pBtns);
 		
 		btnAdd = new JButton("저장");
+		btnAdd.setPreferredSize(new Dimension(80, 30));
 		btnAdd.addActionListener(this);
 		pBtns.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pBtns.add(btnAdd);
 		
 		btnCancel = new JButton("취소");
+		btnCancel.setPreferredSize(new Dimension(80, 30));
 		btnCancel.addActionListener(this);
 		pBtns.add(btnCancel);
 	}

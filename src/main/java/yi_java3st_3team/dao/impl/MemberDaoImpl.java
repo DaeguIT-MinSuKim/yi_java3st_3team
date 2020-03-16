@@ -97,7 +97,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int insertMember(Member member) {
-		String sql = "insert into member(mber_id, mber_pass,mber_name, mber_brthdy,mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,join_dt) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into member(mber_id, mber_pass,mber_name, mber_brthdy,mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,join_dt, wdr_cdt) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, member.getMberId());
 			pstmt.setString(2, member.getMberPass());
@@ -111,6 +111,7 @@ public class MemberDaoImpl implements MemberDao {
 				pstmt.setBytes(9, member.getMberImg());
 			}
 			pstmt.setString(10, nowTime());
+			pstmt.setInt(11, member.getWdrCdt());
 
 //			pstmt.setInt(10, member.getTotalLeCnt());
 //			pstmt.setInt(11, member.getLendBookCnt());
@@ -154,7 +155,7 @@ public class MemberDaoImpl implements MemberDao {
 			sql.append("lend_psb_cdt=?, ");
 		if (member.getJoinDt() != null)
 			sql.append("join_dt=?, ");
-		if (member.getWdrCdt() != 0)
+		if (member.getWdrCdt() != -1)
 			sql.append("wdr_cdt=?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append("where mber_id=?");
@@ -189,7 +190,7 @@ public class MemberDaoImpl implements MemberDao {
 				pstmt.setInt(argCnt++, member.getLendPsbCdt());
 			if (member.getJoinDt() != null)
 				pstmt.setTimestamp(argCnt++, new Timestamp(member.getJoinDt().getTime()));
-			if (member.getWdrCdt() != 0)
+			if (member.getWdrCdt() !=-1)
 				pstmt.setInt(argCnt++, member.getWdrCdt());
 			pstmt.setString(argCnt++, member.getMberId());
 			LogUtil.prnLog(pstmt);
@@ -352,35 +353,71 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Member> searchMemberByID(Member member) {
 		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt\r\n" + 
-					"from member\r\n" + 
-					"where mber_id =?";
-		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+				"from member\r\n" + 
+				"where mber_id =?";
+		List<Member> list = null;
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);){
 			pstmt.setString(1, member.getMberId());
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					return getMember(rs, true);
+				try(ResultSet rs = pstmt.executeQuery()){
+					if (rs.next()) {
+						list = new ArrayList<>();
+						do {
+							list.add(getMemberByAll(rs));
+						} while (rs.next());
+					}
 				}
-			}
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 		
 
 	@Override
 	public List<Member> searchMemberByName(Member member) {
-		
-		return null;
+		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt\r\n" + 
+				"from member\r\n" + 
+				"where mber_name =?";
+		List<Member> list = null;
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);){
+			pstmt.setString(1, member.getMberName());
+				try(ResultSet rs = pstmt.executeQuery()){
+					if (rs.next()) {
+						list = new ArrayList<>();
+						do {
+							list.add(getMemberByAll(rs));
+						} while (rs.next());
+					}
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	@Override
 	public List<Member> searchMemberByBirtyday(Member member) {
+		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt from member where date(mber_brthdy) = ?";
 		
-		return null;
+		List<Member> list = null;
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);){
+			pstmt.setString(1, new String(new SimpleDateFormat("yyyy-MM-dd").format(member.getMberBrthdy())));
+				try(ResultSet rs = pstmt.executeQuery()){
+					if (rs.next()) {
+						list = new ArrayList<>();
+						do {
+							list.add(getMemberByAll(rs));
+						} while (rs.next());
+					}
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
-
 
 
 

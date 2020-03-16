@@ -16,11 +16,8 @@ public interface MemberDao {
 	List<Member> searchMemberByBirtyday(Member member);
 
 	int insertMember(Member member);
-
 	int updateMember(Member member);
-
 	int deleteMember(Member member);
-	
 	int[] selectMemberCounts();
 //	Member selectLendingMemberByNo(Member member);
 }

@@ -338,7 +338,8 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		String mberDetailAd = tfDetailAdress.getText().trim();
 		String mberTel = tfTel.getText().trim();
 		byte[] mberImg = getImage();
-		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg);
+		int wdrCdt = 0;
+		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, wdrCdt);
 	}
 
 	private byte[] getImage() {

@@ -26,7 +26,7 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 	protected Object[] toArray(Member item) {
 		String totalAd;
 		String lendCdt;
-		String wdrCnt;
+		String wdrCdt =item.getWdrCdt() > 0 ? "탈퇴" : "가입";
 		String grade;
 		
 		if(item.getMberDetailAd().length() > 0) {
@@ -43,14 +43,6 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 			lendCdt ="대여가능";
 		}
 		
-		if(item.getWdrCdt() ==0) {
-			wdrCnt = "가입";
-		}else if(item.getWdrCdt() ==1) {
-			wdrCnt = "탈퇴";
-		}else {
-			wdrCnt = "가입";
-		}
-		
 		if(item.getGrade().getGradeNo() == 1) {
 			grade = "일반";
 		}else if(item.getGrade().getGradeNo() == 2) {
@@ -58,11 +50,6 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 		}else {
 			grade = "일반";
 		}
-
-//		if(item.getOdCnt() > 4) {
-//			i
-//		}
-		
 		
 		return new Object[] {
 				item.getMberId(),
@@ -74,7 +61,7 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 				item.getLendBookCnt(),
 				grade,
 				String.format("%tF", item.getJoinDt()),
-				wdrCnt,
+				wdrCdt,
 				lendCdt,
 				item.getOdCnt()
 		};
@@ -84,7 +71,7 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 	public void updateRow(Member item, int updateIdx) {
 		String totalAd;
 		String lendCdt;
-		String wdrCnt;
+		String wdrCdt =item.getWdrCdt() == 0 ? "가입" : "탈퇴";
 		String grade;
 		
 		if(item.getMberDetailAd().length() > 0) {
@@ -99,14 +86,6 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 			lendCdt = "대여불가능";
 		}else {
 			lendCdt ="대여가능";
-		}
-		
-		if(item.getWdrCdt() ==0) {
-			wdrCnt = "가입";
-		}else if(item.getWdrCdt() ==1) {
-			wdrCnt = "탈퇴";
-		}else {
-			wdrCnt = "가입";
 		}
 		
 		if(item.getGrade().getGradeNo() == 1) {
@@ -126,7 +105,7 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 		model.setValueAt(item.getLendBookCnt(), updateIdx, 6);
 		model.setValueAt(grade, updateIdx, 7);
 		model.setValueAt(String.format("%tF", item.getJoinDt()), updateIdx, 8);
-		model.setValueAt(wdrCnt, updateIdx, 9);
+		model.setValueAt(wdrCdt, updateIdx, 9);
 		model.setValueAt(lendCdt, updateIdx, 10);
 		model.setValueAt(item.getOdCnt(), updateIdx, 11);
 	}

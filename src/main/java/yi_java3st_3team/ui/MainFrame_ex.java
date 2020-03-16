@@ -397,10 +397,8 @@ public class MainFrame_ex extends JFrame {
 					revalidate();
 					break;
 					
-					
 				case "대여/반납":
 					break;
-					
 					
 				case "직원관리":
 					break;

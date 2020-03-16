@@ -11,7 +11,7 @@ public interface MemberDao {
 	Member findMemberPw(Member member);
 
 	List<Member> selectMemberByAll();
-	Member searchMemberByID(Member member);
+	List<Member> searchMemberByID(Member member);
 	List<Member> searchMemberByName(Member member);
 	List<Member> searchMemberByBirtyday(Member member);
 

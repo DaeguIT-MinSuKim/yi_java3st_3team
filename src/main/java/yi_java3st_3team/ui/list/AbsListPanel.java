@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;

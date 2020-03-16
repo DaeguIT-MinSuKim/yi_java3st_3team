@@ -7,6 +7,11 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -31,7 +36,9 @@ import com.toedter.calendar.JDateChooser;
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Member;
+import yi_java3st_3team.dto.ZipCode;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
+import yi_java3st_3team.ui.list.MemberTblPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
@@ -53,6 +60,11 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	private String defaultImg = getClass().getClassLoader().getResource("no-image.png").getPath();
 	private JButton btnPic;
 	private MemberUIService service;
+	private JButton btnZip;
+	private ZipDialog zipDialog;
+	private JFrame zipFrame;
+	private MemberTblPanel pMemberList;
+	private MemberUpdateDialog updateDialog;
 
 //	public static void main(String[] args) {
 //		try {
@@ -122,7 +134,8 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		JLabel lblAir = new JLabel("");
 		pUpdate.add(lblAir);
 
-		JButton btnZip = new JButton("검색");
+		btnZip = new JButton("검색");
+		btnZip.addActionListener(this);
 		pUpdate.add(btnZip);
 
 		JLabel lblGrade = new JLabel("등급");
@@ -202,6 +215,8 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 			cmbGrade.setSelectedIndex(item.getGrade().getGradeNo()-1);
 			//cmbGrade.setSelectedItem(item.getGrade().getGradeName());
 		}
+		//JOptionPane.showMessageDialog(null, item.getMberImg().length);
+		
 		if (item.getMberImg() == null || item.getMberImg().length == 0) {
 			setStr(defaultImg);
 		} else {
@@ -224,6 +239,9 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnZip) {
+			btnZipActionPerformed(e);
+		}
 		if (e.getSource() == btnPic) {
 			btnPicActionPerformed(e);
 		}
@@ -243,21 +261,46 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		try {
 			Member upMember = getItem();
 			service.updateMember(upMember);
-			JOptionPane.showMessageDialog(null,
-					String.format("%s [%s]님의 정보가 수정 되었습니다.",upMember.getMberId() ,upMember.getMberName()));
-			
+			JOptionPane.showMessageDialog(null, String.format("%s [%s]님의 정보가 수정 되었습니다.",upMember.getMberId() ,upMember.getMberName()));
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}catch (Exception e1) {
 			e1.printStackTrace();
 		}
-
 	}
 
 	private Member getItem() {
 		validCheck();
+		zipDialog.setDetailAd(zipDialog.getTfDetailAd().getText());
+		zipDialog.setZipCode(zipDialog.getTfZipCode().getText());
+		String mberId = tfID.getText().trim();
+		String mberName = tfName.getText().trim();
+		Date mberBrthdy = tfBirthday.getDate();
+		//ZipCode mberZip = zipDialog.getZipCode();
+		ZipCode mberZip = new ZipCode();
+		//String mberBassAd = tfAd.getText(zipDialog.getAddrFull());
+		String mberBassAd = zipDialog.getAddrFull();
+		String mberDetailAd = zipDialog.getDetailAd();
+		String mberTel = tfTel.getText().trim();
+		byte[] mberImg = getImage();
+		Grade grade = (Grade) cmbGrade.getSelectedItem();
 		
-		return null;
+		return new Member(mberId, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, grade);
+	}
+	
+	private byte[] getImage() {
+		byte[] pic = null;
+		File file = new File(picPath);
+		try (InputStream is = new FileInputStream(file)) {
+			pic = new byte[is.available()];
+			is.read(pic);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return pic;
 	}
 
 	protected void btnPicActionPerformed(ActionEvent e) {
@@ -269,8 +312,27 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		if (res != JFileChooser.APPROVE_OPTION) {
 			JOptionPane.showMessageDialog(null, "사진을 선택하지 않으셨습니다.", "경고", JOptionPane.WARNING_MESSAGE);
 			return;
+			
 		}
 		picPath = chooser.getSelectedFile().getPath();
 		setStr(picPath);
+		
+	}
+	protected void btnZipActionPerformed(ActionEvent e) {
+		
+		zipDialog = new ZipDialog(zipFrame, "우편번호 검색");
+		zipDialog.getBtnAdd().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				zipDialog.setDetailAd(zipDialog.getTfDetailAd().getText());
+				zipDialog.setZipCode(zipDialog.getTfZipCode().getText());
+				tfAd.setText("(" + zipDialog.getZipCode() + ")"+" "+ zipDialog.getAddrFull() +" "+ zipDialog.getDetailAd());
+				zipDialog.dispose();
+			}
+		});
+		zipDialog.setBounds(100, 100, 500, 500);
+		zipDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		zipDialog.setVisible(true);
 	}
 }

@@ -22,6 +22,8 @@ import javafx.scene.Scene;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.MemberBookSearchPanel;
 import yi_java3st_3team.ui.content.MemberUseCdtPanel;
+import yi_java3st_3team.ui.content.RecomPanel;
+//github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
@@ -45,6 +47,8 @@ public class MainFrame_user extends JFrame {
 	private JPanel memberBookSearchPanel;
 	private Member member;
 	private JLabel lblRecommendBook;
+	private JPanel bookRecomPanel;
+	private LoginFrame_ex loginFrame;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -207,6 +211,7 @@ public class MainFrame_user extends JFrame {
 				profileModifyPanel = new ProfileModifyPanel();
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
+				bookRecomPanel = new RecomPanel();
 			}
 		});
 		return thread;
@@ -318,14 +323,29 @@ public class MainFrame_user extends JFrame {
 					revalidate();
 					break;
 				case "도서추천":
+					contentPane.remove(pCenter);
+					contentPane.remove(pWest);
+					pCenter = bookRecomPanel;
+					pCenter.setBackground(Color.white);
+					contentPane.add(pCenter,BorderLayout.CENTER);
+					repaint();
+					revalidate();
 					break;
 				case "로그아웃":
 					dispose();
+					LoginFrame_ex.loginMber = null;
+					loginFrame.setVisible(true);
+					loginFrame.clearTf();
 					break;
 			}
 		}};
 		return menuAdapter;
 	}
+	
+	public void setLoginFrame(LoginFrame_ex loginFrame) {
+		this.loginFrame = loginFrame;
+	}
+	
 	public void initFX(InitScene fxPanel) {
 		Scene scene = fxPanel.createScene();
 		JFXPanel panel = (JFXPanel) fxPanel;

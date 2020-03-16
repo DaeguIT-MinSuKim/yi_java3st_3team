@@ -339,7 +339,7 @@ update lending
 
 -- 대여권수 카운트
 select count(*) from lending where mber_id = 'daddystop@gmail.com' and rturn_date is null; 
-select count(*) from lending where mber_id = 'daddystop@gmail.com'; 
+select count(*) from lending where mber_id = 'ya2354fr@yahoo.com'; 
 
 select * from lending where mber_id = 'daddystop@gmail.com'; 
 update lending 

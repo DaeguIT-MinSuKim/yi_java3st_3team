@@ -58,6 +58,11 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 		}else {
 			grade = "일반";
 		}
+
+//		if(item.getOdCnt() > 4) {
+//			i
+//		}
+		
 		
 		return new Object[] {
 				item.getMberId(),
@@ -124,7 +129,5 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 		model.setValueAt(wdrCnt, updateIdx, 9);
 		model.setValueAt(lendCdt, updateIdx, 10);
 		model.setValueAt(item.getOdCnt(), updateIdx, 11);
-		
 	}
-
 }

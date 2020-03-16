@@ -21,41 +21,45 @@ import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class RecomPanel extends JPanel {
 	private Dimension picDimesion = new Dimension(150, 210);
 	private String defaultImg = getClass().getClassLoader().getResource("book-noImg.png").getPath();
 	private String picPath;
-	
-	private JTextField tfCategory;
-	private JTextField tfBookName;
-	private JTextField tfWriter;
-	private JTextField tfPblicYear;
-	private JTextField tfPls;
 	private JLabel lblBookImg;
 	
 	private RecomUiService service;
 	private JTextArea taContent;
+	private JLabel lblGetCat;
+	private JLabel lblGetBookName;
+	private JLabel lblGetWriter;
+	private JLabel lblGetPblicYear;
+	private JLabel lblGetPls;
 	
 	public RecomPanel() {
 		service = new RecomUiService();
 		initialize();
 	}
 	private void initialize() {
+		setBackground(Color.WHITE);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel pBox1 = new JPanel();
+		pBox1.setBackground(Color.WHITE);
 		pBox1.setBorder(new EmptyBorder(50, 50, 20, 50));
 		add(pBox1);
 		pBox1.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pWest = new JPanel();
+		pWest.setBackground(Color.WHITE);
 		pWest.setBorder(new EmptyBorder(0, 0, 0, 0));
 		pBox1.add(pWest, BorderLayout.WEST);
 		pWest.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JPanel pImg = new JPanel();
+		pImg.setBackground(Color.WHITE);
 		pImg.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		pWest.add(pImg);
 		pImg.setLayout(new BorderLayout(0, 0));
@@ -68,71 +72,64 @@ public class RecomPanel extends JPanel {
 		
 		
 		JPanel pCenter = new JPanel();
+		pCenter.setBackground(Color.WHITE);
 		pCenter.setBorder(new EmptyBorder(0, 0, 0, 150));
 		pBox1.add(pCenter, BorderLayout.CENTER);
 		pCenter.setLayout(new GridLayout(0, 2, 15, 15));
 		
 		JLabel lblCategory = new JLabel("카테고리");
-		lblCategory.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+		lblCategory.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		lblCategory.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblCategory);
 		
-		tfCategory = new JTextField();
-		tfCategory.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		tfCategory.setEditable(false);
-		pCenter.add(tfCategory);
-		tfCategory.setColumns(10);
+		lblGetCat = new JLabel("New label");
+		lblGetCat.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+		pCenter.add(lblGetCat);
 		
 		JLabel lblBookName = new JLabel("도서명");
-		lblBookName.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+		lblBookName.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblBookName);
 		
-		tfBookName = new JTextField();
-		tfBookName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		tfBookName.setEditable(false);
-		tfBookName.setColumns(10);
-		pCenter.add(tfBookName);
+		lblGetBookName = new JLabel("New label");
+		lblGetBookName.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+		pCenter.add(lblGetBookName);
 		
 		JLabel lblWriter = new JLabel("저자/역자");
-		lblWriter.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+		lblWriter.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		lblWriter.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblWriter);
 		
-		tfWriter = new JTextField();
-		tfWriter.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		tfWriter.setEditable(false);
-		tfWriter.setColumns(10);
-		pCenter.add(tfWriter);
+		lblGetWriter = new JLabel("New label");
+		lblGetWriter.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+		pCenter.add(lblGetWriter);
 		
 		JLabel lblPblicYear = new JLabel("발행일");
-		lblPblicYear.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+		lblPblicYear.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		lblPblicYear.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPblicYear);
 		
-		tfPblicYear = new JTextField();
-		tfPblicYear.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		tfPblicYear.setEditable(false);
-		tfPblicYear.setColumns(10);
-		pCenter.add(tfPblicYear);
+		lblGetPblicYear = new JLabel("New label");
+		lblGetPblicYear.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+		pCenter.add(lblGetPblicYear);
 		
 		JLabel lblPls = new JLabel("출판사");
-		lblPls.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+		lblPls.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		lblPls.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPls);
 		
-		tfPls = new JTextField();
-		tfPls.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		tfPls.setEditable(false);
-		tfPls.setColumns(10);
-		pCenter.add(tfPls);
+		lblGetPls = new JLabel("New label");
+		lblGetPls.setFont(new Font("맑은 고딕", Font.BOLD, 16));
+		pCenter.add(lblGetPls);
 		
 		JPanel pBox2 = new JPanel();
+		pBox2.setBackground(Color.WHITE);
 		pBox2.setBorder(new EmptyBorder(0, 50, 30, 50));
 		add(pBox2);
 		pBox2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pTitle = new JPanel();
+		pTitle.setBackground(Color.WHITE);
 		pTitle.setBorder(new EmptyBorder(10, 0, 10, 0));
 		pBox2.add(pTitle, BorderLayout.NORTH);
 		pTitle.setLayout(new BorderLayout(0, 0));
@@ -147,10 +144,13 @@ public class RecomPanel extends JPanel {
 		pContent.setLayout(new BorderLayout(0, 0));
 		
 		taContent = new JTextArea();
+		taContent.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		taContent.setBorder(new EmptyBorder(15, 15, 15, 15));
 		taContent.setLineWrap(true);
 		taContent.setEditable(false);
-		pContent.add(taContent, BorderLayout.CENTER);
+		
+		JScrollPane scrollPane = new JScrollPane(taContent);
+		pContent.add(scrollPane, BorderLayout.CENTER);
 		
 		setService(service);
 	}
@@ -162,15 +162,15 @@ public class RecomPanel extends JPanel {
 
 	
 	public void setItem(Recommendation item) {
-		tfCategory.setText(String.format("%s / %s", item.getBookCode().getLcNo().getLclasName(), item.getBookCode().getMlNo().getMlsfcName()));
-		tfBookName.setText(item.getBookCode().getBookName());
+		lblGetCat.setText(String.format("%s / %s", item.getBookCode().getLcNo().getLclasName(), item.getBookCode().getMlNo().getMlsfcName()));
+		lblGetBookName.setText(item.getBookCode().getBookName().replace("|", ","));
 		if(item.getBookCode().getTrnslrName().equals("")) {
-			tfWriter.setText(item.getBookCode().getAuthrName());
+			lblGetWriter.setText(item.getBookCode().getAuthrName().replace("|", ","));
 		} else {
-			tfWriter.setText(String.format("%s / %s", item.getBookCode().getAuthrName(), item.getBookCode().getTrnslrName()));
+			lblGetWriter.setText(String.format("%s / %s", item.getBookCode().getAuthrName().replace("|", ","), item.getBookCode().getTrnslrName().replace("|", ",")));
 		}
-		tfPblicYear.setText(String.format("%tF", item.getBookCode().getPblicteYear()));
-		tfPls.setText(item.getBookCode().getPls().getPlsName());
+		lblGetPblicYear.setText(String.format("%tF", item.getBookCode().getPblicteYear()));
+		lblGetPls.setText(item.getBookCode().getPls().getPlsName());
 		if(item.getBookCode().getBookImg().length == 0) {
 			setPicStr(defaultImg);
 		} else {

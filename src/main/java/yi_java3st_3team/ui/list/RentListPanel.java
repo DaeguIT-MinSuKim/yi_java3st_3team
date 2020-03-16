@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -15,8 +14,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import yi_java3st_3team.dto.Book;
-import yi_java3st_3team.dto.Lending;
-import yi_java3st_3team.ui.list.tableChkBoxTest.TestTabelModel;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
@@ -26,9 +23,6 @@ public class RentListPanel extends JPanel {
 	private LendingUiService service;
 	private TestTabelModel model;
 
-	/**
-	 * Create the panel.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,15 +52,16 @@ public class RentListPanel extends JPanel {
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
 
-//		for(Lending lending : list) {
-//			model.addRow(new Object[] {
-//					lending.getBookCd().getBookCode(),
-//					lending.getBookCd().getBookName(),
-//					lending.getBookCd().getAuthrName(),
-//					new SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
-//					lending.getBookCd().getPls().getPlsName(),
-//					new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),lending.getRturnDate()==null?"":String.format("%s",new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate())),false});
-//		}
+		/*
+		 * for(Lending lending : list) { model.addRow(new Object[] {
+		 * lending.getBookCd().getBookCode(), lending.getBookCd().getBookName(),
+		 * lending.getBookCd().getAuthrName(), new
+		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
+		 * lending.getBookCd().getPls().getPlsName(), new
+		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),lending.
+		 * getRturnDate()==null?"":String.format("%s",new
+		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate())),false}); }
+		 */
 	}
 
 	public class TestTabelModel extends DefaultTableModel {
@@ -81,9 +76,9 @@ public class RentListPanel extends JPanel {
 			case 0:
 				clazz = Integer.class;
 				break;
-			case 7:
-				clazz = Boolean.class;
-				break;
+//			case 7:
+//				clazz = Boolean.class;
+//				break;
 			}
 			return clazz;
 		}
@@ -107,7 +102,15 @@ public class RentListPanel extends JPanel {
 		Date now = new Date();
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, +15);
-		model.addRow(new Object[] {book.getBookCode(), book.getBookName(), String.format("%s", book.getAuthrName()+"/"+book.getTrnslrName()), new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(), new SimpleDateFormat("yyyy-MM-dd").format(now), new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())});
+		model.addRow(new Object[] { book.getBookCode(), book.getBookName(),
+				String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
+				new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
+				new SimpleDateFormat("yyyy-MM-dd").format(now),
+				new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });
+	}
+
+	public void AllCheck() {
+
 	}
 
 }

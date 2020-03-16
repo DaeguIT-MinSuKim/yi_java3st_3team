@@ -33,7 +33,7 @@ public class LendingPanel extends JPanel implements ActionListener {
 	private JPanel p03;
 	private JPanel p04;
 	private JButton btnCk;
-	private RentListPanel pLengingList;
+	private RentListPanel pLendingList;
 	private JPanel pBtn;
 	private JPanel p05;
 	private JPanel p06;
@@ -99,8 +99,8 @@ public class LendingPanel extends JPanel implements ActionListener {
 		btnCk.addActionListener(this);
 		pAllCk.add(btnCk);
 
-		pLengingList = new RentListPanel();
-		pList.add(pLengingList, BorderLayout.CENTER);
+		pLendingList = new RentListPanel();
+		pList.add(pLendingList, BorderLayout.CENTER);
 
 		pBtn = new JPanel();
 		add(pBtn, BorderLayout.SOUTH);
@@ -143,7 +143,7 @@ public class LendingPanel extends JPanel implements ActionListener {
 		Book id = new Book(tfBookCode.getText());
 		Book book = bookService.LendingBookByCode(id);
 		JOptionPane.showMessageDialog(null, book.toString());
-		pLengingList.testting(book);
+		pLendingList.testting(book);
 		tfBookCode.setText("");
 //		lendingService.showLendingBookCode(book);
 //		pLengingList.addLending(book);
@@ -153,6 +153,7 @@ public class LendingPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
+		
 	}
 
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {

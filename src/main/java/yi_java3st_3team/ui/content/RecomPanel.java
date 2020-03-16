@@ -21,6 +21,7 @@ import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class RecomPanel extends JPanel {
@@ -147,7 +148,9 @@ public class RecomPanel extends JPanel {
 		taContent.setBorder(new EmptyBorder(15, 15, 15, 15));
 		taContent.setLineWrap(true);
 		taContent.setEditable(false);
-		pContent.add(taContent, BorderLayout.CENTER);
+		
+		JScrollPane scrollPane = new JScrollPane(taContent);
+		pContent.add(scrollPane, BorderLayout.CENTER);
 		
 		setService(service);
 	}
@@ -160,11 +163,11 @@ public class RecomPanel extends JPanel {
 	
 	public void setItem(Recommendation item) {
 		lblGetCat.setText(String.format("%s / %s", item.getBookCode().getLcNo().getLclasName(), item.getBookCode().getMlNo().getMlsfcName()));
-		lblGetBookName.setText(item.getBookCode().getBookName());
+		lblGetBookName.setText(item.getBookCode().getBookName().replace("|", ","));
 		if(item.getBookCode().getTrnslrName().equals("")) {
-			lblGetWriter.setText(item.getBookCode().getAuthrName());
+			lblGetWriter.setText(item.getBookCode().getAuthrName().replace("|", ","));
 		} else {
-			lblGetWriter.setText(String.format("%s / %s", item.getBookCode().getAuthrName(), item.getBookCode().getTrnslrName()));
+			lblGetWriter.setText(String.format("%s / %s", item.getBookCode().getAuthrName().replace("|", ","), item.getBookCode().getTrnslrName().replace("|", ",")));
 		}
 		lblGetPblicYear.setText(String.format("%tF", item.getBookCode().getPblicteYear()));
 		lblGetPls.setText(item.getBookCode().getPls().getPlsName());

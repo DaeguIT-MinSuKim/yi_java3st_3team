@@ -54,7 +54,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 	}
 
 	private void initialize() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel pList = new JPanel();
 		pList.setBackground(Color.LIGHT_GRAY);

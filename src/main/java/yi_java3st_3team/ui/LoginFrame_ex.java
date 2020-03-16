@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -68,6 +69,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 					LoginFrame_ex frame = new LoginFrame_ex();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -296,12 +298,12 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	public void setItem(Recommendation recom) {
 		lblCategoryCon.setText(String.format("%s / %s", recom.getBookCode().getLcNo().getLclasName(),
 				recom.getBookCode().getMlNo().getMlsfcName()));
-		lblBookNameCon.setText(recom.getBookCode().getBookName());
+		lblBookNameCon.setText(recom.getBookCode().getBookName().replace("|", ","));
 		if (recom.getBookCode().getTrnslrName().equals("")) {
-			lblWriterCon.setText(String.format("%s", recom.getBookCode().getAuthrName()));
+			lblWriterCon.setText(String.format("%s", recom.getBookCode().getAuthrName().replace("|", ",")));
 		} else {
 			lblWriterCon.setText(
-					String.format("%s / %s", recom.getBookCode().getAuthrName(), recom.getBookCode().getTrnslrName()));
+					String.format("%s / %s", recom.getBookCode().getAuthrName().replace("|", ","), recom.getBookCode().getTrnslrName().replace("|", ",")));
 		}
 		lblPltYearCon.setText(String.format("%s", recom.getBookCode().getPblicteYear()).substring(0, 4));
 		lblPlsCon.setText(recom.getBookCode().getPls().getPlsName());

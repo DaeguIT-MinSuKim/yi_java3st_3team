@@ -34,6 +34,7 @@ import yi_java3st_3team.ui.dialog.FindIdDialog;
 import yi_java3st_3team.ui.dialog.FindPwDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.service.LoginUiService;
+import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
 public class LoginFrame_ex extends JFrame implements ActionListener {
@@ -51,6 +52,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	private FindIdDialog findIdDlog;
 	private FindPwDialog findPwDlog;
 	private LoginUiService service;
+	private MemberUIService memService;
 	private JButton btnFindPw;
 	private JButton btnNewButton;
 	public static Member loginMber;
@@ -81,6 +83,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	}
 
 	private void initialize() {
+		memService = new MemberUIService();
 		setTitle("도서관 관리 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 590);
@@ -371,6 +374,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 
 			if (loginMber != null) {
 				memMainFrame = new MainFrame_user();
+				memMainFrame.setMember(memService, loginMber);
 				memMainFrame.getLblGreeting().setText(loginMber.getMberName() + "님 환영합니다~");
 				memMainFrame.setVisible(true);
 			}

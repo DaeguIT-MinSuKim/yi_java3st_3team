@@ -1,21 +1,16 @@
 package yi_java3st_3team.ui;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
 import yi_java3st_3team.ui.service.StatisticUIService;
-
-import java.awt.BorderLayout;
 
 @SuppressWarnings("serial")
 public class BookCafeInfoUIPanel extends JPanel {
 	private BookInfoCateInfoPanel pNorth;
 	private StatisticUIService service;
-	/**
-	 * Create the panel.
-	 */
+	
 	public BookCafeInfoUIPanel() {
 		initialize();
 	}

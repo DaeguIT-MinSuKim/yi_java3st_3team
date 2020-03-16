@@ -16,7 +16,7 @@ public class MemberIdSelectPanel2 extends JPanel {
 	private JTextField tfMberId;
 	private JTextField tfOverdueCdt;
 	private JTextField tfMberName;
-	private JTextField tfpOdCnt;
+	private JTextField tfOdCnt;
 	private JTextField tfGrade;
 	private JButton btnMberId;
 
@@ -28,12 +28,12 @@ public class MemberIdSelectPanel2 extends JPanel {
 		this.tfMberId = tfMberId;
 	}
 
-	public JTextField getTfLendPsbCdt() {
+	public JTextField getTfOverdueCdt() {
 		return tfOverdueCdt;
 	}
 
-	public void setTfLendPsbCdt(JTextField tfLendPsbCdt) {
-		this.tfOverdueCdt = tfLendPsbCdt;
+	public void setTfOverdueCdt(JTextField tfOverdueCdt) {
+		this.tfOverdueCdt = tfOverdueCdt;
 	}
 
 	public JTextField getTfMberName() {
@@ -44,12 +44,12 @@ public class MemberIdSelectPanel2 extends JPanel {
 		this.tfMberName = tfMberName;
 	}
 
-	public JTextField getTfLendBookCdt() {
-		return tfpOdCnt;
+	public JTextField getTfpOdCnt() {
+		return tfOdCnt;
 	}
 
-	public void setTfLendBookCdt(JTextField tfLendBookCdt) {
-		this.tfpOdCnt = tfLendBookCdt;
+	public void setTfpOdCnt(JTextField tfpOdCnt) {
+		this.tfOdCnt = tfpOdCnt;
 	}
 
 	public JTextField getTfGrade() {
@@ -62,6 +62,10 @@ public class MemberIdSelectPanel2 extends JPanel {
 
 	public JButton getBtnMberId() {
 		return btnMberId;
+	}
+
+	public void setBtnMberId(JButton btnMberId) {
+		this.btnMberId = btnMberId;
 	}
 
 	public MemberIdSelectPanel2() {
@@ -149,9 +153,9 @@ public class MemberIdSelectPanel2 extends JPanel {
 		lblpOdCnt.setHorizontalAlignment(SwingConstants.CENTER);
 		pOdCnt.add(lblpOdCnt);
 
-		tfpOdCnt = new JTextField();
-		pOdCnt.add(tfpOdCnt);
-		tfpOdCnt.setColumns(10);
+		tfOdCnt = new JTextField();
+		pOdCnt.add(tfOdCnt);
+		tfOdCnt.setColumns(10);
 	}
 
 }

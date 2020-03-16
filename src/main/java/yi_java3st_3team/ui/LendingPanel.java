@@ -153,7 +153,7 @@ public class LendingPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
-		
+		pLendingList.AllCheck();
 	}
 
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {

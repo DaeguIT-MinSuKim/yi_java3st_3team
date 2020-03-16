@@ -6,13 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.MemberIdSelectPanel2;
-import yi_java3st_3team.ui.list.RentListPanel;
-import yi_java3st_3team.ui.service.BookUiService;
+import yi_java3st_3team.ui.list.ReturnListPanel;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
@@ -25,18 +23,17 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 	private JPanel p03;
 	private JPanel p04;
 	private JButton btnCk;
-	private RentListPanel pLendingList;
+	private ReturnListPanel pLendingList;
 	private JPanel pBtn;
 	private JPanel p05;
 	private JPanel p06;
 	private JButton btnCancel;
 	private JButton btnLending;
 	private LendingUiService lendingService;
-	private BookUiService bookService;
+	private Member member;
 
 	public LendingPanel2() {
 		lendingService = new LendingUiService();
-		bookService = new BookUiService();
 		initialize();
 	}
 
@@ -74,7 +71,7 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 		btnCk.addActionListener(this);
 		pAllCk.add(btnCk);
 
-		pLendingList = new RentListPanel();
+		pLendingList = new ReturnListPanel();
 		pList.add(pLendingList, BorderLayout.CENTER);
 
 		pBtn = new JPanel();
@@ -112,10 +109,11 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
-
+		pLendingList.AllCheck();
 	}
 
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {
+		pLendingList.AllNotCheck();
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
@@ -123,7 +121,9 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {
 		Member id = new Member(pMember.getTfMberId().getText());
-		Member member = lendingService.showLendingMemberId(id);
+		member = lendingService.showLendingMemberId2(id);
+		
+		
 		pMember.getTfMberName().setText(member.getMberName());
 		if (member.getGrade().getGradeNo() == 1) {
 			pMember.getTfGrade().setText("일반");
@@ -132,14 +132,12 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 		}
 
 		if (member.getLendPsbCdt() == 0) {
-			pMember.getTfLendPsbCdt().setText("가능");
+			pMember.getTfOverdueCdt().setText("정상");
 		} else {
-			pMember.getTfLendPsbCdt().setText("불가능");
-			JOptionPane.showMessageDialog(null, "대출하실 수 없습니다.");
+			pMember.getTfOverdueCdt().setText("연체");
 		}
-		int LendBookCnt = member.getLendBookCnt();
-		int BookLeCnt = member.getGrade().getBookLeCnt();
-		int res = BookLeCnt - LendBookCnt;
-		pMember.getTfLendBookCdt().setText(res + "");
+		pMember.getTfpOdCnt().setText(member.getOdCnt()+"");
+		
+		pLendingList.testting2(member);
 	}
 }

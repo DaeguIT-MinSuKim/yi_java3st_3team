@@ -132,19 +132,21 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		pSouth.setBackground(Color.WHITE);
 		pLcMlCon.add(pSouth, BorderLayout.SOUTH);
 
-		btnCancel = new JButton("취소");
-		btnCancel.addActionListener(this);
-		btnCancel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		pSouth.add(btnCancel);
+		btnAdd = new JButton("추가");
+		btnAdd.setPreferredSize(new Dimension(80, 40));
+		btnAdd.addActionListener(this);
+		btnAdd.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
+		pSouth.add(btnAdd);
 
 		JLabel lblNewLabel_5 = new JLabel("");
 		lblNewLabel_5.setPreferredSize(new Dimension(10, 0));
 		pSouth.add(lblNewLabel_5);
 
-		btnAdd = new JButton("추가");
-		btnAdd.addActionListener(this);
-		btnAdd.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		pSouth.add(btnAdd);
+		btnCancel = new JButton("취소");
+		btnCancel.setPreferredSize(new Dimension(80, 40));
+		btnCancel.addActionListener(this);
+		btnCancel.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
+		pSouth.add(btnCancel);
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		pContent.add(lblNewLabel_1);
@@ -165,36 +167,36 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 
 	private JPopupMenu createPopupMenu() {
 		JPopupMenu popMenu = new JPopupMenu();
-		
+
 		JMenuItem updateItem = new JMenuItem("수정");
 		updateItem.addActionListener(myPopMenuListener);
 		popMenu.add(updateItem);
-		
+
 		JMenuItem deleteItem = new JMenuItem("삭제");
 		deleteItem.addActionListener(myPopMenuListener);
 		popMenu.add(deleteItem);
-		
+
 		return popMenu;
 	}
-	
+
 	ActionListener myPopMenuListener = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				if(e.getActionCommand().contentEquals("수정")) {
+				if (e.getActionCommand().contentEquals("수정")) {
 					MiddleClassification updateItem = pLcMlList.getSelectedItem();
-					
-					if(updateItem.getLclasNo().getLclasNo() == 0) {
+
+					if (updateItem.getLclasNo().getLclasNo() == 0) {
 						JOptionPane.showMessageDialog(null, "구분되는 대분류가 없습니다. 중분류 데이터를 삭제하고 새로 등록해주세요");
 					}
-					
+
 					setItem(updateItem);
 					btnAdd.setText("수정");
 				}
-				if(e.getActionCommand().contentEquals("삭제")) {
+				if (e.getActionCommand().contentEquals("삭제")) {
 					MiddleClassification deleteItem = pLcMlList.getSelectedItem();
-					
+
 					int result = JOptionPane.showConfirmDialog(null, "선택된 중분류 데이터를 삭제하겠습니까?", "삭제확인",
 							JOptionPane.YES_NO_OPTION);
 
@@ -207,10 +209,10 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 					} else {
 					}
 				}
-			} catch (RuntimeException e1){
+			} catch (RuntimeException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
-			
+
 		}
 	};
 
@@ -267,9 +269,9 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAdd) {
-			if(e.getActionCommand().contentEquals("수정")) {
+			if (e.getActionCommand().contentEquals("수정")) {
 				updateActionPerformed(e);
-			} else {				
+			} else {
 				btnAddActionPerformed(e);
 			}
 		}

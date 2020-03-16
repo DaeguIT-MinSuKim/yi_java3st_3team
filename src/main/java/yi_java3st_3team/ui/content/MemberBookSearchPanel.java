@@ -191,35 +191,21 @@ public class MemberBookSearchPanel extends JPanel implements ActionListener {
 		Book book = new Book();
 
 		try {
+			
 			if (tfName.getText().length() != 0) {
 				book.setBookName(tfName.getText());
-
-				if (tfAuthr.getText().length() != 0) {
-					book.setAuthrName(tfAuthr.getText());
-				}
-
-				if (cmbCat.getSelectedIndex() > -1) {
-					book.setLcNo((LargeClassification) cmbCat.getSelectedItem());
-				}
-
-				pBookList.loadData(service.searchBookOnMber(book));
+			}
+			if (tfAuthr.getText().length() != 0) {
+				book.setAuthrName(tfAuthr.getText());
 			}
 
-			if (tfName.getText().length() == 0) {
-				book.setBookName(tfName.getText());
-
-				if (tfAuthr.getText().length() != 0) {
-					book.setAuthrName(tfAuthr.getText());
-				}
-
-				if (cmbCat.getSelectedIndex() > -1) {
-					book.setLcNo((LargeClassification) cmbCat.getSelectedItem());
-				}
-
-				pBookList.loadData(service.searchBookOnMber(book));
+			if (cmbCat.getSelectedIndex() > -1) {
+				book.setLcNo((LargeClassification) cmbCat.getSelectedItem());
 			}
-
+			
+			pBookList.loadData(service.searchBookOnMber(book));
 			cmbCat.setSelectedIndex(-1);
+			
 		} catch (NullPointerException e1) {
 			JOptionPane.showMessageDialog(null, "찾는 도서가 없습니다");
 		}

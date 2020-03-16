@@ -180,6 +180,7 @@ public class LendingPanel extends JPanel implements ActionListener {
 		}
 		int LendBookCnt = member.getLendBookCnt();
 		int BookLeCnt = member.getGrade().getBookLeCnt();
+		JOptionPane.showMessageDialog(null, member.getGrade().getBookLeCnt());
 		int res = BookLeCnt - LendBookCnt;
 		pMember.getTfLendBookCdt().setText(res + "");
 	}

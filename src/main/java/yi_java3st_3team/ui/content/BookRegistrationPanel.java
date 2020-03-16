@@ -91,6 +91,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.setLayout(new GridLayout(0, 2, 10, 10));
 
 		JLabel lblBookName = new JLabel("도서명");
+		lblBookName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblBookName.setBackground(Color.WHITE);
 		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblBookName);
@@ -100,6 +101,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		tfBookName.setColumns(10);
 
 		JLabel lblAuthr = new JLabel("저 자");
+		lblAuthr.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblAuthr.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblAuthr);
 
@@ -108,6 +110,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(tfAuthr);
 
 		JLabel lblTrnslr = new JLabel("역 자");
+		lblTrnslr.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblTrnslr.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblTrnslr);
 
@@ -116,6 +119,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		tfTrnslr.setColumns(10);
 
 		JLabel lblBookPirce = new JLabel("도서가격");
+		lblBookPirce.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblBookPirce.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblBookPirce);
 
@@ -124,6 +128,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		tfBookPirce.setColumns(10);
 
 		JLabel lblCategory = new JLabel("카테고리(분류)");
+		lblCategory.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblCategory.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblCategory);
 
@@ -138,6 +143,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCategory.add(cmbMl);
 
 		JLabel lblPls = new JLabel("출판사");
+		lblPls.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblPls.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPls);
 
@@ -145,6 +151,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(cmbPls);
 
 		JLabel lblPblicYear = new JLabel("출간일");
+		lblPblicYear.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblPblicYear.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPblicYear);
 
@@ -152,6 +159,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(tfRegistDate);
 
 		JLabel lblLendPsbCdt = new JLabel("대여가능여부");
+		lblLendPsbCdt.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblLendPsbCdt.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblLendPsbCdt);
 
@@ -163,11 +171,13 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		lendPsbCdtBtnGrp = new ButtonGroup();
 
 		rdoYes = new JRadioButton("대여 가능");
+		rdoYes.setFont(new Font("굴림", Font.PLAIN, 12));
 		rdoYes.setBackground(Color.WHITE);
 		rdoYes.setSelected(true);
 		pLendPsbCdt.add(rdoYes);
 
 		rdoNo = new JRadioButton("대여 불가능");
+		rdoNo.setFont(new Font("굴림", Font.PLAIN, 12));
 		rdoNo.setBackground(Color.WHITE);
 		pLendPsbCdt.add(rdoNo);
 
@@ -209,23 +219,23 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pSouth.setBorder(new EmptyBorder(30, 0, 30, 0));
 		add(pSouth, BorderLayout.SOUTH);
 
-		btnCancel = new JButton("취소");
-		btnCancel.addActionListener(this);
-		btnCancel.setFocusable(false);
-		btnCancel.setPreferredSize(new Dimension(80, 40));
-		btnCancel.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
-		pSouth.add(btnCancel);
-
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setPreferredSize(new Dimension(10, 0));
-		pSouth.add(lblNewLabel);
-
 		btnSave = new JButton("저장");
 		btnSave.addActionListener(this);
 		btnSave.setFocusable(false);
 		btnSave.setPreferredSize(new Dimension(80, 40));
 		btnSave.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		pSouth.add(btnSave);
+
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setPreferredSize(new Dimension(10, 0));
+		pSouth.add(lblNewLabel);
+
+		btnCancel = new JButton("취소");
+		btnCancel.addActionListener(this);
+		btnCancel.setFocusable(false);
+		btnCancel.setPreferredSize(new Dimension(80, 40));
+		btnCancel.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
+		pSouth.add(btnCancel);
 
 		setService(service);
 	}
@@ -263,7 +273,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		DefaultComboBoxModel<PublishingCompany> model = new DefaultComboBoxModel<PublishingCompany>(
 				new Vector<>(plsList));
 		cmbPls.setModel(model);
-		cmbPls.setSelectedIndex(0);
+		cmbPls.setSelectedIndex(-1);
 	}
 
 	private void setPicStr(String imgPath) {
@@ -330,7 +340,8 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	}
 
 	@Override
-	public void setItem(Book item) {}
+	public void setItem(Book item) {
+	}
 
 	@Override
 	public void clearTf() {

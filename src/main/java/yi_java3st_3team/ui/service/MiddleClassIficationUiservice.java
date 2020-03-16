@@ -21,4 +21,16 @@ public class MiddleClassIficationUiservice {
 	public int getMlLastCode(LargeClassification lc) {
 		return mlDao.selectLastCode(lc);
 	}
+	
+	public int removeMl(MiddleClassification ml) {
+		return mlDao.deleteMiddleClassification(ml);
+	}
+	
+	public int addMl(MiddleClassification ml) {
+		return mlDao.insertMiddleClassification(ml);
+	}
+	
+	public int modifyMl(MiddleClassification ml) {
+		return mlDao.updateMiddleClassification(ml);
+	}
 }

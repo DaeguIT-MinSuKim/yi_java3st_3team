@@ -5,8 +5,10 @@ import java.util.List;
 import yi_java3st_3team.dao.GradeDao;
 import yi_java3st_3team.dao.MemberDao;
 import yi_java3st_3team.dao.ZipCodeDao;
+import yi_java3st_3team.dao.impl.GradeDaoImpl;
 import yi_java3st_3team.dao.impl.MemberDaoImpl;
 import yi_java3st_3team.dao.impl.ZipCodeDaoImpl;
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
@@ -19,6 +21,7 @@ public class MemberUIService {
 	public MemberUIService() {
 		memDao = MemberDaoImpl.getInstance();
 		zipDao = ZipCodeDaoImpl.getInstance();
+		gradeDao = GradeDaoImpl.getInstance();
 	}
 
 	public void addMember(Member mem) {
@@ -43,6 +46,13 @@ public class MemberUIService {
 
 	public List<Grade> showGradeList(){
 		return gradeDao.selectGradeByAll();
+	}
+	public void removeMember(Member mem) {
+		memDao.deleteMember(mem);
+	}
+	
+	public void updateByWdrCdt(Member mem) {
+		memDao.updateMember(mem);
 	}
 	
 }

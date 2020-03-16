@@ -21,8 +21,11 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
+import yi_java3st_3team.ui.content.MemberBookSearchPanel;
 import yi_java3st_3team.ui.content.MemberJoinPanel;
+import yi_java3st_3team.ui.content.MemberUseCdtPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
+import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame_user extends JFrame {
@@ -46,6 +49,8 @@ public class MainFrame_user extends JFrame {
 	private JLabel lblBookSearch;
 	private JPanel profileModifyPanel;
 	private JLabel lblGreeting;
+	private JPanel memberUseCdtpanel;
+	private JPanel memberBookSearchPanel;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -199,6 +204,8 @@ public class MainFrame_user extends JFrame {
 			@Override
 			public void run() {
 				profileModifyPanel = new ProfileModifyPanel();
+				memberUseCdtpanel = new MemberUseCdtPanel();
+				memberBookSearchPanel = new MemberBookSearchPanel();
 			}
 		});
 		return thread;
@@ -283,7 +290,12 @@ public class MainFrame_user extends JFrame {
 									repaint();
 									revalidate();
 									break;
-								case "이용현황" :					
+								case "이용현황" :		
+									contentPane.remove(pCenter);
+									pCenter = memberUseCdtpanel;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
 									break;
 								}
 							}	
@@ -295,6 +307,13 @@ public class MainFrame_user extends JFrame {
 					revalidate();
 					break;
 				case "도서검색":
+					contentPane.remove(pCenter);
+					contentPane.remove(pWest);
+					pCenter = memberBookSearchPanel;
+					pCenter.setBackground(Color.white);
+					contentPane.add(pCenter,BorderLayout.CENTER);
+					repaint();
+					revalidate();
 					break;
 				case "로그아웃":
 					dispose();

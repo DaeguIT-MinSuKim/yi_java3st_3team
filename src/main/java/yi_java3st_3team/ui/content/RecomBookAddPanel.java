@@ -27,6 +27,9 @@ import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Recommendation;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.service.RecomUiService;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
 public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements ActionListener {
@@ -43,6 +46,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 	private JTextArea taPost;
 	private String getBookCode;
 	private RecomUiService service;
+	private JLabel lblTitle;
 
 	public RecomBookAddPanel() {
 		service = new RecomUiService();
@@ -50,10 +54,10 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 	}
 
 	private void initialize() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel pList = new JPanel();
-		pList.setBackground(Color.WHITE);
+		pList.setBackground(Color.LIGHT_GRAY);
 		pList.setPreferredSize(new Dimension(10, 150));
 		add(pList);
 		pList.setLayout(new BorderLayout(0, 0));
@@ -64,7 +68,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 
 		JPanel pTf = new JPanel();
 		pTf.setBackground(Color.WHITE);
-		pTf.setBorder(new EmptyBorder(30, 10, 20, 10));
+		pTf.setBorder(new EmptyBorder(20, 10, 20, 10));
 		add(pTf);
 		pTf.setLayout(new BorderLayout(0, 0));
 
@@ -148,7 +152,6 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 
 		JPanel pPost = new JPanel();
 		pPost.setBackground(Color.WHITE);
-		pPost.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(192, 192, 192)));
 		pBox2.add(pPost, BorderLayout.NORTH);
 		pPost.setLayout(new BorderLayout(0, 0));
 
@@ -161,18 +164,21 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		pTa.setBackground(Color.WHITE);
 		pTa.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		pBox2.add(pTa, BorderLayout.CENTER);
-		pTa.setLayout(new BorderLayout(0, 0));
-
+		pTa.setLayout(new BoxLayout(pTa, BoxLayout.X_AXIS));
+		
 		taPost = new JTextArea();
 		taPost.setBorder(new EmptyBorder(10, 10, 10, 10));
 		taPost.setLineWrap(true);
-		pTa.add(taPost);
+
+		JScrollPane scrollPane = new JScrollPane(taPost);
+		pTa.add(scrollPane);
 
 		JPanel pBox3 = new JPanel();
 		pBox3.setBackground(Color.WHITE);
 		pCenter.add(pBox3);
 
-		btnSave = new JButton("저장");
+		btnSave = new JButton("등록");
+		btnSave.setEnabled(false);
 		btnSave.addActionListener(this);
 		btnSave.setPreferredSize(new Dimension(80, 40));
 		btnSave.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
@@ -187,7 +193,14 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		btnCancel.setPreferredSize(new Dimension(80, 40));
 		btnCancel.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		pBox3.add(btnCancel);
+		
+		lblTitle = new JLabel("등록된 추천 도서");
+		lblTitle.setPreferredSize(new Dimension(52, 40));
+		lblTitle.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.LIGHT_GRAY));
+		lblTitle.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+		pTf.add(lblTitle, BorderLayout.NORTH);
 
+		setItem(service.showRecomBookByLastNo());
 	}
 
 	@Override
@@ -224,16 +237,14 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		} else {
 			setPicByte(item.getBookImg());
 		}
+		taPost.setText("");
+		btnSave.setEnabled(true);
+		lblTitle.setText("New 추천도서 등록");
 	}
 
 	@Override
 	public void clearTf() {
-		tfCategory.setText("");
-		tfWriter.setText("");
-		tfBookName.setText("");
-		tfPls.setText("");
-		taPost.setText("");
-		setPicStr(defaultImg);
+		setItem(service.showRecomBookByLastNo());
 	}
 
 	@Override
@@ -245,6 +256,20 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 
 	@Override
 	public void setItem(Recommendation item) {
+		tfCategory.setText(String.format("%s/%s", item.getBookCode().getLcNo().getLclasName(), item.getBookCode().getMlNo().getMlsfcName()));
+		if(item.getBookCode().getTrnslrName() == null || item.getBookCode().getTrnslrName().length() == 0) {
+			tfWriter.setText(item.getBookCode().getAuthrName());
+		} else {
+			tfWriter.setText(String.format("%s/%s", item.getBookCode().getAuthrName(), item.getBookCode().getTrnslrName()));
+		}
+		tfBookName.setText(item.getBookCode().getBookName());
+		tfPls.setText(item.getBookCode().getPls().getPlsName());
+		taPost.setText(item.getBookCont().trim());
+		if (item.getBookCode().getBookImg() == null || item.getBookCode().getBookImg().length == 0) {
+			setPicStr(defaultImg);
+		} else {
+			setPicByte(item.getBookCode().getBookImg());
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -258,6 +283,8 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		clearTf();
+		btnSave.setEnabled(false);
+		lblTitle.setText("등록된 추천도서");
 	}
 
 	protected void btnSaveActionPerformed(ActionEvent e) {
@@ -269,6 +296,8 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 			Recommendation newRecom = getItem();
 			service.addRecom(newRecom);
 			clearTf();
+			btnSave.setEnabled(false);
+			lblTitle.setText("등록된 추천도서");
 			JOptionPane.showMessageDialog(null, "추천도서가 추가되었습니다");
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());

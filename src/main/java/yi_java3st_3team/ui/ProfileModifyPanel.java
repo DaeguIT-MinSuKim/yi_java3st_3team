@@ -2,11 +2,13 @@ package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -54,11 +56,6 @@ public class ProfileModifyPanel extends JPanel implements ActionListener{
 		btnCancel = new JButton("취소");
 		btnCancel.addActionListener(this);
 		pBtns.add(btnCancel);
-		initTf();
-	}
-
-	private void initTf() {
-		
 	}
 
 	@Override
@@ -77,7 +74,27 @@ public class ProfileModifyPanel extends JPanel implements ActionListener{
 	}
 
 	private void btnAddAction(ActionEvent e) {
-		
+		try {
+			Member updateMem = pMember.getItem();
+			service.updateByWdrCdt(updateMem);
+			JOptionPane.showMessageDialog(null, String.format("%s님의 프로필 수정이 완료되었습니다.", updateMem.getMberId()));
+		}catch(InvalidCheckException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+	}
+
+	public void initTf(Member member) {
+		pMember.getTfID().setText(member.getMberId());
+		pMember.getTfName().setText(member.getMberName());
+		pMember.getPfPW1().setText(member.getMberPass());
+		pMember.getTfBirthday().setDate(member.getMberBrthdy());
+		pMember.getTfTel().setText(member.getMberTel());
+		pMember.getTfZip().setText(member.getMberZip().getZipCode()+"");
+		pMember.getTfAddress().setText(member.getMberBassAd());
+		pMember.getTfDetailAdress().setText(member.getMberDetailAd());
+		ImageIcon icon = new ImageIcon(member.getMberImg());
+		pMember.setPicImageIcon(icon);
+		pMember.getTfID().setEditable(false);
 	}
 
 }

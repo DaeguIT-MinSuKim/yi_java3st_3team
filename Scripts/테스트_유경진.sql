@@ -129,7 +129,7 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.p
 			b1.book_price = b2.book_price and b1.book_name like '%북유럽%' and b1.authr_name like '김%' and b1.lc_no = 10
 	order by b1.book_name;
 
-
+select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price;
 select * from book;
 select * from large_classification;
 
@@ -339,11 +339,44 @@ update lending
 
 -- 대여권수 카운트
 select count(*) from lending where mber_id = 'daddystop@gmail.com' and rturn_date is null; 
-select count(*) from lending where mber_id = 'daddystop@gmail.com'; 
+select count(*) from lending where mber_id = 'ya2354fr@yahoo.com'; 
 
 select * from lending where mber_id = 'daddystop@gmail.com'; 
 update lending 
 	set rturn_psm_cdt = 0
 	where mber_id = 'daddystop@gmail.com' and rturn_date is null;
 		
-		
+
+-- 대여순위/신착도서리스트 -----------------------------------------------------------------------------------------------------
+-- 총 대여 카운트 / 총 대여 카운트 순위 5개
+select l1.book_cd , b.book_name, b.book_img , b.authr_name , b.trnslr_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , 
+		b.pls , p.pls_name ,l2.totlaCnt
+	from lending l1 left join book b on l1.book_cd = b.book_code 
+					left join large_classification lc on b.lc_no = lc.lclas_no 
+					left join middle_classification ml on b.ml_no = ml.mlsfc_no and lc.lclas_no = ml.lclas_no
+					left join publishing_company p on b.pls = p.pls_no ,
+		(select book_cd , count(*) as totlaCnt from lending group by book_cd) l2
+	where l1.book_cd = l2.book_cd
+	group by l1.book_cd
+	order by l2.totlaCnt desc limit 5;
+
+-- 대여중인 도서
+select l1.book_cd , b.book_name , l1.rturn_date , l2.lendCnt
+	from lending l1 left join book b on l1.book_cd = b.book_code,
+		(select book_cd , count(*) as lendCnt from lending where rturn_date is null group by book_cd) l2
+	where l1.book_cd = l2.book_cd and l1.rturn_date is null;
+
+-- 신착도서 
+select pblicte_year, book_name , book_img , authr_name , trnslr_name , b.lc_no , l.lclas_name , b.ml_no , m.mlsfc_name , b.pls , p.pls_name 
+	from book b left join large_classification l on b.lc_no = l.lclas_no 
+				left join middle_classification m on b.ml_no = m.mlsfc_no and l.lclas_no = m.lclas_no 
+				left join publishing_company p on b.pls = p.pls_no 
+	group by book_name
+	order by pblicte_year desc limit 5;
+
+
+
+
+
+
+

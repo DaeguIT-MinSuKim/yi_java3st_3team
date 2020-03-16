@@ -169,6 +169,15 @@ public class ZipDialog extends JDialog implements ActionListener  {
 		return zipCode;
 	}
 
+	public JTextField getTfAd() {
+		return tfAd;
+	}
+
+
+	public void setTfAd(JTextField tfAd) {
+		this.tfAd = tfAd;
+	}
+
 
 	public JTextField getTfZipCode() {
 		return tfZipCode;

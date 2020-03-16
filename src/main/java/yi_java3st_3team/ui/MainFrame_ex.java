@@ -60,6 +60,8 @@ public class MainFrame_ex extends JFrame {
 	private BookPlsManageMentPanel bookPlsMgn;
 	private BookLcAndMlManagerPanel bookCatMag;
 	
+	private LoginFrame_ex loginFrame;
+	
 	private Thread chartThread;
 	private JLabel lblGreeting;
 
@@ -382,6 +384,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((MemberSelectUIPanel) pCenter).loadData();
 									break;
 								}
 							}
@@ -456,6 +459,9 @@ public class MainFrame_ex extends JFrame {
 					break;
 				case "로그아웃":
 					dispose();
+					LoginFrame_ex.loginLib = null;
+					loginFrame.setVisible(true);
+					loginFrame.clearTf();
 					break;
 				}
 				chartThread.interrupt();
@@ -464,6 +470,11 @@ public class MainFrame_ex extends JFrame {
 		};
 		return menuAdapter;
 	}
+	
+	public void setLoginFrame(LoginFrame_ex loginFrame) {
+		this.loginFrame = loginFrame;
+	}
+	
 	public void initFX(InitScene fxPanel) {
 		Scene scene = fxPanel.createScene();
 		JFXPanel panel = (JFXPanel) fxPanel;

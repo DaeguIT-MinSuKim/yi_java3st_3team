@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
@@ -34,6 +35,9 @@ import yi_java3st_3team.ui.dialog.FindIdDialog;
 import yi_java3st_3team.ui.dialog.FindPwDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.service.LoginUiService;
+
+import yi_java3st_3team.ui.service.MemberUIService;
+
 
 @SuppressWarnings("serial")
 public class LoginFrame_ex extends JFrame implements ActionListener {
@@ -51,6 +55,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	private FindIdDialog findIdDlog;
 	private FindPwDialog findPwDlog;
 	private LoginUiService service;
+	private MemberUIService memService;
 	private JButton btnFindPw;
 	private JButton btnNewButton;
 	public static Member loginMber;
@@ -66,6 +71,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
 					LoginFrame_ex frame = new LoginFrame_ex();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -81,6 +87,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	}
 
 	private void initialize() {
+		memService = new MemberUIService();
 		setTitle("도서관 관리 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 590);
@@ -235,9 +242,9 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		pRecomContent.add(lblPlsCon);
 
 		taBookCont = new JTextArea();
+		taBookCont.setEditable(false);
 		taBookCont.setBorder(new EmptyBorder(10, 10, 10, 10));
 		taBookCont.setLineWrap(true);
-		taBookCont.setEditable(false);
 
 		JScrollPane scrollPane = new JScrollPane(taBookCont);
 		scrollPane.setBorder(new EmptyBorder(0, 10, 10, 10));
@@ -293,12 +300,12 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	public void setItem(Recommendation recom) {
 		lblCategoryCon.setText(String.format("%s / %s", recom.getBookCode().getLcNo().getLclasName(),
 				recom.getBookCode().getMlNo().getMlsfcName()));
-		lblBookNameCon.setText(recom.getBookCode().getBookName());
+		lblBookNameCon.setText(recom.getBookCode().getBookName().replace("|", ","));
 		if (recom.getBookCode().getTrnslrName().equals("")) {
-			lblWriterCon.setText(String.format("%s", recom.getBookCode().getAuthrName()));
+			lblWriterCon.setText(String.format("%s", recom.getBookCode().getAuthrName().replace("|", ",")));
 		} else {
 			lblWriterCon.setText(
-					String.format("%s / %s", recom.getBookCode().getAuthrName(), recom.getBookCode().getTrnslrName()));
+					String.format("%s / %s", recom.getBookCode().getAuthrName().replace("|", ","), recom.getBookCode().getTrnslrName().replace("|", ",")));
 		}
 		lblPltYearCon.setText(String.format("%s", recom.getBookCode().getPblicteYear()).substring(0, 4));
 		lblPlsCon.setText(recom.getBookCode().getPls().getPlsName());
@@ -356,23 +363,29 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 
 			if (loginLib != null) {
 				if (loginLib.getTitle().getTitleNo() == 1) {
-					JOptionPane.showMessageDialog(null, "총관리자 로그인 [테스트용]");
 					ADChiefMainFrame = new MainFrame_ex();
+					ADChiefMainFrame.setLoginFrame(this);
 					ADChiefMainFrame.getLblGreeting().setText(loginLib.getLbName() + "님 환영합니다~");
 					ADChiefMainFrame.setVisible(true);
 					clearTf();
+					dispose();
 				}
 				if (loginLib.getTitle().getTitleNo() == 0) {
 					JOptionPane.showMessageDialog(null, "사서 로그인 [테스트용]");
 					clearTf();
+					
 				}
+				
 				return;
 			}
 
 			if (loginMber != null) {
 				memMainFrame = new MainFrame_user();
+				memMainFrame.setLoginFrame(this);
+				memMainFrame.setMember(memService, loginMber);
 				memMainFrame.getLblGreeting().setText(loginMber.getMberName() + "님 환영합니다~");
 				memMainFrame.setVisible(true);
+				dispose();
 			}
 
 		} catch (InvalidCheckException e1) {
@@ -381,7 +394,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 
 	}
 
-	private void clearTf() {
+	public void clearTf() {
 		tfLoginId.setText("");
 		pfLoginPw.setText("");
 	}

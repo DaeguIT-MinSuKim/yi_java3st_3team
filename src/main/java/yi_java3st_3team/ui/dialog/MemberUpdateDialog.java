@@ -7,8 +7,11 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -30,16 +33,17 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Grade;
-import yi_java3st_3team.dto.LargeClassification;
 import yi_java3st_3team.dto.Member;
-import yi_java3st_3team.ui.service.BookUiService;
+import yi_java3st_3team.dto.ZipCode;
+import yi_java3st_3team.ui.exception.InvalidCheckException;
+import yi_java3st_3team.ui.list.MemberTblPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
 public class MemberUpdateDialog extends JDialog implements ActionListener {
 
-	
 	private final JPanel contentPanel = new JPanel();
 	private static JFrame frame;
 	private JButton btnCancel;
@@ -56,6 +60,11 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	private String defaultImg = getClass().getClassLoader().getResource("no-image.png").getPath();
 	private JButton btnPic;
 	private MemberUIService service;
+	private JButton btnZip;
+	private ZipDialog zipDialog;
+	private JFrame zipFrame;
+	private MemberTblPanel pMemberList;
+	private MemberUpdateDialog updateDialog;
 
 //	public static void main(String[] args) {
 //		try {
@@ -69,7 +78,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 
 	public MemberUpdateDialog(JFrame frame, String title) {
 		super(frame, title, true);
-		setBounds(100, 100, 454, 430);
+		setBounds(100, 100, 700, 450);
 		service = new MemberUIService();
 		BorderLayout borderLayout = new BorderLayout();
 		borderLayout.setHgap(10);
@@ -78,119 +87,102 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new GridLayout(0, 2, 10, 0));
-		
-			JPanel pUpdate = new JPanel();
-			contentPanel.add(pUpdate);
-			pUpdate.setLayout(new GridLayout(0, 2, 0, 10));
-			
-				JLabel lblID = new JLabel("ID");
-				lblID.setHorizontalAlignment(SwingConstants.CENTER);
-				pUpdate.add(lblID);
-			
-			
-				tfID = new JTextField();
-				pUpdate.add(tfID);
-				tfID.setColumns(10);
-			
-			
-				JLabel lblName = new JLabel("이름");
-				lblName.setHorizontalAlignment(SwingConstants.CENTER);
-				pUpdate.add(lblName);
-			
-			
-				tfName = new JTextField();
-				pUpdate.add(tfName);
-				tfName.setColumns(10);
-			
-			
-				JLabel lblBirthday = new JLabel("생년월일");
-				lblBirthday.setHorizontalAlignment(SwingConstants.CENTER);
-				pUpdate.add(lblBirthday);
-			
-			
-				tfBirthday = new JDateChooser(new Date(), "yyyy-MM-dd");
-				pUpdate.add(tfBirthday);
-			
-			
-				JLabel lblTel = new JLabel("전화번호");
-				lblTel.setHorizontalAlignment(SwingConstants.CENTER);
-				pUpdate.add(lblTel);
-			
-			
-				tfTel = new JTextField();
-				pUpdate.add(tfTel);
-				tfTel.setColumns(10);
-			
-			
-				JLabel lblAd = new JLabel("주소");
-				lblAd.setHorizontalAlignment(SwingConstants.CENTER);
-				pUpdate.add(lblAd);
-			
-			
-				tfAd = new JTextField();
-				pUpdate.add(tfAd);
-				tfAd.setColumns(10);
-			
-			
-				JLabel lblAir = new JLabel("");
-				pUpdate.add(lblAir);
-			
-			
-				JButton btnZip = new JButton("검색");
-				pUpdate.add(btnZip);
-			
-			
-				JLabel lblGrade = new JLabel("등급");
-				lblGrade.setHorizontalAlignment(SwingConstants.CENTER);
-				pUpdate.add(lblGrade);
-			
-			
-				cmbGrade = new JComboBox();
-				pUpdate.add(cmbGrade);
-			
-		
-		
-			JPanel pImage = new JPanel();
-			contentPanel.add(pImage);
-			pImage.setLayout(new GridLayout(0, 1, 0, 0));
-			
-				JPanel pImg = new JPanel();
-				pImage.add(pImg);
-				pImg.setLayout(new GridLayout(0, 1, 0, 10));
-				
-					lblPic = new JLabel();
-					lblPic.setHorizontalAlignment(SwingConstants.CENTER);
-					lblPic.setPreferredSize(picDimension);
-					lblPic.setSize(picDimension);
-					setStr(defaultImg);
-					pImg.add(lblPic);
-				
-				
-					JPanel pBtn = new JPanel();
-					pImg.add(pBtn);
-					
-						btnPic = new JButton("  회원 이미지  ");
-						btnPic.addActionListener(this);
-						pBtn.add(btnPic);
-					
 
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			
-				btnUpdate = new JButton("  수정  ");
-				btnUpdate.addActionListener(this);
-				btnUpdate.setActionCommand("OK");
-				buttonPane.add(btnUpdate);
-				getRootPane().setDefaultButton(btnUpdate);
-			
-			
-				btnCancel = new JButton("  취소  ");
-				btnCancel.addActionListener(this);
-				btnCancel.setActionCommand("Cancel");
-				buttonPane.add(btnCancel);
-			
-				setService(service);
+		JPanel pUpdate = new JPanel();
+		contentPanel.add(pUpdate);
+		pUpdate.setLayout(new GridLayout(0, 2, 0, 10));
+
+		JLabel lblID = new JLabel("ID");
+		lblID.setHorizontalAlignment(SwingConstants.CENTER);
+		pUpdate.add(lblID);
+
+		tfID = new JTextField();
+		pUpdate.add(tfID);
+		tfID.setColumns(10);
+
+		JLabel lblName = new JLabel("이름");
+		lblName.setHorizontalAlignment(SwingConstants.CENTER);
+		pUpdate.add(lblName);
+
+		tfName = new JTextField();
+		pUpdate.add(tfName);
+		tfName.setColumns(10);
+
+		JLabel lblBirthday = new JLabel("생년월일");
+		lblBirthday.setHorizontalAlignment(SwingConstants.CENTER);
+		pUpdate.add(lblBirthday);
+
+		tfBirthday = new JDateChooser(new Date(), "yyyy-MM-dd");
+		pUpdate.add(tfBirthday);
+
+		JLabel lblTel = new JLabel("전화번호");
+		lblTel.setHorizontalAlignment(SwingConstants.CENTER);
+		pUpdate.add(lblTel);
+
+		tfTel = new JTextField();
+		pUpdate.add(tfTel);
+		tfTel.setColumns(10);
+
+		JLabel lblAd = new JLabel("주소");
+		lblAd.setHorizontalAlignment(SwingConstants.CENTER);
+		pUpdate.add(lblAd);
+
+		tfAd = new JTextField();
+		pUpdate.add(tfAd);
+		tfAd.setColumns(10);
+
+		JLabel lblAir = new JLabel("");
+		pUpdate.add(lblAir);
+
+		btnZip = new JButton("검색");
+		btnZip.addActionListener(this);
+		pUpdate.add(btnZip);
+
+		JLabel lblGrade = new JLabel("등급");
+		lblGrade.setHorizontalAlignment(SwingConstants.CENTER);
+		pUpdate.add(lblGrade);
+
+		cmbGrade = new JComboBox();
+		pUpdate.add(cmbGrade);
+
+		JPanel pImage = new JPanel();
+		contentPanel.add(pImage);
+		pImage.setLayout(new GridLayout(0, 1, 0, 0));
+
+		JPanel pImg = new JPanel();
+		pImage.add(pImg);
+		pImg.setLayout(new GridLayout(0, 1, 0, 10));
+
+		lblPic = new JLabel();
+		lblPic.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPic.setPreferredSize(picDimension);
+		lblPic.setSize(picDimension);
+		setStr(defaultImg);
+		pImg.add(lblPic);
+
+		JPanel pBtn = new JPanel();
+		pImg.add(pBtn);
+
+		btnPic = new JButton("  회원 이미지  ");
+		btnPic.addActionListener(this);
+		pBtn.add(btnPic);
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+
+		btnUpdate = new JButton("  수정  ");
+		btnUpdate.addActionListener(this);
+		btnUpdate.setActionCommand("OK");
+		buttonPane.add(btnUpdate);
+		getRootPane().setDefaultButton(btnUpdate);
+
+		btnCancel = new JButton("  취소  ");
+		btnCancel.addActionListener(this);
+		btnCancel.setActionCommand("Cancel");
+		buttonPane.add(btnCancel);
+
+		setService(service);
 	}
 
 	private void setService(MemberUIService service) {
@@ -208,34 +200,48 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		lblPic.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance((int) picDimension.getWidth(),
 				(int) picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
-	
 
 	public void setItem(Member item) {
 		tfID.setText(item.getMberId());
 		tfName.setText(item.getMberName());
 		tfBirthday.setDate(item.getMberBrthdy());
 		tfTel.setText(item.getMberTel());
-		tfAd.setText(String.format("(%d) %s %s",item.getMberZip().getZipCode(),item.getMberBassAd(),item.getMberDetailAd()));
-		cmbGrade.setSelectedItem(item.getGrade().getGradeName());
-		
-		if(item.getMberImg() ==null || item.getMberImg().length == 0) {
-			setStr(defaultImg);
+		tfAd.setText(String.format("(%d) %s %s", item.getMberZip().getZipCode(), item.getMberBassAd(),
+				item.getMberDetailAd()));
+		if(item.getGrade().getGradeNo() == 0) {
+			//cmbGrade.setSelectedIndex(grade+1);
+			cmbGrade.setSelectedItem("일반");
 		}else {
-			setByte(item.getMberImg());
-			setStr(item.getMberImg().toString());
+			cmbGrade.setSelectedIndex(item.getGrade().getGradeNo()-1);
+			//cmbGrade.setSelectedItem(item.getGrade().getGradeName());
 		}
+		//JOptionPane.showMessageDialog(null, item.getMberImg().length);
 		
+		if (item.getMberImg() == null || item.getMberImg().length == 0) {
+			setStr(defaultImg);
+		} else {
+			setByte(item.getMberImg());
+		}
 	}
-	
-	public void setCmbList(List<Grade> gradeList){
+
+	public void setCmbList(List<Grade> gradeList) {
 		DefaultComboBoxModel<Grade> model = new DefaultComboBoxModel<Grade>(new Vector<>(gradeList));
 		cmbGrade.setModel(model);
-		cmbGrade.setSelectedIndex(-1);
-		
+		// cmbGrade.setSelectedIndex(-1);
 	}
 	
 	
+	public void validCheck() {
+		if (tfID.getText().contentEquals("") || tfName.getText().contentEquals("")
+				|| tfTel.getText().contentEquals("") || tfAd.getText().contentEquals("")) {
+			throw new InvalidCheckException();
+		}
+	}
+
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnZip) {
+			btnZipActionPerformed(e);
+		}
 		if (e.getSource() == btnPic) {
 			btnPicActionPerformed(e);
 		}
@@ -246,24 +252,87 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 			btnCancelActionPerformed(e);
 		}
 	}
+
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		dispose();
 	}
+
 	protected void btnUpdateActionPerformed(ActionEvent e) {
-		
+		try {
+			Member upMember = getItem();
+			service.updateMember(upMember);
+			JOptionPane.showMessageDialog(null, String.format("%s [%s]님의 정보가 수정 되었습니다.",upMember.getMberId() ,upMember.getMberName()));
+		} catch (InvalidCheckException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
+
+	private Member getItem() {
+		validCheck();
+		zipDialog.setDetailAd(zipDialog.getTfDetailAd().getText());
+		zipDialog.setZipCode(zipDialog.getTfZipCode().getText());
+		String mberId = tfID.getText().trim();
+		String mberName = tfName.getText().trim();
+		Date mberBrthdy = tfBirthday.getDate();
+		//ZipCode mberZip = zipDialog.getZipCode();
+		ZipCode mberZip = new ZipCode();
+		//String mberBassAd = tfAd.getText(zipDialog.getAddrFull());
+		String mberBassAd = zipDialog.getAddrFull();
+		String mberDetailAd = zipDialog.getDetailAd();
+		String mberTel = tfTel.getText().trim();
+		byte[] mberImg = getImage();
+		Grade grade = (Grade) cmbGrade.getSelectedItem();
+		
+		return new Member(mberId, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, grade);
+	}
+	
+	private byte[] getImage() {
+		byte[] pic = null;
+		File file = new File(picPath);
+		try (InputStream is = new FileInputStream(file)) {
+			pic = new byte[is.available()];
+			is.read(pic);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return pic;
+	}
+
 	protected void btnPicActionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG or PNG or GIF", "jpg", "png", "gif");
 		chooser.setFileFilter(filter);
-
+		
 		int res = chooser.showOpenDialog(null);
 		if (res != JFileChooser.APPROVE_OPTION) {
 			JOptionPane.showMessageDialog(null, "사진을 선택하지 않으셨습니다.", "경고", JOptionPane.WARNING_MESSAGE);
 			return;
+			
 		}
 		picPath = chooser.getSelectedFile().getPath();
 		setStr(picPath);
 		
+	}
+	protected void btnZipActionPerformed(ActionEvent e) {
+		
+		zipDialog = new ZipDialog(zipFrame, "우편번호 검색");
+		zipDialog.getBtnAdd().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				zipDialog.setDetailAd(zipDialog.getTfDetailAd().getText());
+				zipDialog.setZipCode(zipDialog.getTfZipCode().getText());
+				tfAd.setText("(" + zipDialog.getZipCode() + ")"+" "+ zipDialog.getAddrFull() +" "+ zipDialog.getDetailAd());
+				zipDialog.dispose();
+			}
+		});
+		zipDialog.setBounds(100, 100, 500, 500);
+		zipDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		zipDialog.setVisible(true);
 	}
 }

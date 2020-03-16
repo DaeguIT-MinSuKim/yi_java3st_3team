@@ -80,9 +80,13 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 
 		pMemberList = new MemberTblPanel();
 		pMemberList.setBorder(new EmptyBorder(10, 0, 0, 0));
-		pMemberList.loadData(service.showMemberListAll());
+		loadData();
 		pMemberList.setPopupMenu(createPop());
 		pList.add(pMemberList, BorderLayout.CENTER);
+	}
+
+	public void loadData() {
+		pMemberList.loadData(service.showMemberListAll());
 	}
 
 	private JPopupMenu createPop() {
@@ -110,9 +114,6 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-
-				if (e.getActionCommand().contentEquals("수정")) {
-				}
 				if(e.getActionCommand().contentEquals("회원정보 수정")) {
 
 					Member upMember = pMemberList.getSelectedItem();
@@ -123,10 +124,7 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 					updateDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					updateDialog.setVisible(true);
 
-
-
-					
-					pMemberList.loadData(service.showMemberListAll());
+					loadData();
 					
 				}
 				
@@ -136,18 +134,21 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 					int result = JOptionPane.showConfirmDialog(null, "탈퇴상태로 바꾸시겠습니까?", "탈퇴여부 설정", JOptionPane.YES_NO_OPTION);
 					
 					if(result == JOptionPane.CLOSED_OPTION) {
-						pMemberList.loadData(service.showMemberListAll());
+						loadData();
 					} else if(result == JOptionPane.YES_OPTION) {
-						member = new Member();
 						service.updateByWdrCdt(upMember);
-						
-						//pMemberList.loadData(service.showMemberListAll());
+						loadData();
 						
 					} else {
-						pMemberList.loadData(service.showMemberListAll());
+						loadData();
 					} 
 
 				}
+				if(e.getActionCommand().contentEquals("대여권한 설정")) {
+					int result = JOptionPane.showConfirmDialog(null, "대여권한을 변경하시겠습니까?", "대여권한 변경", JOptionPane.YES_NO_OPTION);
+					
+				}
+				
 				}
 			catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -167,7 +168,14 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 	}
 
 	protected void btnSearchActionPerformed(ActionEvent e) {
-
+			Member member = new Member();
+			
+			try {
+				if(radioBtnID.isSelected()) {
+					
+				}
+			}catch (Exception e1) {
+			}
 	}
 }
 

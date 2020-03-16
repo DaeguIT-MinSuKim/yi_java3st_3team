@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -195,11 +196,12 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		this.loginFrame = loginFrame;
 	}
 	
-	public void setItem() {		
-		if(LoginFrame_ex.loginMber.getMberImg() == null || LoginFrame_ex.loginMber.getMberImg().length == 0) {
+	public void setItem() {
+		Member member = service.SelectedByNo(LoginFrame_ex.loginMber);
+		if(member.getMberImg() == null || member.getMberImg().length == defaultImg.length() || member.getMberImg().length == 0) {
 			setPicStr(defaultImg);
 		} else {
-			setPicByte(LoginFrame_ex.loginMber.getMberImg());
+			setPicByte(member.getMberImg());
 		}
 		
 		lblGrade.setText(LoginFrame_ex.loginMber.getMberName() + "님 / " + (LoginFrame_ex.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원"));

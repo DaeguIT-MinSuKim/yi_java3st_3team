@@ -37,11 +37,21 @@ public class MemberUIService {
 	}
 
 	public Member SelectedByNo(Member mem) {
-		return null;
+		return memDao.selectMemberByNo(mem);
 	}
 
 	public List<Member> showMemberListAll() {
 		return memDao.selectMemberByAll();
+	}
+	
+	public List<Member> searchMemberByID(Member mem){
+		return memDao.searchMemberByID(mem);
+	}
+	public List<Member> searchMemberByName(Member mem){
+		return memDao.searchMemberByName(mem);
+	}
+	public List<Member> searchMemberByBirtyday(Member mem){
+		return memDao.searchMemberByBirtyday(mem);
 	}
 
 	public List<Grade> showGradeList(){
@@ -52,6 +62,10 @@ public class MemberUIService {
 	}
 	
 	public void updateByWdrCdt(Member mem) {
+		memDao.updateMember(mem);
+	}
+
+	public void updateMember(Member mem) {
 		memDao.updateMember(mem);
 	}
 	

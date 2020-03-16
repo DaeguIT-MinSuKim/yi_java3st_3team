@@ -3,6 +3,7 @@ package yi_java3st_3team.ui.list;
 import java.awt.BorderLayout;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;

@@ -54,7 +54,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public List<Member> selectMemberByAll() {
-		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt \r\n" + 
+		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt \r\n" + 
 					  "from member";
 		List<Member> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
@@ -84,13 +84,13 @@ public class MemberDaoImpl implements MemberDao {
 		int totalLeCnt = rs.getInt("total_le_cnt");
 		int lendBookCnt = rs.getInt("lend_book_cnt");
 		Grade grade = new Grade(rs.getInt("grade"));
-		
+		byte[] mberImg = rs.getBytes("mber_img");
 		Date joinDt = rs.getTimestamp("join_dt");
 		int wdrCdt = rs.getInt("wdr_cdt");
 		int lendPsbCdt = rs.getInt("lend_psb_cdt");
 		int odCnt = rs.getInt("od_cnt");
-		
-		Member mber = new Member(mberId, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt, odCnt);
+	
+		Member mber = new Member(mberId, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt, odCnt);
 		LogUtil.prnLog("getMember => " + mber);
 		return mber;
 	}
@@ -379,6 +379,37 @@ public class MemberDaoImpl implements MemberDao {
 			
 			e.printStackTrace();
 		}
+		return null;
+	}
+	public List<Member> searchMemberByID(Member member) {
+		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt\r\n" + 
+					"from member\r\n" + 
+					"where mber_id =?";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setString(1, member.getMberId());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+//					return getMember(rs, true);
+				}
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return null;
+	}
+		
+
+	@Override
+	public List<Member> searchMemberByName(Member member) {
+		
+		return null;
+	}
+
+	@Override
+	public List<Member> searchMemberByBirtyday(Member member) {
+		
+
 		return null;
 	}
 

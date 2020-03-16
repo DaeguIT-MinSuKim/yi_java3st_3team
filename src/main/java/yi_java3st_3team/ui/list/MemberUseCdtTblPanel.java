@@ -54,28 +54,31 @@ public class MemberUseCdtTblPanel extends JPanel {
 		lists = list;
 		
 		model = new TestTabelModel();
-		
-		for (Lending lending : list) {	
-			String writer;
-			
-			if(lending.getBookCd().getTrnslrName() == null || lending.getBookCd().getTrnslrName().length() == 0) {
-				writer = lending.getBookCd().getAuthrName().replace("|", ",");
-			} else {
-				writer = String.format("%s/%s", lending.getBookCd().getAuthrName().replace("|", ","), lending.getBookCd().getTrnslrName().replace("|", ","));
+		try {
+			for (Lending lending : list) {	
+				String writer;
+				
+				if(lending.getBookCd().getTrnslrName() == null || lending.getBookCd().getTrnslrName().length() == 0) {
+					writer = lending.getBookCd().getAuthrName().replace("|", ",");
+				} else {
+					writer = String.format("%s/%s", lending.getBookCd().getAuthrName().replace("|", ","), lending.getBookCd().getTrnslrName().replace("|", ","));
+				}
+				
+				model.addRow(new Object[] {
+						lending.getBookCd().getBookCode(),
+						lending.getBookCd().getBookName().replace("|", ","),
+						writer,
+						String.format("%tF", lending.getBookCd().getPblicteYear()),
+						lending.getBookCd().getPls().getPlsName(),
+						new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
+						String.format("%tF", lending.getRturnDueDate()),
+						lending.getRturnPsmCdt() > 0 ? "신청완료" : "신청가능",
+								false
+				});
+				
 			}
-			
-			model.addRow(new Object[] {
-					lending.getBookCd().getBookCode(),
-					lending.getBookCd().getBookName().replace("|", ","),
-					writer,
-					String.format("%tF", lending.getBookCd().getPblicteYear()),
-					lending.getBookCd().getPls().getPlsName(),
-					new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
-					String.format("%tF", lending.getRturnDueDate()),
-					lending.getRturnPsmCdt() > 0 ? "신청완료" : "신청가능",
-					false
-			});
-			
+		} catch (NullPointerException e) {
+			model.addRow(new Object[] {});
 		}
 		
 		table.setModel(model);
@@ -84,32 +87,36 @@ public class MemberUseCdtTblPanel extends JPanel {
 	}
 	
 	public void getSelectedItem() {
-		
-		for(int i=0; i<table.getRowCount(); i++) {
-			Boolean checkCdt = (Boolean) table.getValueAt(i, 8);
-			
-			if(checkCdt) {
-				if (lists.get(i).getRturnPsmCdt() == 0) {					
-					Date date = lists.get(i).getRturnDueDate();
-					int cdt = lists.get(i).getRturnPsmCdt();
-					cal.setTime(date);
-					cal.add(Calendar.DATE, 10);
-					Date rturnDate = cal.getTime();
-					System.out.println(rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
-							+ lists.get(i).getMberId().getMberId());
-					
-					
-					Lending lending = new Lending();				
-					lending.setBookCd(new Book(lists.get(i).getBookCd().getBookCode()));
-					lending.setMberId(new Member(lists.get(i).getMberId().getMberId()));
-					lending.setRturnPsmCdt(1);
-					lending.setRturnDueDate(rturnDate);
-					service.modifyLendingByCodeAndMberId(lending);
-				} else if( lists.get(i).getRturnPsmCdt() > 0){
-					JOptionPane.showMessageDialog(null, "이미 반납신청 되었습니다.\n(반납연기신청은 1회만 가능합니다.)");
+		try {
+			for(int i=0; i<table.getRowCount(); i++) {
+				Boolean checkCdt = (Boolean) table.getValueAt(i, 8);
+				
+				if(checkCdt) {
+					if (lists.get(i).getRturnPsmCdt() == 0) {					
+						Date date = lists.get(i).getRturnDueDate();
+						int cdt = lists.get(i).getRturnPsmCdt();
+						cal.setTime(date);
+						cal.add(Calendar.DATE, 10);
+						Date rturnDate = cal.getTime();
+						System.out.println(rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
+								+ lists.get(i).getMberId().getMberId());
+						
+						
+						Lending lending = new Lending();				
+						lending.setBookCd(new Book(lists.get(i).getBookCd().getBookCode()));
+						lending.setMberId(new Member(lists.get(i).getMberId().getMberId()));
+						lending.setRturnPsmCdt(1);
+						lending.setRturnDueDate(rturnDate);
+						service.modifyLendingByCodeAndMberId(lending);
+					} else if( lists.get(i).getRturnPsmCdt() > 0){
+						JOptionPane.showMessageDialog(null, "이미 반납신청 되었습니다.\n(반납연기신청은 1회만 가능합니다.)");
+					}
 				}
 			}
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null, "선택된 정보가 없습니다");
 		}
+		
 		
 	}
 	

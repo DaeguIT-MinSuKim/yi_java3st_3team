@@ -359,24 +359,29 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 
 			if (loginLib != null) {
 				if (loginLib.getTitle().getTitleNo() == 1) {
-					JOptionPane.showMessageDialog(null, "총관리자 로그인 [테스트용]");
 					ADChiefMainFrame = new MainFrame_ex();
+					ADChiefMainFrame.setLoginFrame(this);
 					ADChiefMainFrame.getLblGreeting().setText(loginLib.getLbName() + "님 환영합니다~");
 					ADChiefMainFrame.setVisible(true);
 					clearTf();
+					dispose();
 				}
 				if (loginLib.getTitle().getTitleNo() == 0) {
 					JOptionPane.showMessageDialog(null, "사서 로그인 [테스트용]");
 					clearTf();
+					
 				}
+				
 				return;
 			}
 
 			if (loginMber != null) {
 				memMainFrame = new MainFrame_user();
+				memMainFrame.setLoginFrame(this);
 				memMainFrame.setMember(memService, loginMber);
 				memMainFrame.getLblGreeting().setText(loginMber.getMberName() + "님 환영합니다~");
 				memMainFrame.setVisible(true);
+				dispose();
 			}
 
 		} catch (InvalidCheckException e1) {
@@ -385,7 +390,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 
 	}
 
-	private void clearTf() {
+	public void clearTf() {
 		tfLoginId.setText("");
 		pfLoginPw.setText("");
 	}

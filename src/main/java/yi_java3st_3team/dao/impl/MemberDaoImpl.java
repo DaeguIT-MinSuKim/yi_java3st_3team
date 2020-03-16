@@ -36,7 +36,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public Member selectMemberByNo(Member member) {
-		String sql = "select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, lend_psb_cdt, join_dt, wdr_cdt from member where mber_id = ?";
+		String sql = "select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, grad_name, book_le_cnt, lend_psb_cdt, join_dt, wdr_cdt from member m left join grade g on m.grade = g.grade_no where mber_id = ?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, member.getMberId());
 //			LogUtil.prnLog(pstmt);
@@ -247,7 +247,7 @@ public class MemberDaoImpl implements MemberDao {
 		String mberTel = rs.getString("mber_tel");
 		int totalLeCnt = rs.getInt("total_le_cnt");
 		int lendBookCnt = rs.getInt("lend_book_cnt");
-		Grade grade = new Grade(rs.getInt("grade"));
+		Grade grade = new Grade(rs.getInt("grade"), rs.getString("grad_name"), rs.getInt("book_le_cnt"));
 		int lendPsbCdt = rs.getInt("lend_psb_cdt");
 		Date joinDt = rs.getTimestamp("join_dt");
 		int wdrCdt = rs.getInt("wdr_cdt");

@@ -43,6 +43,16 @@ public class MemberUIService {
 	public List<Member> showMemberListAll() {
 		return memDao.selectMemberByAll();
 	}
+	
+	public List<Member> searchMemberByID(Member mem){
+		return memDao.searchMemberByID(mem);
+	}
+	public List<Member> searchMemberByName(Member mem){
+		return memDao.searchMemberByName(mem);
+	}
+	public List<Member> searchMemberByBirtyday(Member mem){
+		return memDao.searchMemberByBirtyday(mem);
+	}
 
 	public List<Grade> showGradeList(){
 		return gradeDao.selectGradeByAll();

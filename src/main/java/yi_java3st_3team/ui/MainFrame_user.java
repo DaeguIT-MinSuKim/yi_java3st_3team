@@ -19,13 +19,16 @@ import javax.swing.border.EmptyBorder;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.MemberBookSearchPanel;
 import yi_java3st_3team.ui.content.MemberJoinPanel;
 import yi_java3st_3team.ui.content.MemberUseCdtPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
+import yi_java3st_3team.ui.content.RecomPanel;
 import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
+import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
 public class MainFrame_user extends JFrame {
@@ -37,12 +40,7 @@ public class MainFrame_user extends JFrame {
 	private JPanel pHome;
 	private JPanel pProfile;
 	private JPanel pBookSearch;
-	private JPanel pDummy1;
-	private JPanel pDummy2;
-	private JPanel pDummy3;
-	private JPanel pDummy4;
-	private JPanel pDummy5;
-	private JPanel pDummy6;
+	private JPanel pRecommendBook;
 	private JPanel pLogout;
 	private JPanel pWest;
 	private JPanel pCenter;
@@ -51,6 +49,10 @@ public class MainFrame_user extends JFrame {
 	private JLabel lblGreeting;
 	private JPanel memberUseCdtpanel;
 	private JPanel memberBookSearchPanel;
+	private Member member;
+	private JLabel lblRecommendBook;
+	private JPanel bookRecomPanel;
+	private LoginFrame_ex loginFrame;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -128,35 +130,40 @@ public class MainFrame_user extends JFrame {
 		lblBookSearch.setFont(new Font("굴림", Font.PLAIN, 15));
 		pBookSearch.add(lblBookSearch, BorderLayout.NORTH);
 		
-		pDummy1 = new JPanel();
+		pRecommendBook = new JPanel();
+		pRecommendBook.setBackground(Color.WHITE);
+		pRecommendBook.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pSouthMenuPanel.add(pRecommendBook);
+		pRecommendBook.setLayout(new BorderLayout(0, 0));
+		
+		lblRecommendBook = new JLabel("도서추천");
+		lblRecommendBook.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRecommendBook.setFont(new Font("굴림", Font.PLAIN, 15));
+		pRecommendBook.add(lblRecommendBook, BorderLayout.NORTH);
+		
+		JPanel pDummy1 = new JPanel();
 		pDummy1.setBackground(Color.WHITE);
 		pDummy1.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pSouthMenuPanel.add(pDummy1);
 		pDummy1.setLayout(new BorderLayout(0, 0));
 		
-		pDummy2 = new JPanel();
+		JPanel pDummy2 = new JPanel();
 		pDummy2.setBackground(Color.WHITE);
 		pDummy2.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pSouthMenuPanel.add(pDummy2);
 		pDummy2.setLayout(new BorderLayout(0, 0));
 		
-		pDummy3 = new JPanel();
+		JPanel pDummy3 = new JPanel();
 		pDummy3.setBackground(Color.WHITE);
-		pDummy3.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pSouthMenuPanel.add(pDummy3);
-		pDummy3.setLayout(new BorderLayout(0, 0));
 		
-		pDummy4 = new JPanel();
+		JPanel pDummy4 = new JPanel();
 		pDummy4.setBackground(Color.WHITE);
 		pSouthMenuPanel.add(pDummy4);
 		
-		pDummy5 = new JPanel();
+		JPanel pDummy5 = new JPanel();
 		pDummy5.setBackground(Color.WHITE);
 		pSouthMenuPanel.add(pDummy5);
-		
-		pDummy6 = new JPanel();
-		pDummy6.setBackground(Color.WHITE);
-		pSouthMenuPanel.add(pDummy6);
 		
 		pLogout = new JPanel();
 		pLogout.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -190,6 +197,7 @@ public class MainFrame_user extends JFrame {
 		pHome.addMouseListener(menuAdapter);
 		pProfile.addMouseListener(menuAdapter);
 		pBookSearch.addMouseListener(menuAdapter);
+		pRecommendBook.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		Thread thread = getMenuThread();
 		thread.run();
@@ -206,6 +214,7 @@ public class MainFrame_user extends JFrame {
 				profileModifyPanel = new ProfileModifyPanel();
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
+				bookRecomPanel = new RecomPanel();
 			}
 		});
 		return thread;
@@ -230,8 +239,8 @@ public class MainFrame_user extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel[] menuPanels = new JPanel[] {pHome,pProfile,pBookSearch};
-				JLabel[] menuLabels = new JLabel[] {lblHome,lblProfile,lblBookSearch};
+				JPanel[] menuPanels = new JPanel[] {pHome,pProfile,pBookSearch,pRecommendBook};
+				JLabel[] menuLabels = new JLabel[] {lblHome,lblProfile,lblBookSearch,lblRecommendBook};
 				//Menu panel,label 초기화
 				for(JPanel p : menuPanels) {
 					p.setBackground(Color.white);
@@ -286,6 +295,7 @@ public class MainFrame_user extends JFrame {
 								case "프로필 수정" :
 									contentPane.remove(pCenter);
 									pCenter = profileModifyPanel;
+									((ProfileModifyPanel) pCenter).initTf(member);
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
@@ -315,16 +325,36 @@ public class MainFrame_user extends JFrame {
 					repaint();
 					revalidate();
 					break;
+				case "도서추천":
+					contentPane.remove(pCenter);
+					contentPane.remove(pWest);
+					pCenter = bookRecomPanel;
+					pCenter.setBackground(Color.white);
+					contentPane.add(pCenter,BorderLayout.CENTER);
+					repaint();
+					revalidate();
+					break;
 				case "로그아웃":
 					dispose();
+					LoginFrame_ex.loginMber = null;
+					loginFrame.setVisible(true);
+					loginFrame.clearTf();
 					break;
 			}
 		}};
 		return menuAdapter;
 	}
+	
+	public void setLoginFrame(LoginFrame_ex loginFrame) {
+		this.loginFrame = loginFrame;
+	}
+	
 	public void initFX(InitScene fxPanel) {
 		Scene scene = fxPanel.createScene();
 		JFXPanel panel = (JFXPanel) fxPanel;
 		panel.setScene(scene);
+	}
+	public void setMember(MemberUIService service, Member mem) {
+		member = service.SelectedByNo(mem);
 	}
 }

@@ -37,7 +37,7 @@ public class MemberUIService {
 	}
 
 	public Member SelectedByNo(Member mem) {
-		return null;
+		return memDao.selectMemberByNo(mem);
 	}
 
 	public List<Member> showMemberListAll() {

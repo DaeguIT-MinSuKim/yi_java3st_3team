@@ -1,6 +1,7 @@
 select user(), database ();
 use yi_java3st_3team;
 
+set autocommit = false;
 -- grade 회원등급
 desc grade;
 insert into grade values
@@ -31,7 +32,6 @@ insert into request_book values
 (9, 'ggg243r4@gmail.com', '독의 꽃', '최수철', null, '작가정신', '2020.02.09', 0),
 (10, 'gfdssdh@naver.com', '우리들의 행복한 시간', '공지영', null, '해냄', '2020.02.09', 0);
 
-set autocommit = false;
 -- book 도서
 desc book;
 load data local infile 'D:/workspace_gradle/yi_java3st_3team/document/data/book_data.csv'

@@ -277,6 +277,43 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 			}
 		}
 	};
+	
+
+	public JTextField getTfName() {
+		return tfName;
+	}
+	
+	public JDateChooser getTfBirthday() {
+		return tfBirthday;
+	}
+
+	public JTextField getTfTel() {
+		return tfTel;
+	}
+
+	public JTextField getTfZip() {
+		return tfZip;
+	}
+
+	public JTextField getTfAddress() {
+		return tfAddress;
+	}
+
+	public JTextField getTfDetailAdress() {
+		return tfDetailAdress;
+	}
+
+	public JTextField getTfID() {
+		return tfID;
+	}
+	
+	public JPasswordField getPfPW1() {
+		return pfPW1;
+	}
+	
+	public JLabel getLblPic() {
+		return lblPic;
+	}
 
 	private void setPic(byte[] mberImg) {
 		lblPic.setIcon(new ImageIcon(new ImageIcon(mberImg).getImage().getScaledInstance((int) picDimension.getWidth(),
@@ -434,5 +471,10 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		}
 		picPath = chooser.getSelectedFile().getPath();
 		setPic(picPath);
+	}
+
+	public void setPicImageIcon(ImageIcon icon) {
+		lblPic.setIcon(new ImageIcon(icon.getImage().getScaledInstance((int) picDimension.getWidth(),
+				(int) picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
 }

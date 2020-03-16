@@ -62,6 +62,14 @@ public class LendingUiService {
 	public List<Lending> showMenberLendBookList(Lending lending) {
 		return lendingDao.selectLendingByMberIdAndLendBookAll(lending);
 	}
+	
+	public int showLendBookCnt(Lending lending) {
+		return lendingDao.getLendBookCnt(lending);
+	}
+	
+	public int showLendBookTotalCnt(Lending lending) {
+		return lendingDao.getLendBookTotalCnt(lending);
+	}
 
 	public Member showLendingMemberId(Member member) {
 		return memberDao.selectMemberByNo(member);

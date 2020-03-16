@@ -238,9 +238,9 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		pRecomContent.add(lblPlsCon);
 
 		taBookCont = new JTextArea();
+		taBookCont.setEditable(false);
 		taBookCont.setBorder(new EmptyBorder(10, 10, 10, 10));
 		taBookCont.setLineWrap(true);
-		taBookCont.setEditable(false);
 
 		JScrollPane scrollPane = new JScrollPane(taBookCont);
 		scrollPane.setBorder(new EmptyBorder(0, 10, 10, 10));

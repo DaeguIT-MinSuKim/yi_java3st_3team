@@ -350,7 +350,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Member> searchMemberByID(Member member) {
+	public Member searchMemberByID(Member member) {
 		List<Member> list = new ArrayList<>();
 		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt\r\n" + 
 					"from member\r\n" + 
@@ -359,7 +359,7 @@ public class MemberDaoImpl implements MemberDao {
 			pstmt.setString(1, member.getMberId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					list.add(getMember(rs, true));
+					return getMember(rs, true);
 				}
 			}
 		} catch (SQLException e) {

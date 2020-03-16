@@ -42,6 +42,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 	private MemberUseCdtTotalTblPanel pTotalTblList;
 	private MemberUseCdtTblPanel pLendTblList;
 	private JButton btnRturnPsmCdt;
+	private Lending lending = new Lending(new Member(LoginFrame_ex.loginMber.getMberId()));
 
 	public MemberUseCdtPanel() {
 		service = new MemberUIService();
@@ -175,7 +176,6 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 
 	public void setService(LendingUiService lendService) {
 		this.lendService = lendService;
-		Lending lending = new Lending(new Member(LoginFrame_ex.loginMber.getMberId()));
 		pTotalTblList.loadData(lendService.showMemberLendBookTotlaList(lending));
 		pLendTblList.loadDate(lendService.showMenberLendBookList(lending));
 	}
@@ -195,7 +195,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		this.loginFrame = loginFrame;
 	}
 	
-	public void setItem() {
+	public void setItem() {		
 		if(LoginFrame_ex.loginMber.getMberImg() == null || LoginFrame_ex.loginMber.getMberImg().length == 0) {
 			setPicStr(defaultImg);
 		} else {
@@ -203,8 +203,8 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		}
 		
 		lblGrade.setText(LoginFrame_ex.loginMber.getMberName() + "님 / " + (LoginFrame_ex.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원"));
-		lblLendCnt.setText(String.format("%d권", LoginFrame_ex.loginMber.getLendBookCnt()));
-		lblTotlaCnt.setText(String.format("%d권", LoginFrame_ex.loginMber.getTotalLeCnt()));
+		lblLendCnt.setText(String.format("%d권", lendService.showLendBookCnt(lending)));
+		lblTotlaCnt.setText(String.format("%d권", lendService.showLendBookTotalCnt(lending)));
 		setService(lendService);
 	}
 	public void actionPerformed(ActionEvent e) {

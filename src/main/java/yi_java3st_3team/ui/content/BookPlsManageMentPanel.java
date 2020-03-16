@@ -89,19 +89,21 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 		pBtns.setBackground(Color.WHITE);
 		pPlsCon.add(pBtns, BorderLayout.SOUTH);
 
-		btnCancel = new JButton("취소");
-		btnCancel.addActionListener(this);
-		btnCancel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		pBtns.add(btnCancel);
+		btnAdd = new JButton("추가");
+		btnAdd.setPreferredSize(new Dimension(80, 40));
+		btnAdd.addActionListener(this);
+		btnAdd.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
+		pBtns.add(btnAdd);
 
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setPreferredSize(new Dimension(10, 0));
 		pBtns.add(lblNewLabel_2);
 
-		btnAdd = new JButton("추가");
-		btnAdd.addActionListener(this);
-		btnAdd.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		pBtns.add(btnAdd);
+		btnCancel = new JButton("취소");
+		btnCancel.setPreferredSize(new Dimension(80, 40));
+		btnCancel.addActionListener(this);
+		btnCancel.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
+		pBtns.add(btnCancel);
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		pContent.add(lblNewLabel_1);
@@ -116,45 +118,46 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 		pPlsList.loadData(service.showPlsListAll());
 		pPlsList.setPopupMenu(createPopupMenu());
 		pList.add(pPlsList, BorderLayout.CENTER);
-		
+
 		setService(service);
 	}
 
 	public void setService(PublishingCompanyUiService service) {
 		this.service = service;
-		tfCode.setText((service.getLastCode()+1)+"");
+		tfCode.setText((service.getLastCode() + 1) + "");
 	}
-	
+
 	private JPopupMenu createPopupMenu() {
 		JPopupMenu popMenu = new JPopupMenu();
-		
+
 		JMenuItem updateItem = new JMenuItem("수정");
 		updateItem.addActionListener(myPopupMenuListener);
 		popMenu.add(updateItem);
-		
+
 		JMenuItem deleteItem = new JMenuItem("삭제");
 		deleteItem.addActionListener(myPopupMenuListener);
 		popMenu.add(deleteItem);
-		
+
 		return popMenu;
 	}
-	
+
 	ActionListener myPopupMenuListener = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				if(e.getActionCommand().contentEquals("수정")) {
+				if (e.getActionCommand().contentEquals("수정")) {
 					PublishingCompany upDate = pPlsList.getSelectedItem();
 					setItem(upDate);
 					btnAdd.setText("수정");
 				}
-				
-				if(e.getActionCommand().contentEquals("삭제")) {
+
+				if (e.getActionCommand().contentEquals("삭제")) {
 					PublishingCompany deletePls = pPlsList.getSelectedItem();
-					int result = JOptionPane.showConfirmDialog(null, "선택된 정보를 삭제하겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
-					
-					if(result == JOptionPane.CLOSED_OPTION) {
+					int result = JOptionPane.showConfirmDialog(null, "선택된 정보를 삭제하겠습니까?", "삭제 확인",
+							JOptionPane.YES_NO_OPTION);
+
+					if (result == JOptionPane.CLOSED_OPTION) {
 					} else if (result == JOptionPane.YES_OPTION) {
 						service.removePls(deletePls);
 						pPlsList.removeRow();
@@ -162,12 +165,12 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 						JOptionPane.showMessageDialog(null, "삭제되었습니다");
 					} else {
 					}
-					
+
 				}
 			} catch (RuntimeException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
-			
+
 		}
 	};
 	private JPanel pInputs;
@@ -200,9 +203,9 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnAdd) {
-			if(e.getActionCommand().contentEquals("수정")) {
+			if (e.getActionCommand().contentEquals("수정")) {
 				btnUpdateActionPerFormed(e);
-			} else {				
+			} else {
 				btnAddActionPerformed(e);
 			}
 		}
@@ -221,7 +224,7 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 		pPlsList.loadData(service.showPlsListAll());
 		JOptionPane.showMessageDialog(null, "수정되었습니다.");
 	}
-	
+
 	protected void btnAddActionPerformed(ActionEvent e) {
 		try {
 			PublishingCompany newPls = getItem();
@@ -235,11 +238,11 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (Exception e1) {
 			SQLException e2 = (SQLException) e1;
-			if(e2.getErrorCode() == 1062) {
+			if (e2.getErrorCode() == 1062) {
 				JOptionPane.showMessageDialog(null, "코드 중복");
 				System.err.println(e2.getMessage());
 				return;
-			} 
+			}
 			e1.printStackTrace();
 		}
 	}

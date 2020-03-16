@@ -12,7 +12,7 @@ insert into grade values
 desc member;
 load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/member.csv'
 into table yi_java3st_3team.member
-character set 'utf8'
+character set 'euckr'
 fields terminated by ','
 ignore 1 lines;
 

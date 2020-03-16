@@ -256,6 +256,42 @@ public class LendingDaoImpl implements LendingDao {
 
 		return new Lending(mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
 	}
+	
+	@Override
+	public int getLendBookCnt(Lending lending) {
+		String sql = "select count(*) from lending where mber_id = ? and rturn_date is null";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, lending.getMberId().getMberId());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {					
+					return rs.getInt("count(*)");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int getLendBookTotalCnt(Lending lending) {
+		String sql = "select count(*) from lending where mber_id = ? ";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, lending.getMberId().getMberId());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {					
+					return rs.getInt("count(*)");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 	@Override
 	public List<Lending> selectLendingByAllTest() {

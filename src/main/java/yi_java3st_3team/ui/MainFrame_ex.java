@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -24,6 +25,7 @@ import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
+import javax.swing.border.MatteBorder;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -59,6 +61,8 @@ public class MainFrame_ex extends JFrame {
 	private RecomBookAddPanel recomBookAdd;
 	private BookPlsManageMentPanel bookPlsMgn;
 	private BookLcAndMlManagerPanel bookCatMag;
+	
+	private OverdueUIPanel overdueMgn;
 	
 	private Thread chartThread;
 	private JLabel lblGreeting;
@@ -97,6 +101,7 @@ public class MainFrame_ex extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pNorth = new JPanel();
+		pNorth.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		pNorth.setBackground(Color.WHITE);
 		contentPane.add(pNorth, BorderLayout.NORTH);
 		pNorth.setLayout(new BorderLayout(0, 0));
@@ -396,9 +401,47 @@ public class MainFrame_ex extends JFrame {
 					
 					
 				case "대여/반납":
-					break;
-					
-					
+					contentPane.remove(pWest);
+					contentPane.remove(pCenter);
+					pCenter = new JPanel();
+					pCenter.setBackground(Color.white);
+					pWest = new WestLendingManagementPanel();
+					JPanel[] pLending = ((WestLendingManagementPanel) pWest).getPanels();
+					for(JPanel panel : pLending) {
+						panel.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								for(JPanel panel : pLending) {
+									JLabel label = (JLabel)panel.getComponent(0);
+									panel.setBackground(new Color(240,240,240));
+									label.setForeground(Color.black);
+								}
+								JPanel chkPanel = (JPanel) e.getSource();
+								JLabel chkLabel = (JLabel) chkPanel.getComponent(0);
+								chkPanel.setBackground(new Color(52,147,221));
+								chkLabel.setForeground(Color.white);
+								switch(chkLabel.getText()) {
+								case "대여 관리" :
+									contentPane.remove(pCenter);
+									break;
+								case "반납 관리" :
+									contentPane.remove(pCenter);
+									break;
+								case "연체 조회" :
+									contentPane.remove(pCenter);
+									pCenter = overdueMgn; 
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+								}
+							}
+							
+						});
+					}
+					contentPane.add(pCenter, BorderLayout.CENTER);
+					contentPane.add(pWest, BorderLayout.WEST);
+					repaint();
+					revalidate();
 				case "직원관리":
 					break;
 					
@@ -496,6 +539,8 @@ public class MainFrame_ex extends JFrame {
 				
 				memberJoin = new MemberJoinUIPanel();
 				memberSelect = new MemberSelectUIPanel();
+				
+				overdueMgn = new OverdueUIPanel();
 				
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();

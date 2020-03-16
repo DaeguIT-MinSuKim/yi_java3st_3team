@@ -194,4 +194,8 @@ select (select count(mber_id) from member) as 'totalmember',
 	   (select count(mber_id) from member where total_le_cnt >= 100) as 'vipmember';
 
 select lb_id,lb_pass from librarian where title = 1;
+select * from librarian;
+select * from member;
+insert into librarian values ('dlstjs8246@naver.com','dlstjs1!','박인선','1990-09-03',41134,'대구광역시 동구 둔산로2길 19-9','그린빌라 8동 201호','010-4175-3675',null,1,now(),0);
 select mber_id,mber_pass from member;
+select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date,rturn_date,datediff(l.rturn_date,l.rturn_due_date) as 'overdue_date' from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id where l.overdue_cdt =1;

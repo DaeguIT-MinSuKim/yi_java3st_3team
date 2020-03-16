@@ -40,4 +40,6 @@ public interface LendingDao {
 	int updateLendingByCodeAndMberId(Lending lending);
 
 	Book showLendingByBookCode(Book book);
+
+	List<Lending> showLendingListByOverdue();
 }

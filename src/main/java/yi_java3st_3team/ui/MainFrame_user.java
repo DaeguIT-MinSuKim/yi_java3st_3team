@@ -15,18 +15,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
-import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import yi_java3st_3team.dto.Member;
-import yi_java3st_3team.ui.content.BookManagerPanel;
-import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.MemberBookSearchPanel;
-import yi_java3st_3team.ui.content.MemberJoinPanel;
 import yi_java3st_3team.ui.content.MemberUseCdtPanel;
-import yi_java3st_3team.ui.content.RecomBookAddPanel;
-import yi_java3st_3team.ui.list.MemberUseCdtTblPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
@@ -76,7 +71,7 @@ public class MainFrame_user extends JFrame {
 
 	private void initialize() {
 		MouseAdapter menuAdapter = getMouseAdapter();
-		setTitle("도서관 관리 프로그램");
+		setTitle("도서관 회원 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 960);
 		contentPane = new JPanel();
@@ -84,6 +79,7 @@ public class MainFrame_user extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pNorth = new JPanel();
+		pNorth.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		pNorth.setBackground(Color.WHITE);
 		contentPane.add(pNorth, BorderLayout.NORTH);
 		pNorth.setLayout(new BorderLayout(0, 0));
@@ -194,6 +190,7 @@ public class MainFrame_user extends JFrame {
 		pHome.addMouseListener(menuAdapter);
 		pProfile.addMouseListener(menuAdapter);
 		pBookSearch.addMouseListener(menuAdapter);
+		pRecommendBook.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		Thread thread = getMenuThread();
 		thread.run();

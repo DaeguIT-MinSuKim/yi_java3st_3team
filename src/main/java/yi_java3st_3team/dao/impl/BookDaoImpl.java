@@ -441,11 +441,15 @@ public class BookDaoImpl implements BookDao {
 	@Override
 
 	public Book LendingBookByCode(Book book) {
-		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n" + 
-				"	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + 
-				"	where book_code = ?";
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+//		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n" + 
+//				"	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + 
+//				"	where book_code = ?";
+		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, p.pls_name, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n"
+				+ "	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + "	where book_code = ?";
+//		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , concat(b.pls,\"/\",p.pls_name ) as 'pls', pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n" + 
+//				"	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + 
+//				"	where book_code = ?";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, book.getBookCode());
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -464,7 +468,7 @@ public class BookDaoImpl implements BookDao {
 		String bookName = rs.getString("book_name");
 		String authrName = rs.getString("authr_name");
 		String trnslrName = rs.getString("trnslr_name");
-		PublishingCompany pls = new PublishingCompany(rs.getInt("pls"));
+		PublishingCompany pls = new PublishingCompany(rs.getInt("pls"), rs.getString("pls_name"));
 		Date pblicteYear = rs.getTimestamp("pblicte_year");
 		int bookPrice = rs.getInt("book_price");
 		int lendPsbCdt = rs.getInt("lend_psb_cdt");

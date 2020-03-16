@@ -16,6 +16,10 @@ public interface LendingDao {
 	List<Lending> selectLendingByMberIdAll(Lending lending);
 
 	List<Lending> selectLendingByMberIdAndLendBookAll(Lending lending);
+	
+	int getLendBookCnt(Lending lending);
+	
+	int getLendBookTotalCnt(Lending lending);
 
 	int insertLending(Lending lending);
 

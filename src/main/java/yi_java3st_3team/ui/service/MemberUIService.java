@@ -54,5 +54,9 @@ public class MemberUIService {
 	public void updateByWdrCdt(Member mem) {
 		memDao.updateMember(mem);
 	}
+
+	public void updateMember(Member mem) {
+		memDao.updateMember(mem);
+	}
 	
 }

@@ -221,6 +221,7 @@ update recommendation set book_cont = '[수정]도서소개 테스트3' where bo
 delete from recommendation where book_code = 'A090103';
 
 select count(*)+1 from recommendation;
+
 --  추천도서 도서번호 재정렬
 set @cnt = 0;
 update recommendation set recommendation.recom_book_no = @cnt:=@cnt+1;
@@ -268,7 +269,6 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.p
 		
 		
 -- 회원 이용 현황 ---------------------------------------------------------------------
-
 select * from `member` where mber_id = 'fivestar@nate.com';
 
 -- 도서 이용 현황
@@ -336,9 +336,10 @@ select * from lending where book_cd = 'A090253' and mber_id = 'fivestar@nate.com
 update lending 
 	set rturn_psm_cdt = 0
 	where mber_id = 'fivestar@nate.com' and rturn_date is null;
-		
-select count(*) from lending where mber_id = 'fivestar@nate.com' and rturn_date is null; 
-select count(*) from lending where mber_id = 'fivestar@nate.com'; 
+
+-- 대여권수 카운트
+select count(*) from lending where mber_id = 'daddystop@gmail.com' and rturn_date is null; 
+select count(*) from lending where mber_id = 'daddystop@gmail.com'; 
 
 select * from lending where mber_id = 'daddystop@gmail.com'; 
 update lending 

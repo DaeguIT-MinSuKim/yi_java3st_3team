@@ -54,28 +54,33 @@ public class MemberUseCdtTblPanel extends JPanel {
 		lists = list;
 		
 		model = new TestTabelModel();
-		
-		for (Lending lending : list) {	
-			String writer;
-			
-			if(lending.getBookCd().getTrnslrName() == null || lending.getBookCd().getTrnslrName().length() == 0) {
-				writer = lending.getBookCd().getAuthrName().replace("|", ",");
-			} else {
-				writer = String.format("%s/%s", lending.getBookCd().getAuthrName().replace("|", ","), lending.getBookCd().getTrnslrName().replace("|", ","));
+		try {
+			for (Lending lending : list) {	
+				String writer;
+				
+				if(lending.getBookCd().getTrnslrName() == null || lending.getBookCd().getTrnslrName().length() == 0) {
+					writer = lending.getBookCd().getAuthrName().replace("|", ",");
+				} else {
+					writer = String.format("%s/%s", lending.getBookCd().getAuthrName().replace("|", ","), lending.getBookCd().getTrnslrName().replace("|", ","));
+				}
+				
+				model.addRow(new Object[] {
+						lending.getBookCd().getBookCode(),
+						lending.getBookCd().getBookName().replace("|", ","),
+						writer,
+						String.format("%tF", lending.getBookCd().getPblicteYear()),
+						lending.getBookCd().getPls().getPlsName(),
+						new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
+						String.format("%tF", lending.getRturnDueDate()),
+						lending.getRturnPsmCdt() > 0 ? "신청완료" : "신청가능",
+								false
+				});
+				
 			}
-			
+		} catch (NullPointerException e) {
 			model.addRow(new Object[] {
-					lending.getBookCd().getBookCode(),
-					lending.getBookCd().getBookName().replace("|", ","),
-					writer,
-					String.format("%tF", lending.getBookCd().getPblicteYear()),
-					lending.getBookCd().getPls().getPlsName(),
-					new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
-					String.format("%tF", lending.getRturnDueDate()),
-					lending.getRturnPsmCdt() > 0 ? "신청완료" : "신청가능",
-					false
+					"", "", "", "", "", "", "", ""
 			});
-			
 		}
 		
 		table.setModel(model);

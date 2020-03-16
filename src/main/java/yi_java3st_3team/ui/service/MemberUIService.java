@@ -44,9 +44,10 @@ public class MemberUIService {
 		return memDao.selectMemberByAll();
 	}
 	
-	public List<Member> searchMemberByID(Member mem){
-		return memDao.searchMemberByID(mem);
-	}
+	
+	 public List<Member> searchMemberByID(Member mem){ 
+		 return memDao.searchMemberByID(mem); }
+	 
 	public List<Member> searchMemberByName(Member mem){
 		return memDao.searchMemberByName(mem);
 	}

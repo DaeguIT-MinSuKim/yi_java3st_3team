@@ -2,6 +2,7 @@ package yi_java3st_3team.ui.list;
 
 import java.awt.BorderLayout;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,6 +38,10 @@ public abstract class AbsListPanel<T> extends JPanel {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		scrollPane.setViewportView(table);
+	}
+	
+	public JTable getTable() {
+		return table;
 	}
 
 	public void setPopupMenu(JPopupMenu popupMenu) {

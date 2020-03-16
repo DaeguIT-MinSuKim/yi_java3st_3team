@@ -29,8 +29,7 @@ select l.book_cd , b.book_name , if(b.trnslr_name = null, b.authr_name, concat(b
 	from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id left join publishing_company p on b.pls = p.pls_no 
 	where l.mber_id = 'daddystop@gmail.com';
 
-select *
-	from `member`;
+
 
 desc `member`;
 
@@ -65,3 +64,18 @@ desc book;
 desc publishing_company;
 
 select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, grad_name, book_le_cnt, lend_psb_cdt, join_dt, wdr_cdt from member m left join grade g on m.grade = g.grade_no where mber_id = 'daddystop@gmail.com';
+
+
+select lend_rturn_no, mber_id ,book_cd , lend_date ,rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt 
+	from lending
+	where mber_id = 'daddystop@gmail.com';
+
+select lend_rturn_no, mber_id ,book_cd , lend_date ,rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt 
+	from lending
+	where rturn_date is null;
+
+select book_code, book_name, authr_name, pblicte_year, pls_name, lend_date, rturn_date from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no where mber_id = 'mamatellme@gmail.com' and rturn_date is null ;
+
+select book_code, book_name, authr_name, trnslr_name, pls, pblicte_year, book_price,b.lend_psb_cdt , b.total_le_cnt, book_img, lc_no, ml_no, lend_date, rturn_date, rturn_due_date, od_cnt 
+	from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no left join member m on l.mber_id = m.mber_id 
+	where l.mber_id = 'mamatellme@gmail.com' and rturn_date is null ;

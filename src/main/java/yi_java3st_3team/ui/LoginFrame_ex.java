@@ -35,7 +35,9 @@ import yi_java3st_3team.ui.dialog.FindIdDialog;
 import yi_java3st_3team.ui.dialog.FindPwDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.service.LoginUiService;
+
 import yi_java3st_3team.ui.service.MemberUIService;
+
 
 @SuppressWarnings("serial")
 public class LoginFrame_ex extends JFrame implements ActionListener {

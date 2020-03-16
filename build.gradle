@@ -31,7 +31,9 @@ dependencies {
 	compile group: 'com.toedter', name: 'jcalendar', version: '1.4'
    	//JFreeChart
    	compile group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
-
+	// https://mvnrepository.com/artifact/javax.mail/mail
+	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+	
     testImplementation 'junit:junit:4.12'
 }
 jar{

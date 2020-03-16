@@ -271,8 +271,6 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 
 	private Member getItem() {
 		validCheck();
-		zipDialog.setDetailAd(zipDialog.getTfDetailAd().getText());
-		zipDialog.setZipCode(zipDialog.getTfZipCode().getText());
 		String mberId = tfID.getText().trim();
 		String mberName = tfName.getText().trim();
 		Date mberBrthdy = tfBirthday.getDate();
@@ -299,7 +297,6 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		return pic;
 	}
 

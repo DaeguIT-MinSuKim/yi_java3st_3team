@@ -14,6 +14,7 @@ public interface LendingDao {
 	List<Lending> selectLendingByAllTest();
 
 	List<Lending> selectLendingByMberIdAll(Lending lending);
+	List<Lending> selectLendingByMberIdAll(Member member);
 
 	List<Lending> selectLendingByMberIdAndLendBookAll(Lending lending);
 	
@@ -40,6 +41,9 @@ public interface LendingDao {
 	int updateLendingByCodeAndMberId(Lending lending);
 
 	Book showLendingByBookCode(Book book);
+	List<Lending> showLendingListByOverdue();
+	List<Lending> selectLendingByMberId(Member member);
+	List<Lending> selectLendingByMberIdChecking();
 	
 	List<Lending> selectLendingBastList();
 }

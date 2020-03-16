@@ -11,11 +11,11 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -25,7 +25,7 @@ import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
-import javax.swing.border.MatteBorder;
+import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -63,7 +63,6 @@ public class MainFrame_ex extends JFrame {
 	private BookLcAndMlManagerPanel bookCatMag;
 	private OverdueUIPanel overdueMgn;
 	private LoginFrame_ex loginFrame;
-	
 	private Thread chartThread;
 	private JLabel lblGreeting;
 
@@ -93,6 +92,7 @@ public class MainFrame_ex extends JFrame {
 
 	private void initialize() {
 		MouseAdapter menuAdapter = getMouseAdapter();
+		setThread();
 		setTitle("도서관 관리 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 960);
@@ -226,6 +226,9 @@ public class MainFrame_ex extends JFrame {
 		pEmpMgn.addMouseListener(menuAdapter);
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
+	}
+
+	public void setThread() {
 		chartThread = initChartThread();
 		chartThread.run();
 		Thread initPanelThread = initPanelThread();
@@ -430,7 +433,7 @@ public class MainFrame_ex extends JFrame {
 									break;
 								case "연체 조회" :
 									contentPane.remove(pCenter);
-									pCenter = overdueMgn; 
+									pCenter = overdueMgn;
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
@@ -445,8 +448,6 @@ public class MainFrame_ex extends JFrame {
 					revalidate();
 				case "직원관리":
 					break;
-					
-					
 				case "통계조회":
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
@@ -536,7 +537,7 @@ public class MainFrame_ex extends JFrame {
 		return thread;
 	}
 	private Thread initPanelThread() {
-		return new Thread(new Runnable() {
+		Thread thread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -550,7 +551,7 @@ public class MainFrame_ex extends JFrame {
 				memberSelect = new MemberSelectUIPanel();
 				
 				overdueMgn = new OverdueUIPanel();
-				
+		
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();
@@ -559,5 +560,6 @@ public class MainFrame_ex extends JFrame {
 				chartMemberInfo.add(memInfoChart,BorderLayout.CENTER);
 			}
 		});
+		return thread;
 	}
 }

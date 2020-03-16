@@ -22,5 +22,5 @@ public interface MemberDao {
 	int deleteMember(Member member);
 	
 	int[] selectMemberCounts();
-//	Member selectLendingMemberByNo(Member member);
+	Member selectLendingMemberByNo(Member member);
 }

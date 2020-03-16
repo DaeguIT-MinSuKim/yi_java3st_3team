@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class SendMenuSettingDialog extends JDialog implements ActionListener {
-	private MemberSendMailDialog dlgMemberSendMail;
+	private MemberSendMailDialog digSendMail;
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnSave;
 	private JTextField tfHost;
@@ -110,6 +110,10 @@ public class SendMenuSettingDialog extends JDialog implements ActionListener {
 			}
 		}
 	}
+	public void setDigSendMail(MemberSendMailDialog digSendMail) {
+		this.digSendMail = digSendMail;
+	}
+
 	public Email getItem() {
 		String hostName = tfHost.getText();
 		String portNum = tfPortNum.getText();
@@ -131,9 +135,10 @@ public class SendMenuSettingDialog extends JDialog implements ActionListener {
 		}
 	}
 	protected void btnSaveActionPerformed(ActionEvent e) {
-		Email email = getItem();
-		dlgMemberSendMail.setEmail(email);
-		dispose();
 		JOptionPane.showMessageDialog(null, "저장되었습니다");
+		Email email = getItem();
+		digSendMail.setEmail(email);
+		clearTf();
+		dispose();
 	}
 }

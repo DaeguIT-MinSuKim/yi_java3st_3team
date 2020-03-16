@@ -7,7 +7,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Properties;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -25,7 +28,6 @@ import yi_java3st_3team.dto.Email;
 
 @SuppressWarnings("serial")
 public class MemberSendMailDialog extends JDialog implements ActionListener {
-
 	private final JPanel contentPanel = new JPanel();
 	private JMenuItem mntmSettings;
 	private JButton okButton;
@@ -48,10 +50,6 @@ public class MemberSendMailDialog extends JDialog implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setEmail(Email email) {
-		this.email = email;
-	}
 
 	/**
 	 * Create the dialog.
@@ -60,6 +58,7 @@ public class MemberSendMailDialog extends JDialog implements ActionListener {
 		initialize();
 	}
 	private void initialize() {
+		configUtil = new ConfigUtility();
 		setTitle("메일 전송 프로그램");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -68,6 +67,7 @@ public class MemberSendMailDialog extends JDialog implements ActionListener {
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
 			JPanel pNorth = new JPanel();
+			pNorth.setBackground(Color.WHITE);
 			contentPanel.add(pNorth, BorderLayout.NORTH);
 			pNorth.setLayout(new GridLayout(0, 2, 0, 0));
 			{
@@ -160,16 +160,34 @@ public class MemberSendMailDialog extends JDialog implements ActionListener {
 			mntmSettingsActionPerformed(e);
 		}
 	}
+	
+	public Email getEmail() {
+		return email;
+	}
+
+	public void setEmail(Email email) {
+		this.email = email;
+	}
 	protected void mntmSettingsActionPerformed(ActionEvent e) {
 		dlgMailSetting = new SendMenuSettingDialog();
+		dlgMailSetting.setDigSendMail(this);
 		dlgMailSetting.setModal(true);
 		dlgMailSetting.setVisible(true);
 	}
 	protected void okButtonActionPerformed(ActionEvent e) {
 		try {
-			configUtil.saveProperties(email.getHostName(), email.getPortNum(), email.getUserId(), email.getUserPass());
-		
+			if (!validateFields()) {
+	            return;
+	        }
+			Properties smtpProperties = configUtil.loadProperties(email);
+			EmailUtility.sendEmail(smtpProperties, tfTo.getText(), tfSubject.getText(), tfMessage.getText(), null);
 		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (AddressException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (MessagingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -184,4 +202,30 @@ public class MemberSendMailDialog extends JDialog implements ActionListener {
 		tfSubject.setText("");
 		tfMessage.setText("");
 	}
+	private boolean validateFields() {
+        if (tfTo.getText().equals("")) {
+            JOptionPane.showMessageDialog(this,
+                    "이메일 주소를 입력하세요",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            tfTo.requestFocus();
+            return false;
+        }
+         
+        if (tfSubject.getText().equals("")) {
+            JOptionPane.showMessageDialog(this,
+                    "제목을 입력하세요",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            tfSubject.requestFocus();
+            return false;
+        }
+         
+        if (tfMessage.getText().equals("")) {
+            JOptionPane.showMessageDialog(this,
+                    "보낼 메시지를 입력하세요",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            tfMessage.requestFocus();
+            return false;
+        }
+        return true;
+    }
 }

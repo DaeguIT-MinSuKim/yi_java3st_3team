@@ -73,4 +73,12 @@ public class Email {
 	public void setSendContext(String sendContext) {
 		this.sendContext = sendContext;
 	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Email [hostName=%s, portNum=%s, userId=%s, userPass=%s, sendId=%s, sendSubject=%s, sendContext=%s]",
+				hostName, portNum, userId, userPass, sendId, sendSubject, sendContext);
+	}
+	
 }

@@ -27,9 +27,7 @@ public class LendingDaoImpl implements LendingDao {
 		return instance;
 	}
 
-	private LendingDaoImpl() {
-		super();
-	}
+	private LendingDaoImpl() {};
 
 	@Override
 	public Lending selectLendingByNo(Lending lending) {
@@ -421,6 +419,7 @@ public class LendingDaoImpl implements LendingDao {
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery(sql)) {
 			while(rs.next()) {
+				LogUtil.prnLog(getLendingByOverdue(rs));
 				list.add(getLendingByOverdue(rs));
 			}
 		} catch (SQLException e) {

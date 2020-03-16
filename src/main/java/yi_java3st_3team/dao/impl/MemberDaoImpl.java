@@ -358,7 +358,7 @@ public class MemberDaoImpl implements MemberDao {
 			pstmt.setString(1, member.getMberId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					return getMember(rs, true);
+//					return getMember(rs, true);
 				}
 			}
 		} catch (SQLException e) {

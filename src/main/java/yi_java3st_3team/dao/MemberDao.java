@@ -20,4 +20,6 @@ public interface MemberDao {
 	int deleteMember(Member member);
 	int[] selectMemberCounts();
 //	Member selectLendingMemberByNo(Member member);
+	Member selectMemberByNo2(Member member);
+	Member selectMemberByNo3(Member member);
 }

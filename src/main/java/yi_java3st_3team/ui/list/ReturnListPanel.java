@@ -3,8 +3,7 @@ package yi_java3st_3team.ui.list;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -13,12 +12,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import yi_java3st_3team.dto.Book;
+import yi_java3st_3team.dto.Lending;
+import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
-public class RentListPanel extends JPanel {
-	private static RentListPanel test = new RentListPanel();
+public class ReturnListPanel extends JPanel {
+	private static ReturnListPanel test = new ReturnListPanel();
 	private JTable table;
 	private LendingUiService service;
 	private TestTabelModel model;
@@ -39,7 +39,7 @@ public class RentListPanel extends JPanel {
 		});
 	}
 
-	public RentListPanel() {
+	public ReturnListPanel() {
 		initialize();
 	}
 
@@ -98,15 +98,13 @@ public class RentListPanel extends JPanel {
 		}
 	}
 
-	public void testting(Book book) {
-		Date now = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, +15);
-		model.addRow(new Object[] { book.getBookCode(), book.getBookName(),
-				String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
-				new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
-				new SimpleDateFormat("yyyy-MM-dd").format(now),
-				new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });
+	public void testting(Lending lending) {
+		model.addRow(new Object[] { lending.getBookCd().getBookCode(), lending.getBookCd().getBookName(),
+				String.format("%s", lending.getBookCd().getAuthrName() + "/" + lending.getBookCd().getTrnslrName()),
+				new SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
+				lending.getBookCd().getPls().getPlsName(),
+				new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
+				new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate()) });
 	}
 
 	public void AllCheck() {
@@ -115,5 +113,30 @@ public class RentListPanel extends JPanel {
 			model.setValueAt(true, j, 7);
 		}
 	}
+	public void AllNotCheck() {
+		int i = model.getRowCount();
+		for(int j= 0; j<i; j++) {
+			model.setValueAt(false, j, 7);
+		}
+	}
+	public void testting2(Member member) {
+		List<Lending> list = service.selectLendingByMberId(member);
+		
+		for(Lending lending : list) { 
+			
+			model.addRow(new Object[] {
+					lending.getBookCd().getBookCode(),
+					lending.getBookCd().getBookName(),
+					String.format("%s", lending.getBookCd().getAuthrName()+ "/" + lending.getBookCd().getTrnslrName()),
+					new SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
+					lending.getBookCd().getPls().getPlsName(),
+					new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
+					lending.getRturnDueDate()==null?"":String.format("%s",new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate()))
+					}); 
+		}
+
+	}
+
+
 
 }

@@ -62,17 +62,21 @@ public class LendingUiService {
 	public List<Lending> showMenberLendBookList(Lending lending) {
 		return lendingDao.selectLendingByMberIdAndLendBookAll(lending);
 	}
-	
+
 	public int showLendBookCnt(Lending lending) {
 		return lendingDao.getLendBookCnt(lending);
 	}
-	
+
 	public int showLendBookTotalCnt(Lending lending) {
 		return lendingDao.getLendBookTotalCnt(lending);
 	}
 
 	public Member showLendingMemberId(Member member) {
-		return memberDao.selectMemberByNo(member);
+		return memberDao.selectMemberByNo2(member);
+	}
+
+	public Member showLendingMemberId2(Member member) {
+		return memberDao.selectMemberByNo3(member);
 	}
 
 	public void modifyLendingByCodeAndMberId(Lending lending) {
@@ -82,4 +86,16 @@ public class LendingUiService {
 	public Book showLendingBookCode(Book book) {
 		return lendingDao.showLendingByBookCode(book);
 	}
+
+	public List<Lending> selectLendingByMberIdAll(Member member) {
+		return lendingDao.selectLendingByMberIdAll(member);
+	}
+
+	public List<Lending> selectLendingByMberId(Member member) {
+		return lendingDao.selectLendingByMberId(member);
+	}
+	public List<Lending> selectLendingByMberId2() {
+		return lendingDao.selectLendingByMberIdChecking();
+	}
+
 }

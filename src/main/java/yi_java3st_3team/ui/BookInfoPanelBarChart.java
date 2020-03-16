@@ -1,7 +1,5 @@
 package yi_java3st_3team.ui;
 
-import java.awt.Font;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;

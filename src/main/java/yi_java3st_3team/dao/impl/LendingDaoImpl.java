@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -235,6 +234,31 @@ public class LendingDaoImpl implements LendingDao {
 		return list;
 	}
 
+	@Override
+	public List<Lending> selectLendingByMberIdAll(Member member) {
+		String sql = "select lend_rturn_no, mber_id ,book_cd , lend_date ,rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt \r\n"
+				+ "	from lending\r\n" + "	where mber_id = ? and rturn_date is null;";
+
+		List<Lending> list = null;
+
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, member.getMberId());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					list = new ArrayList<Lending>();
+					do {
+						list.add(getUseJoinLendgin2(rs));
+					} while (rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
 	private Lending getUseJoinLendgin(ResultSet rs) throws SQLException {
 		Member mberId = new Member(rs.getString("l.mber_id"));
 		Book bookCd = new Book(rs.getString("b.book_code"));
@@ -254,16 +278,27 @@ public class LendingDaoImpl implements LendingDao {
 
 		return new Lending(mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
 	}
-	
+
+	private Lending getUseJoinLendgin2(ResultSet rs) throws SQLException {
+		Member mberId = new Member(rs.getString("mber_id"));
+		Book bookCd = new Book(rs.getString("book_cd"));
+		Date lendDate = rs.getTimestamp("lend_date");
+		Date rturnDueDate = rs.getTimestamp("rturn_due_date");
+		int rturnPsmCdt = rs.getInt("rturn_psm_cdt");
+		Date rturnDate = rs.getTimestamp("rturn_date");
+		int overdueCdt = rs.getInt("overdue_cdt");
+
+		return new Lending(mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
+	}
+
 	@Override
 	public int getLendBookCnt(Lending lending) {
 		String sql = "select count(*) from lending where mber_id = ? and rturn_date is null";
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, lending.getMberId().getMberId());
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
-				if(rs.next()) {					
+				if (rs.next()) {
 					return rs.getInt("count(*)");
 				}
 			}
@@ -276,12 +311,11 @@ public class LendingDaoImpl implements LendingDao {
 	@Override
 	public int getLendBookTotalCnt(Lending lending) {
 		String sql = "select count(*) from lending where mber_id = ? ";
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, lending.getMberId().getMberId());
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
-				if(rs.next()) {					
+				if (rs.next()) {
 					return rs.getInt("count(*)");
 				}
 			}
@@ -311,6 +345,37 @@ public class LendingDaoImpl implements LendingDao {
 		return list;
 	}
 
+	@Override
+	public List<Lending> selectLendingByMberId(Member member) {
+		String sql = "select book_code, book_name, authr_name, trnslr_name, pls, pls_name, pblicte_year, book_price,b.lend_psb_cdt , b.total_le_cnt, book_img, lc_no, ml_no, lend_date, rturn_date, rturn_due_date, od_cnt \r\n"
+				+ "	from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no left join member m on l.mber_id = m.mber_id \r\n"
+				+ "	where l.mber_id = ? and rturn_date is null";
+		List<Lending> list = null;
+
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, member.getMberId());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					list = new ArrayList<Lending>();
+					do {
+						list.add(getLendingByAllTest2(rs));
+					} while (rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	@Override
+	public List<Lending> selectLendingByMberIdChecking() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private Lending getLendingByAllTest(ResultSet rs) throws SQLException {
 		Lending lending = new Lending();
 		Book book = new Book(rs.getString("b.book_code"));
@@ -325,10 +390,43 @@ public class LendingDaoImpl implements LendingDao {
 		return lending;
 	}
 
+	private Lending getLendingByAllTest2(ResultSet rs) throws SQLException {
+		Lending lending = new Lending();
+		Book book = new Book(rs.getString("book_code"));
+		book.setBookName(rs.getString("book_name"));
+		book.setAuthrName(String.format("%s", rs.getString("authr_name") + "/" + rs.getString("trnslr_name")));
+		book.setPblicteYear(rs.getTimestamp("pblicte_year"));
+		PublishingCompany pCompany = new PublishingCompany(rs.getString("pls_name"));
+		book.setPls(pCompany);
+		lending.setBookCd(book);
+		lending.setLendDate(rs.getTimestamp("lend_date"));
+		lending.setRturnDueDate(rs.getTimestamp("rturn_due_date"));
+		return lending;
+	}
+
 	@Override
 	public List<Lending> selectLendingByMberIdAll(Lending lending) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select lend_rturn_no, mber_id ,book_cd , lend_date ,rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt \r\n"
+				+ "	from lending\r\n" + "	where mber_id = ? and rturn_date is null;";
+
+		List<Lending> list = null;
+
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, lending.getMberId().getMberId());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					list = new ArrayList<Lending>();
+					do {
+						list.add(getUseJoinLendgin(rs));
+					} while (rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 
 	@Override

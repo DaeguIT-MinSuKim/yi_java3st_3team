@@ -8,17 +8,16 @@ import java.sql.SQLException;
 import yi_java3st_3team.dao.ZipCodeDao;
 import yi_java3st_3team.ds.MysqlDataSource;
 import yi_java3st_3team.dto.ZipCode;
-import yi_java3st_3team.util.LogUtil;
 
 public class ZipCodeDaoImpl implements ZipCodeDao {
 	private static final ZipCodeDaoImpl instance = new ZipCodeDaoImpl();
-	
-	private ZipCodeDaoImpl() {}
-	
+
+	private ZipCodeDaoImpl() {
+	}
+
 	public static ZipCodeDaoImpl getInstance() {
 		return instance;
 	}
-	
 
 	private ZipCode getZipCode(ResultSet rs) throws SQLException {
 		int zipCode = rs.getInt("zip_code");
@@ -27,25 +26,24 @@ public class ZipCodeDaoImpl implements ZipCodeDao {
 		String roadName = rs.getString("road_name");
 		int buldNoOriginNo = rs.getInt("buld_no_origin_no");
 		int buldNoViceNo = rs.getInt("buld_no_vice_no");
-		return new ZipCode(zipCode,ctprvn, signgu, roadName, buldNoOriginNo, buldNoViceNo);
+		return new ZipCode(zipCode, ctprvn, signgu, roadName, buldNoOriginNo, buldNoViceNo);
 	}
 
 	@Override
 	public ZipCode selectZipCodeByNo(ZipCode zip) {
-		//이름은 no인데 where 모든것으로 찾는거다
-		String sql = "select zip_code,ctprvn,signgu,road_name,buld_no_origin_no,buld_no_vice_no \r\n" + 
-				"from zip_code\r\n" + 
-				"where ctprvn =? and signgu=? and road_name =? and buld_no_origin_no = ? and buld_no_vice_no = ?";
+		// 이름은 no인데 where 모든것으로 찾는거다
+		String sql = "select zip_code,ctprvn,signgu,road_name,buld_no_origin_no,buld_no_vice_no \r\n"
+				+ "from zip_code\r\n"
+				+ "where ctprvn =? and signgu=? and road_name =? and buld_no_origin_no = ? and buld_no_vice_no = ?";
 		ZipCode zipcode = new ZipCode();
-		try(Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, zip.getCtprvn());
 			pstmt.setString(2, zip.getSigngu());
 			pstmt.setString(3, zip.getRoadName());
 			pstmt.setInt(4, zip.getBuldNoOriginNo());
 			pstmt.setInt(5, zip.getBuldNoViceNo());
-			try(ResultSet rs = pstmt.executeQuery()){
-				if(rs.next()) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
 					zipcode = getZipCode(rs);
 				}
 			}

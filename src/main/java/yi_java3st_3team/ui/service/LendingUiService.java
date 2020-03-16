@@ -2,6 +2,8 @@ package yi_java3st_3team.ui.service;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import yi_java3st_3team.dao.BookDao;
 import yi_java3st_3team.dao.GradeDao;
 import yi_java3st_3team.dao.LendingDao;
@@ -40,7 +42,7 @@ public class LendingUiService {
 	}
 
 	public List<Lending> showOverDueList() {
-		return lendingDao.selectLendingByOverDueCdt();
+		return lendingDao.showLendingListByOverdue();
 	}
 
 	public void modifyLending(Lending lending) {
@@ -87,6 +89,9 @@ public class LendingUiService {
 		return lendingDao.showLendingByBookCode(book);
 	}
 
+	public List<Lending> showLendingListByOverdue() {
+		return lendingDao.showLendingListByOverdue();
+	}
 	public List<Lending> selectLendingByMberIdAll(Member member) {
 		return lendingDao.selectLendingByMberIdAll(member);
 	}

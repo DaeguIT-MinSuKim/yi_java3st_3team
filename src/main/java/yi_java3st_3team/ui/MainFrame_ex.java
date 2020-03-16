@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -24,6 +25,7 @@ import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
+import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -59,9 +61,8 @@ public class MainFrame_ex extends JFrame {
 	private RecomBookAddPanel recomBookAdd;
 	private BookPlsManageMentPanel bookPlsMgn;
 	private BookLcAndMlManagerPanel bookCatMag;
-	
+	private OverdueUIPanel overdueMgn;
 	private LoginFrame_ex loginFrame;
-	
 	private Thread chartThread;
 	private JLabel lblGreeting;
 
@@ -91,6 +92,7 @@ public class MainFrame_ex extends JFrame {
 
 	private void initialize() {
 		MouseAdapter menuAdapter = getMouseAdapter();
+		setThread();
 		setTitle("도서관 관리 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 960);
@@ -99,6 +101,7 @@ public class MainFrame_ex extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pNorth = new JPanel();
+		pNorth.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		pNorth.setBackground(Color.WHITE);
 		contentPane.add(pNorth, BorderLayout.NORTH);
 		pNorth.setLayout(new BorderLayout(0, 0));
@@ -223,6 +226,9 @@ public class MainFrame_ex extends JFrame {
 		pEmpMgn.addMouseListener(menuAdapter);
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
+	}
+
+	public void setThread() {
 		chartThread = initChartThread();
 		chartThread.run();
 		Thread initPanelThread = initPanelThread();
@@ -398,12 +404,54 @@ public class MainFrame_ex extends JFrame {
 					break;
 					
 				case "대여/반납":
+<<<<<<< HEAD
 					break;
 					
+=======
+					contentPane.remove(pWest);
+					contentPane.remove(pCenter);
+					pCenter = new JPanel();
+					pCenter.setBackground(Color.white);
+					pWest = new WestLendingManagementPanel();
+					JPanel[] pLending = ((WestLendingManagementPanel) pWest).getPanels();
+					for(JPanel panel : pLending) {
+						panel.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								for(JPanel panel : pLending) {
+									JLabel label = (JLabel)panel.getComponent(0);
+									panel.setBackground(new Color(240,240,240));
+									label.setForeground(Color.black);
+								}
+								JPanel chkPanel = (JPanel) e.getSource();
+								JLabel chkLabel = (JLabel) chkPanel.getComponent(0);
+								chkPanel.setBackground(new Color(52,147,221));
+								chkLabel.setForeground(Color.white);
+								switch(chkLabel.getText()) {
+								case "대여 관리" :
+									contentPane.remove(pCenter);
+									break;
+								case "반납 관리" :
+									contentPane.remove(pCenter);
+									break;
+								case "연체 조회" :
+									contentPane.remove(pCenter);
+									pCenter = overdueMgn;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
+								}
+							}
+							
+						});
+					}
+					contentPane.add(pCenter, BorderLayout.CENTER);
+					contentPane.add(pWest, BorderLayout.WEST);
+					repaint();
+					revalidate();
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 				case "직원관리":
 					break;
-					
-					
 				case "통계조회":
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
@@ -493,7 +541,7 @@ public class MainFrame_ex extends JFrame {
 		return thread;
 	}
 	private Thread initPanelThread() {
-		return new Thread(new Runnable() {
+		Thread thread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -506,6 +554,8 @@ public class MainFrame_ex extends JFrame {
 				memberJoin = new MemberJoinUIPanel();
 				memberSelect = new MemberSelectUIPanel();
 				
+				overdueMgn = new OverdueUIPanel();
+		
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();
@@ -514,5 +564,6 @@ public class MainFrame_ex extends JFrame {
 				chartMemberInfo.add(memInfoChart,BorderLayout.CENTER);
 			}
 		});
+		return thread;
 	}
 }

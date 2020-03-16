@@ -26,9 +26,7 @@ public class LendingDaoImpl implements LendingDao {
 		return instance;
 	}
 
-	private LendingDaoImpl() {
-		super();
-	}
+	private LendingDaoImpl() {};
 
 	@Override
 	public Lending selectLendingByNo(Lending lending) {
@@ -509,6 +507,36 @@ public class LendingDaoImpl implements LendingDao {
 		Book book = new Book(bookCode, bookName, authrName, pls, pblicteYear);
 		LogUtil.prnLog(book);
 		return book;
+	}
+
+	@Override
+	public List<Lending> showLendingListByOverdue() {
+		List<Lending> list = new ArrayList<>();
+		String sql = "select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date,rturn_date,datediff(l.rturn_date,l.rturn_due_date) as 'overdue_date' from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id where l.overdue_cdt =1";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery(sql)) {
+			while(rs.next()) {
+				LogUtil.prnLog(getLendingByOverdue(rs));
+				list.add(getLendingByOverdue(rs));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	private Lending getLendingByOverdue(ResultSet rs) throws SQLException {
+		Member mberId = new Member(rs.getString("mber_id"));
+		mberId.setMberName(rs.getString("mber_name"));
+		Book bookCd = new Book(rs.getString("book_code"));
+		bookCd.setBookName(rs.getString("book_name"));
+		Date lendDate = rs.getTimestamp("lend_date");
+		Date rturnDueDate = rs.getTimestamp("rturn_due_date");
+		Date rturnDate = rs.getTimestamp("rturn_date");
+		int overdueCdt = rs.getInt("overdue_date");
+		return new Lending(mberId, bookCd, lendDate, rturnDueDate,rturnDate, overdueCdt);
 	}
 
 }

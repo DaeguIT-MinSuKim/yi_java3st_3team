@@ -413,4 +413,45 @@ public class LendingDaoImpl implements LendingDao {
 		return book;
 	}
 
+	@Override
+	public List<Lending> selectLendingBastList() {
+		String sql = "select l1.book_cd , b.book_name, b.book_img , b.authr_name , b.trnslr_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n" + 
+				"		b.pls , p.pls_name ,l2.totlaCnt\r\n" + 
+				"	from lending l1 left join book b on l1.book_cd = b.book_code \r\n" + 
+				"					left join large_classification lc on b.lc_no = lc.lclas_no \r\n" + 
+				"					left join middle_classification ml on b.ml_no = ml.mlsfc_no and lc.lclas_no = ml.lclas_no\r\n" + 
+				"					left join publishing_company p on b.pls = p.pls_no ,\r\n" + 
+				"		(select book_cd , count(*) as totlaCnt from lending group by book_cd) l2\r\n" + 
+				"	where l1.book_cd = l2.book_cd\r\n" + 
+				"	group by l1.book_cd\r\n" + 
+				"	order by l2.totlaCnt desc limit 5";
+		List<Lending> list = null;
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {
+				list = new ArrayList<>();
+				do {
+					list.add(getBastList(rs));
+				} while(rs.next());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	private Lending getBastList(ResultSet rs) throws SQLException {
+		Book bookCd = new Book();
+		bookCd.setBookName(rs.getString("b.book_name"));
+		bookCd.setBookImg(rs.getBytes("b.book_img"));
+		bookCd.setAuthrName(rs.getString("b.authr_name"));
+		bookCd.setTrnslrName(rs.getString("b.trnslr_name"));
+		bookCd.setLcNo(new LargeClassification(rs.getInt("b.lc_no"), rs.getString("lc.lclas_name")));
+		bookCd.setMlNo(new MiddleClassification(new LargeClassification(rs.getInt("b.lc_no")), rs.getInt("b.ml_no"), rs.getString("ml.mlsfc_name")));
+		bookCd.setPls(new PublishingCompany(rs.getInt("b.pls"), rs.getString("p.pls_name")));
+		return new Lending(bookCd);
+	}
+
 }

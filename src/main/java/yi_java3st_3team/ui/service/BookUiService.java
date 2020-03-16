@@ -86,4 +86,8 @@ public class BookUiService {
 	public List<Book> showBookAllOnMber() {
 		return bookDao.selectBookAllOnMber();
 	}
+	
+	public List<Book> showNewBookList() {
+		return bookDao.selectNewBookList();
+	}
 }

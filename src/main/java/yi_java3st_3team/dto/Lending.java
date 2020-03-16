@@ -24,6 +24,10 @@ public class Lending {
 		this.mberId = mberId;
 	}
 
+	public Lending(Book bookCd) {
+		this.bookCd = bookCd;
+	}
+
 	public Lending(Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt, Date rturnDate, int overdueCdt) {
 		this.bookCd = bookCd;
 		this.lendDate = lendDate;

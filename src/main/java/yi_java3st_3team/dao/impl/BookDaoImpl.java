@@ -538,4 +538,42 @@ public class BookDaoImpl implements BookDao {
 		return 0;
 	}
 
+	@Override
+	public List<Book> selectNewBookList() {
+		String sql = "select pblicte_year, book_name , book_img , authr_name , trnslr_name , b.lc_no , l.lclas_name , b.ml_no , m.mlsfc_name , b.pls , p.pls_name \r\n" + 
+				"	from book b left join large_classification l on b.lc_no = l.lclas_no \r\n" + 
+				"				left join middle_classification m on b.ml_no = m.mlsfc_no and l.lclas_no = m.lclas_no \r\n" + 
+				"				left join publishing_company p on b.pls = p.pls_no \r\n" + 
+				"	group by book_name\r\n" + 
+				"	order by pblicte_year desc limit 5";
+		List<Book> list = null;
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			LogUtil.prnLog(pstmt);
+			if(rs.next()) {
+				list = new ArrayList<>();
+				do {
+					list.add(getNewBookList(rs));
+				} while(rs.next());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	private Book getNewBookList(ResultSet rs) throws SQLException {
+		Book newBook = new Book();
+		newBook.setBookName(rs.getString("book_name"));
+		newBook.setBookImg(rs.getBytes("book_img"));
+		newBook.setAuthrName(rs.getString("authr_name"));
+		newBook.setTrnslrName(rs.getString("trnslr_name"));
+		newBook.setLcNo(new LargeClassification(rs.getInt("b.lc_no"), rs.getString("l.lclas_name")));
+		newBook.setMlNo(new MiddleClassification(new LargeClassification(rs.getInt("b.lc_no")), rs.getInt("b.ml_no"), rs.getString("m.mlsfc_name")));
+		newBook.setPls(new PublishingCompany(rs.getInt("b.pls"), rs.getString("p.pls_name")));
+		
+		return newBook;
+	}
+
 }

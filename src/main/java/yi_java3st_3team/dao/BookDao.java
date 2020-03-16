@@ -37,4 +37,5 @@ public interface BookDao {
 
 	int[] selectCountByCate();
 
+	List<Book> selectNewBookList();
 }

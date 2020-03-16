@@ -82,4 +82,8 @@ public class LendingUiService {
 	public Book showLendingBookCode(Book book) {
 		return lendingDao.showLendingByBookCode(book);
 	}
+	
+	public List<Lending> showBastList() {
+		return lendingDao.selectLendingBastList();
+	}
 }

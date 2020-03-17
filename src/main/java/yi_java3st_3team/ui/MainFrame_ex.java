@@ -25,7 +25,6 @@ import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
-import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -65,6 +64,8 @@ public class MainFrame_ex extends JFrame {
 	private LoginFrame_ex loginFrame;
 	private Thread chartThread;
 	private JLabel lblGreeting;
+	private JLabel lblProfile;
+	private JPanel pProfile;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -178,6 +179,15 @@ public class MainFrame_ex extends JFrame {
 		lblStatistic.setFont(new Font("굴림", Font.PLAIN, 15));
 		pStatistic.add(lblStatistic, BorderLayout.NORTH);
 		
+		pProfile = new JPanel();
+		pProfile.setBackground(Color.WHITE);
+		pSouthMenuPanel.add(pProfile);
+		
+		lblProfile = new JLabel("프로필");
+		lblProfile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProfile.setFont(new Font("굴림", Font.PLAIN, 15));
+		pProfile.add(lblProfile);
+		
 		JPanel pDummy1 = new JPanel();
 		pDummy1.setBackground(Color.WHITE);
 		pSouthMenuPanel.add(pDummy1);
@@ -185,10 +195,6 @@ public class MainFrame_ex extends JFrame {
 		JPanel pDummy2 = new JPanel();
 		pDummy2.setBackground(Color.WHITE);
 		pSouthMenuPanel.add(pDummy2);
-		
-		JPanel pDummy3 = new JPanel();
-		pDummy3.setBackground(Color.WHITE);
-		pSouthMenuPanel.add(pDummy3);
 		
 		pLogout = new JPanel();
 		pLogout.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -226,6 +232,7 @@ public class MainFrame_ex extends JFrame {
 		pEmpMgn.addMouseListener(menuAdapter);
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
+		pProfile.addMouseListener(menuAdapter);
 	}
 
 	public void setThread() {
@@ -256,14 +263,16 @@ public class MainFrame_ex extends JFrame {
 		MouseAdapter menuAdapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel[] menuPanels = new JPanel[] {pHome,pBookMgn,pMemMgn,pChkOutRtn,pEmpMgn,pStatistic};
-				JLabel[] menuLabels = new JLabel[] {lblHome,lblBookMgn,lblMemMgn,lblChkOutRtn,lblEmpMgn,lblStatistic};
+				JPanel[] menuPanels = new JPanel[] {pHome,pBookMgn,pMemMgn,pChkOutRtn,pEmpMgn,pStatistic,pProfile};
+				JLabel[] menuLabels = new JLabel[] {lblHome,lblBookMgn,lblMemMgn,lblChkOutRtn,lblEmpMgn,lblStatistic,lblProfile};
 				//Menu panel,label 초기화
 				for(JPanel p : menuPanels) {
 					p.setBackground(Color.white);
 				}
 				for(JLabel label : menuLabels) {
 					label.setFont(new Font("굴림", Font.PLAIN, 15));
+					
+					
 					label.setForeground(Color.black);
 				}
 				//mouse가 눌린 menu panel 및 menu label 판별 및 클릭
@@ -497,6 +506,9 @@ public class MainFrame_ex extends JFrame {
 					contentPane.add(pWest,BorderLayout.WEST);
 					repaint();
 					revalidate();
+					break;
+				case "프로필":
+					contentPane.remove(pCenter);
 					break;
 				case "로그아웃":
 					dispose();

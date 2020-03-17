@@ -57,7 +57,7 @@ public class RequestBookDaoTest {
 		RequestBook rbDate = new RequestBook();
 		rbDate.setRequestDate(getYear);
 		
-		List<RequestBook> lists = dao.selectRequestBookByDate(rbDate);
+		List<RequestBook> lists = null;
 		for(RequestBook rb : lists) LogUtil.prnLog(rb);
 	}
 

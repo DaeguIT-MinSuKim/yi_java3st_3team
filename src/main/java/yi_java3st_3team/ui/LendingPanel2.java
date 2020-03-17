@@ -88,7 +88,7 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 		btnCancel.addActionListener(this);
 		p06.add(btnCancel);
 
-		btnLending = new JButton("대여");
+		btnLending = new JButton("반납");
 		btnLending.addActionListener(this);
 		p06.add(btnLending);
 	}

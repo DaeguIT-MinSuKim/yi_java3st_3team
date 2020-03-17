@@ -26,7 +26,7 @@ public class ProfileModifyPanel extends JPanel implements ActionListener{
 	private MemberJoinPanel pMember;
 	private JButton btnAdd;
 	private JButton btnCancel;
-
+	
 	public ProfileModifyPanel() {
 		service = new MemberUIService();
 		initialize();
@@ -56,6 +56,10 @@ public class ProfileModifyPanel extends JPanel implements ActionListener{
 		btnCancel = new JButton("취소");
 		btnCancel.addActionListener(this);
 		pBtns.add(btnCancel);
+	}
+	
+	public MemberJoinPanel getpMember() {
+		return pMember;
 	}
 
 	@Override

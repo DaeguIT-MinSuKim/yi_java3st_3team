@@ -20,8 +20,10 @@ import javax.swing.border.MatteBorder;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import yi_java3st_3team.dto.Member;
+import yi_java3st_3team.ui.content.BookRankingPanel;
 import yi_java3st_3team.ui.content.MemberBookSearchPanel;
 import yi_java3st_3team.ui.content.MemberUseCdtPanel;
+import yi_java3st_3team.ui.content.PasswordCheckPanel;
 import yi_java3st_3team.ui.content.RecomPanel;
 //github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 import yi_java3st_3team.ui.service.MemberUIService;
@@ -49,17 +51,14 @@ public class MainFrame_user extends JFrame {
 	private JLabel lblRecommendBook;
 	private JPanel bookRecomPanel;
 	private LoginFrame_ex loginFrame;
+	private JPanel bookRankPanel;
+	private Thread menuThread;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					// select Look and Feel
 					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-//					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 					JFrame frame = new MainFrame_user();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -196,15 +195,27 @@ public class MainFrame_user extends JFrame {
 		pBookSearch.addMouseListener(menuAdapter);
 		pRecommendBook.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
-		Thread thread = getMenuThread();
-		thread.run();
+		menuThread = getMenuThread();
+		menuThread.run();
 	}
 	
+	public JPanel getProfileModifyPanel() {
+		return profileModifyPanel;
+	}
+
+	public JPanel getpCenter() {
+		return pCenter;
+	}
+	
+	public void setpCenter(JPanel pCenter) {
+		this.pCenter = pCenter;
+	}
+
 	public JLabel getLblGreeting() {
 		return lblGreeting;
 	}
 
-	private Thread getMenuThread() {
+	public Thread getMenuThread() {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -212,6 +223,7 @@ public class MainFrame_user extends JFrame {
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
 				bookRecomPanel = new RecomPanel();
+				bookRankPanel = new BookRankingPanel();
 			}
 		});
 		return thread;
@@ -291,11 +303,12 @@ public class MainFrame_user extends JFrame {
 								switch(chkLabel.getText()) {
 								case "프로필 수정" :
 									contentPane.remove(pCenter);
-									pCenter = profileModifyPanel;
-									((ProfileModifyPanel) pCenter).initTf(member);
-									contentPane.add(pCenter,BorderLayout.CENTER);
-									repaint();
-									revalidate();
+									((ProfileModifyPanel) profileModifyPanel).initTf(member);
+									pCenter = getPassMenuPanel();
+									loginFrame.getMemMainFrame().setpCenter(pCenter);
+									loginFrame.getMemMainFrame().contentPane.add(loginFrame.getMemMainFrame().getpCenter(),BorderLayout.CENTER);
+									loginFrame.getMemMainFrame().contentPane.repaint();
+									loginFrame.getMemMainFrame().contentPane.revalidate();
 									break;
 								case "이용현황" :		
 									contentPane.remove(pCenter);
@@ -325,9 +338,46 @@ public class MainFrame_user extends JFrame {
 				case "도서추천":
 					contentPane.remove(pCenter);
 					contentPane.remove(pWest);
-					pCenter = bookRecomPanel;
+					pCenter = new JPanel();
 					pCenter.setBackground(Color.white);
-					contentPane.add(pCenter,BorderLayout.CENTER);
+					pWest = new WestRecomBookPanel();
+					JPanel[] pReqst = ((WestRecomBookPanel) pWest).getPanels();
+					for(JPanel panel : pReqst) {
+						panel.addMouseListener(new MouseAdapter() {
+
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								for(JPanel panel : pReqst) {
+									JLabel label = (JLabel)panel.getComponent(0);
+									panel.setBackground(new Color(240,240,240));
+									label.setForeground(Color.black);
+								}
+								JPanel chkPanel = (JPanel) e.getSource();
+								JLabel chkLabel = (JLabel) chkPanel.getComponent(0);
+								chkPanel.setBackground(new Color(52, 147, 221));
+								chkLabel.setForeground(Color.white);
+								switch(chkLabel.getText()) {
+								case "대여순위/신착도서":
+									contentPane.remove(pCenter);
+									pCenter = bookRankPanel;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
+									break;
+								case "추천도서":
+									contentPane.remove(pCenter);
+									pCenter = bookRecomPanel;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
+									break;
+								}
+							}
+							
+						});
+					}
+					contentPane.add(pCenter, BorderLayout.CENTER);
+					contentPane.add(pWest, BorderLayout.WEST);
 					repaint();
 					revalidate();
 					break;
@@ -342,6 +392,10 @@ public class MainFrame_user extends JFrame {
 		return menuAdapter;
 	}
 	
+	public LoginFrame_ex getLoginFrame() {
+		return loginFrame;
+	}
+
 	public void setLoginFrame(LoginFrame_ex loginFrame) {
 		this.loginFrame = loginFrame;
 	}
@@ -351,7 +405,17 @@ public class MainFrame_user extends JFrame {
 		JFXPanel panel = (JFXPanel) fxPanel;
 		panel.setScene(scene);
 	}
+	
+	public Member getMember() {
+		return member;
+	}
+
 	public void setMember(MemberUIService service, Member mem) {
 		member = service.SelectedByNo(mem);
+	}
+	private JPanel getPassMenuPanel() {
+		JPanel panel = new PasswordCheckPanel();
+		((PasswordCheckPanel) panel).setLoginFrame(loginFrame);
+		return panel;
 	}
 }

@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 
 import yi_java3st_3team.dto.Lending;
-import yi_java3st_3team.ui.content.MemberSendMailDialog;
+import yi_java3st_3team.ui.content.MailService;
 import yi_java3st_3team.ui.list.OverdueMemList;
 import yi_java3st_3team.ui.service.LendingUiService;
 
@@ -27,7 +27,6 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 	private OverdueMemList pCenter;
 	private boolean allChk;
 	private JButton btnSendMail;
-	private MemberSendMailDialog dlgSendMail;
 	private LendingUiService service;
 	public OverdueUIPanel() {
 		initialize();
@@ -49,7 +48,7 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 		JPanel pDummy = new JPanel();
 		pNorth.add(pDummy);
 		
-		btnSelAll = new JButton("모두선택");
+		btnSelAll = new JButton("모두선택/모두해제");
 		btnSelAll.addActionListener(this);
 		pNorth.add(btnSelAll);
 		
@@ -80,13 +79,13 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 		TableModel model = pCenter.getTable().getModel();
 		if(!allChk) {
 			for(int i=0;i<model.getRowCount();i++) {
-				model.setValueAt(true, i, 8);
+				model.setValueAt(true, i, 6);
 			}
 			allChk = true;
 		}
 		else {
 			for(int i=0;i<model.getRowCount();i++) {
-				model.setValueAt(false, i, 8);
+				model.setValueAt(false, i, 6);
 			}
 			allChk = false;
 		}
@@ -94,15 +93,15 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 	protected void btnSendMailActionPerformed(ActionEvent e) {
 		TableModel model = pCenter.getTable().getModel();
 		for(int i=0;i<model.getRowCount();i++) {
-			if((boolean)model.getValueAt(i, 8)) {
-				int res = JOptionPane.showConfirmDialog(null, (String)model.getValueAt(i, 3)+"님께 메일을 보내시겠습니까?");
-				if(res==0) {
-					dlgSendMail = new MemberSendMailDialog();
-					dlgSendMail.setModal(true);
-					dlgSendMail.setVisible(true);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "취소되었습니다");
+			if((boolean)model.getValueAt(i, 6)) {
+				String email = (String)model.getValueAt(i, 2);
+				StringBuilder message = new StringBuilder();
+				message.append((String)model.getValueAt(i, 3) + "님" +" ");
+				message.append("책 " + (String)model.getValueAt(i, 1) + "이 연체되었습니다 조속히 반납해주세요");
+				String title = (String)model.getValueAt(i, 3) + "님 3조 도서관입니다";
+				String content = message.toString();
+				if(MailService.naverMailSend(email,title,content)) {
+					JOptionPane.showMessageDialog(null, "메일 발송이 성공하였습니다");
 				}
 			}
 		}

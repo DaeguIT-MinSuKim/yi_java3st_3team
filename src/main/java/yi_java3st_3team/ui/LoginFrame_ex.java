@@ -326,6 +326,14 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		imgArea.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance((int) picDimension.getWidth(),
 				(int) picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
+	
+	public MainFrame_user getMemMainFrame() {
+		return memMainFrame;
+	}
+
+	public void setMemMainFrame(MainFrame_user memMainFrame) {
+		this.memMainFrame = memMainFrame;
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnNewButton) {
@@ -362,6 +370,10 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 			loginLib = service.login(new Librarian(id, pw));
 
 			if (loginLib != null) {
+				if(loginLib.getWorkCdt() == 1) {
+					JOptionPane.showMessageDialog(null, "로그인 권한이 없습니다");
+					return;
+				}
 				if (loginLib.getTitle().getTitleNo() == 1) {
 					ADChiefMainFrame = new MainFrame_ex();
 					ADChiefMainFrame.setLoginFrame(this);
@@ -380,6 +392,10 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 			}
 
 			if (loginMber != null) {
+				if(loginMber.getWdrCdt() == 1) {
+					JOptionPane.showMessageDialog(null, "탈퇴회원입니다.");
+					return;
+				}
 				memMainFrame = new MainFrame_user();
 				memMainFrame.setLoginFrame(this);
 				memMainFrame.setMember(memService, loginMber);

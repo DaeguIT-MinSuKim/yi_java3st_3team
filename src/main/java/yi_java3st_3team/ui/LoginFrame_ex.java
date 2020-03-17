@@ -291,6 +291,10 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 
 		setService(service);
 	}
+	
+	public void loadDate() {
+		setService(service);
+	}
 
 	public void setService(LoginUiService service) {
 		this.service = service;

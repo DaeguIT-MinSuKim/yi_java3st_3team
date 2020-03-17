@@ -121,6 +121,10 @@ public class BookListPanel extends JPanel implements ActionListener {
 		btnSearch.addActionListener(this);
 		setService(service);
 	}
+	
+	public void loadDate() {
+		pBookList.loadData(service.showBookListAll());
+	}
 
 	private JPopupMenu createPopupMenu() {
 		JPopupMenu popMenu = new JPopupMenu();

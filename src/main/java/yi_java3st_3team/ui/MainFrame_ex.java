@@ -25,8 +25,6 @@ import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
-import yi_java3st_3team.ui.list.BookPlsTblPanel;
-import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -323,6 +321,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookManagerPanel)pCenter).loadDate();
 									break;
 								case "추천도서 등록" :
 									contentPane.remove(pCenter);
@@ -330,6 +329,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((RecomBookAddPanel)pCenter).loadDate();
 									break;
 								case "출판사 관리" :
 									contentPane.remove(pCenter);
@@ -503,6 +503,7 @@ public class MainFrame_ex extends JFrame {
 					dispose();
 					LoginFrame_ex.loginLib = null;
 					loginFrame.setVisible(true);
+					loginFrame.loadDate();
 					loginFrame.clearTf();
 					break;
 				}

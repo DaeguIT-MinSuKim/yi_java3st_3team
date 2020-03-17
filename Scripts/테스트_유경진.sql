@@ -403,6 +403,8 @@ select pblicte_year, book_name , book_img , authr_name , trnslr_name , b.lc_no ,
 	group by book_name
 	order by pblicte_year desc limit 5;
 
+select * from book;
+
 
 
 

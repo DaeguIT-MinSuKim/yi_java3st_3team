@@ -4,6 +4,15 @@ select lclas_no , mlsfc_no , mlsfc_name
 	from middle_classification
 	where lclas_no = 2;
 
+select * from `member`;
+-- 탈퇴회원 테스트 용 데이터 변경
+update `member` 
+	set wdr_cdt = 0
+	where mber_id = 'daddystop@gmail.com';
+
+select * from librarian;
+
+
 -- login 테스트
 select * from `member`;
 select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad ,

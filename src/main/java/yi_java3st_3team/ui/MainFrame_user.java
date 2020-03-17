@@ -20,6 +20,7 @@ import javax.swing.border.MatteBorder;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import yi_java3st_3team.dto.Member;
+import yi_java3st_3team.ui.content.BookRankingPanel;
 import yi_java3st_3team.ui.content.MemberBookSearchPanel;
 import yi_java3st_3team.ui.content.MemberUseCdtPanel;
 import yi_java3st_3team.ui.content.RecomPanel;
@@ -49,6 +50,7 @@ public class MainFrame_user extends JFrame {
 	private JLabel lblRecommendBook;
 	private JPanel bookRecomPanel;
 	private LoginFrame_ex loginFrame;
+	private JPanel bookRankPanel;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -212,6 +214,7 @@ public class MainFrame_user extends JFrame {
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
 				bookRecomPanel = new RecomPanel();
+				bookRankPanel = new BookRankingPanel();
 			}
 		});
 		return thread;
@@ -325,9 +328,46 @@ public class MainFrame_user extends JFrame {
 				case "도서추천":
 					contentPane.remove(pCenter);
 					contentPane.remove(pWest);
-					pCenter = bookRecomPanel;
+					pCenter = new JPanel();
 					pCenter.setBackground(Color.white);
-					contentPane.add(pCenter,BorderLayout.CENTER);
+					pWest = new WestRequestPanel();
+					JPanel[] pReqst = ((WestRequestPanel) pWest).getPanels();
+					for(JPanel panel : pReqst) {
+						panel.addMouseListener(new MouseAdapter() {
+
+							@Override
+							public void mouseClicked(MouseEvent e) {
+								for(JPanel panel : pReqst) {
+									JLabel label = (JLabel)panel.getComponent(0);
+									panel.setBackground(new Color(240,240,240));
+									label.setForeground(Color.black);
+								}
+								JPanel chkPanel = (JPanel) e.getSource();
+								JLabel chkLabel = (JLabel) chkPanel.getComponent(0);
+								chkPanel.setBackground(new Color(52, 147, 221));
+								chkLabel.setForeground(Color.white);
+								switch(chkLabel.getText()) {
+								case "대여순위/신착도서":
+									contentPane.remove(pCenter);
+									pCenter = bookRankPanel;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
+									break;
+								case "추천도서":
+									contentPane.remove(pCenter);
+									pCenter = bookRecomPanel;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
+									break;
+								}
+							}
+							
+						});
+					}
+					contentPane.add(pCenter, BorderLayout.CENTER);
+					contentPane.add(pWest, BorderLayout.WEST);
 					repaint();
 					revalidate();
 					break;

@@ -23,6 +23,7 @@ import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.BookRankingPanel;
 import yi_java3st_3team.ui.content.MemberBookSearchPanel;
 import yi_java3st_3team.ui.content.MemberUseCdtPanel;
+import yi_java3st_3team.ui.content.PasswordCheckPanel;
 import yi_java3st_3team.ui.content.RecomPanel;
 //github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 import yi_java3st_3team.ui.service.MemberUIService;
@@ -294,6 +295,9 @@ public class MainFrame_user extends JFrame {
 								switch(chkLabel.getText()) {
 								case "프로필 수정" :
 									contentPane.remove(pCenter);
+									((ProfileModifyPanel) profileModifyPanel).initTf(member);
+									pCenter = new PasswordCheckPanel();
+									contentPane.add(pCenter,BorderLayout.CENTER);
 									pCenter = profileModifyPanel;
 									((ProfileModifyPanel) pCenter).initTf(member);
 									contentPane.add(pCenter,BorderLayout.CENTER);

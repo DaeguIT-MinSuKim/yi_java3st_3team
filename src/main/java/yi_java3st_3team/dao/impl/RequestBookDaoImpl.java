@@ -25,16 +25,18 @@ public class RequestBookDaoImpl implements RequestBookDao {
 	private RequestBookDaoImpl() {}
 
 	@Override
-	public List<RequestBook> selectRequestBookByDate(RequestBook rb) {
-		String sql = "select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , " 
-					+ "reqst_mb_id , reqst_date , wh_cdt " 
-					+ " from request_book " 
-					+ "	where year(reqst_date) = ? and month(reqst_date) = ?";
+	public List<RequestBook> selectRequestBookByDateAndWhCdt(RequestBook rb) {
+		StringBuilder sql = new StringBuilder("select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , "
+											+ "request_book_pls , reqst_mb_id , reqst_date , wh_cdt " 
+											+ " from request_book "
+											+ "	where year(reqst_date) = ? and month(reqst_date) = ? ");
+		if(rb.getWhCdt() > -1) sql.append("and wh_cdt = ?");
 		List<RequestBook> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));;
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
 			pstmt.setString(2, new Timestamp(rb.getRequestDate().getTime()).toString().substring(5, 7));
+			if(rb.getWhCdt() > -1) pstmt.setInt(3, rb.getWhCdt());
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
@@ -50,6 +52,12 @@ public class RequestBookDaoImpl implements RequestBookDao {
 		return list;
 	}
 
+	@Override
+	public List<RequestBook> selectRequestBookByYearAndWhCdt(RequestBook rb) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	private RequestBook getRequestBook(ResultSet rs) throws SQLException {
 		int requestBookNo = rs.getInt("reqst_book_no");
 		Member requestMbId = new Member(rs.getString("reqst_mb_id"));

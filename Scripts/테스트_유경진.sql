@@ -376,7 +376,7 @@ select l1.book_cd , b.book_name , l1.rturn_date , l2.lendCnt
 	where l1.book_cd = l2.book_cd and l1.rturn_date is null;
 
 -- 신착도서 
-select pblicte_year, book_name , book_img , authr_name , trnslr_name , b.lc_no , l.lclas_name , b.ml_no , m.mlsfc_name , b.pls , p.pls_name 
+select pblicte_year, book_name , book_img , authr_name , trnslr_name , b.lc_no , l.lclas_name , b.ml_no , m.mlsfc_name , b.pls , p.pls_name , b.pblicte_year 
 	from book b left join large_classification l on b.lc_no = l.lclas_no 
 				left join middle_classification m on b.ml_no = m.mlsfc_no and l.lclas_no = m.lclas_no 
 				left join publishing_company p on b.pls = p.pls_no 

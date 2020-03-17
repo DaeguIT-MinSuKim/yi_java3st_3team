@@ -3,9 +3,9 @@ package yi_java3st_3team.ui;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class WestRequestPanel extends AbsWestMenuPanel {
+public class WestRecomBookPanel extends AbsWestMenuPanel {
 	
-	public WestRequestPanel() {
+	public WestRecomBookPanel() {
 		initLabelText(lbl1,lbl2);
 	}
 	

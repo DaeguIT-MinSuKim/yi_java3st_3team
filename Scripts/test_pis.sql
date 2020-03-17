@@ -202,5 +202,6 @@ select * from member where mber_id = 'dlstjs8246@naver.com';
 insert into lending(mber_id,book_cd,lend_date,rturn_due_date,rturn_psm_cdt,rturn_date,overdue_cdt) 
 values('dlstjs8246@naver.com','A090101','2020-02-01','2020-02-16',0,'2020-03-08',0);
 select * from lending where mber_id = 'dlstjs8246@naver.com';
-select * from lending;
-select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date,rturn_date,datediff(l.rturn_date,l.rturn_due_date) as 'overdue_date' from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id where l.overdue_cdt =1;
+update lending set lend_date = '2020-02-29', rturn_due_date = '2020-03-15' where mber_id = 'dlstjs8246@naver.com';
+
+select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id where l.rturn_date is null;

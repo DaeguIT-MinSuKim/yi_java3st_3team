@@ -48,7 +48,7 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 		JPanel pDummy = new JPanel();
 		pNorth.add(pDummy);
 		
-		btnSelAll = new JButton("모두선택");
+		btnSelAll = new JButton("모두선택/모두해제");
 		btnSelAll.addActionListener(this);
 		pNorth.add(btnSelAll);
 		
@@ -79,13 +79,13 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 		TableModel model = pCenter.getTable().getModel();
 		if(!allChk) {
 			for(int i=0;i<model.getRowCount();i++) {
-				model.setValueAt(true, i, 8);
+				model.setValueAt(true, i, 6);
 			}
 			allChk = true;
 		}
 		else {
 			for(int i=0;i<model.getRowCount();i++) {
-				model.setValueAt(false, i, 8);
+				model.setValueAt(false, i, 6);
 			}
 			allChk = false;
 		}

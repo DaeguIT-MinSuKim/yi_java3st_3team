@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class ProfileMenuPanel extends AbsWestMenuPanel {
-
 	/**
 	 * Create the panel.
 	 */

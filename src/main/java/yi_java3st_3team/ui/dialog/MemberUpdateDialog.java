@@ -33,7 +33,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
-import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
@@ -43,7 +42,7 @@ import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
 public class MemberUpdateDialog extends JDialog implements ActionListener {
-
+	private ZipCode zipCode;
 	private final JPanel contentPanel = new JPanel();
 	private static JFrame frame;
 	private JButton btnCancel;
@@ -78,6 +77,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 
 	public MemberUpdateDialog(JFrame frame, String title) {
 		super(frame, title, true);
+		zipDialog = new ZipDialog(zipFrame, "우편번호 검색");
 		setBounds(100, 100, 700, 450);
 		service = new MemberUIService();
 		BorderLayout borderLayout = new BorderLayout();
@@ -97,8 +97,10 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		pUpdate.add(lblID);
 
 		tfID = new JTextField();
+		tfID.setEditable(false);
 		pUpdate.add(tfID);
 		tfID.setColumns(10);
+		
 
 		JLabel lblName = new JLabel("이름");
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -202,6 +204,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	}
 
 	public void setItem(Member item) {
+		zipCode = item.getMberZip();
 		tfID.setText(item.getMberId());
 		tfName.setText(item.getMberName());
 		tfBirthday.setDate(item.getMberBrthdy());
@@ -271,19 +274,45 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 
 	private Member getItem() {
 		validCheck();
+		
 		String mberId = tfID.getText().trim();
 		String mberName = tfName.getText().trim();
 		Date mberBrthdy = tfBirthday.getDate();
-		//ZipCode mberZip = zipDialog.getZipCode();
-		ZipCode mberZip = new ZipCode();
-		//String mberBassAd = tfAd.getText(zipDialog.getAddrFull());
-		String mberBassAd = zipDialog.getAddrFull();
-		String mberDetailAd = zipDialog.getDetailAd();
 		String mberTel = tfTel.getText().trim();
 		byte[] mberImg = getImage();
-		Grade grade = (Grade) cmbGrade.getSelectedItem();
+		Grade gradeName = (Grade) cmbGrade.getSelectedItem();
+		Grade grade = new Grade(gradeName.getGradeName().equals("일반")? 1 : 2);
+		ZipCode zip = null;
+		String mberBassAd = null;
+		String mberDetailAd = null;
 		
-		return new Member(mberId, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, grade);
+		if(zipDialog.getTfZipCode().getText().equals("")) {
+			//우편번호 검색 안했을 경우
+			int zipcode = Integer.parseInt(tfAd.getText().substring(tfAd.getText().indexOf("(")+1, tfAd.getText().indexOf(")")));
+			zip = new ZipCode(zipcode);
+		//	mberBassAd = tf.trim();
+			mberDetailAd = zipDialog.getDetailAd().trim();
+		}
+		else {
+			//우편번호 검색했을 경우
+			zip = new ZipCode(Integer.parseInt(zipDialog.getTfZipCode().getText().trim()));
+			mberBassAd = zipDialog.getAddrFull().trim();
+			mberDetailAd = zipDialog.getDetailAd().trim();
+		}
+		return new Member(mberId, mberName, mberBrthdy, zip, mberBassAd, mberDetailAd, mberTel, mberImg, grade);
+		
+	                                                                                         
+		
+		//ZipCode mberZip = zipDialog.getZipCode();
+		
+		 
+		
+//		else {
+//			mberZip = zipDialog.getTfZipCode().getText().trim();
+//		}
+		//String mberBassAd = tfAd.getText(zipDialog.getAddrFull());
+		
+		
 	}
 	
 	private byte[] getImage() {
@@ -316,8 +345,6 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		
 	}
 	protected void btnZipActionPerformed(ActionEvent e) {
-		
-		zipDialog = new ZipDialog(zipFrame, "우편번호 검색");
 		zipDialog.getBtnAdd().addActionListener(new ActionListener() {
 			
 			@Override

@@ -326,6 +326,14 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		imgArea.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance((int) picDimension.getWidth(),
 				(int) picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
+	
+	public MainFrame_user getMemMainFrame() {
+		return memMainFrame;
+	}
+
+	public void setMemMainFrame(MainFrame_user memMainFrame) {
+		this.memMainFrame = memMainFrame;
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnNewButton) {

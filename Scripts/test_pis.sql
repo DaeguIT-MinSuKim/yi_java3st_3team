@@ -206,6 +206,7 @@ insert into lending(mber_id,book_cd,lend_date,rturn_due_date,rturn_psm_cdt,rturn
 values('insun8246@gmail.com','A090102','2020-02-01','2020-02-16',0,null,0);
 update book set lend_psb_cdt = 1 where book_code = 'A090102';
 select * from lending where mber_id = 'dlstjs8246@naver.com';
+select * from member where mber_name = '이전';
 update lending set lend_date = '2020-02-29', rturn_due_date = '2020-03-15' where mber_id = 'dlstjs8246@naver.com';
 
 select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id where l.rturn_date is null;

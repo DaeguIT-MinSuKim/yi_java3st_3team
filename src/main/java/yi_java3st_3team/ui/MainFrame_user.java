@@ -52,17 +52,13 @@ public class MainFrame_user extends JFrame {
 	private JPanel bookRecomPanel;
 	private LoginFrame_ex loginFrame;
 	private JPanel bookRankPanel;
+	private Thread menuThread;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					// select Look and Feel
 					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-//					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 					JFrame frame = new MainFrame_user();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -199,15 +195,27 @@ public class MainFrame_user extends JFrame {
 		pBookSearch.addMouseListener(menuAdapter);
 		pRecommendBook.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
-		Thread thread = getMenuThread();
-		thread.run();
+		menuThread = getMenuThread();
+		menuThread.run();
 	}
 	
+	public JPanel getProfileModifyPanel() {
+		return profileModifyPanel;
+	}
+
+	public JPanel getpCenter() {
+		return pCenter;
+	}
+	
+	public void setpCenter(JPanel pCenter) {
+		this.pCenter = pCenter;
+	}
+
 	public JLabel getLblGreeting() {
 		return lblGreeting;
 	}
 
-	private Thread getMenuThread() {
+	public Thread getMenuThread() {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -296,13 +304,11 @@ public class MainFrame_user extends JFrame {
 								case "프로필 수정" :
 									contentPane.remove(pCenter);
 									((ProfileModifyPanel) profileModifyPanel).initTf(member);
-									pCenter = new PasswordCheckPanel();
-									contentPane.add(pCenter,BorderLayout.CENTER);
-									pCenter = profileModifyPanel;
-									((ProfileModifyPanel) pCenter).initTf(member);
-									contentPane.add(pCenter,BorderLayout.CENTER);
-									repaint();
-									revalidate();
+									pCenter = getPassMenuPanel();
+									loginFrame.getMemMainFrame().setpCenter(pCenter);
+									loginFrame.getMemMainFrame().contentPane.add(loginFrame.getMemMainFrame().getpCenter(),BorderLayout.CENTER);
+									loginFrame.getMemMainFrame().contentPane.repaint();
+									loginFrame.getMemMainFrame().contentPane.revalidate();
 									break;
 								case "이용현황" :		
 									contentPane.remove(pCenter);
@@ -386,6 +392,10 @@ public class MainFrame_user extends JFrame {
 		return menuAdapter;
 	}
 	
+	public LoginFrame_ex getLoginFrame() {
+		return loginFrame;
+	}
+
 	public void setLoginFrame(LoginFrame_ex loginFrame) {
 		this.loginFrame = loginFrame;
 	}
@@ -395,7 +405,17 @@ public class MainFrame_user extends JFrame {
 		JFXPanel panel = (JFXPanel) fxPanel;
 		panel.setScene(scene);
 	}
+	
+	public Member getMember() {
+		return member;
+	}
+
 	public void setMember(MemberUIService service, Member mem) {
 		member = service.SelectedByNo(mem);
+	}
+	private JPanel getPassMenuPanel() {
+		JPanel panel = new PasswordCheckPanel();
+		((PasswordCheckPanel) panel).setLoginFrame(loginFrame);
+		return panel;
 	}
 }

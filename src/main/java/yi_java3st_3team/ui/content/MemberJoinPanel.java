@@ -310,7 +310,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	public JPasswordField getPfPW1() {
 		return pfPW1;
 	}
-	
+
 	public JLabel getLblPic() {
 		return lblPic;
 	}

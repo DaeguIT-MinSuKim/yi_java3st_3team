@@ -1,22 +1,7 @@
 {
 	"folders": {},
 	"connections": {
-		"mysql5-170e402a166-7493e8eeefede5a8": {
-			"provider": "mysql",
-			"driver": "mysql5",
-			"name": "MySQL - localhost",
-			"save-password": true,
-			"read-only": false,
-			"configuration": {
-				"host": "localhost",
-				"port": "3306",
-				"url": "jdbc:mysql://localhost:3306/",
-				"home": "C:\\Program Files\\MySQL\\MySQL Server 5.7",
-				"type": "dev",
-				"handlers": {}
-			}
-		},
-		"mysql5-170e403a1ac-326b10a88db87ec0": {
+		"mysql5-170e6e39230-64573a153149d1": {
 			"provider": "mysql",
 			"driver": "mysql5",
 			"name": "MySQL - yi_java3st_3team",

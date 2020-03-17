@@ -2,14 +2,12 @@ package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.SimpleFormatter;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -23,12 +21,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.dialog.MemberUpdateDialog;
 import yi_java3st_3team.ui.list.MemberTblPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
-import java.awt.Dimension;
 
 @SuppressWarnings("serial")
 public class MemberSelectUIPanel extends JPanel implements ActionListener {
@@ -102,7 +98,7 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 		pMemberList.setBorder(new EmptyBorder(10, 0, 0, 0));
 		pList.add(pMemberList, BorderLayout.CENTER);
 		
-		btnSearch.addActionListener(this);
+		//btnSearch.addActionListener(this); //이거 있으니까 에러가 두번씩 찍힘
 	}
 
 	public void loadData() {
@@ -162,12 +158,26 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 					} 
 
 				}
+				
 				if(e.getActionCommand().contentEquals("대여권한 설정")) {
+					Member upMember = pMemberList.getSelectedItem();
+					
 					int result = JOptionPane.showConfirmDialog(null, "대여권한을 변경하시겠습니까?", "대여권한 변경", JOptionPane.YES_NO_OPTION);
 					
+					if(result == JOptionPane.YES_OPTION && upMember.getLendPsbCdt()==0) {
+						upMember.setLendPsbCdt(1);
+						service.updateByWdrCdt(upMember);
+						loadData();
+					}else if(result == JOptionPane.YES_OPTION && upMember.getLendPsbCdt()==1) {
+						upMember.setLendPsbCdt(0);
+						upMember.setOdCnt(0);
+						service.updateByWdrCdt(upMember);
+						loadData();
+					}else if(result == JOptionPane.CLOSED_OPTION || result == JOptionPane.NO_OPTION){
+						loadData();
+					}
 				}
-				
-				}
+			}
 			catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -194,6 +204,7 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 	protected void btnSearchActionPerformed(ActionEvent e) {
 			Member member = new Member();
 			notCheck();
+		
 			try {
 				if(radioBtnID.isSelected()) {
 					member.setMberId(tfSearch.getText());

@@ -32,6 +32,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
+import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
 import yi_java3st_3team.ui.dialog.ZipDialog;
@@ -339,7 +340,10 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		String mberTel = tfTel.getText().trim();
 		byte[] mberImg = getImage();
 		int wdrCdt = 0;
-		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, wdrCdt);
+		Grade grade = new Grade(1);
+		int lendPsbCdt = 0;
+		int odCnt = 0;
+		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, wdrCdt, grade, lendPsbCdt, odCnt);
 	}
 
 	private byte[] getImage() {

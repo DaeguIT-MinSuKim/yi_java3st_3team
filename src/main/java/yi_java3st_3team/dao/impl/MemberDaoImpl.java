@@ -97,7 +97,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int insertMember(Member member) {
-		String sql = "insert into member(mber_id, mber_pass,mber_name, mber_brthdy,mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,join_dt, wdr_cdt) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into member(mber_id, mber_pass,mber_name, mber_brthdy,mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,join_dt, wdr_cdt, grade, lend_psb_cdt, od_cnt) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, member.getMberId());
 			pstmt.setString(2, member.getMberPass());
@@ -107,18 +107,18 @@ public class MemberDaoImpl implements MemberDao {
 			pstmt.setString(6, member.getMberBassAd());
 			pstmt.setString(7, member.getMberDetailAd());
 			pstmt.setString(8, member.getMberTel());
-			if (member.getMberImg() != null) {
-				pstmt.setBytes(9, member.getMberImg());
-			}
+//			if (member.getMberImg() != null) {
+//				pstmt.setBytes(9, member.getMberImg());
+//			}
+			pstmt.setBytes(9, member.getMberImg());
 			pstmt.setString(10, nowTime());
 			pstmt.setInt(11, member.getWdrCdt());
-
-//			pstmt.setInt(10, member.getTotalLeCnt());
-//			pstmt.setInt(11, member.getLendBookCnt());
-//			pstmt.setInt(12, member.getGrade().getGradeNo());
-//			pstmt.setInt(13, member.getLendPsbCdt());
-//			pstmt.setTimestamp(14, new Timestamp(member.getJoinDt().getTime()));
-//			pstmt.setInt(15, member.getWdrCdt());
+			pstmt.setInt(12, member.getGrade().getGradeNo());
+			pstmt.setInt(13, member.getLendPsbCdt());
+			pstmt.setInt(14, member.getOdCnt());
+//			pstmt.setInt(13, member.getTotalLeCnt());
+//			pstmt.setInt(14, member.getLendBookCnt());
+//			pstmt.setTimestamp(16, new Timestamp(member.getJoinDt().getTime()));
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -145,18 +145,20 @@ public class MemberDaoImpl implements MemberDao {
 			sql.append("mber_tel=?, ");
 		if (member.getMberImg() != null)
 			sql.append("mber_img=?, ");
-		if (member.getTotalLeCnt() != 0)
+		if (member.getTotalLeCnt() != -1)
 			sql.append("total_le_cnt=?, ");
-		if (member.getLendBookCnt() != 0)
+		if (member.getLendBookCnt() != -1)
 			sql.append("lend_book_cnt=?, ");
-		if (member.getGrade() != null)
+		if (member.getGrade().getGradeNo() != -1)
 			sql.append("grade=?, ");
-		if (member.getLendPsbCdt() != 0)
+		if (member.getLendPsbCdt() != -1)
 			sql.append("lend_psb_cdt=?, ");
 		if (member.getJoinDt() != null)
 			sql.append("join_dt=?, ");
 		if (member.getWdrCdt() != -1)
 			sql.append("wdr_cdt=?, ");
+		if (member.getOdCnt() != -1)
+			sql.append("od_cnt=?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append("where mber_id=?");
 
@@ -180,18 +182,20 @@ public class MemberDaoImpl implements MemberDao {
 				pstmt.setString(argCnt++, member.getMberTel());
 			if (member.getMberImg() != null)
 				pstmt.setBytes(argCnt++, member.getMberImg());
-			if (member.getTotalLeCnt() != 0)
+			if (member.getTotalLeCnt() != -1)
 				pstmt.setInt(argCnt++, member.getTotalLeCnt());
-			if (member.getLendBookCnt() != 0)
+			if (member.getLendBookCnt() != -1)
 				pstmt.setInt(argCnt++, member.getLendBookCnt());
-			if (member.getGrade() != null)
+			if (member.getGrade().getGradeNo() != -1)
 				pstmt.setInt(argCnt++, member.getGrade().getGradeNo());
-			if (member.getLendPsbCdt() != 0)
+			if (member.getLendPsbCdt() != -1)
 				pstmt.setInt(argCnt++, member.getLendPsbCdt());
 			if (member.getJoinDt() != null)
 				pstmt.setTimestamp(argCnt++, new Timestamp(member.getJoinDt().getTime()));
 			if (member.getWdrCdt() !=-1)
 				pstmt.setInt(argCnt++, member.getWdrCdt());
+			if (member.getOdCnt() !=-1)
+				pstmt.setInt(argCnt++, member.getOdCnt());
 			pstmt.setString(argCnt++, member.getMberId());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
@@ -387,10 +391,10 @@ public class MemberDaoImpl implements MemberDao {
 		List<Member> list = new ArrayList<>();
 		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt\r\n" + 
 				"from member\r\n" + 
-				"where mber_id =?";
+				"where mber_id like ? ";
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);){
-			pstmt.setString(1, member.getMberId());
+			pstmt.setString(1, "%" + member.getMberId() + "%" );
 				try(ResultSet rs = pstmt.executeQuery()){
 					if (rs.next()) {
 						list = new ArrayList<>();
@@ -411,11 +415,11 @@ public class MemberDaoImpl implements MemberDao {
 	public List<Member> searchMemberByName(Member member) {
 		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt\r\n" + 
 				"from member\r\n" + 
-				"where mber_name =?";
+				"where mber_name like ? ";
 		List<Member> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);){
-			pstmt.setString(1, member.getMberName());
+			pstmt.setString(1, "%" + member.getMberName() + "%" );
 				try(ResultSet rs = pstmt.executeQuery()){
 					if (rs.next()) {
 						list = new ArrayList<>();
@@ -433,8 +437,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Member> searchMemberByBirtyday(Member member) {
 		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt from member where date(mber_brthdy) = ?";
-		
-
+	
 		List<Member> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);){

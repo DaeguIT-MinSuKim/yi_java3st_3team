@@ -101,7 +101,7 @@ public class Member {
 	}
 
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
-			String mberDetailAd, String mberTel, byte[] mberImg, int wdrCdt) {
+			String mberDetailAd, String mberTel, byte[] mberImg, int wdrCdt, Grade grade, int lendPsbCdt, int odCnt) {
 		this.mberId = mberId;
 		this.mberPass = mberPass;
 		this.mberName = mberName;
@@ -112,6 +112,9 @@ public class Member {
 		this.mberTel = mberTel;
 		this.mberImg = mberImg;
 		this.wdrCdt = wdrCdt;
+		this.grade = grade;
+		this.lendPsbCdt = lendPsbCdt;
+		this.odCnt = odCnt;
 	}
 
 	public Member(String mberId, String mberPass) {
@@ -435,6 +438,7 @@ public class Member {
 			return false;
 		if (wdrCdt != other.wdrCdt)
 			return false;
+
 		return true;
 	}
 

@@ -25,30 +25,14 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 	@Override
 	protected Object[] toArray(Member item) {
 		String totalAd;
-		String lendCdt;
+		String lendCdt = item.getLendPsbCdt() == 0 ? "대여가능" : "대여불가능";
 		String wdrCdt =item.getWdrCdt() > 0 ? "탈퇴" : "가입";
-		String grade;
+		String grade = item.getGrade().getGradeNo() ==1 ? "일반" : "우수";
 		
 		if(item.getMberDetailAd().length() > 0) {
 			totalAd = String.format("(%d) %s %s",item.getMberZip().getZipCode(),item.getMberBassAd(),item.getMberDetailAd());
 		}else {
 			totalAd = item.getMberBassAd();
-		}
-		
-		if(item.getLendPsbCdt() ==0) {
-			lendCdt = "대여가능";
-		}else if(item.getLendPsbCdt()==1) {
-			lendCdt = "대여불가능";
-		}else {
-			lendCdt ="대여가능";
-		}
-		
-		if(item.getGrade().getGradeNo() == 1) {
-			grade = "일반";
-		}else if(item.getGrade().getGradeNo() == 2) {
-			grade="우수";
-		}else {
-			grade = "일반";
 		}
 		
 		return new Object[] {
@@ -70,30 +54,14 @@ public class MemberTblPanel extends AbsListPanel<Member> {
 	@Override
 	public void updateRow(Member item, int updateIdx) {
 		String totalAd;
-		String lendCdt;
-		String wdrCdt =item.getWdrCdt() == 0 ? "가입" : "탈퇴";
-		String grade;
+		String lendCdt = item.getLendPsbCdt() == 0 ? "대여가능" : "대여불가능";
+		String wdrCdt = item.getWdrCdt() == 0 ? "가입" : "탈퇴";
+		String grade = item.getGrade().getGradeNo() ==1 ? "일반" : "우수";
 		
 		if(item.getMberDetailAd().length() > 0) {
 			totalAd = String.format("(%d) %s %s",item.getMberZip().getZipCode(),item.getMberBassAd(),item.getMberDetailAd());
 		}else {
 			totalAd = item.getMberBassAd();
-		}
-		
-		if(item.getLendPsbCdt() ==0) {
-			lendCdt = "대여가능";
-		}else if(item.getLendPsbCdt()==1) {
-			lendCdt = "대여불가능";
-		}else {
-			lendCdt ="대여가능";
-		}
-		
-		if(item.getGrade().getGradeNo() == 1) {
-			grade = "일반";
-		}else if(item.getGrade().getGradeNo() == 1) {
-			grade="우수";
-		}else {
-			grade = "일반";
 		}
 		
 		model.setValueAt(item.getMberId(), updateIdx, 0);

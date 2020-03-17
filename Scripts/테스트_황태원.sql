@@ -92,3 +92,20 @@ where date(mber_brthdy) = '2020-03-16';
 select *
 from member;
 
+select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt
+from member
+where mber_name like '%하후%';
+
+select mber_id, mber_name
+
+
+select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt 
+from member 
+where date(mber_brthdy) like '%2020%';
+
+select *
+from book;
+
+select *
+from member;
+

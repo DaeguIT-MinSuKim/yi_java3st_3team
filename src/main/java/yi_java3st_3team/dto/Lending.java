@@ -28,15 +28,15 @@ public class Lending {
 		this.bookCd = bookCd;
 	}
 
-	public Lending(Book bookCd, Date lendDate, Date rturnDueDate, int rturnPsmCdt, Date rturnDate, int overdueCdt) {
+	
+	
+	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate) {
+		this.mberId = mberId;
 		this.bookCd = bookCd;
 		this.lendDate = lendDate;
 		this.rturnDueDate = rturnDueDate;
-		this.rturnPsmCdt = rturnPsmCdt;
-		this.rturnDate = rturnDate;
-		this.overdueCdt = overdueCdt;
 	}
-	
+
 	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, Date rturnDate,
 			int overdueCdt) {
 		this.mberId = mberId;

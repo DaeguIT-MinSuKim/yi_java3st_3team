@@ -25,6 +25,7 @@ import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
+import yi_java3st_3team.ui.list.BookPlsTblPanel;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")

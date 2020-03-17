@@ -242,10 +242,30 @@ alter table recommendation auto_increment = 3;
 -- 신청도서
 select * from request_book;
 
+-- 전체 검색
+select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt 
+	from request_book;
+
+-- 선택조건 모두 검색
 select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
 	reqst_mb_id , reqst_date , wh_cdt 
 	from request_book
-	where year(reqst_date) = '2020' and month(reqst_date) = '2';
+	where year(reqst_date) = '2020' and month(reqst_date) = '2' and wh_cdt = 0;
+
+-- 년도조건, 입고조건 검색
+select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt 
+	from request_book
+	where year(reqst_date) = '2020' and wh_cdt = 0;
+
+-- 
+select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt 
+	from request_book
+	where month(reqst_date) = '2' and wh_cdt = 0;
+
+
 
 select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
 	reqst_mb_id , reqst_date , wh_cdt 
@@ -253,7 +273,7 @@ select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr ,
 	where reqst_mb_id = 'ggg243r4@gmail.com';
 
 insert into request_book(reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt)
-	values ('Java의 정석', '남궁성', '', '도우출판', 'ggg243r4@gmail.com', '2020-02-29', 0);
+	values ('Java의 정석', '남궁성', '', '도우출판', 'ggg243r4@gmail.com', '2020-03-17', 0);
 
 update request_book 
 	set reqst_mb_id = 'ggg243r4@gmail.com', reqst_book_name = '이것이 자바다', reqst_book_author = '신용권', reqst_book_trnslr = '', 
@@ -376,7 +396,7 @@ select l1.book_cd , b.book_name , l1.rturn_date , l2.lendCnt
 	where l1.book_cd = l2.book_cd and l1.rturn_date is null;
 
 -- 신착도서 
-select pblicte_year, book_name , book_img , authr_name , trnslr_name , b.lc_no , l.lclas_name , b.ml_no , m.mlsfc_name , b.pls , p.pls_name 
+select pblicte_year, book_name , book_img , authr_name , trnslr_name , b.lc_no , l.lclas_name , b.ml_no , m.mlsfc_name , b.pls , p.pls_name , b.pblicte_year 
 	from book b left join large_classification l on b.lc_no = l.lclas_no 
 				left join middle_classification m on b.ml_no = m.mlsfc_no and l.lclas_no = m.lclas_no 
 				left join publishing_company p on b.pls = p.pls_no 

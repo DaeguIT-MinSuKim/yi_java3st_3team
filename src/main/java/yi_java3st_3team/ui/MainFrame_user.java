@@ -334,8 +334,8 @@ public class MainFrame_user extends JFrame {
 					contentPane.remove(pWest);
 					pCenter = new JPanel();
 					pCenter.setBackground(Color.white);
-					pWest = new WestRequestPanel();
-					JPanel[] pReqst = ((WestRequestPanel) pWest).getPanels();
+					pWest = new WestRecomBookPanel();
+					JPanel[] pReqst = ((WestRecomBookPanel) pWest).getPanels();
 					for(JPanel panel : pReqst) {
 						panel.addMouseListener(new MouseAdapter() {
 

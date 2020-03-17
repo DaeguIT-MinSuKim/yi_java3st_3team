@@ -11,6 +11,7 @@ public class BookLcTblPanel extends AbsListPanel<LargeClassification> {
 	protected void setTblWidthAlign() {
 		tableSetWidth(100, 200);
 		tableCellAlign(SwingConstants.CENTER, 0, 1);
+		
 	}
 
 	@Override

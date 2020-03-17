@@ -243,42 +243,40 @@ alter table recommendation auto_increment = 3;
 select * from request_book;
 
 -- 전체 검색
-select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt 
-	from request_book;
+select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
+	from request_book rb1, 
+		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
+	where rb1.reqst_book_name = rb2.reqst_book_name;
+
+select count(*) from request_book group by reqst_book_name;
 
 -- 선택조건 모두 검색
-select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt 
-	from request_book
-	where year(reqst_date) = '2020' and month(reqst_date) = '2' and wh_cdt = 0;
+select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
+	from request_book rb1, 
+		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
+	where rb1.reqst_book_name = rb2.reqst_book_name and year(reqst_date) = '2020' and month(reqst_date) = '2' and wh_cdt = 0;
 
 -- 년도조건, 입고조건 검색
-select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt 
-	from request_book
-	where year(reqst_date) = '2020' and wh_cdt = 0;
-
--- 
-select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt 
-	from request_book
-	where month(reqst_date) = '2' and wh_cdt = 0;
-
-
+select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
+	from request_book rb1, 
+		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
+	where rb1.reqst_book_name = rb2.reqst_book_name and year(reqst_date) = '2020' and wh_cdt = 0;
 
 select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
 	reqst_mb_id , reqst_date , wh_cdt 
 	from request_book
-	where reqst_mb_id = 'ggg243r4@gmail.com';
+	where reqst_mb_id = 'ggg243r4@gmail.com' and reqst_book_name = 'Java의 정석';
 
 insert into request_book(reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt)
-	values ('Java의 정석', '남궁성', '', '도우출판', 'ggg243r4@gmail.com', '2020-03-17', 0);
+	values ('Java의 정석', '남궁성', '', '도우출판', 'ggg243r4@gmail.com', '2020-03-03', 0);
 
 update request_book 
-	set reqst_mb_id = 'ggg243r4@gmail.com', reqst_book_name = '이것이 자바다', reqst_book_author = '신용권', reqst_book_trnslr = '', 
+	set reqst_mb_id = 'ggg243r4@gmail.com', reqst_book_name = 'Java의 정석', reqst_book_author = '신용권', reqst_book_trnslr = '', 
 		request_book_pls = '한빛미디어', reqst_date = '2020-02-29', wh_cdt = 0
-	where reqst_book_no = 11;
+	where reqst_mb_id = 'ggg243r4@gmail.com' and reqst_book_name = 'Java의 정석';
 
 delete from request_book where reqst_book_no = 12;
 delete from request_book where reqst_book_no = 13;

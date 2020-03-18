@@ -9,10 +9,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -22,11 +24,16 @@ import javax.swing.border.MatteBorder;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import yi_java3st_3team.dto.Librarian;
+import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.BookLcAndMlManagerPanel;
 import yi_java3st_3team.ui.content.BookManagerPanel;
 import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
+import yi_java3st_3team.ui.content.PasswordCheckPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
+import yi_java3st_3team.ui.service.LibrarianService;
+import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
@@ -68,6 +75,10 @@ public class MainFrame_ex extends JFrame {
 	private JLabel lblGreeting;
 	private JLabel lblProfile;
 	private JPanel pProfile;
+	private Librarian lib;
+	private Member member;
+	private Thread panelThread;
+	private MainFrame_ex mainFrame;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -236,13 +247,15 @@ public class MainFrame_ex extends JFrame {
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		pProfile.addMouseListener(menuAdapter);
+		
+		mainFrame = this;
 	}
 
 	public void setThread() {
 		chartThread = initChartThread();
 		chartThread.run();
-		Thread initPanelThread = initPanelThread();
-		initPanelThread.run();
+		panelThread = initPanelThread();
+		panelThread.run();
 	}
 	
 	public JLabel getLblGreeting() {
@@ -255,7 +268,7 @@ public class MainFrame_ex extends JFrame {
 		panel.setLayout(new BorderLayout(0, 0));
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new EmptyBorder(50, 50, 50, 50));
-		lblGreeting = new JLabel("박인선님 환영합니다");
+		lblGreeting = new JLabel("");
 		lblGreeting.setFont(new Font("굴림", Font.BOLD, 65));
 		lblGreeting.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblGreeting, BorderLayout.CENTER);
@@ -291,9 +304,11 @@ public class MainFrame_ex extends JFrame {
 				JLabel label = (JLabel)chkPanel.getComponent(0);
 				switch(label.getText()) {
 				case "HOME":
+					String greeting = lblGreeting.getText();
 					contentPane.remove(pCenter);
 					contentPane.remove(pWest);
 					pCenter = getHomeMenuPanel();
+					lblGreeting.setText(greeting);
 					contentPane.add(pCenter,BorderLayout.CENTER);
 					repaint();
 					revalidate();
@@ -514,6 +529,10 @@ public class MainFrame_ex extends JFrame {
 					break;
 				case "프로필":
 					contentPane.remove(pCenter);
+					pCenter = getPassMenuPanel();
+					contentPane.add(pCenter,BorderLayout.CENTER);
+					repaint();
+					revalidate();
 					break;
 				case "로그아웃":
 					dispose();
@@ -525,7 +544,7 @@ public class MainFrame_ex extends JFrame {
 				}
 				chartThread.interrupt();
 				chartThread.run();
-			}	
+			}
 		};
 		return menuAdapter;
 	}
@@ -538,6 +557,45 @@ public class MainFrame_ex extends JFrame {
 		this.loginFrame = loginFrame;
 	}
 	
+	
+	public Librarian getLib() {
+		return lib;
+	}
+
+	public void setLib(LibrarianService service,Librarian lib) {
+		try {
+			this.lib = service.showLibrarianById(lib);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member,MemberUIService service) {
+		this.member = service.SelectedByNo(member);
+	}
+
+	public MainFrame_ex getMainFrame() {
+		return mainFrame;
+	}
+	
+	public void setMainFrame(MainFrame_ex mainFrame) {
+		this.mainFrame = mainFrame;
+	}
+	
+	public JPanel getpCenter() {
+		return pCenter;
+	}
+
+	public void setpCenter(JPanel pCenter) {
+		this.pCenter = pCenter;
+	}
+	
+
 	public void initFX(InitScene fxPanel) {
 		Scene scene = fxPanel.createScene();
 		JFXPanel panel = (JFXPanel) fxPanel;
@@ -583,4 +641,11 @@ public class MainFrame_ex extends JFrame {
 		});
 		return thread;
 	}
+	
+	private JPanel getPassMenuPanel() {
+		JPanel panel = new PasswordCheckPanel();
+		((PasswordCheckPanel) panel).setLib(lib);
+		((PasswordCheckPanel) panel).setMainFrame_ex(mainFrame);
+		return panel;
+	}	
 }

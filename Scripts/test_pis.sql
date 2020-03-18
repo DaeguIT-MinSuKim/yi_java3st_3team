@@ -39,7 +39,7 @@ into table yi_java3st_3team.book
 character set 'utf8'
 fields terminated by ','
 ignore 1 lines;
-
+select * from librarian where lb_name = '박인선';
 
 -- lending 대여/반납
 -- truncate table lending; -- lending 데이터 전체 삭제
@@ -210,3 +210,4 @@ select * from member where mber_name = '이전';
 update lending set lend_date = '2020-02-29', rturn_due_date = '2020-03-15' where mber_id = 'dlstjs8246@naver.com';
 
 select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id where l.rturn_date is null;
+select * from librarian where lb_name = "박인선";

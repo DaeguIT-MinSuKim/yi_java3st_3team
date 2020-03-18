@@ -21,13 +21,13 @@ import yi_java3st_3team.ui.service.MemberUIService;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class ProfileModifyPanel extends JPanel implements ActionListener{
+public class MemberProfileModifyPanel extends JPanel implements ActionListener{
 	private MemberUIService service;
 	private MemberJoinPanel pMember;
 	private JButton btnAdd;
 	private JButton btnCancel;
 	
-	public ProfileModifyPanel() {
+	public MemberProfileModifyPanel() {
 		service = new MemberUIService();
 		initialize();
 	}

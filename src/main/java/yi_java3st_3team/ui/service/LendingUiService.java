@@ -107,4 +107,11 @@ public class LendingUiService {
 		return lendingDao.selectLendingBastList();
 	}
 
+	public void insertSelectedLendingList(String mberId, String bookCd) {
+//		memberDao.updateMember(member);
+//		bookDao.updateBook(book);
+//		lendingDao.insertLending(lending);
+		
+	}
+
 }

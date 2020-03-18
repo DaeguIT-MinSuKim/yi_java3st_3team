@@ -5,13 +5,5 @@ import java.util.List;
 import yi_java3st_3team.dto.Title;
 
 public interface TitleDao {
-	Title selectTitleByNo(Title title);
-
-	List<Title> selectTitleByAll();
-
-	int insertTitle(Title title);
-
-	int updateTitle(Title title);
-
-	int deleteTitle(Title title);
+	List<Title> selectTitleByAll(); //권한 콤보박스용
 }

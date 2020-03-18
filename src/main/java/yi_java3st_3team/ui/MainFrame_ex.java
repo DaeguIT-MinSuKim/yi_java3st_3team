@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -79,6 +81,7 @@ public class MainFrame_ex extends JFrame {
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 //					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 					JFrame frame = new MainFrame_ex();
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -524,6 +527,10 @@ public class MainFrame_ex extends JFrame {
 		return menuAdapter;
 	}
 	
+	public LoginFrame_ex getLoginFrame() {
+		return loginFrame;
+	}
+
 	public void setLoginFrame(LoginFrame_ex loginFrame) {
 		this.loginFrame = loginFrame;
 	}

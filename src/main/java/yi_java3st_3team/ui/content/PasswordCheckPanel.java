@@ -8,10 +8,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
+import yi_java3st_3team.dto.Librarian;
+import yi_java3st_3team.dto.Member;
+import yi_java3st_3team.ui.LibrarianProfileModifyPanel;
 import yi_java3st_3team.ui.LoginFrame_ex;
+import yi_java3st_3team.ui.MainFrame_ex;
+import yi_java3st_3team.ui.MainFrame_lib;
 import yi_java3st_3team.ui.MainFrame_user;
 import yi_java3st_3team.ui.ProfileMenuPanel;
-import yi_java3st_3team.ui.ProfileModifyPanel;
+import yi_java3st_3team.ui.MemberProfileModifyPanel;
 
 import javax.swing.SwingConstants;
 
@@ -25,7 +30,11 @@ import java.awt.Color;
 public class PasswordCheckPanel extends JPanel implements ActionListener {
 	private JPasswordField pfPassword;
 	private JButton btnCheck;
-	private LoginFrame_ex loginFrame;
+	private Member member;
+	private Librarian lib;
+	private MainFrame_ex mainFrame_ex;
+	private MainFrame_user mainFrame_user;
+	private MainFrame_lib mainFrame_lib;
 	/**
 	 * Create the panel.
 	 */
@@ -53,11 +62,36 @@ public class PasswordCheckPanel extends JPanel implements ActionListener {
 		add(btnCheck);
 	}
 	
-	public LoginFrame_ex getLoginFrame() {
-		return loginFrame;
+	public Member getMember() {
+		return member;
 	}
-	public void setLoginFrame(LoginFrame_ex loginFrame) {
-		this.loginFrame = loginFrame;
+	public void setMember(Member member) {
+		this.member = member;
+	}
+	
+	public Librarian getLib() {
+		return lib;
+	}
+	public void setLib(Librarian lib) {
+		this.lib = lib;
+	}
+	public MainFrame_ex getMainFrame_ex() {
+		return mainFrame_ex;
+	}
+	public void setMainFrame_ex(MainFrame_ex mainFrame_ex) {
+		this.mainFrame_ex = mainFrame_ex;
+	}
+	public MainFrame_lib getMainFrame_lib() {
+		return mainFrame_lib;
+	}
+	public void setMainFrame_lib(MainFrame_lib mainFrame_lib) {
+		this.mainFrame_lib = mainFrame_lib;
+	}
+	public MainFrame_user getMainFrame_user() {
+		return mainFrame_user;
+	}
+	public void setMainFrame_user(MainFrame_user mainFrame_user) {
+		this.mainFrame_user = mainFrame_user;
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCheck) {
@@ -65,19 +99,56 @@ public class PasswordCheckPanel extends JPanel implements ActionListener {
 		}
 	}
 	protected void btnCheckActionPerformed(ActionEvent e) {
-		if(String.valueOf((pfPassword.getPassword())).equals(loginFrame.getMemMainFrame().getMember().getMberPass())) {
-			loginFrame.getMemMainFrame().getContentPane().remove(loginFrame.getMemMainFrame().getpCenter());
-			ProfileModifyPanel modifyPanel = (ProfileModifyPanel) loginFrame.getMemMainFrame().getProfileModifyPanel();
-			loginFrame.getMemMainFrame().setpCenter(modifyPanel);
-			loginFrame.getMemMainFrame().getContentPane().add(loginFrame.getMemMainFrame().getpCenter(),BorderLayout.CENTER);
-			loginFrame.getMemMainFrame().repaint();
-			loginFrame.getMemMainFrame().revalidate();
+		if(member!=null) {
+			String password = new String(pfPassword.getPassword());
+			if(password.equals(member.getMberPass())) {
+				mainFrame_user.getContentPane().remove(mainFrame_user.getpCenter());
+				MemberProfileModifyPanel pCenter = new MemberProfileModifyPanel();
+				pCenter.initTf(member);
+				mainFrame_user.setpCenter(pCenter);
+				mainFrame_user.getContentPane().add(mainFrame_user.getpCenter(),BorderLayout.CENTER);
+				mainFrame_user.repaint();
+				mainFrame_user.revalidate();
+				mainFrame_user = null;
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다 다시 입력해주세요");
+			}
 		}
 		else {
-			JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다 다시 입력해주세요");
-			pfPassword.setText("");
+			if(lib.getTitle().getTitleNo()==1) {
+				String password = new String(pfPassword.getPassword());
+				if(password.equals(lib.getLbPass())) {
+					mainFrame_ex.getContentPane().remove(mainFrame_ex.getpCenter());
+					LibrarianProfileModifyPanel pCenter = new LibrarianProfileModifyPanel();
+					pCenter.initTf(lib);
+					mainFrame_ex.setpCenter(pCenter);
+					mainFrame_ex.getContentPane().add(mainFrame_ex.getpCenter(),BorderLayout.CENTER);
+					mainFrame_ex.repaint();
+					mainFrame_ex.revalidate();
+					mainFrame_ex = null;
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다 다시 입력해주세요");
+				}
+			}
+			else {
+				String password = new String(pfPassword.getPassword());
+				if(password.equals(lib.getLbPass())) {
+					mainFrame_lib.getContentPane().remove(mainFrame_lib.getpCenter());
+					LibrarianProfileModifyPanel pCenter = new LibrarianProfileModifyPanel();
+					pCenter.initTf(lib);
+					mainFrame_lib.setpCenter(pCenter);
+					mainFrame_lib.getContentPane().add(mainFrame_lib.getpCenter(),BorderLayout.CENTER);
+					mainFrame_lib.repaint();
+					mainFrame_lib.revalidate();
+					mainFrame_lib = null;
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다 다시 입력해주세요");
+				}
+			}
+			
 		}
-		
-		
 	}
 }

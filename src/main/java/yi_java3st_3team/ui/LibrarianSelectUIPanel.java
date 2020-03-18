@@ -7,9 +7,11 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -20,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.dto.Librarian;
+import yi_java3st_3team.ui.dialog.LibrarianAddDialog;
 import yi_java3st_3team.ui.dialog.LibrarianUpdateDialog;
 import yi_java3st_3team.ui.list.LibrarianTblPanel;
 import yi_java3st_3team.ui.service.LibrarianUIService;
@@ -36,6 +39,7 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 	private JPanel pList;
 	private JButton btnAdd;
 	private LibrarianUpdateDialog updateDialog;
+	private LibrarianAddDialog AddDialog;
 	private JFrame updateFrame;
 
 	public LibrarianSelectUIPanel() {
@@ -111,8 +115,6 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 	}
 	
 	ActionListener myPop = new ActionListener() {
-		
-		
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -121,7 +123,9 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 					Librarian updateLib = pLibrarianList.getSelectedItem();
 					
 					updateDialog = new LibrarianUpdateDialog(updateFrame, "");
-					
+					updateDialog.setItem(updateLib);
+					updateDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					updateDialog.setVisible(true);
 					
 				}
 			}catch (Exception e1) {
@@ -135,6 +139,9 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 		if (e.getSource() == btnSearch) {
 			btnSearchActionPerformed(e);
 		}
+		if(e.getSource() ==btnAdd) {
+			btnAddActionPerformed(e);
+		}
 	}
 	
 	public void notCheck() {
@@ -143,22 +150,44 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 		}
 	}
 	
+	protected void btnAddActionPerformed(ActionEvent e) {
+		Librarian AddLib = pLibrarianList.getSelectedItem();
+		
+		AddDialog = new LibrarianAddDialog(updateFrame, "");
+		AddDialog.setItem(AddLib);
+		AddDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		AddDialog.setVisible(true);
+		
+		
+	}
+	
 	protected void btnSearchActionPerformed(ActionEvent e) {
 		Librarian lib = new Librarian();
+		
 		notCheck();
 		
 		try {
 			if(radioId.isSelected()) {
 				lib.setLbId(tfSearch.getText().trim());
-				pLibrarianList.loadData(service.searchLibrarianByID(lib));
+				if(service.searchLibrarianByID(lib).isEmpty()) {
+					JOptionPane.showMessageDialog(null, "찾는 사서가 없습니다");
+				}else {
+					pLibrarianList.loadData(service.searchLibrarianByID(lib));
+				}
+				radioId.setSelected(false);
 			}
 			
 			if(radioName.isSelected()) {
 				lib.setLbName(tfSearch.getText().trim());
-				pLibrarianList.loadData(service.searchLibrarianByName(lib));
+				if(service.searchLibrarianByName(lib) ==null) {
+					JOptionPane.showMessageDialog(null, "찾는 사서가 없습니다");
+				}else {
+					pLibrarianList.loadData(service.searchLibrarianByName(lib));
+				}
+				radioName.setSelected(false);
 			}
 		}catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, "찾는 사서가 없습니다.");
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
 }

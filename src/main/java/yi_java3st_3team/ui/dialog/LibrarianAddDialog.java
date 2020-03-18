@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.dto.Grade;
+import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Title;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.list.LibrarianTblPanel;
@@ -148,6 +149,17 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		
 		dispose();
+	}
+	
+	public void setItem(Librarian addLib) {
+			tfId.setText(addLib.getLbId());
+			tfName.setText(addLib.getLbName());
+			tfPassword.setText(addLib.getLbPass());
+			if(addLib.getTitle().getTitleNo()==0) {
+				cmbTitle.setSelectedItem("사서");
+			}else {
+				cmbTitle.setSelectedIndex(addLib.getTitle().getTitleNo()-1);
+			}
 	}
 
 }

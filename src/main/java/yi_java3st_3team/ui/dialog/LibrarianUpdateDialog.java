@@ -148,4 +148,21 @@ public class LibrarianUpdateDialog extends JDialog implements ActionListener {
 		dispose();
 	}
 
+
+	public void setItem(Librarian item) {
+		tfId.setText(item.getLbId());
+		tfName.setText(item.getLbName());
+		if(item.getTitle().getTitleNo() ==0) {
+			cmbTitle.setSelectedItem("사서");
+		}else {
+			cmbTitle.setSelectedIndex(item.getTitle().getTitleNo()-1);
+		}
+		if(item.getWorkCdt()==0) {
+			cmbWork.setSelectedItem("재직");
+		}else {
+			cmbWork.setSelectedIndex(item.getWorkCdt()-1);
+		}
+		
+	}
+
 }

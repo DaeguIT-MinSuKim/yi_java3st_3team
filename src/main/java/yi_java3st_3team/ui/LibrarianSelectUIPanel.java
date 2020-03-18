@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -162,20 +163,31 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 	
 	protected void btnSearchActionPerformed(ActionEvent e) {
 		Librarian lib = new Librarian();
+		
 		notCheck();
 		
 		try {
 			if(radioId.isSelected()) {
 				lib.setLbId(tfSearch.getText().trim());
-				pLibrarianList.loadData(service.searchLibrarianByID(lib));
+				if(service.searchLibrarianByID(lib).isEmpty()) {
+					JOptionPane.showMessageDialog(null, "찾는 사서가 없습니다");
+				}else {
+					pLibrarianList.loadData(service.searchLibrarianByID(lib));
+				}
+				radioId.setSelected(false);
 			}
 			
 			if(radioName.isSelected()) {
 				lib.setLbName(tfSearch.getText().trim());
-				pLibrarianList.loadData(service.searchLibrarianByName(lib));
+				if(service.searchLibrarianByName(lib) ==null) {
+					JOptionPane.showMessageDialog(null, "찾는 사서가 없습니다");
+				}else {
+					pLibrarianList.loadData(service.searchLibrarianByName(lib));
+				}
+				radioName.setSelected(false);
 			}
 		}catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, "찾는 사서가 없습니다.");
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
 }

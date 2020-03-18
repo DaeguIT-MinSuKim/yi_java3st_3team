@@ -79,6 +79,23 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.p
 	order by b1.regist_date;
 
 -- 도서코드 검색
+create view vw_book as 
+	select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year ,
+	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no,
+	   b1.regist_date , b1.dsuse_cdt
+	from book b1 
+		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no 
+		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,
+		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2
+	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
+			b1.book_price = b2.book_price 
+	order by b1.regist_date;
+
+select * from vw_book where book_code like 'A%' and lc_no = 9;
+
+
+
+
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no,
 	   b1.regist_date , b1.dsuse_cdt
@@ -87,10 +104,11 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.p
 		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,
 		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2
 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
-			b1.book_price = b2.book_price and b1.book_code like 'D%' and b1.lc_no = 9
+			b1.book_price = b2.book_price and b1.book_code like 'C%' and b1.lc_no = 9
 	order by b1.regist_date;
 		
--- 도서명 검색
+select count(*) from book where book_name like '82%' group by book_name;
+-- 도서명 검색 
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no,
 	   b1.regist_date , b1.dsuse_cdt
@@ -148,7 +166,6 @@ update book
 delete 
 	from book 
 	where book_code = 'D030104';
-		 
 
 -- 출판사
 select * from publishing_company;
@@ -187,7 +204,7 @@ delete from middle_classification where lclas_no = 10 and mlsfc_no = 3;
 select * from middle_classification;
 select * from middle_classification where mlsfc_no = 1 and mlsfc_name = 'test';
 
--- 추천도서
+-- 추천도서 ----------------------------------------------------------------------------------------------------------------
 select * from book;
 select * from recommendation;
 select book_code, book_cont 
@@ -229,62 +246,6 @@ update recommendation set recommendation.recom_book_no = @cnt:=@cnt+1;
 alter table recommendation auto_increment = 3;
 
 
--- 신청도서
-select * from request_book;
-
--- 전체 검색
-select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
-	from request_book rb1, 
-		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
-	where rb1.reqst_book_name = rb2.reqst_book_name;
-
-select count(*) from request_book group by reqst_book_name;
-
--- 선택조건 모두 검색
-select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
-	from request_book rb1, 
-		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
-	where rb1.reqst_book_name = rb2.reqst_book_name and year(reqst_date) = '2020' and month(reqst_date) = '2' and wh_cdt = 0;
-
--- 년도조건, 입고조건 검색
-select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
-	from request_book rb1, 
-		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
-	where rb1.reqst_book_name = rb2.reqst_book_name and year(reqst_date) = '2020' and wh_cdt = 0;
-
-select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt 
-	from request_book
-	where reqst_mb_id = 'ggg243r4@gmail.com' and reqst_book_name = 'Java의 정석';
-
-insert into request_book(reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt)
-	values ('Java의 정석', '남궁성', '', '도우출판', 'ggg243r4@gmail.com', '2020-03-03', 0);
-
-update request_book 
-	set reqst_mb_id = 'ggg243r4@gmail.com', reqst_book_name = 'Java의 정석', reqst_book_author = '신용권', reqst_book_trnslr = '', 
-		request_book_pls = '한빛미디어', reqst_date = '2020-02-29', wh_cdt = 0
-	where reqst_mb_id = 'ggg243r4@gmail.com' and reqst_book_name = 'Java의 정석';
-
-delete from request_book where reqst_book_no = 12;
-delete from request_book where reqst_book_no = 13;
-delete from request_book where reqst_book_no = 14;
-
--- 컬럼값 초기화
-alter table request_book auto_increment = 11;
-
-select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year , 
-	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no, 
-	   b1.regist_date , b1.dsuse_cdt 
-	from book b1 
-		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no 
-		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,
-		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and b1.book_code like '%D%' and b1.lc_no = 9  order by b1.regist_date
-
-		
-		
 -- 회원 이용 현황 ---------------------------------------------------------------------
 select * from `member` where mber_id = 'fivestar@nate.com';
 
@@ -394,7 +355,70 @@ select pblicte_year, book_name , book_img , authr_name , trnslr_name , b.lc_no ,
 select * from book;
 
 
+-- 신청도서 ---------------------------------------------------------------------------------------------------
+select * from request_book;
+select count(*) from request_book group by reqst_book_name;
 
+-- 전체 검색
+select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
+	from request_book rb1, 
+		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
+	where rb1.reqst_book_name = rb2.reqst_book_name;
+
+-- 선택조건 모두 검색
+select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
+	from request_book rb1, 
+		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
+	where rb1.reqst_book_name = rb2.reqst_book_name and year(reqst_date) = '2020' and month(reqst_date) = '3' and wh_cdt = 0;
+
+-- 년도조건, 입고조건 검색
+select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
+	from request_book rb1, 
+		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
+	where rb1.reqst_book_name = rb2.reqst_book_name and year(reqst_date) = '2020' and wh_cdt = 0;
+
+-- 신청 id와 도서명 검색
+select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
+	from request_book rb1, 
+		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
+	where rb1.reqst_book_name = rb2.reqst_book_name and reqst_mb_id = 'ggg243r4@gmail.com';
+
+-- 신청 도서 등록
+insert into request_book(reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt)
+	values ('Java의 정석', '남궁성', '', '도우출판', 'daddystop@gmail.com', '2020-03-18', 0);
+
+-- 신청 도서 수정
+update request_book 
+	set wh_cdt = 0
+	where reqst_mb_id = 'ggg243r4@gmail.com' and reqst_book_name = 'Java의 정석';
+
+delete from request_book where reqst_book_name = '' and reqst_mb_id = '';
+
+
+
+
+-- 컬럼값 초기화
+alter table request_book auto_increment = 11;
+
+-- delete from request_book where reqst_book_no = 12;
+-- delete from request_book where reqst_book_no = 13;
+-- delete from request_book where reqst_book_no = 14;
+
+
+
+
+		
+select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year , 
+	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no, 
+	   b1.regist_date , b1.dsuse_cdt 
+	from book b1 
+		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no 
+		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,
+		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and b1.book_code like '%D%' and b1.lc_no = 9  order by b1.regist_date
 
 
 

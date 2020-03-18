@@ -21,10 +21,7 @@ public class TitleDaoImpl implements TitleDao {
 
 	private TitleDaoImpl() {
 	}
-	@Override
-	public Title selectTitleByNo(Title title) {
-		return null;
-	}
+	
 
 	@Override
 	public List<Title> selectTitleByAll() {
@@ -50,19 +47,5 @@ public class TitleDaoImpl implements TitleDao {
 		return new Title(titleNo, titleName);
 	}
 
-	@Override
-	public int insertTitle(Title title) {
-		return 0;
-	}
-
-	@Override
-	public int updateTitle(Title title) {
-		return 0;
-	}
-
-	@Override
-	public int deleteTitle(Title title) {
-		return 0;
-	}
 
 }

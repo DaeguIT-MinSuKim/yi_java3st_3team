@@ -27,7 +27,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 	}
 
 	@Override
-	public Librarian selectLibrarianByNo(Librarian lib) {
+	public Librarian selectLibrarianById(Librarian lib) {
 		String sql = "select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, title, join_date, work_cdt from librarian where lb_id = ?";
 		try (Connection con = MysqlDataSource.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);) {
@@ -142,7 +142,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		if(lib.getLbImg()!=null) sql.append("lb_img=?, ");
 		if(lib.getTitle()!=null) sql.append("title=?, ");
 		if(lib.getJoinDate()!=null) sql.append("join_date=?, ");
-		if(lib.getWorkCdt()!=0) sql.append("work_cdt=?, ");
+		if(lib.getWorkCdt()!=-1) sql.append("work_cdt=?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append("where lb_id=?");
 		
@@ -159,7 +159,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 			if(lib.getLbImg()!=null)pstmt.setBytes(argCnt++, lib.getLbImg());
 			if(lib.getTitle()!=null)pstmt.setInt(argCnt++, lib.getTitle().getTitleNo());
 			if(lib.getJoinDate()!=null) pstmt.setTimestamp(argCnt++, new Timestamp(lib.getJoinDate().getTime()));
-			if(lib.getWorkCdt()!=0)pstmt.setInt(argCnt++, lib.getWorkCdt());
+			if(lib.getWorkCdt()!=-1)pstmt.setInt(argCnt++, lib.getWorkCdt());
 			pstmt.setString(argCnt++, lib.getLbId());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
@@ -250,5 +250,68 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		}
 		return null;
 	}
+
+	@Override
+	public List<Librarian> searchLibrarianByID(Librarian librarian) {
+		List<Librarian> list = new ArrayList<>();
+		String sql = "select lb_id, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, title, join_date, work_cdt  \r\n" + 
+				"from librarian\r\n" + 
+				"where lb_id like ? ";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);){
+			pstmt.setString(1, "%" + librarian.getLbId() + "%" );
+				try(ResultSet rs = pstmt.executeQuery()){
+					if (rs.next()) {
+						list = new ArrayList<>();
+						do {
+							list.add(getLibrarianByAll(rs));
+						} while (rs.next());
+					}
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Librarian> searchLibrarianByName(Librarian librarian) {
+		List<Librarian> list = new ArrayList<>();
+		String sql = "select lb_id, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, title, join_date, work_cdt  \r\n" + 
+				"from librarian\r\n" + 
+				"where lb_name like ? ";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);){
+			pstmt.setString(1, "%" + librarian.getLbName() + "%" );
+				try(ResultSet rs = pstmt.executeQuery()){
+					if (rs.next()) {
+						list = new ArrayList<>();
+						do {
+							list.add(getLibrarianByAll(rs));
+						} while (rs.next());
+					}
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	private Librarian getLibrarianByAll(ResultSet rs) throws SQLException {
+		String lbId = rs.getString("lb_id");
+		String lbName = rs.getString("lb_name");
+		Date lbBirthDay = rs.getDate("lb_birthday");
+		ZipCode lbZip = new ZipCode(rs.getInt("lb_zip"));
+		String lbBassAd = rs.getString("lb_bass_ad");
+		String lbDetailAd = rs.getString("lb_detail_ad");
+		String lbTel = rs.getString("lb_tel");
+		byte[] lbImg = rs.getBytes("lb_img");
+		Title title = new Title(rs.getInt("title"));
+		Date joinDate = rs.getDate("join_date");
+		int workCdt = rs.getInt("work_cdt");
+		
+		return new Librarian(lbId, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, lbImg, title, joinDate, workCdt);
+	}
+
 
 }

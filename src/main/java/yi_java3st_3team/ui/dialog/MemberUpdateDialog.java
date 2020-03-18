@@ -174,12 +174,14 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 		btnUpdate = new JButton("  수정  ");
+		btnUpdate.setPreferredSize(new Dimension(75, 25));
 		btnUpdate.addActionListener(this);
 		btnUpdate.setActionCommand("OK");
 		buttonPane.add(btnUpdate);
 		getRootPane().setDefaultButton(btnUpdate);
 
 		btnCancel = new JButton("  취소  ");
+		btnCancel.setPreferredSize(new Dimension(75, 25));
 		btnCancel.addActionListener(this);
 		btnCancel.setActionCommand("Cancel");
 		buttonPane.add(btnCancel);
@@ -265,6 +267,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 			Member upMember = getItem();
 			service.updateMember(upMember);
 			JOptionPane.showMessageDialog(null, String.format("%s [%s]님의 정보가 수정 되었습니다.",upMember.getMberId() ,upMember.getMberName()));
+			dispose();
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}catch (Exception e1) {
@@ -274,7 +277,6 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 
 	private Member getItem() {
 		validCheck();
-		
 		String mberId = tfID.getText().trim();
 		String mberName = tfName.getText().trim();
 		Date mberBrthdy = tfBirthday.getDate();
@@ -290,8 +292,9 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 			//우편번호 검색 안했을 경우
 			int zipcode = Integer.parseInt(tfAd.getText().substring(tfAd.getText().indexOf("(")+1, tfAd.getText().indexOf(")")));
 			zip = new ZipCode(zipcode);
-		//	mberBassAd = tf.trim();
-			mberDetailAd = zipDialog.getDetailAd().trim();
+			mberBassAd = tfAd.getText().substring(tfAd.getText().indexOf(" ")+1, tfAd.getText().lastIndexOf(" "));
+			//mberDetailAd = zipDialog.getDetailAd().trim();
+			mberDetailAd =tfAd.getText().substring(tfAd.getText().lastIndexOf(" "),tfAd.getText().length()-1);
 		}
 		else {
 			//우편번호 검색했을 경우
@@ -300,19 +303,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 			mberDetailAd = zipDialog.getDetailAd().trim();
 		}
 		return new Member(mberId, mberName, mberBrthdy, zip, mberBassAd, mberDetailAd, mberTel, mberImg, grade);
-		
-	                                                                                         
-		
-		//ZipCode mberZip = zipDialog.getZipCode();
-		
-		 
-		
-//		else {
-//			mberZip = zipDialog.getTfZipCode().getText().trim();
-//		}
-		//String mberBassAd = tfAd.getText(zipDialog.getAddrFull());
-		
-		
+
 	}
 	
 	private byte[] getImage() {

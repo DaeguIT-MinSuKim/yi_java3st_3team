@@ -15,7 +15,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -205,8 +204,15 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		}
 		
 		lblGrade.setText(LoginFrame_ex.loginMber.getMberName() + "님 / " + (LoginFrame_ex.loginMber.getGrade().getGradeNo() > 1 ? "우수회원" : "일반회원"));
+		
+		// 데이터 정리 후 삭제
 		lblLendCnt.setText(String.format("%d권", lendService.showLendBookCnt(lending)));
 		lblTotlaCnt.setText(String.format("%d권", lendService.showLendBookTotalCnt(lending)));
+		
+		// 데이터 정리 완료 후 주석 풀기
+//		lblLendCnt.setText(String.format("%d권", member.getLendBookCnt()));
+//		lblTotlaCnt.setText(String.format("%d권", member.getTotalLeCnt()));
+		
 		setService(lendService);
 	}
 	public void actionPerformed(ActionEvent e) {

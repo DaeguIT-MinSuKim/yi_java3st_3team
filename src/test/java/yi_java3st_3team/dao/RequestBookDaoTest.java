@@ -61,8 +61,8 @@ public class RequestBookDaoTest {
 		RequestBook rbook = new RequestBook();
 		rbook.setRequestDate(getYear);
 //		rbook.setWhCdt(1);
-		List<RequestBook> lists = dao.selectRequestBookByYearAndWhCdt(rbook);
-		for(RequestBook rb : lists) LogUtil.prnLog(rb);
+//		List<RequestBook> lists = dao.selectRequestBookByYearAndWhCdt(rbook);
+//		for(RequestBook rb : lists) LogUtil.prnLog(rb);
 	}
 
 	@Test

@@ -7,10 +7,14 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -53,20 +57,6 @@ public class MainFrame_user extends JFrame {
 	private LoginFrame_ex loginFrame;
 	private JPanel bookRankPanel;
 	private Thread menuThread;
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					// select Look and Feel
-					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-					JFrame frame = new MainFrame_user();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public MainFrame_user() {
 		initialize();

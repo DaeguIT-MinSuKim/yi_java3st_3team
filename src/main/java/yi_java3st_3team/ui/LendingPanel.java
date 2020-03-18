@@ -142,7 +142,6 @@ public class LendingPanel extends JPanel implements ActionListener {
 	protected void do_btnSearch_actionPerformed(ActionEvent e) {
 		Book id = new Book(tfBookCode.getText());
 		Book book = bookService.LendingBookByCode(id);
-		JOptionPane.showMessageDialog(null, book.toString());
 		pLendingList.testting(book);
 		tfBookCode.setText("");
 //		lendingService.showLendingBookCode(book);
@@ -153,13 +152,15 @@ public class LendingPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
-		pLendingList.AllCheck();
+		pLendingList.AllChecking(true);
 	}
 
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {
+		pLendingList.AllChecking(false);
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
+		pLendingList.setRent(true);
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {

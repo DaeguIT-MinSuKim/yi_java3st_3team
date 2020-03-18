@@ -109,11 +109,21 @@ public class RentListPanel extends JPanel {
 				new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });
 	}
 
-	public void AllCheck() {
+	public void AllChecking(boolean b) {
 		int i = model.getRowCount();
 		for(int j= 0; j<i; j++) {
-			model.setValueAt(true, j, 7);
+			model.setValueAt(b, j, 7);
 		}
+	}
+
+	public void setRent(boolean b) {
+		int i = model.getRowCount();
+		for(int j =0; j<i; j++) {
+//			if(model.getValueAt(j, 7) == true) {
+				
+//			}
+		}
+//		model.getValueAt(row, 7);
 	}
 
 }

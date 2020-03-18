@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -62,6 +64,8 @@ public class MainFrame_ex extends JFrame {
 	private BookLcAndMlManagerPanel bookCatMag;
 	private OverdueUIPanel overdueMgn;
 	private LoginFrame_ex loginFrame;
+	private LendingPanel lendingPanel;
+	private LendingPanel2 lendingPanel2;
 	private Thread chartThread;
 	private JLabel lblGreeting;
 	private JLabel lblProfile;
@@ -79,6 +83,7 @@ public class MainFrame_ex extends JFrame {
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 //					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 					JFrame frame = new MainFrame_ex();
+					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -437,9 +442,17 @@ public class MainFrame_ex extends JFrame {
 								switch(chkLabel.getText()) {
 								case "대여 관리" :
 									contentPane.remove(pCenter);
+									pCenter = lendingPanel;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
 									break;
 								case "반납 관리" :
 									contentPane.remove(pCenter);
+									pCenter = lendingPanel2;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
 									break;
 								case "연체 조회" :
 									contentPane.remove(pCenter);
@@ -527,6 +540,10 @@ public class MainFrame_ex extends JFrame {
 		return menuAdapter;
 	}
 	
+	public LoginFrame_ex getLoginFrame() {
+		return loginFrame;
+	}
+
 	public void setLoginFrame(LoginFrame_ex loginFrame) {
 		this.loginFrame = loginFrame;
 	}
@@ -565,7 +582,8 @@ public class MainFrame_ex extends JFrame {
 				memberSelect = new MemberSelectUIPanel();
 				
 				overdueMgn = new OverdueUIPanel();
-		
+				lendingPanel = new LendingPanel();
+				lendingPanel2 = new LendingPanel2();
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();

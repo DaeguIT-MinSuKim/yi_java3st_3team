@@ -86,15 +86,189 @@ select *
 	where rturn_date is null;
 	
 select  date_format(curdate(), "%Y-%m-%d"); 
+
+
+SELECT mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, lend_psb_cdt, join_dt, wdr_cdt, od_cnt
+FROM yi_java3st_3team.`member`
+where mber_id = 'ya2354fr@yahoo.com';
+
+
+select total_le_cnt, lend_book_cnt
+	from member
+	where mber_id = 'ya2354fr@yahoo.com';
+
+select lend_psb_cdt, total_le_cnt 
+	from book
+	where book_code = 'A090251';
+
+select * 
+	from lending
+	where mber_id = 'ya2354fr@yahoo.com';
+
+
+
+select  curdate();
+select  ADDDATE(curdate(), 15);
+
+
+/* 1권을 반납한다고 가정했을 때  */
+
+-- 회원 테이블에 총대여권수, 대여도서권수가 대여한 숫자만큼  증가시키는 업데이트
+update member
+	set total_le_cnt = total_le_cnt + 1, lend_book_cnt = lend_book_cnt +1
+	where mber_id = 'ya2354fr@yahoo.com';
+
+-- 도서 테이블에 대여가능여부, 총대여횟수가 1로 바뀌고 , 1이 증가하여야 한다
+update book 
+	set lend_psb_cdt = 1, total_le_cnt = total_le_cnt +1
+	where book_code = 'A090251';
+
+-- 대여반납 테이블에 대여 도서정보가 등록
+INSERT INTO lending
+(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt)
+VALUES('ya2354fr@yahoo.com', 'A090251', curdate(), ADDDATE(curdate(), 15), 0, null, 0);
+
+
+
+-- 대여 프로시저 테스트(회원 아이디, 도서코드)
+drop procedure if exists rent_book;
+
+delimiter $$
+$$
+create procedure rent_book(in _mber_id varchar(30), in _book_cd char(7))
+
+begin
+	declare continue handler for sqlexception
+	begin
+		select '오류 발생했습니다.';
+		rollback;
+	end
+	start transaction
+	set AUTOCOMMIT = 0;
+
+		-- 회원 테이블에 총대여권수, 대여도서권수가 대여한 숫자만큼  증가시키는 업데이트
+		update member
+			set total_le_cnt = total_le_cnt + 1, lend_book_cnt = lend_book_cnt +1
+			where mber_id = _mber_id;
+			
+		-- 도서 테이블에 대여가능여부, 총대여횟수가 1로 바뀌고 , 1이 증가하여야 한다
+		update book 
+			set lend_psb_cdt = 1, total_le_cnt = total_le_cnt +1
+			where book_code = _book_cd;
 	
-/* 반납일이 null값을 오늘날짜로 업데이트*/
+		-- 대여반납 테이블에 대여 도서정보가 등록
+		INSERT INTO lending
+		(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt)
+		VALUES(_mber_id, _book_cd, curdate(), ADDDATE(curdate(), 15), 0, null, 0);
+	
+	commit;
+	set AUTOCOMMIT = 1;
+end $$
+
+delimiter ;
+
+call rent_book('ssdfr@daum.net', 'A090101'); 
+
+
+select total_le_cnt, lend_book_cnt
+	from member
+	where mber_id = 'ssdfr@daum.net';
+
+select lend_psb_cdt, total_le_cnt 
+	from book
+	where book_code = 'A090101';
+
+select count(*) 
+	from lending;
+
+select * 
+	from lending
+	where mber_id = 'ssdfr@daum.net';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 반납대여 테이블
+/* 반납대여 테이블에서 반납일의 null값을 반납날짜로 업데이트*/
 update lending 
 	set rturn_date = date_format(curdate(), "%Y-%m-%d")
 	where rturn_date is null;
 	
+/* 반납대여 테이블에서 반납일이 반납예정일보다 늦다는 조건에 부합할시  연체여부의 값을 연체로 업데이트, 
+ * 반납일이 반납예정일과 같거나 빠를시는 적용 x */
+update lending
+	set overdue_cdt = 1
+	where DATEDIFF(rturn_date, rturn_due_date ) > 0;
 
-select *
-	from lending;
+-- 도서 테이블
+/* 반납이 이루어졌을 경우 책 테이블의 대여가능유무를 대여가능으로 업데이트 */
+update lending l left join book b 
+	on l.book_cd = b.book_code
+	set lend_psb_cdt = 0
+	where rturn_date is not null;
+
+-- 회원 테이블
+-- 회원 테이블의 특정 회원의 대여도서권수(=대여반납 테이블에 반납일이 없는 행의 수)를 감소시키기() 위한 업데이트
+update member m left join lending l
+	on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no
+	set lend_book_cnt = if((g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))) is null, 0, (g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))))
+	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null;
+
+select if((g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))) is null, 0, (g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null)))) as 'lend_book_cnt'
+	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no 
+	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null;
+
+select count( l.rturn_date is null)
+	from member m left join lending l on m.mber_id = l.mber_id
+	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null
+	group by m.mber_id ;
+
+drop trigger if exists cnt_rturn_date_null;
+
+create trigger cnt_rturn_date_null
+
+
+
+
+
+
+
+-- 특정 회원이 도서를 반납했을 경우 반납날을 기준으로 반납예정일 보다 늦었을 경우 회원 테이블의 연체횟수가 1 증가
+update member m left join lending l
+	on m.mber_id = l.mber_id
+	set od_cnt = od_cnt +1
+	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'phonehu@gmail.com'; 
+-- 회원 테이블의 연체횟수가 5회 이상일시 대여가능여부를 업데이트 
+update member
+	set lend_psb_cdt = 1
+	where od_cnt>4;
+
+
+
+
 
 
 select date_format((rturn_date -rturn_due_date), "%Y-%m-%d")
@@ -111,17 +285,10 @@ select overdue_cdt
 	where DATEDIFF(rturn_date, rturn_due_date ) > 0;
 
 
-/* 반납일이 반납예정일보다 늦었을시 연체여부의 값을 연체로 업데이드 */
-update lending
-	set overdue_cdt = 1
-	where DATEDIFF(rturn_date, rturn_due_date ) > 0;
 
 
-/* 반납이 이루어졌을 경우 책 테이블의 대여가능유무를 대여가능으로 업데이트 */
-update lending l left join book b 
-	on l.book_cd = b.book_code
-	set lend_psb_cdt = 0
-	where rturn_date is not null;
+
+
 
 select total_le_cnt, lend_psb_cdt 
 	from book;
@@ -136,7 +303,7 @@ select l.mber_id, m.mber_name , date_format(l.rturn_date, "%Y-%m-%d") as 'rturn_
 	from lending l left join member m on l.mber_id = m.mber_id
 	group by l.mber_id ;
 
-/* 회원이 반납을 했을시 반납일을 기준으로 연체가 되었는지를 판단*/
+/*  특정 회원이 반납을 했을시 반납일을 기준으로 연체가 되었는지를 판단 */
 select mber_id, rturn_date,overdue_cdt, count(book_cd) 
 	from lending
 	where mber_id  = 'phonehu@gmail.com'
@@ -246,10 +413,7 @@ BEGIN
 			set overdue_cdt = 1
 			where DATEDIFF(rturn_date, rturn_due_date ) > 0;
 		
-		update lending l left join book b 
-			on l.book_cd = b.book_code
-			set lend_psb_cdt = 0
-			where rturn_date is not null;
+		
 		
 
 	/* 커밋 */

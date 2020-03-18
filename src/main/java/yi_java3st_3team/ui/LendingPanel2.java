@@ -109,11 +109,11 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
-		pLendingList.AllCheck();
+		pLendingList.AllChecking(true);
 	}
 
 	protected void do_btnCancel_actionPerformed(ActionEvent e) {
-		pLendingList.AllNotCheck();
+		pLendingList.AllChecking(false);
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {

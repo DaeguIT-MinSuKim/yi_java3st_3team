@@ -107,18 +107,6 @@ public class ReturnListPanel extends JPanel {
 				new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate()) });
 	}
 
-	public void AllCheck() {
-		int i = model.getRowCount();
-		for(int j= 0; j<i; j++) {
-			model.setValueAt(true, j, 7);
-		}
-	}
-	public void AllNotCheck() {
-		int i = model.getRowCount();
-		for(int j= 0; j<i; j++) {
-			model.setValueAt(false, j, 7);
-		}
-	}
 	public void testting2(Member member) {
 		List<Lending> list = service.selectLendingByMberId(member);
 		
@@ -135,6 +123,13 @@ public class ReturnListPanel extends JPanel {
 					}); 
 		}
 
+	}
+
+	public void AllChecking(boolean b) {
+		int i = model.getRowCount();
+		for(int j= 0; j<i; j++) {
+			model.setValueAt(b, j, 7);
+		}
 	}
 
 

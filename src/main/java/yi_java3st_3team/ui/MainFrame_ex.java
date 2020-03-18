@@ -7,8 +7,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -63,17 +61,13 @@ public class MainFrame_ex extends JFrame {
 	private BookManagerPanel bookMgn;
 	private RecomBookAddPanel recomBookAdd;
 	private BookPlsManageMentPanel bookPlsMgn;
-<<<<<<< HEAD
+
 	private BookLcAndMlManagerPanel bookCatMag;
 	private OverdueUIPanel overdueMgn;
 	private LoginFrame_ex loginFrame;
-=======
-	private BookLcAndMlManagerPanel bookCatMag;
-	private OverdueUIPanel overdueMgn;
-	private LoginFrame_ex loginFrame;
+
 	private LendingPanel lendingPanel;
 	private LendingPanel2 lendingPanel2;
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 	private Thread chartThread;
 	private JLabel lblGreeting;
 	private JLabel lblProfile;
@@ -494,10 +488,10 @@ public class MainFrame_ex extends JFrame {
 								switch (chkLabel.getText()) {
 								case "직원 등록/수정":
 									contentPane.remove(pCenter);
-<<<<<<< HEAD
+
 									pCenter = LibrarianSelect;
 									contentPane.add(pCenter, BorderLayout.CENTER);
-=======
+
 									pCenter = lendingPanel;
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									contentPane.repaint();
@@ -514,7 +508,6 @@ public class MainFrame_ex extends JFrame {
 									contentPane.remove(pCenter);
 									pCenter = overdueMgn;
 									contentPane.add(pCenter,BorderLayout.CENTER);
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;
@@ -596,13 +589,11 @@ public class MainFrame_ex extends JFrame {
 		};
 		return menuAdapter;
 	}
-<<<<<<< HEAD
-=======
+
 	
 	public LoginFrame_ex getLoginFrame() {
 		return loginFrame;
 	}
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 
 	public void setLoginFrame(LoginFrame_ex loginFrame) {
 		this.loginFrame = loginFrame;
@@ -645,12 +636,10 @@ public class MainFrame_ex extends JFrame {
 				LibrarianSelect = new LibrarianSelectUIPanel();
 
 				overdueMgn = new OverdueUIPanel();
-<<<<<<< HEAD
 
-=======
+
 				lendingPanel = new LendingPanel();
 				lendingPanel2 = new LendingPanel2();
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();

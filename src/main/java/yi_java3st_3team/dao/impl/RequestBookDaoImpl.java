@@ -22,84 +22,28 @@ public class RequestBookDaoImpl implements RequestBookDao {
 		return instance;
 	}
 
-	private RequestBookDaoImpl() {
-	}
-
-	@Override
-	public List<RequestBook> selectRequestBookByDateAndWhCdt(RequestBook rb) {
-		StringBuilder sql = new StringBuilder(
-				"select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , "
-						+ "request_book_pls , reqst_mb_id , reqst_date , wh_cdt " + " from request_book "
-						+ "	where year(reqst_date) = ? and month(reqst_date) = ? ");
-		if (rb.getWhCdt() > -1)
-			sql.append("and wh_cdt = ?");
-		List<RequestBook> list = null;
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
-			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
-			pstmt.setString(2, new Timestamp(rb.getRequestDate().getTime()).toString().substring(5, 7));
-			if (rb.getWhCdt() > -1)
-				pstmt.setInt(3, rb.getWhCdt());
-			LogUtil.prnLog(pstmt);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					list = new ArrayList<>();
-					do {
-						list.add(getRequestBook(rs));
-					} while (rs.next());
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
-	@Override
-	public List<RequestBook> selectRequestBookByYearAndWhCdt(RequestBook rb) {
-		StringBuilder sql = new StringBuilder(
-				"select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , "
-						+ "request_book_pls , reqst_mb_id , reqst_date , wh_cdt " + " from request_book "
-						+ "	where year(reqst_date) = ? ");
-		if (rb.getWhCdt() > -1) sql.append("and wh_cdt = ?");
-		List<RequestBook> list = null;
-		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
-			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
-			if (rb.getWhCdt() > -1) pstmt.setInt(2, rb.getWhCdt());
-			LogUtil.prnLog(pstmt);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					list = new ArrayList<>();
-					do {
-						list.add(getRequestBook(rs));
-					} while (rs.next());
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
+	private RequestBookDaoImpl() {}
+	
 	private RequestBook getRequestBook(ResultSet rs) throws SQLException {
 		int requestBookNo = rs.getInt("reqst_book_no");
-		Member requestMbId = new Member(rs.getString("reqst_mb_id"));
 		String requestBookName = rs.getString("reqst_book_name");
 		String requestBookAuthor = rs.getString("reqst_book_author");
 		String requestBookTrnslr = rs.getString("reqst_book_trnslr");
 		String requestBookPls = rs.getString("request_book_pls");
+		Member requestMbId = new Member(rs.getString("reqst_mb_id"));
 		Date requestDate = rs.getTimestamp("reqst_date");
 		int whCdt = rs.getInt("wh_cdt");
+		int overlapCnt = rs.getInt("cnt");
 
-		return new RequestBook(requestBookNo, requestMbId, requestBookName, requestBookAuthor, requestBookTrnslr,
-				requestBookPls, requestDate, whCdt);
+		return new RequestBook(requestBookNo, requestMbId, requestBookName, requestBookAuthor, requestBookTrnslr, requestBookPls, 
+				requestDate, whCdt, overlapCnt);
 	}
-
+	
 	@Override
 	public List<RequestBook> selectRequestBookByAll() {
-		String sql = "select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , "
-				+ "reqst_mb_id , reqst_date , wh_cdt " + "	from request_book ";
+		String sql = "select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, "
+						+ "reqst_date, wh_cdt, cnt \r\n" 
+						+ "	from vw_request_book";
 		List<RequestBook> list = null;
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -117,11 +61,70 @@ public class RequestBookDaoImpl implements RequestBookDao {
 
 		return list;
 	}
+	
+	@Override
+	public List<RequestBook> selectRequestBookByOptionAll(RequestBook rb) {
+		StringBuilder sql = new StringBuilder("select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, "
+				+ "reqst_mb_id, reqst_date, wh_cdt, cnt \r\n" 
+				+ "	from vw_request_book "
+				+ "where year(reqst_date) = ? and month(reqst_date) = ?");
+		if(rb.getWhCdt() > -1) sql.append("and wh_cdt = ?");
+		
+		List<RequestBook> list = null;
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())){
+			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
+			pstmt.setString(2, new Timestamp(rb.getRequestDate().getTime()).toString().substring(5, 7));
+			if(rb.getWhCdt() > -1) pstmt.setInt(3, rb.getWhCdt());
+			
+			try (ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					list = new ArrayList<>();
+					do {
+						list.add(getRequestBook(rs));
+					} while(rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	@Override
+	public List<RequestBook> selectRequestBookByYearOption(RequestBook rb) {
+		StringBuilder sql = new StringBuilder("select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, "
+				+ "reqst_mb_id, reqst_date, wh_cdt, cnt \r\n" 
+				+ "	from vw_request_book "
+				+ "where year(reqst_date) = ? ");
+		if(rb.getWhCdt() > -1) sql.append("and wh_cdt = ?");
+		
+		List<RequestBook> list = null;
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())){
+			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
+			if(rb.getWhCdt() > -1) pstmt.setInt(2, rb.getWhCdt());
+			
+			try (ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					list = new ArrayList<>();
+					do {
+						list.add(getRequestBook(rs));
+					} while(rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
 	public List<RequestBook> selectRequestBookById(RequestBook rb) {
-		String sql = "select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , "
-				+ "reqst_mb_id , reqst_date , wh_cdt \r\n" + "	from request_book\r\n" + "	where reqst_mb_id = ?";
+		String sql = "select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, "
+					+ "reqst_date, wh_cdt, cnt \r\n"  
+					+ "	from vw_request_book \r\n"  
+					+ "	where reqst_mb_id = ?";
 		List<RequestBook> list = null;
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, rb.getRequestMbId().getMberId());
@@ -140,6 +143,36 @@ public class RequestBookDaoImpl implements RequestBookDao {
 		return list;
 	}
 
+
+	@Override
+	public List<RequestBook> selectRequestBookByIdAndYearOption(RequestBook rb) {
+		String sql = "select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, "
+					+ "reqst_date, wh_cdt, cnt \r\n" 
+					+ "	from vw_request_book \r\n" 
+					+ "	where year(reqst_date) = ? and reqst_mb_id = ?";
+		List<RequestBook> list = null;
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
+			pstmt.setString(2, rb.getRequestMbId().getMberId());
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					list = new ArrayList<>();
+					do {
+						list.add(getRequestBook(rs));
+					} while (rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+
+	
+	
 	@Override
 	public int insertRequestBook(RequestBook rb) {
 		String sql = "insert into request_book"
@@ -170,9 +203,9 @@ public class RequestBookDaoImpl implements RequestBookDao {
 		if (rb.getRequestBookTrnslr() != null) sql.append("reqst_book_trnslr = ?, ");
 		if (rb.getRequestBookPls() != null) sql.append("request_book_pls = ?, ");
 		if (rb.getRequestDate() != null) sql.append("reqst_date = ?, ");
-		if (rb.getWhCdt() != 0) sql.append("wh_cdt = ?, ");
+		if (rb.getWhCdt() > -1) sql.append("wh_cdt = ?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
-		sql.append("where reqst_book_no = ?");
+		sql.append(" where reqst_book_name = ? and request_book_pls = ?");
 
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
@@ -190,9 +223,10 @@ public class RequestBookDaoImpl implements RequestBookDao {
 				pstmt.setString(argCnt++, rb.getRequestBookPls());
 			if (rb.getRequestDate() != null)
 				pstmt.setTimestamp(argCnt++, new Timestamp(rb.getRequestDate().getTime()));
-			if (rb.getWhCdt() != 0)
+			if (rb.getWhCdt() > -1)
 				pstmt.setInt(argCnt++, rb.getWhCdt());
-			pstmt.setInt(argCnt++, rb.getRequestBookNo());
+			pstmt.setString(argCnt++, rb.getRequestBookName());
+			pstmt.setString(argCnt++, rb.getRequestBookPls());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -204,9 +238,10 @@ public class RequestBookDaoImpl implements RequestBookDao {
 
 	@Override
 	public int deleteRequestBook(RequestBook rb) {
-		String sql = "delete from request_book where reqst_book_no = ?";
+		String sql = "delete from request_book where reqst_mb_id = ? and reqst_book_name = ?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, rb.getRequestBookNo());
+			pstmt.setString(1, rb.getRequestMbId().getMberId());
+			pstmt.setString(2, rb.getRequestBookName());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -214,5 +249,63 @@ public class RequestBookDaoImpl implements RequestBookDao {
 		}
 		return 0;
 	}
+	
+
+//	@Override
+//	public List<RequestBook> selectRequestBookByDateAndWhCdt(RequestBook rb) {
+//		StringBuilder sql = new StringBuilder(
+//				"select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , "
+//						+ "request_book_pls , reqst_mb_id , reqst_date , wh_cdt " + " from request_book "
+//						+ "	where year(reqst_date) = ? and month(reqst_date) = ? ");
+//		if (rb.getWhCdt() > -1)
+//			sql.append("and wh_cdt = ?");
+//		List<RequestBook> list = null;
+//		try (Connection con = MysqlDataSource.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+//			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
+//			pstmt.setString(2, new Timestamp(rb.getRequestDate().getTime()).toString().substring(5, 7));
+//			if (rb.getWhCdt() > -1)
+//				pstmt.setInt(3, rb.getWhCdt());
+//			LogUtil.prnLog(pstmt);
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					list = new ArrayList<>();
+//					do {
+//						list.add(getRequestBook(rs));
+//					} while (rs.next());
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+//	}
+//
+//	@Override
+//	public List<RequestBook> selectRequestBookByYearAndWhCdt(RequestBook rb) {
+//		StringBuilder sql = new StringBuilder(
+//				"select reqst_book_no , reqst_book_name , reqst_book_author , reqst_book_trnslr , "
+//						+ "request_book_pls , reqst_mb_id , reqst_date , wh_cdt " + " from request_book "
+//						+ "	where year(reqst_date) = ? ");
+//		if (rb.getWhCdt() > -1) sql.append("and wh_cdt = ?");
+//		List<RequestBook> list = null;
+//		try (Connection con = MysqlDataSource.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+//			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
+//			if (rb.getWhCdt() > -1) pstmt.setInt(2, rb.getWhCdt());
+//			LogUtil.prnLog(pstmt);
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					list = new ArrayList<>();
+//					do {
+//						list.add(getRequestBook(rs));
+//					} while (rs.next());
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+//	}
 
 }

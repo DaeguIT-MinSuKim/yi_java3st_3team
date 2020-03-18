@@ -366,37 +366,46 @@ select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trns
 		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
 	where rb1.reqst_book_name = rb2.reqst_book_name;
 
--- 선택조건 모두 검색
+-- 전체 검색 (view)
+create view vw_request_book as 
 select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
 	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
 	from request_book rb1, 
 		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
-	where rb1.reqst_book_name = rb2.reqst_book_name and year(reqst_date) = '2020' and month(reqst_date) = '3' and wh_cdt = 0;
+	where rb1.reqst_book_name = rb2.reqst_book_name;
+
+select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
+	from vw_request_book; 
+
+-- 선택조건 모두 검색
+select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt
+	from vw_request_book 
+	where year(reqst_date) = '2020' and month(reqst_date) = '3' and wh_cdt = 0;
 
 -- 년도조건, 입고조건 검색
-select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
-	from request_book rb1, 
-		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
-	where rb1.reqst_book_name = rb2.reqst_book_name and year(reqst_date) = '2020' and wh_cdt = 0;
+select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt
+	from vw_request_book 
+	where year(reqst_date) = '2020' and wh_cdt = 0;
 
--- 신청 id와 도서명 검색
-select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
-	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
-	from request_book rb1, 
-		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
-	where rb1.reqst_book_name = rb2.reqst_book_name and reqst_mb_id = 'ggg243r4@gmail.com';
+-- 신청 id와 도서명 검색 (회원 페이지에서 나와야할 신청도서 리스트)
+select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
+	from vw_request_book 
+	where reqst_mb_id = 'ggg243r4@gmail.com';
 
--- 신청 도서 등록
+select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
+	from vw_request_book 
+	where year(reqst_date) = '2020' and reqst_mb_id = 'ggg243r4@gmail.com';
+
+-- 신청 도서 등록 (회원 페이지)
 insert into request_book(reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt)
 	values ('Java의 정석', '남궁성', '', '도우출판', 'daddystop@gmail.com', '2020-03-18', 0);
 
--- 신청 도서 수정
+-- 입고 처리
 update request_book 
 	set wh_cdt = 0
-	where reqst_mb_id = 'ggg243r4@gmail.com' and reqst_book_name = 'Java의 정석';
+	where reqst_book_name = 'Java의 정석' and request_book_pls = '도우출판';
 
-delete from request_book where reqst_book_name = '' and reqst_mb_id = '';
+delete from request_book where reqst_mb_id = '' and reqst_book_name = '';
 
 
 

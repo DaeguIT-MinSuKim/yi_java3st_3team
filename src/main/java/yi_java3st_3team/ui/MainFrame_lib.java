@@ -34,21 +34,19 @@ import yi_java3st_3team.ui.service.MemberUIService;
 
 
 @SuppressWarnings("serial")
-public class MainFrame_ex extends JFrame {
+public class MainFrame_lib extends JFrame {
 	private JPanel contentPane;
 	private JPanel pSouthMenuPanel;
 	private JLabel lblHome;
 	private JLabel lblBookMgn;
 	private JLabel lblMemMgn;
 	private JLabel lblChkOutRtn;
-	private JLabel lblEmpMgn;
 	private JLabel lblStatistic;
 	private JLabel lblLogOut;
 	private JPanel pHome;
 	private JPanel pBookMgn;
 	private JPanel pMemMgn;
 	private JPanel pChkOutRtn;
-	private JPanel pEmpMgn;
 	private JPanel pStatistic;
 	private JPanel pLogout;
 	private JPanel pWest;
@@ -62,7 +60,6 @@ public class MainFrame_ex extends JFrame {
 	private MemberInfoPanelPieChart memInfoChart;
 	private MemberJoinUIPanel memberJoin;
 	private MemberSelectUIPanel memberSelect;
-	private LibrarianSelectUIPanel LibrarianSelect;
 
 	private BookRegistrationPanel bookReqst;
 	private BookManagerPanel bookMgn;
@@ -82,7 +79,8 @@ public class MainFrame_ex extends JFrame {
 	private Librarian lib;
 	private Member member;
 	private Thread panelThread;
-	private MainFrame_ex mainFrame;
+	private MainFrame_lib mainFrame;
+	private JPanel pDummy1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -95,7 +93,7 @@ public class MainFrame_ex extends JFrame {
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
 //					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 //					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-					JFrame frame = new MainFrame_ex();
+					JFrame frame = new MainFrame_lib();
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -105,7 +103,7 @@ public class MainFrame_ex extends JFrame {
 		});
 	}
 
-	public MainFrame_ex() {
+	public MainFrame_lib() {
 		initialize();
 	}
 
@@ -175,17 +173,6 @@ public class MainFrame_ex extends JFrame {
 		lblChkOutRtn.setFont(new Font("굴림", Font.PLAIN, 15));
 		pChkOutRtn.add(lblChkOutRtn, BorderLayout.NORTH);
 
-		pEmpMgn = new JPanel();
-		pEmpMgn.setBackground(Color.WHITE);
-		pEmpMgn.setBorder(new EmptyBorder(5, 5, 5, 5));
-		pSouthMenuPanel.add(pEmpMgn);
-		pEmpMgn.setLayout(new BorderLayout(0, 0));
-
-		lblEmpMgn = new JLabel("직원관리");
-		lblEmpMgn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmpMgn.setFont(new Font("굴림", Font.PLAIN, 15));
-		pEmpMgn.add(lblEmpMgn, BorderLayout.NORTH);
-
 		pStatistic = new JPanel();
 		pStatistic.setBackground(Color.WHITE);
 		pStatistic.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -205,14 +192,18 @@ public class MainFrame_ex extends JFrame {
 		lblProfile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProfile.setFont(new Font("굴림", Font.PLAIN, 15));
 		pProfile.add(lblProfile);
-
-		JPanel pDummy1 = new JPanel();
+		
+		pDummy1 = new JPanel();
 		pDummy1.setBackground(Color.WHITE);
 		pSouthMenuPanel.add(pDummy1);
 
 		JPanel pDummy2 = new JPanel();
 		pDummy2.setBackground(Color.WHITE);
 		pSouthMenuPanel.add(pDummy2);
+
+		JPanel pDummy3 = new JPanel();
+		pDummy3.setBackground(Color.WHITE);
+		pSouthMenuPanel.add(pDummy3);
 
 		pLogout = new JPanel();
 		pLogout.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -246,7 +237,6 @@ public class MainFrame_ex extends JFrame {
 		pBookMgn.addMouseListener(menuAdapter);
 		pMemMgn.addMouseListener(menuAdapter);
 		pChkOutRtn.addMouseListener(menuAdapter);
-		pEmpMgn.addMouseListener(menuAdapter);
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		pProfile.addMouseListener(menuAdapter);
@@ -282,9 +272,9 @@ public class MainFrame_ex extends JFrame {
 		MouseAdapter menuAdapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel[] menuPanels = new JPanel[] { pHome, pBookMgn, pMemMgn, pChkOutRtn, pEmpMgn, pStatistic,
+				JPanel[] menuPanels = new JPanel[] { pHome, pBookMgn, pMemMgn, pChkOutRtn, pStatistic,
 						pProfile };
-				JLabel[] menuLabels = new JLabel[] { lblHome, lblBookMgn, lblMemMgn, lblChkOutRtn, lblEmpMgn,
+				JLabel[] menuLabels = new JLabel[] { lblHome, lblBookMgn, lblMemMgn, lblChkOutRtn,
 						lblStatistic, lblProfile };
 				// Menu panel,label 초기화
 				for (JPanel p : menuPanels) {
@@ -484,66 +474,7 @@ public class MainFrame_ex extends JFrame {
 					contentPane.add(pWest, BorderLayout.WEST);
 					repaint();
 					revalidate();
-					break;
-					
-				case "직원관리":
-					contentPane.remove(pWest);
-					contentPane.remove(pCenter);
-					pCenter = new JPanel();
-					pCenter.setBackground(Color.white);
-					pWest = new WestLibrarianManagementPanel();
-					JPanel[] pLibrarian = ((WestLibrarianManagementPanel) pWest).getPanels();
-					for (JPanel panel : pLibrarian) {
-						panel.addMouseListener(new MouseAdapter() {
-							@Override
-							public void mouseClicked(MouseEvent e) {
-								for (JPanel panel : pLibrarian) {
-									JLabel label = (JLabel) panel.getComponent(0);
-									panel.setBackground(new Color(240, 240, 240));
-									label.setForeground(Color.black);
-								}
-								JPanel chkPanel = (JPanel) e.getSource();
-								JLabel chkLabel = (JLabel) chkPanel.getComponent(0);
-								chkPanel.setBackground(new Color(52, 147, 221));
-								chkLabel.setForeground(Color.white);
-								switch (chkLabel.getText()) {
-								case "직원 등록/수정":
-									contentPane.remove(pCenter);
-									pCenter = LibrarianSelect;
-<<<<<<< HEAD
-									contentPane.add(pCenter, BorderLayout.CENTER);
-=======
-									contentPane.add(pCenter, BorderLayout.CENTER);
-									pCenter = lendingPanel;
-									contentPane.add(pCenter,BorderLayout.CENTER);
-									contentPane.repaint();
-									contentPane.revalidate();
-									break;
-								case "반납 관리" :
-									contentPane.remove(pCenter);
-									pCenter = lendingPanel2;
-									contentPane.add(pCenter,BorderLayout.CENTER);
-									contentPane.repaint();
-									contentPane.revalidate();
-									break;
-								case "연체 조회" :
-									contentPane.remove(pCenter);
-									pCenter = overdueMgn;
-									contentPane.add(pCenter,BorderLayout.CENTER);
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
-									contentPane.repaint();
-									contentPane.revalidate();
-									break;
-								}
-							}
-						});
-					}
-					contentPane.add(pCenter, BorderLayout.CENTER);
-					contentPane.add(pWest, BorderLayout.WEST);
-					repaint();
-					revalidate();
-					break;
-					
+					break;			
 				case "통계조회":
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
@@ -648,11 +579,11 @@ public class MainFrame_ex extends JFrame {
 		this.member = service.SelectedByNo(member);
 	}
 
-	public MainFrame_ex getMainFrame() {
+	public MainFrame_lib getMainFrame() {
 		return mainFrame;
 	}
 	
-	public void setMainFrame(MainFrame_ex mainFrame) {
+	public void setMainFrame(MainFrame_lib mainFrame) {
 		this.mainFrame = mainFrame;
 	}
 	
@@ -698,7 +629,6 @@ public class MainFrame_ex extends JFrame {
 
 				memberJoin = new MemberJoinUIPanel();
 				memberSelect = new MemberSelectUIPanel();
-				LibrarianSelect = new LibrarianSelectUIPanel();
 
 				overdueMgn = new OverdueUIPanel();
 
@@ -718,7 +648,7 @@ public class MainFrame_ex extends JFrame {
 	private JPanel getPassMenuPanel() {
 		JPanel panel = new PasswordCheckPanel();
 		((PasswordCheckPanel) panel).setLib(lib);
-		((PasswordCheckPanel) panel).setMainFrame_ex(mainFrame);
+		((PasswordCheckPanel) panel).setMainFrame_lib(mainFrame);
 		return panel;
 	}	
 }

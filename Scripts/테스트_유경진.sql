@@ -1,17 +1,9 @@
 select user(), database();
 
-select lclas_no , mlsfc_no , mlsfc_name 
-	from middle_classification
-	where lclas_no = 2;
-
-select * from `member`;
 -- 탈퇴회원 테스트 용 데이터 변경
-update `member` 
-	set wdr_cdt = 0
-	where mber_id = 'daddystop@gmail.com';
-
-select * from librarian;
-
+--update `member` 
+--	set wdr_cdt = 1
+--	where mber_id = 'daddystop@gmail.com';
 
 -- login 테스트
 select * from `member`;
@@ -22,7 +14,6 @@ select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad ,
 	where mber_id = "daddystop@gmail.com" and mber_pass = "airopwieop3678";
 	
 select * from librarian;
-
 select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, 
        lb_tel, lb_img, title, join_date, work_cdt
 	from librarian
@@ -57,7 +48,6 @@ select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad,
 -- book -------------------------------------------------------------------------------
 select * from book where pls = 196;
 select book_code from book order by regist_date desc limit 1;
-
 
 select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,

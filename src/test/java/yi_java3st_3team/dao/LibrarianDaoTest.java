@@ -38,7 +38,7 @@ public class LibrarianDaoTest {
 	public void test01SelectLibrarianByNo() {
 		//이름 지은건 No인데 id를 기준으로 잡는다
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		Librarian lib = dao.selectLibrarianByNo(new Librarian("iiopio5@book.ff.kr"));
+		Librarian lib = dao.selectLibrarianById(new Librarian("iiopio5@book.ff.kr"));
 		Assert.assertNotNull(lib);
 		LogUtil.prnLog(String.format("%1$tF - %1tT %1$tY년 %1$tm월 %1$td일 ", lib.getJoinDate()));
 		

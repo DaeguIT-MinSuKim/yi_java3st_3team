@@ -46,4 +46,6 @@ public interface LendingDao {
 	List<Lending> selectLendingByMberIdChecking();
 	
 	List<Lending> selectLendingBastList();
+	
+	int insertLendingUpdateBookMember(Member member, Book book);
 }

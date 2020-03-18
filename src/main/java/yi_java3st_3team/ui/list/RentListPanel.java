@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import yi_java3st_3team.dto.Book;
+import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
@@ -127,7 +128,9 @@ public class RentListPanel extends JPanel {
 //				book.setBookCode((String)model.getValueAt(j, 0));
 				String bookCd = (String)model.getValueAt(j, 0);
 				JOptionPane.showMessageDialog(null, bookCd);
-				service.insertSelectedLendingList(mberId, bookCd);
+				Member m = service.selectedMberId(mberId);
+				Book b = service.selectedBookCd(bookCd);
+				service.insertSelectedLendingList(m, b);
 			}
 		}
 	}

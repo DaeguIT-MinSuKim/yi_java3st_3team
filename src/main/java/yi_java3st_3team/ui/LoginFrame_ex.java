@@ -67,6 +67,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	private JPasswordField pfLoginPw;
 	private MainFrame_ex ADChiefMainFrame;
 	private MainFrame_user memMainFrame;
+	private MainFrame_lib libMainFrame;
 
 	private Dimension bookImg = new Dimension(100, 160);
 	private Dimension libraryIcon = new Dimension(96, 96);
@@ -400,18 +401,24 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 					dispose();
 				}
 				if (loginLib.getTitle().getTitleNo() == 0) {
-					JOptionPane.showMessageDialog(null, "사서 로그인 [테스트용]");
+					libMainFrame = new MainFrame_lib();
+					libMainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					libMainFrame.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosed(WindowEvent e) {
+							libMainFrame.getLoginFrame().setVisible(true);
+						}
+					});
+					libMainFrame.setLoginFrame(this);
+					libMainFrame.setLib(libService,loginLib);
+					libMainFrame.getLblGreeting().setText(loginLib.getLbName() + "님 환영합니다~");
+					libMainFrame.setVisible(true);
 					clearTf();
+					dispose();
 					
-				}
-				
-				return;
+				}	
 			}
-			else {
-				JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다 다시 확인해주세요");
-			}
-
-			if (loginMber != null) {
+			else if (loginMber != null) {
 				if(loginMber.getWdrCdt() == 1) {
 					JOptionPane.showMessageDialog(null, "탈퇴회원입니다.");
 					return;
@@ -429,6 +436,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 				memMainFrame.setMember(memService, loginMber);
 				memMainFrame.getLblGreeting().setText(loginMber.getMberName() + "님 환영합니다~");
 				memMainFrame.setVisible(true);
+				clearTf();
 				dispose();
 			}
 			else {

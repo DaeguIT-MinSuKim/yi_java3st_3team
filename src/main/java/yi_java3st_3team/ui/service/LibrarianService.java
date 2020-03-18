@@ -17,7 +17,7 @@ public class LibrarianService {
 		return dao.selectLibrarianByAll();
 	}
 	public Librarian showLibrarianById(Librarian lib) throws SQLException {
-		return dao.selectLibrarianByNo(lib);
+		return dao.selectLibrarianById(lib);
 	}
 	public int addLibrarian(Librarian lib) throws SQLException {
 		return dao.insertLibrarian(lib);

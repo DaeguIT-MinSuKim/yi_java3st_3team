@@ -10,6 +10,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -380,6 +382,13 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 				}
 				if (loginLib.getTitle().getTitleNo() == 1) {
 					ADChiefMainFrame = new MainFrame_ex();
+					ADChiefMainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
+					ADChiefMainFrame.addWindowListener(new WindowAdapter() {
+						@Override
+						public void windowClosed(WindowEvent e) {
+							ADChiefMainFrame.getLoginFrame().setVisible(true);
+						}
+					});
 					ADChiefMainFrame.setLoginFrame(this);
 					ADChiefMainFrame.getLblGreeting().setText(loginLib.getLbName() + "님 환영합니다~");
 					ADChiefMainFrame.setVisible(true);
@@ -401,6 +410,14 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 					return;
 				}
 				memMainFrame = new MainFrame_user();
+				memMainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				memMainFrame.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosed(WindowEvent e) {
+						memMainFrame.getLoginFrame().setVisible(true);
+					}
+					
+				});
 				memMainFrame.setLoginFrame(this);
 				memMainFrame.setMember(memService, loginMber);
 				memMainFrame.getLblGreeting().setText(loginMber.getMberName() + "님 환영합니다~");

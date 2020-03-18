@@ -1,18 +1,7 @@
 {
 	"folders": {},
 	"connections": {
-<<<<<<< HEAD
-		"mysql5-170e76599f5-1b3c240fc09ba6a2": {
-=======
-<<<<<<< HEAD
-		"mysql5-170e6e39230-64573a153149d1": {
-=======
-<<<<<<< HEAD
-		"mysql5-170e402a166-7493e8eeefede5a8": {
-=======
-		"mysql5-170e6e1b579-74c356662d826454": {
->>>>>>> refs/heads/hotfix_Hwang
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
+		"mysql5-170ec34e5b6-5eebb927fc8e33af": {
 			"provider": "mysql",
 			"driver": "mysql5",
 			"name": "MySQL - localhost",
@@ -27,16 +16,7 @@
 				"handlers": {}
 			}
 		},
-<<<<<<< HEAD
-		"mysql5-170e765e0b8-4c95f7713aac45e3": {
-=======
-<<<<<<< HEAD
-		"mysql5-170e403a1ac-326b10a88db87ec0": {
-=======
-		"mysql5-170e6e262e7-66ca43b221fb3616": {
->>>>>>> refs/heads/hotfix_Hwang
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
+		"mysql5-170ec4195ad-7a30770b5fdd97e1": {
 			"provider": "mysql",
 			"driver": "mysql5",
 			"name": "MySQL - yi_java3st_3team",

@@ -306,6 +306,7 @@ public class MainFrame_user extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((MemberUseCdtPanel)pCenter).setItem();
 									break;
 								}
 							}	
@@ -375,6 +376,7 @@ public class MainFrame_user extends JFrame {
 					dispose();
 					LoginFrame_ex.loginMber = null;
 					loginFrame.setVisible(true);
+					loginFrame.loadDate();
 					loginFrame.clearTf();
 					break;
 			}

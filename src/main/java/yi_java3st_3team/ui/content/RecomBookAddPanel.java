@@ -47,6 +47,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 	private String getBookCode;
 	private RecomUiService service;
 	private JLabel lblTitle;
+	private BookListPanel pBookList;
 
 	public RecomBookAddPanel() {
 		service = new RecomUiService();
@@ -62,7 +63,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		add(pList);
 		pList.setLayout(new BorderLayout(0, 0));
 
-		BookListPanel pBookList = new BookListPanel(this);
+		pBookList = new BookListPanel(this);
 		pBookList.setPreferredSize(new Dimension(104, 10));
 		pList.add(pBookList);
 
@@ -209,6 +210,11 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		Book bookCode = new Book(getBookCode);
 		String bookCont = taPost.getText();
 		return new Recommendation(bookCode, bookCont);
+	}
+	
+	public void loadDate() {
+		pBookList.loadDate();
+		setItem(service.showRecomBookByLastNo());
 	}
 
 	private void setPicByte(byte[] bookImg) {

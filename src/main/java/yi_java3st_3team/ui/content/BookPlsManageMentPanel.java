@@ -121,6 +121,10 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 
 		setService(service);
 	}
+	
+	public void loadDate() {
+		pPlsList.loadData(service.showPlsListAll());
+	}
 
 	public void setService(PublishingCompanyUiService service) {
 		this.service = service;

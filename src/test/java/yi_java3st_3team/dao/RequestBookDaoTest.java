@@ -50,14 +50,18 @@ public class RequestBookDaoTest {
 	@Test
 	public void test02SelectRequestBookByDate() throws ParseException {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
-		String selDate = "2020-02-10";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		String selDate = "2020-03";
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+//		Date getYear = sdf.parse(selDate);
+		
+		String selDate = "2020";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		Date getYear = sdf.parse(selDate);
 		
-		RequestBook rbDate = new RequestBook();
-		rbDate.setRequestDate(getYear);
-		
-		List<RequestBook> lists = null;
+		RequestBook rbook = new RequestBook();
+		rbook.setRequestDate(getYear);
+//		rbook.setWhCdt(1);
+		List<RequestBook> lists = dao.selectRequestBookByYearAndWhCdt(rbook);
 		for(RequestBook rb : lists) LogUtil.prnLog(rb);
 	}
 

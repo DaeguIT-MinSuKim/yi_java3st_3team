@@ -334,6 +334,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookManagerPanel)pCenter).loadDate();
 									break;
 								case "추천도서 등록" :
 									contentPane.remove(pCenter);
@@ -341,6 +342,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((RecomBookAddPanel)pCenter).loadDate();
 									break;
 								case "출판사 관리" :
 									contentPane.remove(pCenter);
@@ -517,6 +519,7 @@ public class MainFrame_ex extends JFrame {
 					dispose();
 					LoginFrame_ex.loginLib = null;
 					loginFrame.setVisible(true);
+					loginFrame.loadDate();
 					loginFrame.clearTf();
 					break;
 				}

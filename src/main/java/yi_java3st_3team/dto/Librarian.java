@@ -23,6 +23,24 @@ public class Librarian {
 		this.lbId = lbId;
 	}
 
+	
+	
+	public Librarian(String lbId, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd, String lbDetailAd,
+			String lbTel, byte[] lbImg, Title title, Date joinDate, int workCdt) {
+		super();
+		this.lbId = lbId;
+		this.lbName = lbName;
+		this.lbBirthDay = lbBirthDay;
+		this.lbZip = lbZip;
+		this.lbBassAd = lbBassAd;
+		this.lbDetailAd = lbDetailAd;
+		this.lbTel = lbTel;
+		this.lbImg = lbImg;
+		this.title = title;
+		this.joinDate = joinDate;
+		this.workCdt = workCdt;
+	}
+
 	public Librarian(String lbId, String lbPass) {
 		this.lbId = lbId;
 		this.lbPass = lbPass;
@@ -37,6 +55,19 @@ public class Librarian {
 		this.lbId = lbId;
 		this.lbName = lbName;
 		this.lbBirthDay = lbBirthDay;
+	}
+	
+	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
+			String lbDetailAd, String lbTel, byte[] lbImg) {
+		this.lbId = lbId;
+		this.lbPass = lbPass;
+		this.lbName = lbName;
+		this.lbBirthDay = lbBirthDay;
+		this.lbZip = lbZip;
+		this.lbBassAd = lbBassAd;
+		this.lbDetailAd = lbDetailAd;
+		this.lbTel = lbTel;
+		this.lbImg = lbImg;
 	}
 
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,

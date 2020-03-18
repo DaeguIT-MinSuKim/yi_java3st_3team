@@ -2,14 +2,10 @@ package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,12 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.BookRankingPanel;
 import yi_java3st_3team.ui.content.MemberBookSearchPanel;
@@ -57,6 +53,7 @@ public class MainFrame_user extends JFrame {
 	private LoginFrame_ex loginFrame;
 	private JPanel bookRankPanel;
 	private Thread menuThread;
+	private MainFrame_user mainFrame;
 
 	public MainFrame_user() {
 		initialize();
@@ -187,6 +184,8 @@ public class MainFrame_user extends JFrame {
 		pLogout.addMouseListener(menuAdapter);
 		menuThread = getMenuThread();
 		menuThread.run();
+		
+		mainFrame = this;
 	}
 	
 	public JPanel getProfileModifyPanel() {
@@ -204,12 +203,20 @@ public class MainFrame_user extends JFrame {
 	public JLabel getLblGreeting() {
 		return lblGreeting;
 	}
+	
+	public MainFrame_user getMainFrame() {
+		return mainFrame;
+	}
+
+	public void setMainFrame(MainFrame_user mainFrame) {
+		this.mainFrame = mainFrame;
+	}
 
 	public Thread getMenuThread() {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				profileModifyPanel = new ProfileModifyPanel();
+				profileModifyPanel = new MemberProfileModifyPanel();
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
 				bookRecomPanel = new RecomPanel();
@@ -293,12 +300,10 @@ public class MainFrame_user extends JFrame {
 								switch(chkLabel.getText()) {
 								case "프로필 수정" :
 									contentPane.remove(pCenter);
-									((ProfileModifyPanel) profileModifyPanel).initTf(member);
 									pCenter = getPassMenuPanel();
-									loginFrame.getMemMainFrame().setpCenter(pCenter);
-									loginFrame.getMemMainFrame().contentPane.add(loginFrame.getMemMainFrame().getpCenter(),BorderLayout.CENTER);
-									loginFrame.getMemMainFrame().contentPane.repaint();
-									loginFrame.getMemMainFrame().contentPane.revalidate();
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									repaint();
+									revalidate();
 									break;
 								case "이용현황" :		
 									contentPane.remove(pCenter);
@@ -407,7 +412,8 @@ public class MainFrame_user extends JFrame {
 	}
 	private JPanel getPassMenuPanel() {
 		JPanel panel = new PasswordCheckPanel();
-		((PasswordCheckPanel) panel).setLoginFrame(loginFrame);
+		((PasswordCheckPanel) panel).setMember(member);
+		((PasswordCheckPanel) panel).setMainFrame_user(mainFrame);
 		return panel;
 	}
 }

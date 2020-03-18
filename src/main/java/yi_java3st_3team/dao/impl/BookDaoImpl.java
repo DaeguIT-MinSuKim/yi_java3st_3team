@@ -60,6 +60,7 @@ public class BookDaoImpl implements BookDao {
 				+ "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2 \r\n"
 				+ "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price \r\n"
 				+ "		  b1.book_code = ?";
+	
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, book.getBookCode());
 			LogUtil.prnLog(pstmt);
@@ -103,20 +104,26 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public List<Book> selectBookByCodeAndCat(Book book) {
-		StringBuilder sql = new StringBuilder(
-				"select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year , \r\n"
-						+ "	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no, m.mlsfc_name , \r\n"
-						+ "	   b1.regist_date , b1.dsuse_cdt \r\n" + "	from book b1 \r\n"
-						+ "		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no \r\n"
-						+ "		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,\r\n"
-						+ "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2 "
-						+ "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and ");
+//		StringBuilder sql = new StringBuilder(
+//				"select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year , \r\n"
+//						+ "	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no, m.mlsfc_name , \r\n"
+//						+ "	   b1.regist_date , b1.dsuse_cdt \r\n" + "	from book b1 \r\n"
+//						+ "		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no \r\n"
+//						+ "		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,\r\n"
+//						+ "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2 "
+//						+ "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and ");
+		
+		StringBuilder sql = new StringBuilder("select * from vw_book "); 
+		StringBuilder where = new StringBuilder("where ");
 		if (book.getBookCode() != null)
-			sql.append("b1.book_code like ? and ");
-		if (book.getLcNo() != null)
-			sql.append("b1.lc_no = ? and ");
-		sql.replace(sql.lastIndexOf("and"), sql.length(), " ");
-		sql.append("order by b1.regist_date");
+			where.append("book_code like ? and ");
+		if (book.getLcNo() != null) {
+			where.append("lc_no = ? and ");
+		}
+		where.replace(where.lastIndexOf("and"), where.length(), " ");
+		
+		sql.append(where);
+//		sql.append("order by b1.regist_date");
 
 		List<Book> list = null;
 

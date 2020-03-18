@@ -71,6 +71,8 @@ public class MainFrame_ex extends JFrame {
 	private BookLcAndMlManagerPanel bookCatMag;
 	private OverdueUIPanel overdueMgn;
 	private LoginFrame_ex loginFrame;
+	private LendingPanel lendingPanel;
+	private LendingPanel2 lendingPanel2;
 	private Thread chartThread;
 	private JLabel lblGreeting;
 	private JLabel lblProfile;
@@ -455,9 +457,17 @@ public class MainFrame_ex extends JFrame {
 								switch(chkLabel.getText()) {
 								case "대여 관리" :
 									contentPane.remove(pCenter);
+									pCenter = lendingPanel;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
 									break;
 								case "반납 관리" :
 									contentPane.remove(pCenter);
+									pCenter = lendingPanel2;
+									contentPane.add(pCenter,BorderLayout.CENTER);
+									contentPane.repaint();
+									contentPane.revalidate();
 									break;
 								case "연체 조회" :
 									contentPane.remove(pCenter);
@@ -630,7 +640,8 @@ public class MainFrame_ex extends JFrame {
 				memberSelect = new MemberSelectUIPanel();
 				
 				overdueMgn = new OverdueUIPanel();
-		
+				lendingPanel = new LendingPanel();
+				lendingPanel2 = new LendingPanel2();
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();

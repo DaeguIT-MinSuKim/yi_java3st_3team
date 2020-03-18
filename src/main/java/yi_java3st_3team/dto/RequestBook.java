@@ -11,6 +11,7 @@ public class RequestBook {
 	private String requestBookPls;
 	private Date requestDate;
 	private int whCdt;
+	private int overlapCnt;
 
 	public RequestBook() {
 	}
@@ -18,20 +19,10 @@ public class RequestBook {
 	public RequestBook(int requestBookNo) {
 		this.requestBookNo = requestBookNo;
 	}
-	
-	public RequestBook(Member requestMbId, String requestBookName, String requestBookAuthor, String requestBookTrnslr,
-			String requestBookPls, Date requestDate, int whCdt) {
-		this.requestMbId = requestMbId;
-		this.requestBookName = requestBookName;
-		this.requestBookAuthor = requestBookAuthor;
-		this.requestBookTrnslr = requestBookTrnslr;
-		this.requestBookPls = requestBookPls;
-		this.requestDate = requestDate;
-		this.whCdt = whCdt;
-	}
 
 	public RequestBook(int requestBookNo, Member requestMbId, String requestBookName, String requestBookAuthor,
-			String requestBookTrnslr, String requestBookPls, Date requestDate, int whCdt) {
+			String requestBookTrnslr, String requestBookPls, Date requestDate, int whCdt, int overlapCnt) {
+		super();
 		this.requestBookNo = requestBookNo;
 		this.requestMbId = requestMbId;
 		this.requestBookName = requestBookName;
@@ -40,6 +31,7 @@ public class RequestBook {
 		this.requestBookPls = requestBookPls;
 		this.requestDate = requestDate;
 		this.whCdt = whCdt;
+		this.overlapCnt = overlapCnt;
 	}
 
 	public int getRequestBookNo() {

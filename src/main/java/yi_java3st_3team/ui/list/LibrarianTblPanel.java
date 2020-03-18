@@ -26,8 +26,8 @@ public class LibrarianTblPanel extends AbsListPanel<Librarian> {
 	@Override
 	protected Object[] toArray(Librarian item) {
 		String totalAd;
-		String title = item.getTitle().getTitleNo() == 1 ? "사서" : "총관리자"; 
-		String workCdt = item.getWorkCdt() > 0? "퇴사":"가입";
+		String title = item.getTitle().getTitleNo() == 0 ? "사서" : "총관리자"; 
+		String workCdt = item.getWorkCdt() > 0? "퇴직":"재직";
 		
 		if(item.getLbDetailAd().length() >0) {
 			totalAd = String.format("(%d) %s %s", item.getLbZip().getZipCode(), item.getLbBassAd(),item.getLbDetailAd());
@@ -51,7 +51,7 @@ public class LibrarianTblPanel extends AbsListPanel<Librarian> {
 	public void updateRow(Librarian item, int updateIdx) {
 		String totalAd;
 		String title = item.getTitle().getTitleNo() == 1 ? "사서" : "총관리자"; 
-		String workCdt = item.getWorkCdt() > 0? "퇴사":"가입";
+		String workCdt = item.getWorkCdt() > 0? "퇴직":"재직";
 		
 		if(item.getLbDetailAd().length() >0) {
 			totalAd = String.format("(%d) %s %s", item.getLbZip().getZipCode(), item.getLbBassAd(),item.getLbDetailAd());

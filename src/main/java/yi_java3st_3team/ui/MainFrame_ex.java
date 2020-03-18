@@ -491,23 +491,6 @@ public class MainFrame_ex extends JFrame {
 
 									pCenter = LibrarianSelect;
 									contentPane.add(pCenter, BorderLayout.CENTER);
-
-									pCenter = lendingPanel;
-									contentPane.add(pCenter,BorderLayout.CENTER);
-									contentPane.repaint();
-									contentPane.revalidate();
-									break;
-								case "반납 관리" :
-									contentPane.remove(pCenter);
-									pCenter = lendingPanel2;
-									contentPane.add(pCenter,BorderLayout.CENTER);
-									contentPane.repaint();
-									contentPane.revalidate();
-									break;
-								case "연체 조회" :
-									contentPane.remove(pCenter);
-									pCenter = overdueMgn;
-									contentPane.add(pCenter,BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;

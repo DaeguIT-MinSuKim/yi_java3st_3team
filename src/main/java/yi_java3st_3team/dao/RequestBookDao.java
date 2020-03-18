@@ -6,10 +6,10 @@ import yi_java3st_3team.dto.RequestBook;
 
 public interface RequestBookDao {
 	List<RequestBook> selectRequestBookByAll();
-	List<RequestBook> selectRequestBookByOptionAll(RequestBook rb);
-	List<RequestBook> selectRequestBookByYearOption(RequestBook rb);
+	List<RequestBook> selectRequestBookByOptionAll(RequestBook rb, String year, String month);
+	List<RequestBook> selectRequestBookByYearOption(RequestBook rb, String year);
 	List<RequestBook> selectRequestBookById(RequestBook rb);
-	List<RequestBook> selectRequestBookByIdAndYearOption(RequestBook rb);
+	List<RequestBook> selectRequestBookByIdAndYearOption(RequestBook rb, String year);
 
 	int insertRequestBook(RequestBook rb);
 	int updateRequestBook(RequestBook rb);

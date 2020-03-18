@@ -9,121 +9,232 @@ import javax.swing.JFrame;
 
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
+
 import yi_java3st_3team.ui.list.RequestIntoTblPanel;
 import yi_java3st_3team.ui.service.RequestBookUiService;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
-public class RequestBookIntoPanel extends AbsItemPanel<RequestBook> {
+public class RequestBookIntoPanel extends JPanel implements ActionListener {
 	private RequestBookUiService service;
 	private RequestIntoTblPanel pReqstList;
-	
+	private JComboBox<String> cmbYear;
+	private JComboBox<String> cmbMonth;
+	private JComboBox<String> cmbOption;
+	private JButton btnSearch;
+	private JButton btnTotalChk;
+	private JButton btnExcel;
+	private JButton btnWh;
+	private JButton btnTotalUnChk;
+
 	public static void main(String[] args) {
 		JFrame test = new JFrame();
 		test.setBounds(100, 100, 1000, 800);
 		test.getContentPane().add(new RequestBookIntoPanel());
 		test.setVisible(true);
 	}
-	
+
 	public RequestBookIntoPanel() {
 		service = new RequestBookUiService();
 		initialize();
 	}
-	
+
 	private void initialize() {
 		setBorder(new EmptyBorder(30, 30, 30, 30));
 		setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel pNorth = new JPanel();
 		pNorth.setBorder(new EmptyBorder(10, 20, 10, 20));
 		add(pNorth, BorderLayout.NORTH);
 		pNorth.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel pSearch = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pSearch.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		pNorth.add(pSearch, BorderLayout.CENTER);
-		
-		JComboBox cmbYear = new JComboBox();
+
+		cmbYear = new JComboBox<>();
 		pSearch.add(cmbYear);
-		
+
 		JLabel lblYear = new JLabel("년");
 		pSearch.add(lblYear);
-		
-		JComboBox cmbMonth = new JComboBox();
+
+		cmbMonth = new JComboBox<>();
 		pSearch.add(cmbMonth);
-		
+
 		JLabel lblMonth = new JLabel("월");
 		pSearch.add(lblMonth);
-		
-		JComboBox cmbOption = new JComboBox();
+
+		cmbOption = new JComboBox<>();
 		pSearch.add(cmbOption);
-		
-		JButton btnSearch = new JButton("검색");
+
+		btnSearch = new JButton("검색");
+		btnSearch.addActionListener(this);
 		pSearch.add(btnSearch);
-		
+
 		JPanel pChk = new JPanel();
 		pNorth.add(pChk, BorderLayout.EAST);
+
+		btnTotalChk = new JButton("모두 선택");
+		btnTotalChk.addActionListener(this);
 		
-		JButton btnTotalChk = new JButton("모두 선택");
+		btnTotalUnChk = new JButton("모두 해제");
+		btnTotalUnChk.addActionListener(this);
+		pChk.add(btnTotalUnChk);
 		pChk.add(btnTotalChk);
-		
+
 		JPanel pList = new JPanel();
 		add(pList, BorderLayout.CENTER);
 		pList.setLayout(new BorderLayout(0, 0));
-		
+
 		pReqstList = new RequestIntoTblPanel();
 		pReqstList.loadDate(service.showRequestAll());
-		
+
 		pList.add(pReqstList, BorderLayout.CENTER);
-		
+
 		JPanel pSouth = new JPanel();
 		pSouth.setBorder(new EmptyBorder(30, 0, 0, 0));
 		add(pSouth, BorderLayout.SOUTH);
 		pSouth.setLayout(new GridLayout(0, 2, 0, 0));
-		
+
 		JPanel pLeft = new JPanel();
 		pLeft.setBorder(new EmptyBorder(0, 30, 0, 0));
 		FlowLayout flowLayout_1 = (FlowLayout) pLeft.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		pSouth.add(pLeft);
-		
-		JButton btnExcel = new JButton("엑셀저장");
+
+		btnExcel = new JButton("엑셀저장");
 		pLeft.add(btnExcel);
-		
+
 		JPanel pRight = new JPanel();
 		pRight.setBorder(new EmptyBorder(0, 0, 0, 30));
 		FlowLayout flowLayout_2 = (FlowLayout) pRight.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.RIGHT);
 		pSouth.add(pRight);
-		
-		JButton btnWh = new JButton("입고처리");
+
+		btnWh = new JButton("입고처리");
 		pRight.add(btnWh);
+
+		setCmbYearList();
+		setCmbMonthList();
+		setCmbWhCdtList();
 	}
 
-	@Override
+	public void setService(RequestBookUiService service) {
+		this.service = service;
+	}
+
+	public void setCmbYearList() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+
+		List<String> years = new ArrayList<String>();
+
+		for (int i = 0; i > -10; i--) {
+			years.add(sdf.format(cal.getTime()));
+			cal.add(Calendar.YEAR, -1);
+		}
+
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(new Vector<>(years));
+		cmbYear.setModel(model);
+	}
+
+	public void setCmbMonthList() {
+		List<String> months = new ArrayList<String>();
+
+		for (int i = 1; i <= 12; i++) {
+			months.add(String.format("%02d", i));
+		}
+
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(new Vector<>(months));
+		cmbMonth.setModel(model);
+		cmbMonth.setSelectedIndex(-1);
+	}
+
+	public void setCmbWhCdtList() {
+		List<String> whCdt = new ArrayList<String>();
+		whCdt.add("입고완료");
+		whCdt.add("미입고");
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(new Vector<>(whCdt));
+		cmbOption.setModel(model);
+		cmbOption.setSelectedIndex(-1);
+	}
+
 	public RequestBook getItem() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void setItem(RequestBook item) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
 	public void clearTf() {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
 	public void validCheck() {
-		// TODO Auto-generated method stub
-		
 	}
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnTotalUnChk) {
+			btnTotalUnChkActionPerformed(e);
+		}
+		if (e.getSource() == btnTotalChk) {
+			btnTotalChkActionPerformed(e);
+		}
+		if (e.getSource() == btnSearch) {
+			btnSearchActionPerformed(e);
+		}
+	}
+
+	protected void btnSearchActionPerformed(ActionEvent e) {
+
+		if (cmbYear.getModel().getSelectedItem() != null) {
+			String year = (String) cmbYear.getModel().getSelectedItem();
+			String month = null;
+			String Option = (String) cmbOption.getModel().getSelectedItem();
+			RequestBook rb = new RequestBook();
+
+			System.out.println("whcdt : " + Option);
+
+			if (cmbMonth.getModel().getSelectedItem() != null) {
+				month = (String) cmbMonth.getModel().getSelectedItem();
+			}
+
+			try {
+				if (Option.equals("입고완료")) {
+					rb.setWhCdt(1);
+				}
+
+				if (Option.equals("미입고")) {
+					rb.setWhCdt(0);
+				}
+
+			} catch (NullPointerException e1) {
+				rb.setWhCdt(-1);
+			}
+
+			pReqstList.loadDate(service.showRequestByOptionAll(rb, year, month));
+		}
+
+		cmbYear.setSelectedIndex(0);
+		cmbMonth.setSelectedIndex(-1);
+		cmbOption.setSelectedIndex(-1);
+	}
+
+	protected void btnTotalChkActionPerformed(ActionEvent e) {
+		pReqstList.totlaChk();
+	}
+	protected void btnTotalUnChkActionPerformed(ActionEvent e) {
+		pReqstList.totlaUnChk();
+	}
 }

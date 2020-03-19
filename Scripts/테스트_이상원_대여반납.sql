@@ -503,3 +503,40 @@ BEGIN
 	SET RESULT = 0;
 END$$
 DELIMITER ;
+
+
+select total_le_cnt, lend_book_cnt, lend_book_cnt 
+	from member
+	where mber_id = 'ddr23dd@naver.com';
+
+select lend_psb_cdt, total_le_cnt 
+	from book
+	where book_code = 'B040110';
+select lend_psb_cdt, total_le_cnt 
+	from book
+	where book_code = 'A090119';
+
+select * 
+	from lending
+	where mber_id = 'ddr23dd@naver.com';
+
+
+
+select mber_id,mber_pass,mber_name,mber_brthdy,mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,total_le_cnt,lend_book_cnt,
+	grade,grad_name,book_le_cnt,lend_psb_cdt,join_dt,wdr_cdt
+from
+	member m left join grade g on m.grade = g.grade_no
+where
+	mber_name like '%조%';
+
+
+
+
+
+
+
+
+
+
+
+

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -100,15 +101,22 @@ public class RentListPanel extends JPanel {
 		}
 	}
 
-	public void testting(Book book) {
-		Date now = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, +15);
-		model.addRow(new Object[] { book.getBookCode(), book.getBookName(),
-				String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
-				new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
-				new SimpleDateFormat("yyyy-MM-dd").format(now),
-				new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });
+	public void testting(List<Book> bookList) {
+		try {
+			Date now = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, +15);
+			for(Book book : bookList) {
+				model.addRow(new Object[] { book.getBookCode(), book.getBookName(),
+						String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
+						new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
+						new SimpleDateFormat("yyyy-MM-dd").format(now),
+						new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });	
+			}	
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "입력하지 않으셨거나 잘못입력하셨습니다. 다시 입력해주세요.");
+		}
 	}
 
 	public void AllChecking(boolean b) {

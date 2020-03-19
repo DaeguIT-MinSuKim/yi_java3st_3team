@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -99,8 +98,9 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 		pLibrarianList.setBorder(new EmptyBorder(10, 0, 0, 0));
 		pList.add(pLibrarianList, BorderLayout.CENTER);
 	}
+	
 
-	private void loadData() {
+	public void loadData() {
 		pLibrarianList.loadData(service.showLibrarianListAll());
 	}
 
@@ -151,14 +151,13 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 	}
 	
 	protected void btnAddActionPerformed(ActionEvent e) {
-		Librarian AddLib = pLibrarianList.getSelectedItem();
+		//Librarian AddLib = pLibrarianList.getSelectedItem();
 		
 		AddDialog = new LibrarianAddDialog(updateFrame, "");
-		AddDialog.setItem(AddLib);
+		AddDialog.setSelectUI(this);
+		//AddDialog.setItem(AddLib);
 		AddDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		AddDialog.setVisible(true);
-		
-		
 	}
 	
 	protected void btnSearchActionPerformed(ActionEvent e) {
@@ -179,7 +178,7 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 			
 			if(radioName.isSelected()) {
 				lib.setLbName(tfSearch.getText().trim());
-				if(service.searchLibrarianByName(lib) ==null) {
+				if(service.searchLibrarianByName(lib).isEmpty()) {
 					JOptionPane.showMessageDialog(null, "찾는 사서가 없습니다");
 				}else {
 					pLibrarianList.loadData(service.searchLibrarianByName(lib));
@@ -190,4 +189,6 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
+
+
 }

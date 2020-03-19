@@ -105,22 +105,28 @@ public class LibrarianDaoImpl implements LibrarianDao {
 
 	@Override
 	public int insertLibrarian(Librarian lib) {
-		String sql = "insert into librarian values (?,?,?,?,?,?,?,?,?,?,?,?)";
+	//	System.out.println("titleno"+lib.getTitle().getTitleNo());
+		//System.out.println("titlename" + lib.getTitle().getTitleName());
+		//String sql = "insert into librarian(lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, title ,join_date ,work_cdt) values\r\n" + 
+		//		"(?, ?, ?,?,?,?,?,?,?,?,?,?);";
+		String sql = "insert into librarian(lb_id, lb_pass, lb_name,title ,join_date ,work_cdt) values\r\n" + 
+				"(?, ?, ?,?,?,?);";
 		try(Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, lib.getLbId());
 			pstmt.setString(2, lib.getLbPass());
 			pstmt.setString(3, lib.getLbName());
-			pstmt.setTimestamp(4, new Timestamp(lib.getLbBirthDay().getTime()));
-			pstmt.setInt(5, lib.getLbZip().getZipCode());
-			pstmt.setString(6, lib.getLbBassAd());
-			pstmt.setString(7, lib.getLbDetailAd());
-			pstmt.setString(8, lib.getLbTel());
-			pstmt.setBytes(9, lib.getLbImg());
-			pstmt.setInt(10, lib.getTitle().getTitleNo());
-			pstmt.setTimestamp(11, new Timestamp(lib.getJoinDate().getTime()));
-			pstmt.setInt(12, lib.getWorkCdt());
+		//	pstmt.setTimestamp(4, new Timestamp(lib.getLbBirthDay().getTime()));
+		//	pstmt.setInt(5, lib.getLbZip().getZipCode());
+		//	pstmt.setString(6, lib.getLbBassAd());
+		//	pstmt.setString(7, lib.getLbDetailAd());
+		//	pstmt.setString(8, lib.getLbTel());
+		//	pstmt.setBytes(9, lib.getLbImg());
+			pstmt.setInt(4, lib.getTitle().getTitleNo());
+			pstmt.setTimestamp(5, new Timestamp(lib.getJoinDate().getTime()));
+			pstmt.setInt(6, lib.getWorkCdt());
 			LogUtil.prnLog(pstmt);
+			
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -140,7 +146,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		if(lib.getLbDetailAd()!=null) sql.append("lb_detail_ad=?, ");
 		if(lib.getLbTel()!=null) sql.append("lb_tel=?, ");
 		if(lib.getLbImg()!=null) sql.append("lb_img=?, ");
-		if(lib.getTitle()!=null) sql.append("title=?, ");
+		if(lib.getTitle().getTitleNo() !=-1) sql.append("title=?, ");
 		if(lib.getJoinDate()!=null) sql.append("join_date=?, ");
 		if(lib.getWorkCdt()!=-1) sql.append("work_cdt=?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
@@ -157,7 +163,7 @@ public class LibrarianDaoImpl implements LibrarianDao {
 			if(lib.getLbDetailAd()!=null) pstmt.setString(argCnt++, lib.getLbDetailAd());
 			if(lib.getLbTel()!=null) pstmt.setString(argCnt++,lib.getLbTel());
 			if(lib.getLbImg()!=null)pstmt.setBytes(argCnt++, lib.getLbImg());
-			if(lib.getTitle()!=null)pstmt.setInt(argCnt++, lib.getTitle().getTitleNo());
+			if(lib.getTitle().getTitleNo() !=-1)pstmt.setInt(argCnt++, lib.getTitle().getTitleNo());
 			if(lib.getJoinDate()!=null) pstmt.setTimestamp(argCnt++, new Timestamp(lib.getJoinDate().getTime()));
 			if(lib.getWorkCdt()!=-1)pstmt.setInt(argCnt++, lib.getWorkCdt());
 			pstmt.setString(argCnt++, lib.getLbId());
@@ -311,6 +317,34 @@ public class LibrarianDaoImpl implements LibrarianDao {
 		int workCdt = rs.getInt("work_cdt");
 		
 		return new Librarian(lbId, lbName, lbBirthDay, lbZip, lbBassAd, lbDetailAd, lbTel, lbImg, title, joinDate, workCdt);
+	}
+	
+	
+	private Librarian getLibrarianByWork(ResultSet rs) throws SQLException {
+		String lbId = rs.getString("lb_id");
+		int workCdt = rs.getInt("work_cdt");
+		return new Librarian(lbId, workCdt);
+	}
+
+	@Override
+	public List<Librarian> selectByWork(Librarian lib) {
+		List<Librarian> list = new ArrayList<>();
+		String sql = "select work_cdt from librarian where lb_id=?";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);){
+			pstmt.setString(1, lib.getLbId());
+				try(ResultSet rs = pstmt.executeQuery()){
+					if (rs.next()) {
+						list = new ArrayList<>();
+						do {
+							list.add(getLibrarianByWork(rs));
+						} while (rs.next());
+					}
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 

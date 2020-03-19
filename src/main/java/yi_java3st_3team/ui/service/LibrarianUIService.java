@@ -56,4 +56,9 @@ public class LibrarianUIService {
 		return libDao.searchLibrarianByName(lib); //이름으로 검색
 	}
 
+	public List<Librarian> showWorkList(Librarian lib) {
+		return libDao.selectByWork(lib);
+	}
+
+
 }

@@ -1,5 +1,7 @@
 package yi_java3st_3team.ui.exception;
 
+import javax.swing.JOptionPane;
+
 @SuppressWarnings("serial")
 public class InvalidCheckException extends RuntimeException {
 	public InvalidCheckException() {

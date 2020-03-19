@@ -9,6 +9,15 @@ public class Title {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	
+	public Title(String titleName) {
+		super();
+		this.titleName = titleName;
+	}
+
+
+
 	public Title(int titleNo) {
 		super();
 		this.titleNo = titleNo;
@@ -66,7 +75,7 @@ public class Title {
 
 	@Override
 	public String toString() {
-		return "Title [titleNo=" + titleNo + ", titleName=" + titleName + "]";
+		return String.format("%s[%d]", titleName, titleNo);
 	}
 
 }

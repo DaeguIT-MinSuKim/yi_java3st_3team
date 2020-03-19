@@ -25,7 +25,7 @@ public class TitleDaoImpl implements TitleDao {
 
 	@Override
 	public List<Title> selectTitleByAll() {
-		String sql = "select * from title";
+		String sql = "select title_no,title_name from title";
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -44,7 +44,7 @@ public class TitleDaoImpl implements TitleDao {
 	private Title getTitle(ResultSet rs) throws SQLException {
 		int titleNo = rs.getInt("title_no");
 		String titleName = rs.getString("title_name");
-		return new Title(titleNo, titleName);
+		return new Title(titleNo,titleName);
 	}
 
 

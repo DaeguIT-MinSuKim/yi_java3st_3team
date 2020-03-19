@@ -29,6 +29,7 @@ import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.PasswordCheckPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
+import yi_java3st_3team.ui.content.RequestBookIntoPanel;
 import yi_java3st_3team.ui.service.LibrarianService;
 import yi_java3st_3team.ui.service.MemberUIService;
 
@@ -64,9 +65,8 @@ public class MainFrame_lib extends JFrame {
 	private BookRegistrationPanel bookReqst;
 	private BookManagerPanel bookMgn;
 	private RecomBookAddPanel recomBookAdd;
-	private BookPlsManageMentPanel bookPlsMgn;
+	private RequestBookIntoPanel reqstInto;
 
-	private BookLcAndMlManagerPanel bookCatMag;
 	private OverdueUIPanel overdueMgn;
 	private LoginFrame_ex loginFrame;
 
@@ -313,8 +313,8 @@ public class MainFrame_lib extends JFrame {
 					contentPane.remove(pCenter);
 					pCenter = new JPanel();
 					pCenter.setBackground(Color.white);
-					pWest = new WestBookManagementPanel();
-					JPanel[] pBook = ((WestBookManagementPanel) pWest).getPanels();
+					pWest = new WestBookManagementPanel_lib();
+					JPanel[] pBook = ((WestBookManagementPanel_lib) pWest).getPanels();
 					for (JPanel panel : pBook) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override
@@ -344,6 +344,13 @@ public class MainFrame_lib extends JFrame {
 									revalidate();
 									((BookManagerPanel) pCenter).loadDate();
 									break;
+								case "신청도서 관리":
+									contentPane.remove(pCenter);
+									pCenter = reqstInto;
+									contentPane.add(pCenter, BorderLayout.CENTER);
+									repaint();
+									revalidate();
+									break;
 								case "추천도서 등록":
 									contentPane.remove(pCenter);
 									pCenter = recomBookAdd;
@@ -351,20 +358,6 @@ public class MainFrame_lib extends JFrame {
 									repaint();
 									revalidate();
 									((RecomBookAddPanel) pCenter).loadDate();
-									break;
-								case "출판사 관리":
-									contentPane.remove(pCenter);
-									pCenter = bookPlsMgn;
-									contentPane.add(pCenter, BorderLayout.CENTER);
-									repaint();
-									revalidate();
-									break;
-								case "도서분류 관리":
-									contentPane.remove(pCenter);
-									pCenter = bookCatMag;
-									contentPane.add(pCenter, BorderLayout.CENTER);
-									repaint();
-									revalidate();
 									break;
 								}
 							}
@@ -624,9 +617,8 @@ public class MainFrame_lib extends JFrame {
 				bookReqst = new BookRegistrationPanel();
 				bookMgn = new BookManagerPanel();
 				recomBookAdd = new RecomBookAddPanel();
-				bookPlsMgn = new BookPlsManageMentPanel();
-				bookCatMag = new BookLcAndMlManagerPanel();
-
+				reqstInto = new RequestBookIntoPanel();
+				
 				memberJoin = new MemberJoinUIPanel();
 				memberSelect = new MemberSelectUIPanel();
 

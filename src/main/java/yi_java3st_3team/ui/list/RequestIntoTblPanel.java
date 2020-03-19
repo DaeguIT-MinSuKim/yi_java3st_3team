@@ -30,19 +30,18 @@ import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.RequestBook;
 import yi_java3st_3team.ui.service.LendingUiService;
+import yi_java3st_3team.ui.service.RequestBookUiService;
 
 @SuppressWarnings("serial")
 public class RequestIntoTblPanel extends JPanel {
 	private JTable table;
 	private TestTabelModel model;
-	private LendingUiService service;
+	private RequestBookUiService service;
 	
 	private List<RequestBook> lists;
-	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	private Calendar cal = Calendar.getInstance();
 
 	public RequestIntoTblPanel() {
-		service = new LendingUiService();
+		service = new RequestBookUiService();
 		initialize();
 	}
 
@@ -57,41 +56,6 @@ public class RequestIntoTblPanel extends JPanel {
 		scrollPane.setViewportView(table);
 		
 	}
-	
-//	public void excelEvent() {
-//		String filePath = System.getProperty("user.dir")+"\\data.xls\\";
-//		String SheetName = "bookList";
-//		String[][] data = new String[][];
-//		
-//		String[] getColumn = new String[table.getColumnCount()];
-//		for(int i=0; i<table.getColumnCount(); i++) { // 컬럼명 받기
-//			getColumn[i] = table.getColumnName(i);
-//		}
-//		
-//		String[][] getData = new String[table.getRowCount()][table.getColumnCount()]; // 데이터 받기
-//		for(int i=0; i<table.getRowCount(); i++) {
-//			for(int j=0; j<table.getColumnCount(); j++) {
-//				getData[i][j] = (String) table.getValueAt(i, j);
-//			}
-//		}
-//		
-//		try {
-//			WritableWorkbook workbook = Workbook.createWorkbook(new File(filePath)); //파일경로 설정
-//			WritableSheet sheet = workbook.createSheet(SheetName, 0); //시트이름과 몇번째 시트인덱스
-//			jxl.write.WritableCellFormat format_column = new WritableCellFormat(); //컬럼 포멧. 스트링
-//			jxl.write.WritableCellFormat format_data = new WritableCellFormat(); //데이터 포멧. 스트링
-//			jxl.write.WritableCellFormat format_integer1 = new WritableCellFormat(NumberFormats.INTEGER); // 데이터 포멧. 정수형
-//			jxl.write.WritableCellFormat format_float1 = new WritableCellFormat(NumberFormats.FLOAT); // 데이터 포멧. 실수형
-//			format_column.setBackground(jxl.format.Colour.GRAY_25); // 컬럼 백그라운드 색 설정
-//			format_column.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN); // 컬럼 보더라인 스타일 설정
-//			
-//			for(int i=0; i<)
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		
-//	}
 	
 	public int getColumnCnt() {
 		return table.getColumnCount();
@@ -162,25 +126,15 @@ public class RequestIntoTblPanel extends JPanel {
 				Boolean checkCdt = (Boolean) table.getValueAt(i, 7);
 				
 				if(checkCdt) {
-//					if (lists.get(i).getRturnPsmCdt() == 0) {					
-//						Date date = lists.get(i).getRturnDueDate();
-//						int cdt = lists.get(i).getRturnPsmCdt();
-//						cal.setTime(date);
-//						cal.add(Calendar.DATE, 10);
-//						Date rturnDate = cal.getTime();
-//						System.out.println(rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
-//								+ lists.get(i).getMberId().getMberId());
-//						
-//						
-//						Lending lending = new Lending();				
-//						lending.setBookCd(new Book(lists.get(i).getBookCd().getBookCode()));
-//						lending.setMberId(new Member(lists.get(i).getMberId().getMberId()));
-//						lending.setRturnPsmCdt(1);
-//						lending.setRturnDueDate(rturnDate);
-//						service.modifyLendingByCodeAndMberId(lending);
-//					} else if( lists.get(i).getRturnPsmCdt() > 0){
-//						JOptionPane.showMessageDialog(null, "이미 반납신청 되었습니다.\n(반납연기신청은 1회만 가능합니다.)");
-//					}
+					if (lists.get(i).getWhCdt() == 0) {										
+						RequestBook reqst = new RequestBook();
+						reqst.setRequestBookName(lists.get(i).getRequestBookName());
+						reqst.setRequestBookPls(lists.get(i).getRequestBookPls());
+						reqst.setWhCdt(1);
+						service.modifyRequestBook(reqst);
+					} else if( lists.get(i).getWhCdt() > 0){
+						JOptionPane.showMessageDialog(null, "입고완료된 도서가 선택되었습니다.");
+					}
 				}
 			}
 		} catch (NullPointerException e) {

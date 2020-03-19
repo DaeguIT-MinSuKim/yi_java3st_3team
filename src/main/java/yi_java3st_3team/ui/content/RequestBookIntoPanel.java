@@ -133,6 +133,7 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 		pSouth.add(pRight);
 
 		btnWh = new JButton("입고처리");
+		btnWh.addActionListener(this);
 		pRight.add(btnWh);
 
 		setCmbYearList();
@@ -195,6 +196,9 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnWh) {
+			btnWhActionPerformed(e);
+		}
 		if (e.getSource() == btnExcel) {
 			btnExcelActionPerformed(e);
 		}
@@ -210,7 +214,7 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 	}
 
 	protected void btnSearchActionPerformed(ActionEvent e) {
-		
+
 		if (cmbYear.getModel().getSelectedItem() != null) {
 			String year = (String) cmbYear.getModel().getSelectedItem();
 			String month = null;
@@ -251,58 +255,63 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 	protected void btnTotalUnChkActionPerformed(ActionEvent e) {
 		pReqstList.totlaUnChk();
 	}
-	
+
 	protected void btnExcelActionPerformed(ActionEvent e) {
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String date = sdf.format(today);
-		String fileName = "신청도서리스트("+ date +").xls";
-		
-		int tbColumnCnt = pReqstList.getColumnCnt()-1;
+		String fileName = "신청도서리스트(" + date + ").xls";
+
+		int tbColumnCnt = pReqstList.getColumnCnt() - 1;
 		int tbRowCnt = pReqstList.getRowCnt();
-		
-		String filePath = System.getProperty("user.dir") + "\\document\\Excel\\"+fileName+"\\";
+
+		String filePath = System.getProperty("user.dir") + "\\document\\Excel\\" + fileName + "\\";
 		String SheetName = "bookList";
-		String[][] data = new String[tbRowCnt][tbColumnCnt-1];
-		
+		String[][] data = new String[tbRowCnt][tbColumnCnt - 1];
+
 		String[] getColumn = new String[tbColumnCnt];
-		for(int i=0; i<tbColumnCnt; i++) { // 컬럼명 받기
+		for (int i = 0; i < tbColumnCnt; i++) { // 컬럼명 받기
 			getColumn[i] = pReqstList.getColumnName(i);
 		}
-		
+
 		String[][] getData = new String[tbRowCnt][tbColumnCnt]; // 데이터 받기
-		for(int i=0; i<tbRowCnt; i++) {
-			for(int j=0; j<tbColumnCnt; j++) {
+		for (int i = 0; i < tbRowCnt; i++) {
+			for (int j = 0; j < tbColumnCnt; j++) {
 				getData[i][j] = pReqstList.getValueAt(i, j);
 			}
 		}
-		
+
 		try {
-			WritableWorkbook workbook = Workbook.createWorkbook(new File(filePath)); //파일경로 설정
-			WritableSheet sheet = workbook.createSheet(SheetName, 0); //시트이름과 몇번째 시트인덱스
-			jxl.write.WritableCellFormat format_column = new WritableCellFormat(); //컬럼 포멧. 스트링
-			jxl.write.WritableCellFormat format_data = new WritableCellFormat(); //데이터 포멧. 스트링
+			WritableWorkbook workbook = Workbook.createWorkbook(new File(filePath)); // 파일경로 설정
+			WritableSheet sheet = workbook.createSheet(SheetName, 0); // 시트이름과 몇번째 시트인덱스
+			jxl.write.WritableCellFormat format_column = new WritableCellFormat(); // 컬럼 포멧. 스트링
+			jxl.write.WritableCellFormat format_data = new WritableCellFormat(); // 데이터 포멧. 스트링
 			jxl.write.WritableCellFormat format_integer1 = new WritableCellFormat(NumberFormats.INTEGER); // 데이터 포멧. 정수형
 			jxl.write.WritableCellFormat format_float1 = new WritableCellFormat(NumberFormats.FLOAT); // 데이터 포멧. 실수형
 			format_column.setBackground(jxl.format.Colour.GRAY_25); // 컬럼 백그라운드 색 설정
 			format_column.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN); // 컬럼 보더라인 스타일 설정
-			
-			for(int i=0; i<getColumn.length; i++) { //컬럼명 넣기
+
+			for (int i = 0; i < getColumn.length; i++) { // 컬럼명 넣기
 				Label label = new jxl.write.Label(i, 0, getColumn[i], format_column);
 				sheet.addCell(label);
 			}
-			
-			for(int i=0; i<data.length; i++) { //데이터넣기. 컬럼명이 0번에 들어가므로 데이터는 1무터 넣는다.
-				for(int j=0; j<getData[i].length; j++) {
-					Label lbl = new jxl.write.Label(j, i+1, getData[i][j], format_data);
+
+			for (int i = 0; i < data.length; i++) { // 데이터넣기. 컬럼명이 0번에 들어가므로 데이터는 1무터 넣는다.
+				for (int j = 0; j < getData[i].length; j++) {
+					Label lbl = new jxl.write.Label(j, i + 1, getData[i][j], format_data);
 					sheet.addCell(lbl);
 				}
 			}
-			
-			workbook.write();//파일저장
-			workbook.close();//파일닫기
+
+			workbook.write();// 파일저장
+			workbook.close();// 파일닫기
 		} catch (Exception e1) {
 			e1.printStackTrace();
-		} 
+		}
+	}
+
+	protected void btnWhActionPerformed(ActionEvent e) {
+		pReqstList.getSelectedItem();
+		pReqstList.loadDate(service.showRequestAll());
 	}
 }

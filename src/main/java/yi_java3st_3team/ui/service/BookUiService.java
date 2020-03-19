@@ -68,7 +68,7 @@ public class BookUiService {
 	public Book showBookByCode(Book book) {
 		return bookDao.selectBookByCode(book);
 	}
-	public Book LendingBookByCode(Book book) {
+	public List<Book> LendingBookByCode(Book book) {
 		return bookDao.LendingBookByCode(book);
 	}
 	public void modifyBook(Book book) {
@@ -89,5 +89,9 @@ public class BookUiService {
 	
 	public List<Book> showNewBookList() {
 		return bookDao.selectNewBookList();
+	}
+
+	public List<Book> LendingBookByName(Book book) {
+		return bookDao.lendingBookByName(book);
 	}
 }

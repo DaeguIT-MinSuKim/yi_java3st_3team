@@ -123,7 +123,7 @@ public class RequestBookDaoImpl implements RequestBookDao {
 	}
 	
 	@Override
-	public List<RequestBook> selectRequestBookById(RequestBook rb) {
+	public List<RequestBook> selectRequestBookByIdAll(RequestBook rb) {
 		String sql = "select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, "
 					+ "reqst_date, wh_cdt, cnt \r\n"  
 					+ "	from vw_request_book \r\n"  
@@ -153,8 +153,10 @@ public class RequestBookDaoImpl implements RequestBookDao {
 					+ "reqst_date, wh_cdt, cnt \r\n" 
 					+ "	from vw_request_book \r\n" 
 					+ "	where year(reqst_date) = ? and reqst_mb_id = ?";
+		
 		List<RequestBook> list = null;
-		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = MysqlDataSource.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, year);
 			pstmt.setString(2, rb.getRequestMbId().getMberId());
 			LogUtil.prnLog(pstmt);

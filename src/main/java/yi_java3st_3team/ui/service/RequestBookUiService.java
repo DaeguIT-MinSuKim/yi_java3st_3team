@@ -25,8 +25,8 @@ public class RequestBookUiService {
 		return dao.selectRequestBookByYearOption(rb, year);
 	}
 	
-	public List<RequestBook> showRequestById(RequestBook rb) {
-		return dao.selectRequestBookById(rb);
+	public List<RequestBook> showRequestByIdAll(RequestBook rb) {
+		return dao.selectRequestBookByIdAll(rb);
 	}
 	
 	public List<RequestBook> showRequestByIdAndYear(RequestBook rb, String year) {

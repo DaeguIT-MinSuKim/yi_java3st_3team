@@ -1,7 +1,9 @@
 package yi_java3st_3team.ui.list;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,24 +20,28 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import jxl.Workbook;
+import jxl.write.NumberFormats;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.RequestBook;
 import yi_java3st_3team.ui.service.LendingUiService;
+import yi_java3st_3team.ui.service.RequestBookUiService;
 
 @SuppressWarnings("serial")
 public class RequestIntoTblPanel extends JPanel {
 	private JTable table;
 	private TestTabelModel model;
-	private LendingUiService service;
+	private RequestBookUiService service;
 	
 	private List<RequestBook> lists;
-	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	private Calendar cal = Calendar.getInstance();
 
 	public RequestIntoTblPanel() {
-		service = new LendingUiService();
+		service = new RequestBookUiService();
 		initialize();
 	}
 
@@ -49,6 +55,22 @@ public class RequestIntoTblPanel extends JPanel {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
+	}
+	
+	public int getColumnCnt() {
+		return table.getColumnCount();
+	}
+	
+	public int getRowCnt() {
+		return table.getRowCount();
+	}
+	
+	public String getColumnName(int i) {
+		return table.getColumnName(i);
+	}
+	
+	public String getValueAt(int i, int j) {
+		return table.getValueAt(i, j)+"";
 	}
 	
 	public void loadDate(List<RequestBook> list) {
@@ -104,25 +126,15 @@ public class RequestIntoTblPanel extends JPanel {
 				Boolean checkCdt = (Boolean) table.getValueAt(i, 7);
 				
 				if(checkCdt) {
-//					if (lists.get(i).getRturnPsmCdt() == 0) {					
-//						Date date = lists.get(i).getRturnDueDate();
-//						int cdt = lists.get(i).getRturnPsmCdt();
-//						cal.setTime(date);
-//						cal.add(Calendar.DATE, 10);
-//						Date rturnDate = cal.getTime();
-//						System.out.println(rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
-//								+ lists.get(i).getMberId().getMberId());
-//						
-//						
-//						Lending lending = new Lending();				
-//						lending.setBookCd(new Book(lists.get(i).getBookCd().getBookCode()));
-//						lending.setMberId(new Member(lists.get(i).getMberId().getMberId()));
-//						lending.setRturnPsmCdt(1);
-//						lending.setRturnDueDate(rturnDate);
-//						service.modifyLendingByCodeAndMberId(lending);
-//					} else if( lists.get(i).getRturnPsmCdt() > 0){
-//						JOptionPane.showMessageDialog(null, "이미 반납신청 되었습니다.\n(반납연기신청은 1회만 가능합니다.)");
-//					}
+					if (lists.get(i).getWhCdt() == 0) {										
+						RequestBook reqst = new RequestBook();
+						reqst.setRequestBookName(lists.get(i).getRequestBookName());
+						reqst.setRequestBookPls(lists.get(i).getRequestBookPls());
+						reqst.setWhCdt(1);
+						service.modifyRequestBook(reqst);
+					} else if( lists.get(i).getWhCdt() > 0){
+						JOptionPane.showMessageDialog(null, "입고완료된 도서가 선택되었습니다.");
+					}
 				}
 			}
 		} catch (NullPointerException e) {

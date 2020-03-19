@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.service.LendingUiService;
@@ -129,6 +131,25 @@ public class ReturnListPanel extends JPanel {
 		int i = model.getRowCount();
 		for(int j= 0; j<i; j++) {
 			model.setValueAt(b, j, 7);
+		}
+	}
+
+	public void setReturn(String mberId) {
+		int i = model.getRowCount();
+		for(int j =0; j<i; j++) {
+			Boolean chk = (Boolean)model.getValueAt(j, 7);
+			
+			if(chk) {
+//				Book book = new Book();
+//				book.setBookCode((String)model.getValueAt(j, 0));
+				String bookCd = (String)model.getValueAt(j, 0);
+				JOptionPane.showMessageDialog(null, bookCd);
+				Member m = service.selectedMberId(mberId);
+				System.out.println("=================================="+bookCd);
+				Book b = service.selectedBookCd(bookCd);
+				System.out.println("=================================="+bookCd);
+				service.updateLendingList(m, b);
+			}
 		}
 	}
 

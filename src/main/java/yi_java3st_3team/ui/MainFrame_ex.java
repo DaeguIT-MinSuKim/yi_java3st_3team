@@ -29,6 +29,7 @@ import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
 import yi_java3st_3team.ui.content.BookRegistrationPanel;
 import yi_java3st_3team.ui.content.PasswordCheckPanel;
 import yi_java3st_3team.ui.content.RecomBookAddPanel;
+import yi_java3st_3team.ui.content.RequestBookIntoPanel;
 import yi_java3st_3team.ui.service.LibrarianService;
 import yi_java3st_3team.ui.service.MemberUIService;
 
@@ -68,6 +69,7 @@ public class MainFrame_ex extends JFrame {
 	private BookManagerPanel bookMgn;
 	private RecomBookAddPanel recomBookAdd;
 	private BookPlsManageMentPanel bookPlsMgn;
+	private RequestBookIntoPanel reqstInto;
 
 	private BookLcAndMlManagerPanel bookCatMag;
 	private OverdueUIPanel overdueMgn;
@@ -353,6 +355,13 @@ public class MainFrame_ex extends JFrame {
 									repaint();
 									revalidate();
 									((BookManagerPanel) pCenter).loadDate();
+									break;
+								case "신청도서 관리":
+									contentPane.remove(pCenter);
+									pCenter = reqstInto;
+									contentPane.add(pCenter, BorderLayout.CENTER);
+									repaint();
+									revalidate();
 									break;
 								case "추천도서 등록":
 									contentPane.remove(pCenter);
@@ -676,6 +685,7 @@ public class MainFrame_ex extends JFrame {
 				recomBookAdd = new RecomBookAddPanel();
 				bookPlsMgn = new BookPlsManageMentPanel();
 				bookCatMag = new BookLcAndMlManagerPanel();
+				reqstInto = new RequestBookIntoPanel();
 
 				memberJoin = new MemberJoinUIPanel();
 				memberSelect = new MemberSelectUIPanel();

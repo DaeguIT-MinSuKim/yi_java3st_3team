@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,30 +21,33 @@ import yi_java3st_3team.ui.content.MemberIdSelectPanel;
 import yi_java3st_3team.ui.list.RentListPanel;
 import yi_java3st_3team.ui.service.BookUiService;
 import yi_java3st_3team.ui.service.LendingUiService;
+import javax.swing.JRadioButton;
 
 @SuppressWarnings("serial")
 public class LendingPanel extends JPanel implements ActionListener {
-	private JTextField tfBookCode;
+	private JTextField tfBookSearch;
 	private MemberIdSelectPanel pMember;
 	private JPanel pList;
 	private JPanel pLendingSearch;
 	private JPanel pLendingLbl;
-	private JLabel lbl01;
-	private JLabel lbl02;
 	private JButton btnSearch;
 	private JPanel pAllCk;
 	private JPanel p03;
-	private JPanel p04;
-	private JButton btnCk;
+	private JButton btnCheckTrue;
 	private RentListPanel pLendingList;
 	private JPanel pBtn;
 	private JPanel p05;
 	private JPanel p06;
-	private JButton btnCancel;
 	private JButton btnLending;
 	private LendingUiService lendingService;
 	private BookUiService bookService;
-
+	private JRadioButton rdbtnBookCode;
+	private JRadioButton rdbtnBookName;
+	private JPanel pUseless;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JButton btnCheckFalse;
+	private JPanel pUseless2;
+	
 	public LendingPanel() {
 		lendingService = new LendingUiService();
 		bookService = new BookUiService();
@@ -67,19 +73,19 @@ public class LendingPanel extends JPanel implements ActionListener {
 		pLendingLbl = new JPanel();
 		pLendingSearch.add(pLendingLbl);
 		pLendingLbl.setLayout(new GridLayout(1, 0, 0, 0));
-
-		lbl01 = new JLabel("대여 도서 목록");
-		lbl01.setHorizontalAlignment(SwingConstants.CENTER);
-		pLendingLbl.add(lbl01);
-
-		lbl02 = new JLabel("도서 코드");
-		lbl02.setHorizontalAlignment(SwingConstants.CENTER);
-		pLendingLbl.add(lbl02);
-
-		tfBookCode = new JTextField();
-		tfBookCode.setHorizontalAlignment(SwingConstants.CENTER);
-		pLendingLbl.add(tfBookCode);
-		tfBookCode.setColumns(10);
+		
+		rdbtnBookCode = new JRadioButton("도서코드");
+		pLendingLbl.add(rdbtnBookCode);
+		buttonGroup.add(rdbtnBookCode);
+		
+		rdbtnBookName = new JRadioButton("도서명");
+		pLendingLbl.add(rdbtnBookName);
+		buttonGroup.add(rdbtnBookName);
+		
+		tfBookSearch = new JTextField();
+		tfBookSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		pLendingLbl.add(tfBookSearch);
+		tfBookSearch.setColumns(10);
 
 		btnSearch = new JButton("검색");
 		btnSearch.addActionListener(this);
@@ -87,17 +93,18 @@ public class LendingPanel extends JPanel implements ActionListener {
 
 		pAllCk = new JPanel();
 		pLendingSearch.add(pAllCk);
-		pAllCk.setLayout(new GridLayout(1, 0, 0, 0));
+		pAllCk.setLayout(new GridLayout(0, 3, 0, 0));
 
 		p03 = new JPanel();
 		pAllCk.add(p03);
 
-		p04 = new JPanel();
-		pAllCk.add(p04);
-
-		btnCk = new JButton("모두 선택");
-		btnCk.addActionListener(this);
-		pAllCk.add(btnCk);
+		btnCheckTrue = new JButton("모두 선택");
+		btnCheckTrue.addActionListener(this);
+		pAllCk.add(btnCheckTrue);
+		
+		btnCheckFalse = new JButton("취소");
+		btnCheckFalse.addActionListener(this);
+		pAllCk.add(btnCheckFalse);
 
 		pLendingList = new RentListPanel();
 		pList.add(pLendingList, BorderLayout.CENTER);
@@ -112,26 +119,29 @@ public class LendingPanel extends JPanel implements ActionListener {
 		p06 = new JPanel();
 		pBtn.add(p06);
 
-		btnCancel = new JButton("취소");
-		btnCancel.addActionListener(this);
-		p06.add(btnCancel);
+		pUseless = new JPanel();
+		p06.add(pUseless);
+		p06.setLayout(new GridLayout(0, 3, 0, 0));
 
+		pUseless2 = new JPanel();
+		p06.add(pUseless2);
+		
 		btnLending = new JButton("대여");
 		btnLending.addActionListener(this);
 		p06.add(btnLending);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCheckFalse) {
+			do_btnCheckFalse_actionPerformed(e);
+		}
 		if (e.getSource() == pMember.getBtnMberId()) {
 			do_pMemberBtnMberId_actionPerformed(e);
 		}
 		if (e.getSource() == btnLending) {
 			do_btnLending_actionPerformed(e);
 		}
-		if (e.getSource() == btnCancel) {
-			do_btnCancel_actionPerformed(e);
-		}
-		if (e.getSource() == btnCk) {
+		if (e.getSource() == btnCheckTrue) {
 			do_btnCk_actionPerformed(e);
 		}
 		if (e.getSource() == btnSearch) {
@@ -140,23 +150,31 @@ public class LendingPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnSearch_actionPerformed(ActionEvent e) {
-		Book id = new Book(tfBookCode.getText());
-		Book book = bookService.LendingBookByCode(id);
-		pLendingList.testting(book);
-		tfBookCode.setText("");
-//		lendingService.showLendingBookCode(book);
-//		pLengingList.addLending(book);
-//		pLengingList.revalidate();
-//		pLengingList.repaint();
-//		pLengingList.addItem(item);
+		try {
+			if(rdbtnBookCode.isSelected()) {
+				Book id = new Book(tfBookSearch.getText());
+				List<Book> book = bookService.LendingBookByCode(id);
+				pLendingList.testting(book);
+				tfBookSearch.setText("");
+			}
+			if(rdbtnBookName.isSelected()) {
+				Book name = new Book(tfBookSearch.getText());
+				List<Book> book = bookService.LendingBookByName(name);
+				pLendingList.testting(book);
+				tfBookSearch.setText("");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "선택해주세요.");
+			}
+		} catch (NullPointerException e2) {
+			JOptionPane.showMessageDialog(null, "입력하지 않으셨거나 잘못 입력하셨습니다.");
+			e2.printStackTrace();	
+		}
+
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
 		pLendingList.AllChecking(true);
-	}
-
-	protected void do_btnCancel_actionPerformed(ActionEvent e) {
-		pLendingList.AllChecking(false);
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
@@ -184,5 +202,8 @@ public class LendingPanel extends JPanel implements ActionListener {
 		JOptionPane.showMessageDialog(null, member.getGrade().getBookLeCnt());
 		int res = BookLeCnt - LendBookCnt;
 		pMember.getTfLendBookCdt().setText(res + "");
+	}
+	protected void do_btnCheckFalse_actionPerformed(ActionEvent e) {
+		pLendingList.AllChecking(false);
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"folders": {},
 	"connections": {
-		"mysql5-170ed5fd76c-368aeef6bcb2f3f4": {
+		"mysql5-170f0328469-57fd38b510de0314": {
 			"provider": "mysql",
 			"driver": "mysql5",
 			"name": "MySQL - localhost",
@@ -16,7 +16,7 @@
 				"handlers": {}
 			}
 		},
-		"mysql5-170ed602390-49d8f0da8d33895e": {
+		"mysql5-170f03311b8-57d1ff542f68734": {
 			"provider": "mysql",
 			"driver": "mysql5",
 			"name": "MySQL - yi_java3st_3team",

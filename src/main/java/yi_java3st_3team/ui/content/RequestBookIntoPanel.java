@@ -1,26 +1,15 @@
 package yi_java3st_3team.ui.content;
 
-import yi_java3st_3team.dto.RequestBook;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import jxl.Workbook;
-import jxl.write.Label;
-import jxl.write.NumberFormats;
-import jxl.write.WritableCellFormat;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-
+import java.awt.Color;
 import java.awt.FlowLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,14 +17,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import jxl.Workbook;
+import jxl.write.NumberFormats;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import yi_java3st_3team.dto.RequestBook;
 import yi_java3st_3team.ui.list.RequestIntoTblPanel;
 import yi_java3st_3team.ui.service.RequestBookUiService;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class RequestBookIntoPanel extends JPanel implements ActionListener {
@@ -319,13 +316,13 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 			format_column.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN); // 컬럼 보더라인 스타일 설정
 
 			for (int i = 0; i < getColumn.length; i++) { // 컬럼명 넣기
-				Label label = new jxl.write.Label(i, 0, getColumn[i], format_column);
+				jxl.write.Label label = new jxl.write.Label(i, 0, getColumn[i], format_column);
 				sheet.addCell(label);
 			}
 
 			for (int i = 0; i < data.length; i++) { // 데이터넣기. 컬럼명이 0번에 들어가므로 데이터는 1무터 넣는다.
 				for (int j = 0; j < getData[i].length; j++) {
-					Label lbl = new jxl.write.Label(j, i + 1, getData[i][j], format_data);
+					jxl.write.Label lbl = new jxl.write.Label(j, i + 1, getData[i][j], format_data);
 					sheet.addCell(lbl);
 				}
 			}

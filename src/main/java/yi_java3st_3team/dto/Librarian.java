@@ -25,6 +25,16 @@ public class Librarian {
 
 	
 	
+	public Librarian(String lbId, String lbPass, String lbName, Title title, Date joinDate, int workCdt) {
+		super();
+		this.lbId = lbId;
+		this.lbPass = lbPass;
+		this.lbName = lbName;
+		this.title = title;
+		this.joinDate = joinDate;
+		this.workCdt = workCdt;
+	}
+
 	public Librarian(String lbId, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd, String lbDetailAd,
 			String lbTel, byte[] lbImg, Title title, Date joinDate, int workCdt) {
 		super();
@@ -44,6 +54,12 @@ public class Librarian {
 	public Librarian(String lbId, String lbPass) {
 		this.lbId = lbId;
 		this.lbPass = lbPass;
+	}
+	
+	public Librarian(String lbId, int workCdt) {
+		super();
+		this.lbId = lbId;
+		this.workCdt = workCdt;
 	}
 
 	public Librarian(String lbName, Date lbBirthDay) {

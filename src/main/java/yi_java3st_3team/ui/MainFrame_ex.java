@@ -522,6 +522,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((LibrarianSelectUIPanel) pCenter).loadData();
 									break;
 								}
 							}

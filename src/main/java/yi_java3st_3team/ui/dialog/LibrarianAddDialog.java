@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -15,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -23,9 +25,12 @@ import javax.swing.border.EmptyBorder;
 import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Title;
+import yi_java3st_3team.dto.ZipCode;
+import yi_java3st_3team.ui.LibrarianSelectUIPanel;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.list.LibrarianTblPanel;
 import yi_java3st_3team.ui.service.LibrarianUIService;
+import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class LibrarianAddDialog extends JDialog implements ActionListener {
@@ -33,28 +38,22 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tfId;
 	private JTextField tfName;
-	private JTextField tfPassword;
 	private JButton btnAdd;
 	private JButton btnCancel;
 	private LibrarianUIService service;
 	private LibrarianTblPanel pLibrarianList;
 	private JComboBox<Title> cmbTitle;
+	private LibrarianAddDialog addLibrarian;
+	private JPasswordField passPW;
+	private Title title;
+	private Librarian findId;
+	private LibrarianSelectUIPanel selectUI;
 	
-
-//	public static void main(String[] args) {
-//		try {
-//			LibrarianAddDialog dialog = new LibrarianAddDialog();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	public LibrarianAddDialog(JFrame frame, String title) {
 		super(frame, title, true);
-		service = new LibrarianUIService();
 		setTitle("사서 등록");
+		service = new LibrarianUIService();
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,10 +79,9 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 		JLabel lblPassword = new JLabel("비밀번호");
 		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPanel.add(lblPassword);
-
-		tfPassword = new JTextField();
-		contentPanel.add(tfPassword);
-		tfPassword.setColumns(10);
+		
+		passPW = new JPasswordField();
+		contentPanel.add(passPW);
 
 		JLabel lblTitle = new JLabel("직급");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -112,22 +110,57 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 		setService(service);
 		
 	}
+	public void loadData() {
+		pLibrarianList.loadData(service.showLibrarianListAll());
+		//selectUI.loadData(service.showLibrarianListAll());
+	}
+	
+	
+	private Librarian getItem() {
+		validCheck();
+		String lbId = tfId.getText().trim();
+		String lbPass = new String(passPW.getPassword());
+		String lbName = tfName.getText().trim();
+		//Date lbBirthDay = null;
+		//ZipCode lbZip = null;
+		//String lbBassAd = null;
+		//String lbDetailAd = null;
+		//String lbTel = null;
+		//byte[] lbImg = null; 
+		Date joinDate = new Date();
+		Title titleName = (Title) cmbTitle.getSelectedItem();
+		Title title = new Title(titleName.getTitleName().equals("사서")? 1:0);
+//		int titleIdx = cmbTitle.getSelectedIndex();
+//		if(titleIdx == 0) {
+//			title = new Title(0);
+//		}
+		//Title title = cmbTitle.getSelectedItem();
+		int workCdt = 1;
+		
+		return new Librarian(lbId, lbPass, lbName, title, joinDate, workCdt);
+	}
+	
 
-
-	private void setService(LibrarianUIService service2) {
+	public LibrarianSelectUIPanel getSelectUI() {
+		return selectUI;
+	}
+	public void setSelectUI(LibrarianSelectUIPanel selectUI) {
+		this.selectUI = selectUI;
+	}
+	private void setService(LibrarianUIService service) {
 		this.service = service;
 		setCmbList(service.showTitleList());
 	}
 
-
 	private void setCmbList(List<Title> showTitleList) {
 		DefaultComboBoxModel<Title> model = new DefaultComboBoxModel<Title>(new Vector<>(showTitleList));
 		cmbTitle.setModel(model);
+		cmbTitle.setSelectedIndex(1);
 	}
 	
 	public void validCheck() {
 		if (tfId.getText().contentEquals("") || tfName.getText().contentEquals("")
-				|| tfPassword.getText().contentEquals("")) {
+				|| passPW.getPassword().length==0) {
 			throw new InvalidCheckException();
 		}
 	}
@@ -143,23 +176,55 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 
 	protected void btnAddActionPerformed(ActionEvent e) {
 		
+		String Id = tfId.getText().trim();
+		findId = service.IDCheckLibrarian(new Librarian(Id));
+		
+		try {
+			if(findId != null) {
+				JOptionPane.showMessageDialog(null, "중복된 아이디입니다.");
+				clearTf();
+			} else {
+		
+				Librarian addLib = getItem();
+				service.insertLibrarian(addLib);
+				
+				selectUI.loadData();
+				JOptionPane.showMessageDialog(null, String.format("[ %s ] 님 사서가입이 완료되었습니다.", addLib.getLbName()));
+				setVisible(false);
+				//loadData();
+				//addLibrarian.clearTf();
+				//dispose();
+				//loadData();
+			}
+				
+		}catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			System.out.println("여기서?");
+		}
+		
+	}
+	protected void btnCancelActionPerformed(ActionEvent e) {
 		dispose();
 	}
 
-	protected void btnCancelActionPerformed(ActionEvent e) {
-		
-		dispose();
+	private void clearTf() {
+		tfId.setText("");
+		tfName.setText("");
+		passPW.setText("");
+		cmbTitle.setSelectedIndex(1);
 	}
+
 	
-	public void setItem(Librarian addLib) {
-			tfId.setText(addLib.getLbId());
-			tfName.setText(addLib.getLbName());
-			tfPassword.setText(addLib.getLbPass());
-			if(addLib.getTitle().getTitleNo()==0) {
-				cmbTitle.setSelectedItem("사서");
-			}else {
-				cmbTitle.setSelectedIndex(addLib.getTitle().getTitleNo()-1);
-			}
-	}
+	
+//	public void setItem(Librarian addLib) {
+//			tfId.setText(addLib.getLbId());
+//			tfName.setText(addLib.getLbName());
+//			passPW.setText(addLib.getLbPass());
+//			if(addLib.getTitle().getTitleNo()==1) {
+//				cmbTitle.setSelectedItem("사서");
+//			}else {
+//				cmbTitle.setSelectedIndex(addLib.getTitle().getTitleNo()-1);
+//			}
+//	}
 
 }

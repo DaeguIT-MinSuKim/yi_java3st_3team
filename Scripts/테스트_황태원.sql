@@ -109,6 +109,9 @@ from book;
 select *
 from member;
 
+select*
+from grade;
+
 select title_name from title;
 select *
 from title;
@@ -122,3 +125,20 @@ where lb_id like '%eiwre%';
 
 select *
 from librarian;
+
+select title_name from title;
+
+select *
+from title;
+
+delete
+from librarian 
+where lb_id ='테스트';
+
+insert into librarian(lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad, lb_tel, lb_img, title ,join_date ,work_cdt) values
+('테스트', '테스트', '황태원',null,null,null,null,null,null,0,'1991-12-18',0);
+
+select work_cdt 
+from librarian
+where lb_id='43ojlkjl@book.ff.kr';
+

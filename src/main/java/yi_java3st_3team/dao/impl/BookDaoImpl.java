@@ -447,27 +447,25 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 
-	public Book LendingBookByCode(Book book) {
-//		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n" + 
-//				"	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + 
-//				"	where book_code = ?";
+	public List<Book> LendingBookByCode(Book book) {
+		List<Book> list = null;
 		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, p.pls_name, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n"
-				+ "	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + "	where book_code = ?";
-//		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , concat(b.pls,\"/\",p.pls_name ) as 'pls', pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n" + 
-//				"	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + 
-//				"	where book_code = ?";
+				+ "	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + "	where book_code like ?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, book.getBookCode());
+			pstmt.setString(1, "%"+book.getBookCode()+"%");
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					return getBook2(rs);
+					list = new ArrayList<>();
+					do {
+						list.add(getBook2(rs));
+					} while (rs.next());
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return list;
 	}
 
 	private Book getBook2(ResultSet rs) throws SQLException {
@@ -581,6 +579,12 @@ public class BookDaoImpl implements BookDao {
 		newBook.setPls(new PublishingCompany(rs.getInt("b.pls"), rs.getString("p.pls_name")));
 		
 		return newBook;
+	}
+
+	@Override
+	public List<Book> lendingBookByName(Book book) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

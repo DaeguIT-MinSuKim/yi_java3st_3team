@@ -287,6 +287,8 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		validCheck();
 		LargeClassification lcNo = (LargeClassification) cmbLc.getSelectedItem();
 		MiddleClassification mlNo = (MiddleClassification) cmbMl.getSelectedItem();
+		
+		System.out.println(lcNo);
 
 		String lcNoStd = String.format("%02d", lcNo.getLclasNo());
 		String mlNoStd = String.format("%02d", mlNo.getMlsfcNo());

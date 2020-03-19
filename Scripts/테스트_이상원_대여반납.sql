@@ -95,18 +95,27 @@ where mber_id = 'ya2354fr@yahoo.com';
 
 select total_le_cnt, lend_book_cnt
 	from member
-	where mber_id = 'ya2354fr@yahoo.com';
+	where mber_id = 'ddr23dd@naver.com';
 
 select lend_psb_cdt, total_le_cnt 
 	from book
-	where book_code = 'A090251';
+	where book_code in('B040110', 'B040111');
 
 select * 
 	from lending
-	where mber_id = 'ya2354fr@yahoo.com';
+	where mber_id = 'ddr23dd@naver.com';
 
 
-
+select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year , 
+	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no , m.mlsfc_name , 
+	   b1.regist_date , b1.dsuse_cdt
+	from book b1 
+		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no 
+		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no, 
+		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2 
+	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and
+		  b1.book_code = 'B040110';
+		 
 select  curdate();
 select  ADDDATE(curdate(), 15);
 
@@ -142,10 +151,9 @@ begin
 	begin
 		select '오류 발생했습니다.';
 		rollback;
-	end
-	start transaction
+	end;
 	set AUTOCOMMIT = 0;
-
+	start transaction;
 		-- 회원 테이블에 총대여권수, 대여도서권수가 대여한 숫자만큼  증가시키는 업데이트
 		update member
 			set total_le_cnt = total_le_cnt + 1, lend_book_cnt = lend_book_cnt +1
@@ -232,23 +240,23 @@ update lending l left join book b
 
 -- 회원 테이블
 -- 회원 테이블의 특정 회원의 대여도서권수(=대여반납 테이블에 반납일이 없는 행의 수)를 감소시키기() 위한 업데이트
-update member m left join lending l
-	on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no
-	set lend_book_cnt = if((g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))) is null, 0, (g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))))
-	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null;
-
-select if((g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))) is null, 0, (g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null)))) as 'lend_book_cnt'
-	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no 
-	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null;
-
-select count( l.rturn_date is null)
-	from member m left join lending l on m.mber_id = l.mber_id
-	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null
-	group by m.mber_id ;
-
-drop trigger if exists cnt_rturn_date_null;
-
-create trigger cnt_rturn_date_null
+-- update member m left join lending l
+-- 	on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no
+-- 	set lend_book_cnt = if((g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))) is null, 0, (g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))))
+-- 	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null;
+-- 
+-- select if((g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null))) is null, 0, (g.book_le_cnt -(g.book_le_cnt - count(l.rturn_date is null)))) as 'lend_book_cnt'
+-- 	from member m left join lending l on m.mber_id = l.mber_id left join grade g on m.grade = g.grade_no 
+-- 	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null;
+-- 
+-- select count( l.rturn_date is null)
+-- 	from member m left join lending l on m.mber_id = l.mber_id
+-- 	where m.mber_id = 'phonehu@gmail.com' and l.rturn_date is null
+-- 	group by m.mber_id ;
+-- 
+-- drop trigger if exists cnt_rturn_date_null;
+-- 
+-- create trigger cnt_rturn_date_null
 
 
 

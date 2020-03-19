@@ -579,17 +579,19 @@ public class LendingDaoImpl implements LendingDao {
 	}
 	@Override
 	public int insertLendingUpdateBookMember(Member member, Book book) {
-		String sql = "all rent_book(?, ?)";
-		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareCall(sql)) {
-			Lending lending = new Lending();
-			pstmt.setInt(1, lending.getLendRturnNo());
-			pstmt.setString(2, lending.getMberId().getMberId());
-			pstmt.setString(3, lending.getBookCd().getBookCode());
-			pstmt.setTimestamp(4, new Timestamp(lending.getLendDate().getTime()));
-			pstmt.setTimestamp(5, new Timestamp(lending.getRturnDueDate().getTime()));
-			pstmt.setInt(6, lending.getRturnPsmCdt());
-			pstmt.setTimestamp(7, new Timestamp(lending.getRturnDate().getTime()));
-			pstmt.setInt(8, lending.getOverdueCdt());
+		String sql = "{call rent_book(?, ?)}";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareCall(sql);) {
+			pstmt.setString(1, member.getMberId());
+			pstmt.setString(2, book.getBookCode());
+//			Lending lending = new Lending();
+//			pstmt.setInt(1, lending.getLendRturnNo());
+//			pstmt.setString(2, lending.getMberId().getMberId());
+//			pstmt.setString(3, lending.getBookCd().getBookCode());
+//			pstmt.setTimestamp(4, new Timestamp(lending.getLendDate().getTime()));
+//			pstmt.setTimestamp(5, new Timestamp(lending.getRturnDueDate().getTime()));
+//			pstmt.setInt(6, lending.getRturnPsmCdt());
+//			pstmt.setTimestamp(7, new Timestamp(lending.getRturnDate().getTime()));
+//			pstmt.setInt(8, lending.getOverdueCdt());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {

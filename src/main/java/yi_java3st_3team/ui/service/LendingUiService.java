@@ -109,6 +109,9 @@ public class LendingUiService {
 //		memberDao.updateMember(member);
 //		bookDao.updateBook(book);
 //		lendingDao.insertLending(lending);
+		System.out.println("-------------------------------------------------");
+		System.out.println(mberId);
+		System.out.println(bookCd);
 		lendingDao.insertLendingUpdateBookMember(mberId, bookCd);
 	}
 

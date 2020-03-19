@@ -19,7 +19,20 @@ select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trns
 	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
 	from request_book rb1, 
 		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
+	where rb1.reqst_book_name = rb2.reqst_book_name
+	group by rb1.reqst_book_name
+	order by reqst_date;
+
+-- 신청도서 검색 (회원용)
+DROP VIEW IF EXISTS vw_request_book_member;
+create view vw_request_book_member as 
+select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
+	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt
+	from request_book rb1, 
+		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
 	where rb1.reqst_book_name = rb2.reqst_book_name;
+
+
 	
 -- 대여 프로시저(회원 아이디, 도서코드)
 drop procedure if exists rent_book;

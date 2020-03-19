@@ -126,7 +126,7 @@ public class RequestBookDaoImpl implements RequestBookDao {
 	public List<RequestBook> selectRequestBookByIdAll(RequestBook rb) {
 		String sql = "select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, "
 					+ "reqst_date, wh_cdt, cnt \r\n"  
-					+ "	from vw_request_book \r\n"  
+					+ "	from vw_request_book_member \r\n"  
 					+ "	where reqst_mb_id = ?";
 		List<RequestBook> list = null;
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -151,7 +151,7 @@ public class RequestBookDaoImpl implements RequestBookDao {
 	public List<RequestBook> selectRequestBookByIdAndYearOption(RequestBook rb, String year) {
 		String sql = "select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, "
 					+ "reqst_date, wh_cdt, cnt \r\n" 
-					+ "	from vw_request_book \r\n" 
+					+ "	from vw_request_book_member \r\n" 
 					+ "	where year(reqst_date) = ? and reqst_mb_id = ?";
 		
 		List<RequestBook> list = null;

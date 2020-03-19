@@ -389,11 +389,11 @@ select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, req
 
 -- 신청 id와 도서명 검색 (회원 페이지에서 나와야할 신청도서 리스트)
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
-	from vw_request_book 
+	from vw_request_book_member 
 	where reqst_mb_id = 'ggg243r4@gmail.com';
 
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
-	from vw_request_book 
+	from vw_request_book_member 
 	where year(reqst_date) = '2020' and reqst_mb_id = 'ggg243r4@gmail.com';
 
 -- 신청 도서 등록 (회원 페이지)
@@ -428,7 +428,5 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.p
 		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no 
 		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,
 		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price and b1.book_code like '%D%' and b1.lc_no = 9  order by b1.regist_date
-
-
 
 

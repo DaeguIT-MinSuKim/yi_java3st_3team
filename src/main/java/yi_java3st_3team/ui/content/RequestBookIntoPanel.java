@@ -196,19 +196,6 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 		cmbOption.setSelectedIndex(-1);
 	}
 
-	public RequestBook getItem() {
-		return null;
-	}
-
-	public void setItem(RequestBook item) {
-	}
-
-	public void clearTf() {
-	}
-
-	public void validCheck() {
-	}
-
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnWh) {
 			btnWhActionPerformed(e);

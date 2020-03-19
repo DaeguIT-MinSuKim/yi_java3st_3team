@@ -20,9 +20,23 @@ public class RequestBook {
 		this.requestBookNo = requestBookNo;
 	}
 
+	public RequestBook(Member requestMbId) {
+		this.requestMbId = requestMbId;
+	}
+
+	public RequestBook(Member requestMbId, String requestBookName, String requestBookAuthor, String requestBookTrnslr,
+			String requestBookPls, Date requestDate, int whCdt) {
+		this.requestMbId = requestMbId;
+		this.requestBookName = requestBookName;
+		this.requestBookAuthor = requestBookAuthor;
+		this.requestBookTrnslr = requestBookTrnslr;
+		this.requestBookPls = requestBookPls;
+		this.requestDate = requestDate;
+		this.whCdt = whCdt;
+	}
+
 	public RequestBook(int requestBookNo, Member requestMbId, String requestBookName, String requestBookAuthor,
 			String requestBookTrnslr, String requestBookPls, Date requestDate, int whCdt, int overlapCnt) {
-		super();
 		this.requestBookNo = requestBookNo;
 		this.requestMbId = requestMbId;
 		this.requestBookName = requestBookName;
@@ -98,10 +112,19 @@ public class RequestBook {
 		this.whCdt = whCdt;
 	}
 
+	public int getOverlapCnt() {
+		return overlapCnt;
+	}
+
+	public void setOverlapCnt(int overlapCnt) {
+		this.overlapCnt = overlapCnt;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + overlapCnt;
 		result = prime * result + ((requestBookAuthor == null) ? 0 : requestBookAuthor.hashCode());
 		result = prime * result + ((requestBookName == null) ? 0 : requestBookName.hashCode());
 		result = prime * result + requestBookNo;
@@ -122,6 +145,8 @@ public class RequestBook {
 		if (getClass() != obj.getClass())
 			return false;
 		RequestBook other = (RequestBook) obj;
+		if (overlapCnt != other.overlapCnt)
+			return false;
 		if (requestBookAuthor == null) {
 			if (other.requestBookAuthor != null)
 				return false;
@@ -162,9 +187,9 @@ public class RequestBook {
 	@Override
 	public String toString() {
 		return String.format(
-				"RequestBook [requestBookNo=%s, requestMbId=%s, requestBookName=%s, requestBookAuthor=%s, requestBookTrnslr=%s, requestBookPls=%s, requestDate=%s, whCdt=%s]",
+				"RequestBook [requestBookNo=%s, requestMbId=%s, requestBookName=%s, requestBookAuthor=%s, requestBookTrnslr=%s, requestBookPls=%s, requestDate=%s, whCdt=%s, overlapCnt=%s]",
 				requestBookNo, requestMbId, requestBookName, requestBookAuthor, requestBookTrnslr, requestBookPls,
-				requestDate, whCdt);
+				requestDate, whCdt, overlapCnt);
 	}
 
 	public String toWhCdtString() {

@@ -92,7 +92,7 @@ public class RequestIntoTblPanel extends JPanel {
 						reqst.getRequestBookName(),
 						writer,
 						reqst.getRequestBookPls(),
-						reqst.getRequestMbId().getMberId(),
+						reqst.getOverlapCnt(),
 						String.format("%tF", reqst.getRequestDate()),
 						reqst.getWhCdt() > 0 ? "입고완료" : "미입고",
 						false
@@ -104,7 +104,7 @@ public class RequestIntoTblPanel extends JPanel {
 		}
 		
 		table.setModel(model);
-		tableSetWidth(30, 200, 100, 100, 150, 100, 80, 30);
+		tableSetWidth(30, 200, 100, 100, 100, 100, 80, 30);
 		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6);
 	}
 	
@@ -163,7 +163,7 @@ public class RequestIntoTblPanel extends JPanel {
 
 	public class TestTabelModel extends DefaultTableModel {
 		public TestTabelModel() {
-			super(new String[] { "no", "신청도서명", "저자/역자", "출판사", "신청회원ID", "신청일자", "입고여부", "선택" }, 0);
+			super(new String[] { "no", "신청도서명", "저자/역자", "출판사", "신청회원수", "신청일자", "입고여부", "선택" }, 0);
 		}
 		
 		@Override

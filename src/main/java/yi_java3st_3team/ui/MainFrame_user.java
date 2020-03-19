@@ -25,6 +25,7 @@ import yi_java3st_3team.ui.content.MemberBookSearchPanel;
 import yi_java3st_3team.ui.content.MemberUseCdtPanel;
 import yi_java3st_3team.ui.content.PasswordCheckPanel;
 import yi_java3st_3team.ui.content.RecomPanel;
+import yi_java3st_3team.ui.content.RequestBookMemberPanel;
 //github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 import yi_java3st_3team.ui.service.MemberUIService;
 
@@ -39,6 +40,8 @@ public class MainFrame_user extends JFrame {
 	private JPanel pProfile;
 	private JPanel pBookSearch;
 	private JPanel pRecommendBook;
+	private JPanel pRequestBook;
+	private JLabel lblRequestBook;
 	private JPanel pLogout;
 	private JPanel pWest;
 	private JPanel pCenter;
@@ -54,6 +57,7 @@ public class MainFrame_user extends JFrame {
 	private JPanel bookRankPanel;
 	private Thread menuThread;
 	private MainFrame_user mainFrame;
+	private JPanel requestBookPanel;
 
 	public MainFrame_user() {
 		initialize();
@@ -124,6 +128,17 @@ public class MainFrame_user extends JFrame {
 		lblRecommendBook.setFont(new Font("굴림", Font.PLAIN, 15));
 		pRecommendBook.add(lblRecommendBook, BorderLayout.NORTH);
 		
+		pRequestBook = new JPanel();
+		pRequestBook.setBackground(Color.WHITE);
+		pRequestBook.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pSouthMenuPanel.add(pRequestBook);
+		pRequestBook.setLayout(new BorderLayout(0, 0));
+		
+		lblRequestBook = new JLabel("도서신청");
+		lblRequestBook.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRequestBook.setFont(new Font("굴림", Font.PLAIN, 15));
+		pRequestBook.add(lblRequestBook, BorderLayout.NORTH);
+		
 		JPanel pDummy1 = new JPanel();
 		pDummy1.setBackground(Color.WHITE);
 		pDummy1.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -143,10 +158,6 @@ public class MainFrame_user extends JFrame {
 		JPanel pDummy4 = new JPanel();
 		pDummy4.setBackground(Color.WHITE);
 		pSouthMenuPanel.add(pDummy4);
-		
-		JPanel pDummy5 = new JPanel();
-		pDummy5.setBackground(Color.WHITE);
-		pSouthMenuPanel.add(pDummy5);
 		
 		pLogout = new JPanel();
 		pLogout.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -181,6 +192,7 @@ public class MainFrame_user extends JFrame {
 		pProfile.addMouseListener(menuAdapter);
 		pBookSearch.addMouseListener(menuAdapter);
 		pRecommendBook.addMouseListener(menuAdapter);
+		pRequestBook.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		menuThread = getMenuThread();
 		menuThread.run();
@@ -221,6 +233,7 @@ public class MainFrame_user extends JFrame {
 				memberBookSearchPanel = new MemberBookSearchPanel();
 				bookRecomPanel = new RecomPanel();
 				bookRankPanel = new BookRankingPanel();
+				requestBookPanel = new RequestBookMemberPanel();
 			}
 		});
 		return thread;
@@ -245,8 +258,8 @@ public class MainFrame_user extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel[] menuPanels = new JPanel[] {pHome,pProfile,pBookSearch,pRecommendBook};
-				JLabel[] menuLabels = new JLabel[] {lblHome,lblProfile,lblBookSearch,lblRecommendBook};
+				JPanel[] menuPanels = new JPanel[] {pHome,pProfile,pBookSearch,pRecommendBook,pRequestBook};
+				JLabel[] menuLabels = new JLabel[] {lblHome,lblProfile,lblBookSearch,lblRecommendBook,lblRequestBook};
 				//Menu panel,label 초기화
 				for(JPanel p : menuPanels) {
 					p.setBackground(Color.white);
@@ -374,6 +387,15 @@ public class MainFrame_user extends JFrame {
 					}
 					contentPane.add(pCenter, BorderLayout.CENTER);
 					contentPane.add(pWest, BorderLayout.WEST);
+					repaint();
+					revalidate();
+					break;
+				case "도서신청":
+					contentPane.remove(pCenter);
+					contentPane.remove(pWest);
+					pCenter = requestBookPanel;
+					pCenter.setBackground(Color.white);
+					contentPane.add(pCenter,BorderLayout.CENTER);
 					repaint();
 					revalidate();
 					break;

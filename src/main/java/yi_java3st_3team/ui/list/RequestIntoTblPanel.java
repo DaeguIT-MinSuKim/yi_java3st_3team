@@ -1,7 +1,9 @@
 package yi_java3st_3team.ui.list;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +20,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import jxl.Workbook;
+import jxl.write.NumberFormats;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
@@ -49,6 +56,57 @@ public class RequestIntoTblPanel extends JPanel {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
+	}
+	
+//	public void excelEvent() {
+//		String filePath = System.getProperty("user.dir")+"\\data.xls\\";
+//		String SheetName = "bookList";
+//		String[][] data = new String[][];
+//		
+//		String[] getColumn = new String[table.getColumnCount()];
+//		for(int i=0; i<table.getColumnCount(); i++) { // 컬럼명 받기
+//			getColumn[i] = table.getColumnName(i);
+//		}
+//		
+//		String[][] getData = new String[table.getRowCount()][table.getColumnCount()]; // 데이터 받기
+//		for(int i=0; i<table.getRowCount(); i++) {
+//			for(int j=0; j<table.getColumnCount(); j++) {
+//				getData[i][j] = (String) table.getValueAt(i, j);
+//			}
+//		}
+//		
+//		try {
+//			WritableWorkbook workbook = Workbook.createWorkbook(new File(filePath)); //파일경로 설정
+//			WritableSheet sheet = workbook.createSheet(SheetName, 0); //시트이름과 몇번째 시트인덱스
+//			jxl.write.WritableCellFormat format_column = new WritableCellFormat(); //컬럼 포멧. 스트링
+//			jxl.write.WritableCellFormat format_data = new WritableCellFormat(); //데이터 포멧. 스트링
+//			jxl.write.WritableCellFormat format_integer1 = new WritableCellFormat(NumberFormats.INTEGER); // 데이터 포멧. 정수형
+//			jxl.write.WritableCellFormat format_float1 = new WritableCellFormat(NumberFormats.FLOAT); // 데이터 포멧. 실수형
+//			format_column.setBackground(jxl.format.Colour.GRAY_25); // 컬럼 백그라운드 색 설정
+//			format_column.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN); // 컬럼 보더라인 스타일 설정
+//			
+//			for(int i=0; i<)
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		
+//	}
+	
+	public int getColumnCnt() {
+		return table.getColumnCount();
+	}
+	
+	public int getRowCnt() {
+		return table.getRowCount();
+	}
+	
+	public String getColumnName(int i) {
+		return table.getColumnName(i);
+	}
+	
+	public String getValueAt(int i, int j) {
+		return table.getValueAt(i, j)+"";
 	}
 	
 	public void loadDate(List<RequestBook> list) {

@@ -1,4 +1,5 @@
 -- 도서 전체 검색 view
+DROP VIEW IF EXISTS vw_book;
 create view vw_book as 
 	select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no,
@@ -12,6 +13,7 @@ create view vw_book as
 	order by b1.regist_date;
 	
 -- 신청도서 전체검색 view
+DROP VIEW IF EXISTS vw_request_book;
 create view vw_request_book as 
 select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 
 	reqst_mb_id , reqst_date , wh_cdt , rb2.cnt

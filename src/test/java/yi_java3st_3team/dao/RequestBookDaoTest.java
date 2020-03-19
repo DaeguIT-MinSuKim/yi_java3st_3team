@@ -72,6 +72,19 @@ public class RequestBookDaoTest {
 		Assert.assertNotEquals(0, lists.size());
 		for(RequestBook rb : lists) LogUtil.prnLog(rb);
 	}
+	
+	@Test
+	public void selectRequestBookByOptionAll() {
+		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		RequestBook rb = new RequestBook();
+//		rb.setWhCdt(0);
+		String year = "2020";
+		String month = "02";
+		
+		List<RequestBook> lists = dao.selectRequestBookByOptionAll(rb, year, month);
+		Assert.assertNotEquals(0, lists.size());
+		for(RequestBook rbs : lists) LogUtil.prnLog(rbs);
+	}
 
 	@Test
 	public void test04SelectRequestBookById() {

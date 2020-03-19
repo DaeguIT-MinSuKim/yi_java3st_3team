@@ -4,13 +4,15 @@ import java.util.List;
 
 import yi_java3st_3team.dao.GradeDao;
 import yi_java3st_3team.dao.MemberDao;
+import yi_java3st_3team.dao.TitleDao;
 import yi_java3st_3team.dao.ZipCodeDao;
 import yi_java3st_3team.dao.impl.GradeDaoImpl;
 import yi_java3st_3team.dao.impl.MemberDaoImpl;
+import yi_java3st_3team.dao.impl.TitleDaoImpl;
 import yi_java3st_3team.dao.impl.ZipCodeDaoImpl;
-import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Member;
+import yi_java3st_3team.dto.Title;
 import yi_java3st_3team.dto.ZipCode;
 
 public class MemberUIService {
@@ -43,25 +45,27 @@ public class MemberUIService {
 	public List<Member> showMemberListAll() {
 		return memDao.selectMemberByAll();
 	}
-	
-	
-	 public List<Member> searchMemberByID(Member mem){ 
-		 return memDao.searchMemberByID(mem); }
-	 
-	public List<Member> searchMemberByName(Member mem){
+
+	public List<Member> searchMemberByID(Member mem) {
+		return memDao.searchMemberByID(mem);
+	}
+
+	public List<Member> searchMemberByName(Member mem) {
 		return memDao.searchMemberByName(mem);
 	}
-	public List<Member> searchMemberByBirtyday(Member mem){
+
+	public List<Member> searchMemberByBirtyday(Member mem) {
 		return memDao.searchMemberByBirtyday(mem);
 	}
 
-	public List<Grade> showGradeList(){
+	public List<Grade> showGradeList() {
 		return gradeDao.selectGradeByAll();
 	}
+
 	public void removeMember(Member mem) {
 		memDao.deleteMember(mem);
 	}
-	
+
 	public void updateByWdrCdt(Member mem) {
 		memDao.updateMember(mem);
 	}
@@ -69,5 +73,5 @@ public class MemberUIService {
 	public void updateMember(Member mem) {
 		memDao.updateMember(mem);
 	}
-	
+
 }

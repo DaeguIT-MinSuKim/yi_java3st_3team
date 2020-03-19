@@ -167,4 +167,7 @@ public class RequestBook {
 				requestDate, whCdt);
 	}
 
+	public String toWhCdtString() {
+		return String.format("%s", whCdt > 0 ? "입고완료" : "미입고");
+	}
 }

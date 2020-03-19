@@ -63,19 +63,22 @@ public class RequestBookDaoImpl implements RequestBookDao {
 	}
 	
 	@Override
-	public List<RequestBook> selectRequestBookByOptionAll(RequestBook rb) {
+	public List<RequestBook> selectRequestBookByOptionAll(RequestBook rb, String year, String month) {
 		StringBuilder sql = new StringBuilder("select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, "
 				+ "reqst_mb_id, reqst_date, wh_cdt, cnt \r\n" 
 				+ "	from vw_request_book "
-				+ "where year(reqst_date) = ? and month(reqst_date) = ?");
+				+ " where year(reqst_date) = ? ");
+		if(month != null) sql.append("and month(reqst_date) = ? ");
 		if(rb.getWhCdt() > -1) sql.append("and wh_cdt = ?");
 		
 		List<RequestBook> list = null;
 		try(Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql.toString())){
-			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
-			pstmt.setString(2, new Timestamp(rb.getRequestDate().getTime()).toString().substring(5, 7));
-			if(rb.getWhCdt() > -1) pstmt.setInt(3, rb.getWhCdt());
+			int argCnt = 1;
+			pstmt.setString(argCnt++, year);
+			if(month != null) pstmt.setString(argCnt++, month);
+			if(rb.getWhCdt() > -1) pstmt.setInt(argCnt++, rb.getWhCdt());
+			LogUtil.prnLog(pstmt);
 			
 			try (ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
@@ -92,19 +95,19 @@ public class RequestBookDaoImpl implements RequestBookDao {
 	}
 
 	@Override
-	public List<RequestBook> selectRequestBookByYearOption(RequestBook rb) {
+	public List<RequestBook> selectRequestBookByYearOption(RequestBook rb, String year) {
 		StringBuilder sql = new StringBuilder("select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, "
 				+ "reqst_mb_id, reqst_date, wh_cdt, cnt \r\n" 
 				+ "	from vw_request_book "
 				+ "where year(reqst_date) = ? ");
-		if(rb.getWhCdt() > -1) sql.append("and wh_cdt = ?");
+		if(rb.getWhCdt() > 0) sql.append("and wh_cdt = ?");
 		
 		List<RequestBook> list = null;
 		try(Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql.toString())){
-			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
-			if(rb.getWhCdt() > -1) pstmt.setInt(2, rb.getWhCdt());
-			
+			pstmt.setString(1, year);
+			if(rb.getWhCdt() > 0) pstmt.setInt(2, rb.getWhCdt());
+			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
 					list = new ArrayList<>();
@@ -145,14 +148,14 @@ public class RequestBookDaoImpl implements RequestBookDao {
 
 
 	@Override
-	public List<RequestBook> selectRequestBookByIdAndYearOption(RequestBook rb) {
+	public List<RequestBook> selectRequestBookByIdAndYearOption(RequestBook rb, String year) {
 		String sql = "select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, "
 					+ "reqst_date, wh_cdt, cnt \r\n" 
 					+ "	from vw_request_book \r\n" 
 					+ "	where year(reqst_date) = ? and reqst_mb_id = ?";
 		List<RequestBook> list = null;
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, new Timestamp(rb.getRequestDate().getTime()).toString().substring(0, 4));
+			pstmt.setString(1, year);
 			pstmt.setString(2, rb.getRequestMbId().getMberId());
 			LogUtil.prnLog(pstmt);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -203,7 +206,7 @@ public class RequestBookDaoImpl implements RequestBookDao {
 		if (rb.getRequestBookTrnslr() != null) sql.append("reqst_book_trnslr = ?, ");
 		if (rb.getRequestBookPls() != null) sql.append("request_book_pls = ?, ");
 		if (rb.getRequestDate() != null) sql.append("reqst_date = ?, ");
-		if (rb.getWhCdt() > -1) sql.append("wh_cdt = ?, ");
+		if (rb.getWhCdt() > 0) sql.append("wh_cdt = ?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append(" where reqst_book_name = ? and request_book_pls = ?");
 
@@ -223,7 +226,7 @@ public class RequestBookDaoImpl implements RequestBookDao {
 				pstmt.setString(argCnt++, rb.getRequestBookPls());
 			if (rb.getRequestDate() != null)
 				pstmt.setTimestamp(argCnt++, new Timestamp(rb.getRequestDate().getTime()));
-			if (rb.getWhCdt() > -1)
+			if (rb.getWhCdt() > 0)
 				pstmt.setInt(argCnt++, rb.getWhCdt());
 			pstmt.setString(argCnt++, rb.getRequestBookName());
 			pstmt.setString(argCnt++, rb.getRequestBookPls());

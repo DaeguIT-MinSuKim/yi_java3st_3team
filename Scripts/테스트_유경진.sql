@@ -380,12 +380,12 @@ select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, req
 -- 선택조건 모두 검색
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt
 	from vw_request_book 
-	where year(reqst_date) = '2020' and month(reqst_date) = '3' and wh_cdt = 0;
+	where year(reqst_date) = 2020 and month(reqst_date) = 3 and wh_cdt = 1;
 
 -- 년도조건, 입고조건 검색
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt
 	from vw_request_book 
-	where year(reqst_date) = '2020' and wh_cdt = 0;
+	where year(reqst_date) = 2020 and wh_cdt = 0;
 
 -- 신청 id와 도서명 검색 (회원 페이지에서 나와야할 신청도서 리스트)
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
@@ -398,11 +398,11 @@ select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, req
 
 -- 신청 도서 등록 (회원 페이지)
 insert into request_book(reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt)
-	values ('Java의 정석', '남궁성', '', '도우출판', 'daddystop@gmail.com', '2020-03-18', 0);
+	values ('Java의 정석', '남궁성', '', '도우출판', 'ggg243r4@gmail.com', '2020-03-18', 0);
 
 -- 입고 처리
 update request_book 
-	set wh_cdt = 0
+	set wh_cdt = 1
 	where reqst_book_name = 'Java의 정석' and request_book_pls = '도우출판';
 
 delete from request_book where reqst_mb_id = '' and reqst_book_name = '';
@@ -413,7 +413,7 @@ delete from request_book where reqst_mb_id = '' and reqst_book_name = '';
 -- 컬럼값 초기화
 alter table request_book auto_increment = 11;
 
--- delete from request_book where reqst_book_no = 12;
+delete from request_book where reqst_book_name = 'Java의 정석';
 -- delete from request_book where reqst_book_no = 13;
 -- delete from request_book where reqst_book_no = 14;
 

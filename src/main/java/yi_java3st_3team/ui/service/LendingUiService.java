@@ -2,8 +2,6 @@ package yi_java3st_3team.ui.service;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import yi_java3st_3team.dao.BookDao;
 import yi_java3st_3team.dao.GradeDao;
 import yi_java3st_3team.dao.LendingDao;
@@ -105,6 +103,23 @@ public class LendingUiService {
 	
 	public List<Lending> showBastList() {
 		return lendingDao.selectLendingBastList();
+	}
+
+	public void insertSelectedLendingList(Member mberId, Book bookCd) {
+//		memberDao.updateMember(member);
+//		bookDao.updateBook(book);
+//		lendingDao.insertLending(lending);
+		lendingDao.insertLendingUpdateBookMember(mberId, bookCd);
+	}
+
+	public Member selectedMberId(String mberId) {
+		Member member = new Member(mberId);
+		return memberDao.selectMemberByNo(member);
+	}
+
+	public Book selectedBookCd(String bookCd) {
+		Book book = new Book(bookCd);
+		return bookDao.selectBookByCode(book);
 	}
 
 }

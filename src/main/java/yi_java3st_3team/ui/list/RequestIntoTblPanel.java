@@ -86,6 +86,18 @@ public class RequestIntoTblPanel extends JPanel {
 		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6);
 	}
 	
+	public void totlaChk() {
+		for(int i=0; i<table.getRowCount(); i++) {			
+			table.setValueAt((boolean) true , i, 7);
+		}
+	}
+	
+	public void totlaUnChk() {
+		for(int i=0; i<table.getRowCount(); i++) {			
+			table.setValueAt((boolean) false , i, 7);
+		}
+	}
+	
 	public void getSelectedItem() {
 		try {
 			for(int i=0; i<table.getRowCount(); i++) {

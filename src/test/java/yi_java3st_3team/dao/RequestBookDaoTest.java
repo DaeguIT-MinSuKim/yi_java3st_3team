@@ -91,7 +91,7 @@ public class RequestBookDaoTest {
 		LogUtil.prnLog(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		RequestBook rbId = new RequestBook();
 		rbId.setRequestMbId(new Member("ggg243r4@gmail.com"));
-		List<RequestBook> lists = dao.selectRequestBookById(rbId);
+		List<RequestBook> lists = dao.selectRequestBookByIdAll(rbId);
 		Assert.assertNotEquals(0, lists.size());
 		for(RequestBook rb : lists) LogUtil.prnLog(rb);
 	}

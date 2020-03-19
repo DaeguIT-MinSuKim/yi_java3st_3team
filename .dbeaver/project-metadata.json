@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"resources":{"Scripts/view.sql":{"sql-editor-data-source-id":"mysql5-170f02f87c7-2a3d09aa22c80d3e"},"Scripts/기본_테스트.sql":{"sql-editor-data-source-id":"mysql5-170f02f87c7-2a3d09aa22c80d3e"}}}
+=======
+{"resources":{"Scripts/test_pis.sql":{"sql-editor-data-source-id":"mysql5-170ec037454-78607378f2fba70f"},"Scripts/view.sql":{"sql-editor-data-source-id":"mysql5-170f12bee9e-3688ca33cc0734b"},"Scripts/데이터.sql":{"sql-editor-data-source-id":"mysql5-170f12bee9e-3688ca33cc0734b"},"Scripts/초기화.sql":{"sql-editor-data-source-id":"mysql5-170f12b672e-2f354dce01028d65"},"Scripts/테스트_이상원_대여반납.sql":{"sql-editor-data-source-id":"mysql5-170f12bee9e-3688ca33cc0734b"}}}
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git

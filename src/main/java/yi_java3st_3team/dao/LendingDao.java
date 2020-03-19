@@ -48,4 +48,6 @@ public interface LendingDao {
 	List<Lending> selectLendingBastList();
 	
 	int insertLendingUpdateBookMember(Member member, Book book);
+
+	int updateLendingBookMember(Member m, Book b);
 }

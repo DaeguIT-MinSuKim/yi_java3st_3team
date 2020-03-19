@@ -1,6 +1,5 @@
 package yi_java3st_3team.dao.impl;
 
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -579,45 +578,29 @@ public class LendingDaoImpl implements LendingDao {
 	}
 	@Override
 	public int insertLendingUpdateBookMember(Member member, Book book) {
-		String sql = "all rent_book(?, ?)";
-		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareCall(sql)) {
-			Lending lending = new Lending();
-			pstmt.setInt(1, lending.getLendRturnNo());
-			pstmt.setString(2, lending.getMberId().getMberId());
-			pstmt.setString(3, lending.getBookCd().getBookCode());
-			pstmt.setTimestamp(4, new Timestamp(lending.getLendDate().getTime()));
-			pstmt.setTimestamp(5, new Timestamp(lending.getRturnDueDate().getTime()));
-			pstmt.setInt(6, lending.getRturnPsmCdt());
-			pstmt.setTimestamp(7, new Timestamp(lending.getRturnDate().getTime()));
-			pstmt.setInt(8, lending.getOverdueCdt());
+		String sql = "{call rent_book(?, ?)}";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareCall(sql);) {
+			pstmt.setString(1, member.getMberId());
+			pstmt.setString(2, book.getBookCode());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
-//		
-//		
-//		String sql = "select lend_rturn_no, mber_id ,book_cd , lend_date ,rturn_due_date , rturn_psm_cdt , rturn_date , overdue_cdt \r\n"
-//				+ "	from lending\r\n" + "	where mber_id = ? and rturn_date is null;";
-//
-//		List<Lending> list = null;
-//
-//		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-//			pstmt.setString(1, member.getMberId());
-//			LogUtil.prnLog(pstmt);
-//			try (ResultSet rs = pstmt.executeQuery()) {
-//				if (rs.next()) {
-//					list = new ArrayList<Lending>();
-//					do {
-//						list.add(getUseJoinLendgin2(rs));
-//					} while (rs.next());
-//				}
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return list;
+	}
+
+	@Override
+	public int updateLendingBookMember(Member member, Book book) {
+		String sql = "{call return_book(?, ?)}";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareCall(sql);) {
+			pstmt.setString(1, member.getMberId());
+			pstmt.setString(2, book.getBookCode());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

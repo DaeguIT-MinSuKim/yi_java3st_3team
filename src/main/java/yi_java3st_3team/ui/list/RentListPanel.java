@@ -129,7 +129,9 @@ public class RentListPanel extends JPanel {
 				String bookCd = (String)model.getValueAt(j, 0);
 				JOptionPane.showMessageDialog(null, bookCd);
 				Member m = service.selectedMberId(mberId);
+				System.out.println("=================================="+bookCd);
 				Book b = service.selectedBookCd(bookCd);
+				System.out.println("=================================="+bookCd);
 				service.insertSelectedLendingList(m, b);
 			}
 		}

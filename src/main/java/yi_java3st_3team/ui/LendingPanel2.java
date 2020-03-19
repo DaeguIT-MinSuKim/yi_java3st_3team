@@ -117,6 +117,7 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
+		pLendingList.setReturn(pMember.getTfMberId().getText());
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {

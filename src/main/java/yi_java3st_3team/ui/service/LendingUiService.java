@@ -125,4 +125,9 @@ public class LendingUiService {
 		return bookDao.selectBookByCode(book);
 	}
 
+	public void updateLendingList(Member m, Book b) {
+		lendingDao.updateLendingBookMember(m,b);
+		
+	}
+
 }

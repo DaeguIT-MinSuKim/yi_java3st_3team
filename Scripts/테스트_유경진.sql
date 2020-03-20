@@ -47,7 +47,7 @@ select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad,
 		  
 -- book -------------------------------------------------------------------------------
 select * from book where pls = 196;
-select book_code from book order by regist_date desc limit 1;
+select book_code, book_name from book where book_name = '82년생 김지영' order by regist_date desc limit 1 ;
 
 select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,

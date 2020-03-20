@@ -93,6 +93,8 @@ create view vw_book as
 
 select * from vw_book where book_code like 'A%' and lc_no = 9;
 
+select * from vw_book where book_code like '%A%'  
+
 
 
 
@@ -209,6 +211,7 @@ select * from book;
 select * from recommendation;
 select book_code, book_cont 
 	from recommendation
+	
 	order by recom_book_no desc limit 1;
 
 

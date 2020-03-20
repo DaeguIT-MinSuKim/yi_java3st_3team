@@ -49,6 +49,29 @@ public class BookDaoImpl implements BookDao {
 
 		return book;
 	}
+	
+	private Book getBookVw(ResultSet rs) throws SQLException {
+		String bookCode = rs.getString("book_code");
+		String bookName = rs.getString("book_name");
+		String authrName = rs.getString("authr_name");
+		String trnslrName = rs.getString("trnslr_name");
+		PublishingCompany pls = new PublishingCompany(rs.getInt("pls"), rs.getString("pls_name"));
+		Date pblicteYear = rs.getTimestamp("pblicte_year");
+		int bookPrice = rs.getInt("book_price");
+		int bookCnt = rs.getInt("book_cnt");
+		int lendPsbCdt = rs.getInt("lend_psb_cdt");
+		int totalLeCnt = rs.getInt("total_le_cnt");
+		byte[] bookImg = rs.getBytes("book_img");
+		LargeClassification lcNo = new LargeClassification(rs.getInt("lc_no"), rs.getString("lclas_name"));
+		MiddleClassification mlNo = new MiddleClassification(rs.getInt("ml_no"), rs.getString("mlsfc_name"));
+		Date registDate = rs.getTimestamp("regist_date");
+		int dsuseCdt = rs.getInt("dsuse_cdt");
+
+		Book book = new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, bookCnt,
+				lendPsbCdt, totalLeCnt, bookImg, lcNo, mlNo, registDate, dsuseCdt);
+
+		return book;
+	}
 
 	@Override
 	public Book selectBookByCode(Book book) {
@@ -123,7 +146,7 @@ public class BookDaoImpl implements BookDao {
 		where.replace(where.lastIndexOf("and"), where.length(), " ");
 		
 		sql.append(where);
-//		sql.append("order by b1.regist_date");
+		sql.append("order by regist_date");
 
 		List<Book> list = null;
 
@@ -139,7 +162,7 @@ public class BookDaoImpl implements BookDao {
 				if (rs.next()) {
 					list = new ArrayList<>();
 					do {
-						list.add(getBook(rs));
+						list.add(getBookVw(rs));
 					} while (rs.next());
 				}
 			}

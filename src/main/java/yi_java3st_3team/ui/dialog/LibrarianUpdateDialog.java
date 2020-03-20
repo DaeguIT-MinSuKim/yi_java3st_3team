@@ -176,7 +176,7 @@ public class LibrarianUpdateDialog extends JDialog implements ActionListener {
 
 			Librarian upLib = getItem();
 			service.updateLibrarian(upLib);
-			selectUI.loadData();
+			//selectUI.loadData();
 			JOptionPane.showMessageDialog(null, String.format("[ %s ] 님의 정보가 수정되었습니다 ", upLib.getLbName()));
 			setVisible(false);
 		} catch (Exception e1) {

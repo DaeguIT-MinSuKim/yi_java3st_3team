@@ -212,8 +212,8 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		return new Recommendation(bookCode, bookCont);
 	}
 	
-	public void loadDate() {
-		pBookList.loadDate();
+	public void loadData() {
+		pBookList.loadData();
 		setItem(service.showRecomBookByLastNo());
 	}
 

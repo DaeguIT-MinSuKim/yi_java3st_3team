@@ -123,7 +123,7 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 		setService(service);
 	}
 	
-	public void loadDate() {
+	public void loadData() {
 		pBookList.loadData(service.showBookListAll());
 	}
 

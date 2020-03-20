@@ -46,6 +46,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -75,6 +76,13 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	private String defaultImg = getClass().getClassLoader().getResource("book-noImg.png").getPath();
 	private JButton btnCancel;
 	private JButton btnSave;
+	
+	public static void main(String[] args) {
+		JFrame test = new JFrame();
+		test.setBounds(2000, 100, 1000, 800);
+		test.getContentPane().add(new BookRegistrationPanel());
+		test.setVisible(true);
+	}
 
 	public BookRegistrationPanel() {
 		service = new BookUiService();
@@ -284,24 +292,28 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 
 	@Override
 	public Book getItem() {
-		validCheck();
+//		validCheck();
 		LargeClassification lcNo = (LargeClassification) cmbLc.getSelectedItem();
 		MiddleClassification mlNo = (MiddleClassification) cmbMl.getSelectedItem();
-		
-		System.out.println(lcNo);
 
 		String lcNoStd = String.format("%02d", lcNo.getLclasNo());
 		String mlNoStd = String.format("%02d", mlNo.getMlsfcNo());
-		String lastCode = service.getLastCode();
-		int lastCodeAp = lastCode.substring(0, 1).charAt(0);
-		int lastNum = Integer.parseInt(lastCode.substring(lastCode.length() - 2, lastCode.length()));
-		String bookCode = null;
-
-		if (lastNum == 99) {
-			bookCode = ((char) (lastCodeAp + 1)) + lcNoStd + mlNoStd + String.format("%02d", 1);
-		} else {
-			bookCode = ((char) lastCodeAp) + lcNoStd + mlNoStd + String.format("%02d", (lastNum + 1));
-		}
+		
+		System.out.println(cmbPls.getSelectedItem());
+		
+//		String overlapChk = service.getOverlapBookLastCode(tfBookName, tfAuthr, cmbPls.getSelectedItem());
+		
+//		String lastCode = service.getLastCode();
+//		int lastCodeAp = lastCode.substring(0, 1).charAt(0);
+//		int lastNum = Integer.parseInt(lastCode.substring(lastCode.length() - 2, lastCode.length()));
+//		String bookCode = null;
+//
+//		if (lastNum == 99) {
+//			bookCode = ((char) (lastCodeAp + 1)) + lcNoStd + mlNoStd + String.format("%02d", 1);
+//		} else {
+//			bookCode = ((char) lastCodeAp) + lcNoStd + mlNoStd + String.format("%02d", (lastNum + 1));
+//		}
+		String bookCode = "test중";
 
 		String bookName = tfBookName.getText().trim();
 		String authrName = tfAuthr.getText().trim();
@@ -321,7 +333,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		byte[] bookImg = getImge();
 		Date registDate = new Date();
 		int dsuseCdt = 0;
-
+		
 		return new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, lendPsbCdt, totalLeCnt,
 				bookImg, lcNo, mlNo, registDate, dsuseCdt);
 	}
@@ -401,11 +413,12 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	protected void btnSaveActionPerformed(ActionEvent e) {
 		try {
 			Book newBook = getItem();
-			LogUtil.prnLog(newBook.toDebug());
-			service.addBook(newBook);
-			clearTf();
-			JOptionPane.showMessageDialog(null,
-					String.format("%s[%s] 추가되었습니다.", newBook.getBookName(), newBook.getBookCode()));
+			JOptionPane.showMessageDialog(null, getItem());
+//			LogUtil.prnLog(newBook.toDebug());
+//			service.addBook(newBook);
+//			clearTf();
+//			JOptionPane.showMessageDialog(null,
+//					String.format("%s[%s] 추가되었습니다.", newBook.getBookName(), newBook.getBookCode()));
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (NumberFormatException e1) {

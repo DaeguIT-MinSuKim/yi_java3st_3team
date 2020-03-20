@@ -17,7 +17,9 @@ public interface BookDao {
 	
 	List<Book> selectBookAllOnMber();
 
-	String selectBookByLastCode();
+	String selectBookByOverlapBookLastCode(String bName, String aName, int pls);
+	
+	String selectBookByCatLastCode(int lcNo, int mlNo);
 
 	List<Book> LendingBookByCode(Book book);
 

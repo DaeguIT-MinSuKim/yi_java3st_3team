@@ -48,7 +48,6 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 	private Title title;
 	private Librarian findId;
 	private LibrarianSelectUIPanel selectUI;
-	
 
 	public LibrarianAddDialog(JFrame frame, String title) {
 		super(frame, title, true);
@@ -79,7 +78,7 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 		JLabel lblPassword = new JLabel("비밀번호");
 		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPanel.add(lblPassword);
-		
+
 		passPW = new JPasswordField();
 		contentPanel.add(passPW);
 
@@ -106,47 +105,47 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 		btnCancel.setPreferredSize(new Dimension(75, 25));
 		btnCancel.setActionCommand("Cancel");
 		buttonPane.add(btnCancel);
-		
+
 		setService(service);
-		
+
 	}
+
 	public void loadData() {
 		pLibrarianList.loadData(service.showLibrarianListAll());
-		//selectUI.loadData(service.showLibrarianListAll());
 	}
-	
-	
+
 	private Librarian getItem() {
 		validCheck();
 		String lbId = tfId.getText().trim();
 		String lbPass = new String(passPW.getPassword());
 		String lbName = tfName.getText().trim();
-		//Date lbBirthDay = null;
-		//ZipCode lbZip = null;
-		//String lbBassAd = null;
-		//String lbDetailAd = null;
-		//String lbTel = null;
-		//byte[] lbImg = null; 
+		// Date lbBirthDay = null;
+		// ZipCode lbZip = null;
+		// String lbBassAd = null;
+		// String lbDetailAd = null;
+		// String lbTel = null;
+		// byte[] lbImg = null;
 		Date joinDate = new Date();
 		Title titleName = (Title) cmbTitle.getSelectedItem();
-		Title title = new Title(titleName.getTitleName().equals("사서")? 1:0);
+		Title title = new Title(titleName.getTitleName().equals("사서") ? 1 : 0);
 //		int titleIdx = cmbTitle.getSelectedIndex();
 //		if(titleIdx == 0) {
 //			title = new Title(0);
 //		}
-		//Title title = cmbTitle.getSelectedItem();
+		// Title title = cmbTitle.getSelectedItem();
 		int workCdt = 1;
-		
+
 		return new Librarian(lbId, lbPass, lbName, title, joinDate, workCdt);
 	}
-	
 
 	public LibrarianSelectUIPanel getSelectUI() {
 		return selectUI;
 	}
+
 	public void setSelectUI(LibrarianSelectUIPanel selectUI) {
 		this.selectUI = selectUI;
 	}
+
 	private void setService(LibrarianUIService service) {
 		this.service = service;
 		setCmbList(service.showTitleList());
@@ -157,10 +156,10 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 		cmbTitle.setModel(model);
 		cmbTitle.setSelectedIndex(1);
 	}
-	
+
 	public void validCheck() {
 		if (tfId.getText().contentEquals("") || tfName.getText().contentEquals("")
-				|| passPW.getPassword().length==0) {
+				|| passPW.getPassword().length == 0) {
 			throw new InvalidCheckException();
 		}
 	}
@@ -175,34 +174,28 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 	}
 
 	protected void btnAddActionPerformed(ActionEvent e) {
-		
 		String Id = tfId.getText().trim();
 		findId = service.IDCheckLibrarian(new Librarian(Id));
-		
+
 		try {
-			if(findId != null) {
+			if (findId != null) {
 				JOptionPane.showMessageDialog(null, "중복된 아이디입니다.");
 				clearTf();
 			} else {
-		
+
 				Librarian addLib = getItem();
 				service.insertLibrarian(addLib);
-				
 				selectUI.loadData();
 				JOptionPane.showMessageDialog(null, String.format("[ %s ] 님 사서가입이 완료되었습니다.", addLib.getLbName()));
 				setVisible(false);
-				//loadData();
-				//addLibrarian.clearTf();
-				//dispose();
-				//loadData();
 			}
-				
-		}catch (Exception e1) {
+
+		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
-			System.out.println("여기서?");
 		}
-		
+
 	}
+
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		dispose();
 	}
@@ -213,18 +206,4 @@ public class LibrarianAddDialog extends JDialog implements ActionListener {
 		passPW.setText("");
 		cmbTitle.setSelectedIndex(1);
 	}
-
-	
-	
-//	public void setItem(Librarian addLib) {
-//			tfId.setText(addLib.getLbId());
-//			tfName.setText(addLib.getLbName());
-//			passPW.setText(addLib.getLbPass());
-//			if(addLib.getTitle().getTitleNo()==1) {
-//				cmbTitle.setSelectedItem("사서");
-//			}else {
-//				cmbTitle.setSelectedIndex(addLib.getTitle().getTitleNo()-1);
-//			}
-//	}
-
 }

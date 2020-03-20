@@ -77,12 +77,12 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	private JButton btnCancel;
 	private JButton btnSave;
 	
-	public static void main(String[] args) {
-		JFrame test = new JFrame();
-		test.setBounds(2000, 100, 1000, 800);
-		test.getContentPane().add(new BookRegistrationPanel());
-		test.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame test = new JFrame();
+//		test.setBounds(2000, 100, 1000, 800);
+//		test.getContentPane().add(new BookRegistrationPanel());
+//		test.setVisible(true);
+//	}
 
 	public BookRegistrationPanel() {
 		service = new BookUiService();
@@ -292,33 +292,13 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 
 	@Override
 	public Book getItem() {
-//		validCheck();
+		validCheck();
 		LargeClassification lcNo = (LargeClassification) cmbLc.getSelectedItem();
 		MiddleClassification mlNo = (MiddleClassification) cmbMl.getSelectedItem();
-
-		String lcNoStd = String.format("%02d", lcNo.getLclasNo());
-		String mlNoStd = String.format("%02d", mlNo.getMlsfcNo());
-		
-		System.out.println(cmbPls.getSelectedItem());
-		
-//		String overlapChk = service.getOverlapBookLastCode(tfBookName, tfAuthr, cmbPls.getSelectedItem());
-		
-//		String lastCode = service.getLastCode();
-//		int lastCodeAp = lastCode.substring(0, 1).charAt(0);
-//		int lastNum = Integer.parseInt(lastCode.substring(lastCode.length() - 2, lastCode.length()));
-//		String bookCode = null;
-//
-//		if (lastNum == 99) {
-//			bookCode = ((char) (lastCodeAp + 1)) + lcNoStd + mlNoStd + String.format("%02d", 1);
-//		} else {
-//			bookCode = ((char) lastCodeAp) + lcNoStd + mlNoStd + String.format("%02d", (lastNum + 1));
-//		}
-		String bookCode = "test중";
-
+		PublishingCompany pls = (PublishingCompany) cmbPls.getSelectedItem();
 		String bookName = tfBookName.getText().trim();
 		String authrName = tfAuthr.getText().trim();
 		String trnslrName = tfTrnslr.getText().trim();
-		PublishingCompany pls = (PublishingCompany) cmbPls.getSelectedItem();
 		Date pblicteYear = tfRegistDate.getDate();
 		int bookPrice = Integer.parseInt(tfBookPirce.getText().trim());
 
@@ -334,6 +314,42 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		Date registDate = new Date();
 		int dsuseCdt = 0;
 		
+		// 북코드 생성
+		String bookCode = null;
+		String lcNoStd = String.format("%02d", lcNo.getLclasNo());
+		String mlNoStd = String.format("%02d", mlNo.getMlsfcNo());
+		int plsInt = pls.getPlsNo();
+		int lcNoInt = lcNo.getLclasNo();
+		int mlNoInt = mlNo.getMlsfcNo();
+		
+		if(service.getCatBookLastCode(lcNoInt, mlNoInt) != null) {
+			if(service.getOverlapBookLastCode(bookName, authrName, plsInt) != null) {
+				System.out.println("중복도서 마지막 코드"+service.getOverlapBookLastCode(bookName, authrName, plsInt));			
+				
+				String getLastCode = service.getOverlapBookLastCode(bookName, authrName, plsInt);
+				String[] splitCode = getLastCode.split("-");
+				int updateNum = Integer.parseInt(splitCode[1]) + 1;
+				
+				// 코드생성
+				bookCode = splitCode[0] + "-" + updateNum;
+				System.out.println("생성된 중복도서 코드 : " + bookCode);
+	
+			} else {				
+				System.out.println("해당카테고리 마지막 코드 : "+service.getCatBookLastCode(lcNoInt, mlNoInt));
+				
+				String getLastCatCode = service.getCatBookLastCode(lcNoInt, mlNoInt);
+				String[] splitCode1 = getLastCatCode.split("\\.");
+				String[] splitCode2 = splitCode1[1].split("-");
+				int updateNum = Integer.parseInt(splitCode2[0]) + 1;
+				
+				bookCode = splitCode1[0] + "." + String.format("%03d", updateNum) + "-1";
+				
+				System.out.println("생성된 카테고리 마지막 코드 : " + bookCode);
+			}
+		} else if(service.getCatBookLastCode(lcNoInt, mlNoInt) == null) {			
+			bookCode = lcNoStd + mlNoStd + ".001-1";
+		}
+				
 		return new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, lendPsbCdt, totalLeCnt,
 				bookImg, lcNo, mlNo, registDate, dsuseCdt);
 	}
@@ -413,12 +429,12 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	protected void btnSaveActionPerformed(ActionEvent e) {
 		try {
 			Book newBook = getItem();
-			JOptionPane.showMessageDialog(null, getItem());
-//			LogUtil.prnLog(newBook.toDebug());
-//			service.addBook(newBook);
-//			clearTf();
-//			JOptionPane.showMessageDialog(null,
-//					String.format("%s[%s] 추가되었습니다.", newBook.getBookName(), newBook.getBookCode()));
+			System.out.println("getItem : "+getItem());
+			LogUtil.prnLog(newBook.toDebug());
+			service.addBook(newBook);
+			clearTf();
+			JOptionPane.showMessageDialog(null,
+					String.format("%s[%s] 추가되었습니다.", newBook.getBookName(), newBook.getBookCode()));
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (NumberFormatException e1) {

@@ -116,7 +116,7 @@ public class PasswordCheckPanel extends JPanel implements ActionListener {
 			}
 		}
 		else {
-			if(lib.getTitle().getTitleNo()==1) {
+			if(lib.getTitle().getTitleNo()==0) {
 				String password = new String(pfPassword.getPassword());
 				if(password.equals(lib.getLbPass())) {
 					mainFrame_ex.getContentPane().remove(mainFrame_ex.getpCenter());

@@ -123,7 +123,7 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 				if(e.getActionCommand().contentEquals("수정")) {
 					Librarian updateLib = pLibrarianList.getSelectedItem();
 					
-					updateDialog = new LibrarianUpdateDialog(updateFrame, "사서정보 수정");
+					updateDialog = new LibrarianUpdateDialog(updateFrame, "");
 					updateDialog.setItem(updateLib);
 					//updateDialog.setSelectUI(this);
 					updateDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

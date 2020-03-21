@@ -19,7 +19,7 @@ public interface BookDao {
 
 	String selectBookByLastCode();
 
-	List<Book> LendingBookByCode(Book book);
+	Book LendingBookByCode(Book book);
 
 	int insertBook(Book book);
 
@@ -40,4 +40,6 @@ public interface BookDao {
 	List<Book> selectNewBookList();
 
 	List<Book> lendingBookByName(Book book);
+
+	List<Book> LendingBookByCode2(Book book);
 }

@@ -3,6 +3,7 @@ package yi_java3st_3team.ui.list;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,17 +55,6 @@ public class RentListPanel extends JPanel {
 		model = new TestTabelModel();
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
-
-		/*
-		 * for(Lending lending : list) { model.addRow(new Object[] {
-		 * lending.getBookCd().getBookCode(), lending.getBookCd().getBookName(),
-		 * lending.getBookCd().getAuthrName(), new
-		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
-		 * lending.getBookCd().getPls().getPlsName(), new
-		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),lending.
-		 * getRturnDate()==null?"":String.format("%s",new
-		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate())),false}); }
-		 */
 	}
 
 	public class TestTabelModel extends DefaultTableModel {
@@ -99,26 +89,51 @@ public class RentListPanel extends JPanel {
 				fireTableCellUpdated(row, column);
 			}
 		}
+		public void setValueAt2(Object aValue, int row, int column) {
+			if (aValue instanceof String && column == 7) {
+				Vector rowData = (Vector) getDataVector().get(row);
+				rowData.set(7, "대여완료");
+				fireTableCellUpdated(row, column);
+			}
+		}
 	}
 
-	public void testting(List<Book> bookList) {
+	public void search(Book book) {
+		try {
+			Date now = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.DATE, +15);
+			model.addRow(new Object[] { book.getBookCode(), book.getBookName(),
+					String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
+					new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
+					new SimpleDateFormat("yyyy-MM-dd").format(now),
+					new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())});		
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "입력하지 않으셨거나 잘못입력하셨습니다. 다시 입력해주세요.");
+		}
+	}
+	public void search2(List<Book> bookList, int res) {
+		ArrayList<Book> list = null;
 		try {
 			Date now = new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DATE, +15);
 			for(Book book : bookList) {
+				if(model.getRowCount() >= res) {
+					return;
+				}
 				model.addRow(new Object[] { book.getBookCode(), book.getBookName(),
 						String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
 						new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
 						new SimpleDateFormat("yyyy-MM-dd").format(now),
-						new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });	
+						new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())});	
 			}	
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "입력하지 않으셨거나 잘못입력하셨습니다. 다시 입력해주세요.");
 		}
 	}
-
 	public void AllChecking(boolean b) {
 		int i = model.getRowCount();
 		for(int j= 0; j<i; j++) {
@@ -130,19 +145,33 @@ public class RentListPanel extends JPanel {
 		int i = model.getRowCount();
 		for(int j =0; j<i; j++) {
 			Boolean chk = (Boolean)model.getValueAt(j, 7);
-			
 			if(chk) {
-//				Book book = new Book();
-//				book.setBookCode((String)model.getValueAt(j, 0));
 				String bookCd = (String)model.getValueAt(j, 0);
-				JOptionPane.showMessageDialog(null, bookCd);
 				Member m = service.selectedMberId(mberId);
-				System.out.println("=================================="+bookCd);
 				Book b = service.selectedBookCd(bookCd);
-				System.out.println("=================================="+bookCd);
+//				if(model.getColumnClass(7) == Boolean.class) {
+//					if((Boolean)model.getValueAt(j, 7) == true) {
+//						model.setValueAt2("대여완료", j, 7);
+//					}
+//				}
 				service.insertSelectedLendingList(m, b);
 			}
 		}
 	}
+	public int checkingRow_Cnt() {
+		int i = model.getRowCount();
+		int c = 0;
+		for(int j=0; j<i; j++) {
+			if((Boolean)model.getValueAt(j, 7) == true) {
+				c++;
+			}
+		}
+		return c;
+	}
+
+	public void checkingRow_Cnt(int res) {
+		
+	}
+
 
 }

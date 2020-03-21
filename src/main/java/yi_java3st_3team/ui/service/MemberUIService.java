@@ -74,4 +74,8 @@ public class MemberUIService {
 		memDao.updateMember(mem);
 	}
 
+	public List<Member> showLendingMemberId2(Member id) {
+		return memDao.selectMemberByCodeName(id);
+	}
+
 }

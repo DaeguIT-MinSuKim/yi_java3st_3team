@@ -518,8 +518,8 @@ public class TestMemberProfileModifyPanel extends AbsItemPanel<Member> implement
 		
 		try {
 			Member updateMem = tMember.getItem();
-			service.updateByWdrCdt(updateMem);
-			JOptionPane.showMessageDialog(null, String.format("%s님의 프로필 수정이 완료되었습니다.", updateMem.getMberId()));
+			service.updateMember(updateMem);
+			JOptionPane.showMessageDialog(null, String.format("%s님의 프로필 수정이 완료되었습니다.", updateMem.getMberName()));
 		}catch(InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}

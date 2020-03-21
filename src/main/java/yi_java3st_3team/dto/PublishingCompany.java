@@ -70,7 +70,7 @@ public class PublishingCompany {
 
 	@Override
 	public String toString() {
-		return String.format("%s[%02d]", plsName, plsNo);
+		return String.format("[%02d] %s", plsNo, plsName);
 	}
 
 }

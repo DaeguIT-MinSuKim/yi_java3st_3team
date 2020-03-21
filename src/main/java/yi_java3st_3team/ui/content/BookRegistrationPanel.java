@@ -4,6 +4,7 @@ import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.LargeClassification;
 import yi_java3st_3team.dto.MiddleClassification;
 import yi_java3st_3team.dto.PublishingCompany;
+import yi_java3st_3team.ui.dialog.BookPlsSearchDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.service.BookUiService;
 import yi_java3st_3team.util.LogUtil;
@@ -45,6 +46,7 @@ import com.toedter.calendar.JDateChooser;
 
 import java.awt.Font;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
@@ -76,13 +78,19 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	private String defaultImg = getClass().getClassLoader().getResource("book-noImg.png").getPath();
 	private JButton btnCancel;
 	private JButton btnSave;
+	private JPanel panel;
+	private JButton btnPlsSearch;
+	private JLabel lblNewLabel_1;
 	
-//	public static void main(String[] args) {
-//		JFrame test = new JFrame();
-//		test.setBounds(2000, 100, 1000, 800);
-//		test.getContentPane().add(new BookRegistrationPanel());
-//		test.setVisible(true);
-//	}
+	private BookPlsSearchDialog plsSearchDig;
+	private JFrame plsSearch;
+
+	public static void main(String[] args) {
+		JFrame test = new JFrame();
+		test.setBounds(2000, 100, 1000, 800);
+		test.getContentPane().add(new BookRegistrationPanel());
+		test.setVisible(true);
+	}
 
 	public BookRegistrationPanel() {
 		service = new BookUiService();
@@ -155,8 +163,22 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		lblPls.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPls);
 
+		panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		pCenter.add(panel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+
 		cmbPls = new JComboBox<>();
-		pCenter.add(cmbPls);
+		panel.add(cmbPls);
+
+		btnPlsSearch = new JButton("검색");
+		btnPlsSearch.setFont(new Font("굴림", Font.PLAIN, 14));
+		btnPlsSearch.addActionListener(this);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBorder(new EmptyBorder(0, 10, 0, 0));
+		panel.add(lblNewLabel_1);
+		panel.add(btnPlsSearch);
 
 		JLabel lblPblicYear = new JLabel("출간일");
 		lblPblicYear.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
@@ -313,7 +335,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		byte[] bookImg = getImge();
 		Date registDate = new Date();
 		int dsuseCdt = 0;
-		
+
 		// 북코드 생성
 		String bookCode = null;
 		String lcNoStd = String.format("%02d", lcNo.getLclasNo());
@@ -321,35 +343,35 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		int plsInt = pls.getPlsNo();
 		int lcNoInt = lcNo.getLclasNo();
 		int mlNoInt = mlNo.getMlsfcNo();
-		
-		if(service.getCatBookLastCode(lcNoInt, mlNoInt) != null) {
-			if(service.getOverlapBookLastCode(bookName, authrName, plsInt) != null) {
-				System.out.println("중복도서 마지막 코드"+service.getOverlapBookLastCode(bookName, authrName, plsInt));			
-				
+
+		if (service.getCatBookLastCode(lcNoInt, mlNoInt) != null) {
+			if (service.getOverlapBookLastCode(bookName, authrName, plsInt) != null) {
+				System.out.println("중복도서 마지막 코드" + service.getOverlapBookLastCode(bookName, authrName, plsInt));
+
 				String getLastCode = service.getOverlapBookLastCode(bookName, authrName, plsInt);
 				String[] splitCode = getLastCode.split("-");
 				int updateNum = Integer.parseInt(splitCode[1]) + 1;
-				
+
 				// 코드생성
 				bookCode = splitCode[0] + "-" + updateNum;
 				System.out.println("생성된 중복도서 코드 : " + bookCode);
-	
-			} else {				
-				System.out.println("해당카테고리 마지막 코드 : "+service.getCatBookLastCode(lcNoInt, mlNoInt));
-				
+
+			} else {
+				System.out.println("해당카테고리 마지막 코드 : " + service.getCatBookLastCode(lcNoInt, mlNoInt));
+
 				String getLastCatCode = service.getCatBookLastCode(lcNoInt, mlNoInt);
 				String[] splitCode1 = getLastCatCode.split("\\.");
 				String[] splitCode2 = splitCode1[1].split("-");
 				int updateNum = Integer.parseInt(splitCode2[0]) + 1;
-				
+
 				bookCode = splitCode1[0] + "." + String.format("%03d", updateNum) + "-1";
-				
+
 				System.out.println("생성된 카테고리 마지막 코드 : " + bookCode);
 			}
-		} else if(service.getCatBookLastCode(lcNoInt, mlNoInt) == null) {			
+		} else if (service.getCatBookLastCode(lcNoInt, mlNoInt) == null) {
 			bookCode = lcNoStd + mlNoStd + ".001-1";
 		}
-				
+
 		return new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, lendPsbCdt, totalLeCnt,
 				bookImg, lcNo, mlNo, registDate, dsuseCdt);
 	}
@@ -397,6 +419,9 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnPlsSearch) {
+			btnPlsSearchActionPerformed(e);
+		}
 		if (e.getSource() == btnSave) {
 			btnSaveActionPerformed(e);
 		}
@@ -429,7 +454,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	protected void btnSaveActionPerformed(ActionEvent e) {
 		try {
 			Book newBook = getItem();
-			System.out.println("getItem : "+getItem());
+			System.out.println("getItem : " + getItem());
 			LogUtil.prnLog(newBook.toDebug());
 			service.addBook(newBook);
 			clearTf();
@@ -442,5 +467,16 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	protected void btnPlsSearchActionPerformed(ActionEvent e) {
+		plsSearchDig = new BookPlsSearchDialog(plsSearch, "출판사 검색");
+		plsSearchDig.setBounds(100, 100, 450, 500);
+		plsSearchDig.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		plsSearchDig.setVisible(true);
+		
+		PublishingCompany cmbPlsItem = plsSearchDig.getPls();
+		if(cmbPlsItem == null) return;
+		cmbPls.setSelectedItem(cmbPlsItem);
 	}
 }

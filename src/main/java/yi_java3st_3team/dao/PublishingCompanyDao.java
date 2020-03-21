@@ -8,6 +8,8 @@ public interface PublishingCompanyDao {
 	PublishingCompany selectPublishingCompanyByNo(PublishingCompany pc);
 
 	List<PublishingCompany> selectPublishingCompanyByAll();
+	
+	List<PublishingCompany> selectPublishingCompanyByNameAll(String pcName);
 
 	int insertPublishingCompany(PublishingCompany pc);
 

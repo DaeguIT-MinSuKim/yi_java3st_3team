@@ -66,6 +66,29 @@ public class PublishingCompanyDaoImpl implements PublishingCompanyDao {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<PublishingCompany> selectPublishingCompanyByNameAll(String pcName) {
+		String sql = "select pls_no, pls_name from publishing_company where pls_name like ?";
+		List<PublishingCompany> list = null;
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, pcName +"%");
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()) {				
+				if(rs.next()) {
+					list = new ArrayList<>();
+					do {
+						list.add(getPls(rs));
+					} while (rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 	@Override
 	public int insertPublishingCompany(PublishingCompany pc) {

@@ -65,7 +65,7 @@ public class LargeClassification {
 
 	@Override
 	public String toString() {
-		return String.format("%s[%02d]", lclasName, lclasNo);
+		return String.format("[%02d] %s", lclasNo, lclasName);
 	}
 
 }

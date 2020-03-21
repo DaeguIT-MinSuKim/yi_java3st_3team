@@ -48,6 +48,10 @@ public class BookUiService {
 	public List<PublishingCompany> showPlsList() {
 		return plsDao.selectPublishingCompanyByAll();
 	}
+	
+	public List<PublishingCompany> searchPlsNameList(String pcName) {
+		return plsDao.selectPublishingCompanyByNameAll(pcName);
+	}
 
 	public String getOverlapBookLastCode(String bName, String aName, int pls) {
 		return bookDao.selectBookByOverlapBookLastCode(bName, aName, pls);

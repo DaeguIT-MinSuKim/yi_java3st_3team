@@ -6,15 +6,18 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -38,25 +41,16 @@ public class LibrarianUpdateDialog extends JDialog implements ActionListener {
 	private LibrarianUIService service;
 	private LibrarianTblPanel pLibrarianList;
 	private JComboBox<Title> cmbTitle;
-	private JComboBox<Librarian> cmbWork;
-	private LibrarianSelectUIPanel selectUI;
+	private JComboBox<String> cmbWork;
+	
 	private Librarian lib;
-
-//	public static void main(String[] args) {
-//		try {
-//			LibrarianUpdateDialog dialog = new LibrarianUpdateDialog();
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	private List<Librarian> showLibrarians;
+	private LibrarianSelectUIPanel selectUI;
 
 	public LibrarianUpdateDialog(JFrame frame, String title) {
 		super(frame, title, true);
-		service = new LibrarianUIService();
-		lib = new Librarian();
 		setTitle("정보 수정");
+		service = new LibrarianUIService();
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,14 +78,14 @@ public class LibrarianUpdateDialog extends JDialog implements ActionListener {
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPanel.add(lblTitle);
 
-		cmbTitle = new JComboBox();
+		cmbTitle = new JComboBox<>();
 		contentPanel.add(cmbTitle);
 
 		JLabel lblWork = new JLabel("근무여부");
 		lblWork.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPanel.add(lblWork);
 
-		cmbWork = new JComboBox();
+		cmbWork = new JComboBox<>();
 		contentPanel.add(cmbWork);
 
 		JPanel buttonPane = new JPanel();
@@ -110,38 +104,58 @@ public class LibrarianUpdateDialog extends JDialog implements ActionListener {
 		btnCancel.setPreferredSize(new Dimension(75, 25));
 		btnCancel.setActionCommand("Cancel");
 		buttonPane.add(btnCancel);
-		
+
 		setService(service);
 	}
 
+	private void loadData() {
+		pLibrarianList.loadData(service.showLibrarianListAll());
+	}
+	
+	private Librarian getItem() {
+		validCheck();
+		String lbId = tfId.getText().trim();
+		String lbName = tfName.getText().trim();
+		Title title = (Title) cmbTitle.getSelectedItem();
+		int workCdt = cmbWork.getSelectedItem().equals("퇴직") ? 0 : 1;
 
-	private void setService(LibrarianUIService service) {
-		this.service = service;
-		setCmbTitleList(service.showTitleList());
-		setCmbWorkList(service.showWorkList(lib));
+		return new Librarian(lbId, lbName, title, workCdt);
 	}
 
-
+	
+	
 	public LibrarianSelectUIPanel getSelectUI() {
 		return selectUI;
 	}
-
-
+	
+	
 	public void setSelectUI(LibrarianSelectUIPanel selectUI) {
 		this.selectUI = selectUI;
 	}
 
 
+
+	private void setService(LibrarianUIService service) {
+		this.service = service;
+		setCmbTitleList(service.showTitleList());
+		setCmbWorkList();
+
+	}
+
 	private void setCmbTitleList(List<Title> titleList) {
 		DefaultComboBoxModel<Title> model = new DefaultComboBoxModel<Title>(new Vector<>(titleList));
 		cmbTitle.setModel(model);
 	}
-	
-	private void setCmbWorkList(List<Librarian> showWorkList) {
-		DefaultComboBoxModel<Librarian> model = new DefaultComboBoxModel<Librarian>(new Vector<>(showWorkList));
+
+	private void setCmbWorkList() {
+		List<String> workNo = new ArrayList<String>();
+		workNo.add("재직");
+		workNo.add("퇴직");
+		ComboBoxModel<String> model = new DefaultComboBoxModel<String>(new Vector<>(workNo));
 		cmbWork.setModel(model);
+		cmbWork.setSelectedIndex(-1);
 	}
-	
+
 	public void validCheck() {
 		if (tfId.getText().contentEquals("") || tfName.getText().contentEquals("")) {
 			throw new InvalidCheckException();
@@ -158,30 +172,36 @@ public class LibrarianUpdateDialog extends JDialog implements ActionListener {
 	}
 
 	protected void btnUpdateActionPerformed(ActionEvent e) {
-		
-		
-		 selectUI.loadData();
-		dispose();
+		try {
+
+			Librarian upLib = getItem();
+			service.updateLibrarian(upLib);
+			//selectUI.loadData();
+			JOptionPane.showMessageDialog(null, String.format("[ %s ] 님의 정보가 수정되었습니다 ", upLib.getLbName()));
+			setVisible(false);
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
 	}
 
 	protected void btnCancelActionPerformed(ActionEvent e) {
-		
 		dispose();
 	}
-
 
 	public void setItem(Librarian item) {
 		tfId.setText(item.getLbId());
 		tfName.setText(item.getLbName());
-		if(item.getTitle().getTitleNo() ==0) {
+		if (item.getTitle().getTitleNo() == 0) {
 			cmbTitle.setSelectedItem("총관리자");
-		}else {
+		} else {
 			cmbTitle.setSelectedIndex(item.getTitle().getTitleNo());
 		}
-		if(item.getWorkCdt()==0) {
-			cmbWork.setSelectedItem("퇴직");
-		}else {
-			cmbWork.setSelectedIndex(item.getWorkCdt());
+		if (item.getWorkCdt() == 0) {
+			cmbWork.setSelectedIndex(item.getWorkCdt() + 1);
+		} else {
+			cmbWork.setSelectedIndex(item.getWorkCdt() - 1);
 		}
+
 	}
+
 }

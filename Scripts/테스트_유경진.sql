@@ -47,7 +47,17 @@ select lb_id, lb_pass, lb_name, lb_birthday, lb_zip, lb_bass_ad, lb_detail_ad,
 		  
 -- book -------------------------------------------------------------------------------
 select * from book where pls = 196;
-select book_code from book order by regist_date desc limit 1;
+select * from book;
+select * from book where book_name = '82년생 김지영';
+
+-- 각 도서의 마지막 코드를 가져오는 테스트용 데이터
+insert into book(book_code , book_name , authr_name , pls, pblicte_year , book_price , lc_no , ml_no , regist_date , lend_psb_cdt ) values 
+('0901.001-2', '82년생 김지영', '조남주', 1, '2016-10-14', 13000, 9, 1, '2020-03-20', 0);
+
+-- 특정 책의 마지막 코드 / 분류의 마지막 코드
+select book_code from book where book_name = '82년생 김지영' and authr_name = '조남주' and pls = '1' order by regist_date desc limit 1 ;
+select book_code from book where lc_no = 09 and ml_no = 01 order by book_code desc limit 1;
+
 
 select book_code , book_name , authr_name , trnslr_name , pls , pblicte_year ,
 	   book_price , lend_psb_cdt , total_le_cnt , book_img , lc_no, ml_no ,
@@ -76,7 +86,7 @@ select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.p
 		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,
 		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2
 	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and b1.book_price = b2.book_price
-	order by b1.regist_date;
+	order by b1.book_code ;
 
 -- 도서코드 검색
 create view vw_book as 
@@ -91,7 +101,9 @@ create view vw_book as
 			b1.book_price = b2.book_price 
 	order by b1.regist_date;
 
-select * from vw_book where book_code like 'A%' and lc_no = 9;
+select * from vw_book where book_code like '09%' and lc_no = 9;
+
+select * from vw_book where book_code like '%09%'  
 
 
 
@@ -209,6 +221,7 @@ select * from book;
 select * from recommendation;
 select book_code, book_cont 
 	from recommendation
+	
 	order by recom_book_no desc limit 1;
 
 

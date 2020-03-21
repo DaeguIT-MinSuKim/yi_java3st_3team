@@ -403,7 +403,7 @@ public class MainFrame_user extends JFrame {
 					dispose();
 					LoginFrame_ex.loginMber = null;
 					loginFrame.setVisible(true);
-					loginFrame.loadDate();
+					loginFrame.loadData();
 					loginFrame.clearTf();
 					break;
 			}

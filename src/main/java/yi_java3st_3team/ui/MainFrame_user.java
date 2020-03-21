@@ -228,7 +228,8 @@ public class MainFrame_user extends JFrame {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				profileModifyPanel = new MemberProfileModifyPanel();
+				//profileModifyPanel = new MemberProfileModifyPanel();
+				profileModifyPanel = new TestMemberProfileModifyPanel();
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
 				bookRecomPanel = new RecomPanel();
@@ -403,7 +404,7 @@ public class MainFrame_user extends JFrame {
 					dispose();
 					LoginFrame_ex.loginMber = null;
 					loginFrame.setVisible(true);
-					loginFrame.loadDate();
+					loginFrame.loadData();
 					loginFrame.clearTf();
 					break;
 			}

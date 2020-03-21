@@ -115,7 +115,7 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 
 		pReqstList = new RequestIntoTblPanel();
 		pReqstList.setBackground(Color.WHITE);
-		pReqstList.loadDate(service.showRequestAll());
+		pReqstList.loadData(service.showRequestAll());
 
 		pList.add(pReqstList, BorderLayout.CENTER);
 
@@ -154,6 +154,10 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 
 	public void setService(RequestBookUiService service) {
 		this.service = service;
+	}
+	
+	public void loadData() {
+		pReqstList.loadData(service.showRequestAll());
 	}
 
 	public void setCmbYearList() {
@@ -243,7 +247,7 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 				rb.setWhCdt(-1);
 			}
 
-			pReqstList.loadDate(service.showRequestByOptionAll(rb, year, month));
+			pReqstList.loadData(service.showRequestByOptionAll(rb, year, month));
 		}
 
 		cmbYear.setSelectedIndex(0);
@@ -323,6 +327,6 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 
 	protected void btnWhActionPerformed(ActionEvent e) {
 		pReqstList.getSelectedItem();
-		pReqstList.loadDate(service.showRequestAll());
+		pReqstList.loadData(service.showRequestAll());
 	}
 }

@@ -292,13 +292,37 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public String selectBookByLastCode() {
-		String sql = "select book_code from book order by regist_date desc limit 1";
+	public String selectBookByOverlapBookLastCode(String bName, String aName, int pls) {
+		String sql = "select book_code from book where book_name = ? and authr_name = ? and pls = ? order by regist_date desc limit 1 ";
 		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
-			if (rs.next()) {
-				return rs.getString("book_code");
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, bName);
+			pstmt.setString(2, aName);
+			pstmt.setInt(3, pls);
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					return rs.getString("book_code");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public String selectBookByCatLastCode(int lcNo, int mlNo) {
+		String sql = "select book_code from book where lc_no = ? and ml_no = ? order by book_code desc limit 1;";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, lcNo);
+			pstmt.setInt(2, mlNo);
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()){				
+				if (rs.next()) {
+					return rs.getString("book_code");
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

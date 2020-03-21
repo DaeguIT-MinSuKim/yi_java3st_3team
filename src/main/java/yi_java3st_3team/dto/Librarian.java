@@ -17,14 +17,21 @@ public class Librarian {
 	private Date joinDate;
 	private int workCdt;
 
-	public Librarian() {}
+	public Librarian() {
+	}
 
 	public Librarian(String lbId) {
 		this.lbId = lbId;
 	}
 
-	
-	
+	public Librarian(String lbId, String lbName, Title title, int workCdt) {
+		super();
+		this.lbId = lbId;
+		this.lbName = lbName;
+		this.title = title;
+		this.workCdt = workCdt;
+	}
+
 	public Librarian(String lbId, String lbPass, String lbName, Title title, Date joinDate, int workCdt) {
 		super();
 		this.lbId = lbId;
@@ -55,7 +62,7 @@ public class Librarian {
 		this.lbId = lbId;
 		this.lbPass = lbPass;
 	}
-	
+
 	public Librarian(String lbId, int workCdt) {
 		super();
 		this.lbId = lbId;
@@ -66,13 +73,13 @@ public class Librarian {
 		this.lbName = lbName;
 		this.lbBirthDay = lbBirthDay;
 	}
-	
+
 	public Librarian(String lbId, String lbName, Date lbBirthDay) {
 		this.lbId = lbId;
 		this.lbName = lbName;
 		this.lbBirthDay = lbBirthDay;
 	}
-	
+
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
 			String lbDetailAd, String lbTel, byte[] lbImg) {
 		this.lbId = lbId;
@@ -100,7 +107,7 @@ public class Librarian {
 		this.joinDate = joinDate;
 		this.workCdt = workCdt;
 	}
-	
+
 	public Librarian(String lbId, String lbPass, String lbName, Date lbBirthDay, ZipCode lbZip, String lbBassAd,
 			String lbDetailAd, String lbTel, byte[] lbImg, Title title, Date joinDate, int workCdt) {
 		this.lbId = lbId;
@@ -204,7 +211,7 @@ public class Librarian {
 	public void setWorkCdt(int workCdt) {
 		this.workCdt = workCdt;
 	}
-	
+
 	public byte[] getLbImg() {
 		return lbImg;
 	}

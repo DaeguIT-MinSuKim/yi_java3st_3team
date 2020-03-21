@@ -298,7 +298,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		setService(service);
 	}
 	
-	public void loadDate() {
+	public void loadData() {
 		setService(service);
 	}
 
@@ -384,7 +384,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "로그인 권한이 없습니다");
 					return;
 				}
-				if (loginLib.getTitle().getTitleNo() == 1) {
+				if (loginLib.getTitle().getTitleNo() == 0) {
 					ADChiefMainFrame = new MainFrame_ex();
 					ADChiefMainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
 					ADChiefMainFrame.addWindowListener(new WindowAdapter() {
@@ -400,7 +400,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 					clearTf();
 					dispose();
 				}
-				if (loginLib.getTitle().getTitleNo() == 0) {
+				if (loginLib.getTitle().getTitleNo() == 1) {
 					libMainFrame = new MainFrame_lib();
 					libMainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					libMainFrame.addWindowListener(new WindowAdapter() {

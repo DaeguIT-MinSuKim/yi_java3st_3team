@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -19,6 +20,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.PanelUI;
 
 import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.ui.dialog.LibrarianAddDialog;
@@ -48,7 +50,7 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 
 	private void initialize() {
 		setLayout(new BorderLayout(0, 0));
-
+		pLibrarianList = new LibrarianTblPanel();
 		JPanel pNorth = new JPanel();
 		pNorth.setBackground(Color.WHITE);
 		add(pNorth, BorderLayout.NORTH);
@@ -106,7 +108,6 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 
 	private JPopupMenu createPop() {
 		JPopupMenu popMenu = new JPopupMenu();
-		
 		JMenuItem updateItem = new JMenuItem("수정");
 		updateItem.addActionListener(myPop);
 		popMenu.add(updateItem);
@@ -119,14 +120,16 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				if(e.getActionCommand() =="수정") {
+				if(e.getActionCommand().contentEquals("수정")) {
 					Librarian updateLib = pLibrarianList.getSelectedItem();
 					
 					updateDialog = new LibrarianUpdateDialog(updateFrame, "");
 					updateDialog.setItem(updateLib);
+					//updateDialog.setSelectUI(this);
 					updateDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					updateDialog.setVisible(true);
 					
+					loadData();
 				}
 			}catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -151,11 +154,8 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 	}
 	
 	protected void btnAddActionPerformed(ActionEvent e) {
-		//Librarian AddLib = pLibrarianList.getSelectedItem();
-		
 		AddDialog = new LibrarianAddDialog(updateFrame, "");
 		AddDialog.setSelectUI(this);
-		//AddDialog.setItem(AddLib);
 		AddDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		AddDialog.setVisible(true);
 	}
@@ -189,6 +189,5 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
-
 
 }

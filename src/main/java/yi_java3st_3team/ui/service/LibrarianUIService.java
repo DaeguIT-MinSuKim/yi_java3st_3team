@@ -24,41 +24,34 @@ public class LibrarianUIService {
 	}
 
 	public void insertLibrarian(Librarian lib) {
-		libDao.insertLibrarian(lib); //사서등록
+		libDao.insertLibrarian(lib); // 사서등록
 	}
 
 	public Librarian IDCheckLibrarian(Librarian lib) {
-		return libDao.selectLibrarianById(lib); //아이디 중복체크
+		return libDao.selectLibrarianById(lib); // 아이디 중복체크
 	}
 
-
 	public void updateLibrarian(Librarian lib) {
-		libDao.updateLibrarian(lib); //사서정보수정
+		libDao.updateLibrarian(lib); // 사서정보수정
 	}
 
 	public ZipCode zipCodeCheck(ZipCode zip) {
-		return zipDao.selectZipCodeByNo(zip); //우편번호체크
+		return zipDao.selectZipCodeByNo(zip); // 우편번호체크
 	}
 
 	public List<Librarian> showLibrarianListAll() {
-		return libDao.selectLibrarianByAll(); //사서 목록, 근무여부 리스트
+		return libDao.selectLibrarianByAll(); // 사서 목록, 근무여부 리스트
 	}
 
 	public List<Title> showTitleList() {
-		return titleDao.selectTitleByAll(); //권한콤보박스용
+		return titleDao.selectTitleByAll(); // 권한콤보박스용
 	}
-	
+
 	public List<Librarian> searchLibrarianByID(Librarian lib) {
-		return libDao.searchLibrarianByID(lib); //아이디로 검색
+		return libDao.searchLibrarianByID(lib); // 아이디로 검색
 	}
 
 	public List<Librarian> searchLibrarianByName(Librarian lib) {
-		return libDao.searchLibrarianByName(lib); //이름으로 검색
+		return libDao.searchLibrarianByName(lib); // 이름으로 검색
 	}
-
-	public List<Librarian> showWorkList(Librarian lib) {
-		return libDao.selectByWork(lib);
-	}
-
-
 }

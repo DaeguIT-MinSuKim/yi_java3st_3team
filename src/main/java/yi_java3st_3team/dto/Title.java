@@ -75,7 +75,7 @@ public class Title {
 
 	@Override
 	public String toString() {
-		return String.format("%s[%d]", titleName, titleNo);
+		return String.format("%s [ %d ]", titleName, titleNo);
 	}
 
 }

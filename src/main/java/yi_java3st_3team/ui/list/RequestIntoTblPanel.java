@@ -57,7 +57,7 @@ public class RequestIntoTblPanel extends JPanel {
 		return table.getValueAt(i, j)+"";
 	}
 	
-	public void loadDate(List<RequestBook> list) {
+	public void loadData(List<RequestBook> list) {
 		lists = list;
 		
 		model = new TestTabelModel();

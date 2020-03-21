@@ -49,6 +49,29 @@ public class BookDaoImpl implements BookDao {
 
 		return book;
 	}
+	
+	private Book getBookVw(ResultSet rs) throws SQLException {
+		String bookCode = rs.getString("book_code");
+		String bookName = rs.getString("book_name");
+		String authrName = rs.getString("authr_name");
+		String trnslrName = rs.getString("trnslr_name");
+		PublishingCompany pls = new PublishingCompany(rs.getInt("pls"), rs.getString("pls_name"));
+		Date pblicteYear = rs.getTimestamp("pblicte_year");
+		int bookPrice = rs.getInt("book_price");
+		int bookCnt = rs.getInt("book_cnt");
+		int lendPsbCdt = rs.getInt("lend_psb_cdt");
+		int totalLeCnt = rs.getInt("total_le_cnt");
+		byte[] bookImg = rs.getBytes("book_img");
+		LargeClassification lcNo = new LargeClassification(rs.getInt("lc_no"), rs.getString("lclas_name"));
+		MiddleClassification mlNo = new MiddleClassification(rs.getInt("ml_no"), rs.getString("mlsfc_name"));
+		Date registDate = rs.getTimestamp("regist_date");
+		int dsuseCdt = rs.getInt("dsuse_cdt");
+
+		Book book = new Book(bookCode, bookName, authrName, trnslrName, pls, pblicteYear, bookPrice, bookCnt,
+				lendPsbCdt, totalLeCnt, bookImg, lcNo, mlNo, registDate, dsuseCdt);
+
+		return book;
+	}
 
 	@Override
 	public Book selectBookByCode(Book book) {
@@ -123,7 +146,7 @@ public class BookDaoImpl implements BookDao {
 		where.replace(where.lastIndexOf("and"), where.length(), " ");
 		
 		sql.append(where);
-//		sql.append("order by b1.regist_date");
+		sql.append("order by regist_date");
 
 		List<Book> list = null;
 
@@ -139,7 +162,7 @@ public class BookDaoImpl implements BookDao {
 				if (rs.next()) {
 					list = new ArrayList<>();
 					do {
-						list.add(getBook(rs));
+						list.add(getBookVw(rs));
 					} while (rs.next());
 				}
 			}
@@ -269,13 +292,37 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public String selectBookByLastCode() {
-		String sql = "select book_code from book order by regist_date desc limit 1";
+	public String selectBookByOverlapBookLastCode(String bName, String aName, int pls) {
+		String sql = "select book_code from book where book_name = ? and authr_name = ? and pls = ? order by regist_date desc limit 1 ";
 		try (Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
-			if (rs.next()) {
-				return rs.getString("book_code");
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, bName);
+			pstmt.setString(2, aName);
+			pstmt.setInt(3, pls);
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					return rs.getString("book_code");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public String selectBookByCatLastCode(int lcNo, int mlNo) {
+		String sql = "select book_code from book where lc_no = ? and ml_no = ? order by book_code desc limit 1;";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, lcNo);
+			pstmt.setInt(2, mlNo);
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()){				
+				if (rs.next()) {
+					return rs.getString("book_code");
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

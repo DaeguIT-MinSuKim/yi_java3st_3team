@@ -49,8 +49,12 @@ public class BookUiService {
 		return plsDao.selectPublishingCompanyByAll();
 	}
 
-	public String getLastCode() {
-		return bookDao.selectBookByLastCode();
+	public String getOverlapBookLastCode(String bName, String aName, int pls) {
+		return bookDao.selectBookByOverlapBookLastCode(bName, aName, pls);
+	}
+	
+	public String getCatBookLastCode(int lcNo, int mlNo) {
+		return bookDao.selectBookByCatLastCode(lcNo, mlNo);
 	}
 
 	public void addBook(Book book) {

@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 {"resources":{"Scripts/기본_테스트.sql":{"sql-editor-data-source-id":"mysql5-170fc07f833-598cb4d2574e0758"},"Scripts/테스트_유경진.sql":{"sql-editor-data-source-id":"mysql5-170fc07f833-598cb4d2574e0758"}}}
+=======
+<<<<<<< HEAD
+{"resources":{"Scripts/view.sql":{"sql-editor-data-source-id":"mysql5-170f53cfce3-6f100466591b87a4"},"Scripts/기본_테스트.sql":{"sql-editor-data-source-id":"mysql5-170f53cfce3-6f100466591b87a4"},"Scripts/데이터.sql":{"sql-editor-data-source-id":"mysql5-170f53cfce3-6f100466591b87a4"},"Scripts/초기화.sql":{"sql-editor-data-source-id":"mysql5-170f53cc872-129407c093ef041f"},"Scripts/테스트_유경진.sql":{"sql-editor-data-source-id":"mysql5-170f53cfce3-6f100466591b87a4"},"Scripts/테스트_이상원_대여반납.sql":{"sql-editor-data-source-id":"mysql5-170f53cfce3-6f100466591b87a4"}}}
+=======
+{"resources":{"Scripts/view.sql":{"sql-editor-data-source-id":"mysql5-170fc60a928-4e3babca8059eee9"},"Scripts/기본_테스트.sql":{"sql-editor-data-source-id":"mysql5-170f65fac43-61c90eab3a2a5f02"},"Scripts/데이터.sql":{"sql-editor-data-source-id":"mysql5-170fc60a928-4e3babca8059eee9"},"Scripts/초기화.sql":{"sql-editor-data-source-id":"mysql5-170fc603bb7-23ff2a3c2d433be0"},"Scripts/테스트_황태원.sql":{"sql-editor-data-source-id":"mysql5-170fc60a928-4e3babca8059eee9"}}}
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git

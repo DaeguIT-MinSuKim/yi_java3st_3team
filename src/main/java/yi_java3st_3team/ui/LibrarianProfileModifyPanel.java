@@ -18,6 +18,7 @@ import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.ui.content.LibrarianModifyPanel;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.service.LibrarianService;
+import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class LibrarianProfileModifyPanel extends JPanel implements ActionListener{
@@ -78,7 +79,7 @@ public class LibrarianProfileModifyPanel extends JPanel implements ActionListene
 	private void btnAddAction(ActionEvent e) {
 		try {
 			Librarian updateLib = pLib.getItem();
-			JOptionPane.showMessageDialog(null, new ImageIcon(updateLib.getLbImg()));
+			//JOptionPane.showMessageDialog(null, new ImageIcon(updateLib.getLbImg()));
 			service.modifyLibrarian(updateLib);
 			JOptionPane.showMessageDialog(null, String.format("%s님의 프로필 수정이 완료되었습니다.", updateLib.getLbId()));
 		}catch(InvalidCheckException e1) {

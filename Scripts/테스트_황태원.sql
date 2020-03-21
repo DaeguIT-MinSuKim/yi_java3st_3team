@@ -142,3 +142,6 @@ select work_cdt
 from librarian
 where lb_id='43ojlkjl@book.ff.kr';
 
+select *
+from member;
+

@@ -1,4 +1,4 @@
-package yi_java3st_3team.ui.content;
+package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,8 +8,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -27,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -35,13 +35,15 @@ import com.toedter.calendar.JDateChooser;
 import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
+import yi_java3st_3team.ui.content.AbsItemPanel;
+import yi_java3st_3team.ui.content.MemberJoinPanel;
 import yi_java3st_3team.ui.dialog.ZipDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.listener.MyDocumentListener;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
-public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListener {
+public class TestMemberProfileModifyPanel extends AbsItemPanel<Member> implements ActionListener {
 	private JTextField tfName;
 	private JDateChooser tfBirthday;
 	private JTextField tfTel;
@@ -52,7 +54,6 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	private JPasswordField pfPW1;
 	private JPasswordField pfPW2;
 	private JLabel lblPic;
-	private JButton btnPic;
 	private Dimension picDimension = new Dimension(100, 150);
 	private JLabel lblPWCheck;
 	private Member findMber;
@@ -62,47 +63,59 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	private MemberUIService service;
 	private ZipDialog zipDialog;
 	private JFrame member;
-	private JButton btnAdd;
-	private JPanel pResult;
+	private TestMemberProfileModifyPanel tMember;
+	private MemberJoinPanel pMember;
+	private JLabel label_1;
+	private JButton button;
+	private Grade grade;
+	private JButton btnSave;
+	private JButton btnCancel;
 
-	public MemberJoinPanel() {
-		service = new MemberUIService();
+	public TestMemberProfileModifyPanel() {
+		setBackground(Color.WHITE);
+		setBorder(new EmptyBorder(20, 10, 20, 30));
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pEast = new JPanel();
 		pEast.setBackground(Color.WHITE);
 		add(pEast, BorderLayout.EAST);
-		pEast.setLayout(new GridLayout(0, 3, 0, 0));
-		
-		JPanel pLeft = new JPanel();
-		pLeft.setBackground(Color.WHITE);
-		pEast.add(pLeft);
-		pLeft.setLayout(new BorderLayout(0, 0));
-		
+		pEast.setLayout(new GridLayout(0, 1, 0, 0));
+
 		JPanel pContent = new JPanel();
+		pContent.setBorder(new EmptyBorder(10, 20, 10, 60));
 		pContent.setBackground(Color.WHITE);
 		pEast.add(pContent);
-		
+
 		lblPic = new JLabel();
+		lblPic.setBackground(Color.WHITE);
+		lblPic.setAlignmentY(0.0f);
+		lblPic.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblPic.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPic.setPreferredSize(new Dimension(100, 150));
-		lblPic.setSize(new Dimension(100, 150));
+		lblPic.setPreferredSize(new Dimension(150, 200));
+		lblPic.setSize(new Dimension(150, 200));
 		setPic(getClass().getClassLoader().getResource("no-image.png").getPath());
-		pContent.setLayout(new GridLayout(0, 1, 0, -30));
+		pContent.setLayout(new BoxLayout(pContent, BoxLayout.Y_AXIS));
+
+		label_1 = new JLabel("");
+		label_1.setForeground(Color.DARK_GRAY);
+		label_1.setBorder(new EmptyBorder(0, 30, 0, 0));
+		label_1.setPreferredSize(new Dimension(30, 30));
+		label_1.setHorizontalTextPosition(SwingConstants.LEADING);
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 20));
+		pContent.add(label_1);
 		pContent.add(lblPic);
-		
-		JPanel pBtn = new JPanel();
-		pBtn.setBackground(Color.WHITE);
-		pContent.add(pBtn);
-		
-		btnPic = new JButton("증명사진");
-		btnPic.addActionListener(this);
-		pBtn.setLayout(new BorderLayout(0, 0));
-		pBtn.add(btnPic, BorderLayout.NORTH);
-		
-		JPanel pRight = new JPanel();
-		pRight.setBackground(Color.WHITE);
-		pEast.add(pRight);
+
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new EmptyBorder(0, 60, 0, 0));
+		panel_2.setBackground(Color.WHITE);
+		pContent.add(panel_2);
+
+		button = new JButton("증명사진");
+		button.addActionListener(this);
+		button.setPreferredSize(new Dimension(70, 25));
+		button.setBorder(new EmptyBorder(10, 10, 10, 10));
+		panel_2.add(button);
 
 		JPanel pCenter = new JPanel();
 		pCenter.setBackground(Color.WHITE);
@@ -113,34 +126,17 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		lblID.setFont(new Font("굴림", Font.PLAIN, 17));
 		lblID.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblID);
-		
+
 		JPanel pID = new JPanel();
 		pID.setBackground(Color.WHITE);
 		pCenter.add(pID);
 		pID.setLayout(new GridLayout(0, 2, 20, 0));
-		
+
 		tfID = new JTextField();
 		tfID.setForeground(Color.GRAY);
 		tfID.setColumns(10);
-		tfID.setText("이메일 입력");
-		tfID.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(tfID.getText().equals("이메일 입력")) {
-					tfID.setText("");
-					tfID.setForeground(Color.BLACK);
-				}
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				if(tfID.getText().equals("")) {
-					tfID.setText("이메일 입력");
-					tfID.setForeground(Color.GRAY);
-				}
-			}
-		});
 		pID.add(tfID);
-		
+
 		btnIDCheck = new JButton("ID 중복확인");
 		btnIDCheck.addActionListener(this);
 		btnIDCheck.setFont(new Font("굴림", Font.PLAIN, 12));
@@ -172,11 +168,11 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		pfPW2 = new JPasswordField();
 		pfPW2.getDocument().addDocumentListener(docListener);
 		pCenter.add(pfPW2);
-		
+
 		JPanel pAir2 = new JPanel();
 		pAir2.setBackground(Color.WHITE);
 		pCenter.add(pAir2);
-		
+
 		lblPWCheck = new JLabel("비밀번호 중복확인");
 		lblPWCheck.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPWCheck.setForeground(Color.GRAY);
@@ -199,23 +195,6 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		tfTel = new JTextField();
 		tfTel.setForeground(Color.GRAY);
 		tfTel.setFont(new Font("굴림", Font.PLAIN, 11));
-		tfTel.setText("앞자리를 포함하여 하이픈(-)을 입력하여 주세요.");
-		tfTel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(tfTel.getText().equals("앞자리를 포함하여 하이픈(-)을 입력하여 주세요.")) {
-					tfTel.setText("");
-					tfTel.setForeground(Color.BLACK);
-				}
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				if(tfTel.getText().equals("")) {
-					tfTel.setText("앞자리를 포함하여 하이픈(-)을 입력하여 주세요.");
-					tfTel.setForeground(Color.GRAY);
-				}
-			}
-		});
 		pCenter.add(tfTel);
 		tfTel.setColumns(10);
 
@@ -230,7 +209,6 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		pZip.setLayout(new GridLayout(0, 2, 20, 0));
 
 		tfZip = new JTextField();
-		//tfZip.setText("");
 		tfZip.setHorizontalAlignment(SwingConstants.LEFT);
 		tfZip.setColumns(7);
 		pZip.add(tfZip);
@@ -256,8 +234,27 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		tfDetailAdress = new JTextField();
 		pCenter.add(tfDetailAdress);
 		tfDetailAdress.setColumns(10);
-	}
+
+		JPanel panel = new JPanel();
+		panel.setBorder(new EmptyBorder(10, 0, 10, 0));
+		panel.setBackground(Color.WHITE);
+		add(panel, BorderLayout.SOUTH);
+
+		btnSave = new JButton("수정");
+		btnSave.addActionListener(this);
+		btnSave.setPreferredSize(new Dimension(80, 30));
+		panel.add(btnSave);
+
+		btnCancel = new JButton("취소");
+		btnCancel.addActionListener(this);
+		btnCancel.setPreferredSize(new Dimension(80, 30));
+		panel.add(btnCancel);
+		
+
+		service = new MemberUIService();
+		
 	
+	}
 	public void setService(MemberUIService service) {
 		this.service = service;
 	}
@@ -278,12 +275,12 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 			}
 		}
 	};
-	
+
 
 	public JTextField getTfName() {
 		return tfName;
 	}
-	
+
 	public JDateChooser getTfBirthday() {
 		return tfBirthday;
 	}
@@ -307,7 +304,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	public JTextField getTfID() {
 		return tfID;
 	}
-	
+
 	public JPasswordField getPfPW1() {
 		return pfPW1;
 	}
@@ -326,7 +323,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		lblPic.setIcon(new ImageIcon(new ImageIcon(imgPath).getImage().getScaledInstance((int) picDimension.getWidth(),
 				(int) picDimension.getHeight(), Image.SCALE_DEFAULT)));
 	}
-	
+
 	@Override
 	public Member getItem() {
 		validCheck();
@@ -340,10 +337,16 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		String mberTel = tfTel.getText().trim();
 		byte[] mberImg = getImage();
 		int wdrCdt = 0;
-		Grade grade = new Grade(1);
+		if (label_1.getText().equals("우수")) {
+			grade = new Grade(2);
+		} else {
+			grade = new Grade(1);
+		}
+
 		int lendPsbCdt = 0;
 		int odCnt = 0;
-		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, wdrCdt, grade, lendPsbCdt, odCnt);
+		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg,
+				wdrCdt, grade, lendPsbCdt, odCnt);
 	}
 
 	private byte[] getImage() {
@@ -362,34 +365,11 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 
 	@Override
 	public void validCheck() {
-		if(tfID.getText().equals("") || pfPW1.getPassword().equals("") || tfName.getText().equals("") || tfZip.getText().equals("") 
-				|| tfAddress.getText().equals("") || tfTel.getText().equals("") || tfBirthday.getDate()==new Date()){
-					throw new InvalidCheckException();
-				}
-	}
-
-	@Override
-	public void setItem(Member item) {
-		tfID.setText(item.getMberId());
-		pfPW1.setText("");
-		pfPW2.setText("");
-		tfName.setText(item.getMberName());
-		tfBirthday.setDate(item.getMberBrthdy());
-		tfZip.setText(item.getMberZip() + "");
-		tfAddress.setText(item.getMberBassAd());
-		tfDetailAdress.setText(item.getMberDetailAd());
-		tfTel.setText(item.getMberTel());
-		if (item.getMberImg() == null) {
-			setPic(getClass().getClassLoader().getResource("no-image.png").getPath());
-		} else {
-			setPic(item.getMberImg());
+		if (tfID.getText().equals("") || pfPW1.getPassword().equals("") || tfName.getText().equals("")
+				|| tfZip.getText().equals("") || tfAddress.getText().equals("") || tfTel.getText().equals("")
+				|| tfBirthday.getDate() == new Date()) {
+			throw new InvalidCheckException();
 		}
-//		  private int totalLeCnt;
-//		  private int lendBookCnt;
-//		  private Grade grade;
-//		  private int lendPsbCdt; 
-//		  private Date joinDt; 
-//		  private int wdrCdt;
 	}
 
 	@Override
@@ -404,24 +384,98 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		tfAddress.setText("");
 		tfDetailAdress.setText("");
 		setPic(getClass().getClassLoader().getResource("no-image.png").getPath());
-	}	
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnPic) {
-			btnPicAction(e);
-		}
-		if(e.getSource() == btnIDCheck) {
-			btnIDCheckAction(e);
-		}
-		if(e.getSource() == btnZip) {
-			btnZipAction(e);
-		}
 	}
 
-	private void btnZipAction(ActionEvent e) {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCancel) {
+			btnCancelActionPerformed(e);
+		}
+		if (e.getSource() == btnSave) {
+			btnSaveActionPerformed(e);
+		}
+		if (e.getSource() == button) {
+			button_1ActionPerformed(e);
+		}
 
-		//ZipDialog zipP = new ZipDialog(member, picPath);
+		if (e.getSource() == btnZip) {
+			btnZipActionPerformed(e);
+		}
+
+	}
+
+	@Override
+	public void setItem(Member item) {
+		tfID.setText(item.getMberId());
+		pfPW1.setText("");
+		pfPW2.setText("");
+		tfName.setText(item.getMberName());
+		tfBirthday.setDate(item.getMberBrthdy());
+		tfZip.setText(item.getMberZip() + "");
+		tfAddress.setText(item.getMberBassAd());
+		tfDetailAdress.setText(item.getMberDetailAd());
+		label_1.setText(item.getGrade().getGradeName());
+		// lblNewLabel.setText(item.getGrade().getGradeName());
+		tfTel.setText(item.getMberTel());
+		if (item.getMberImg() == null) {
+			setPic(getClass().getClassLoader().getResource("no-image.png").getPath());
+		} else {
+			setPic(item.getMberImg());
+		}
+//		  private int totalLeCnt;
+//		  private int lendBookCnt;
+//		  private Grade grade;
+//		  private int lendPsbCdt; 
+//		  private Date joinDt; 
+//		  private int wdrCdt;
+	}
+
+	public MemberJoinPanel getpMember() {
+		return pMember;
+	}
+
+	public void initTf(Member member) {
+
+		tfID.setText(member.getMberId());
+		tfName.setText(member.getMberName());
+		pfPW1.setText(member.getMberPass());
+		tfBirthday.setDate(member.getMberBrthdy());
+		tfTel.setText(member.getMberTel());
+		tfZip.setText(member.getMberZip().getZipCode() + "");
+		tfAddress.setText(member.getMberBassAd());
+		tfDetailAdress.setText(member.getMberDetailAd());
+		if (member.getGrade().getGradeNo() == 1) {
+			label_1.setText("일반");
+		} else {
+			label_1.setText("우수");
+		}
+
+		ImageIcon icon = new ImageIcon(member.getMberImg());
+		setPicImageIcon(icon);
+		tfID.setEditable(false);
+
+//		pMember.getTfID().setText(member.getMberId());
+//		pMember.getTfName().setText(member.getMberName());
+//		pMember.getPfPW1().setText(member.getMberPass());
+//		pMember.getTfBirthday().setDate(member.getMberBrthdy());
+//		pMember.getTfTel().setText(member.getMberTel());
+//		pMember.getTfZip().setText(member.getMberZip().getZipCode()+"");
+//		pMember.getTfAddress().setText(member.getMberBassAd());
+//		pMember.getTfDetailAdress().setText(member.getMberDetailAd());
+//		lblNewLabel.setText(member.getGrade().getGradeName());
+//		ImageIcon icon = new ImageIcon(member.getMberImg());
+//		pMember.setPicImageIcon(icon);
+//		pMember.getTfID().setEditable(false);
+	}
+
+	public void setPicImageIcon(ImageIcon icon) {
+		lblPic.setIcon(new ImageIcon(icon.getImage().getScaledInstance((int) picDimension.getWidth(),
+				(int) picDimension.getHeight(), Image.SCALE_DEFAULT)));
+	}
+
+	protected void btnZipActionPerformed(ActionEvent e) {
+
+		// ZipDialog zipP = new ZipDialog(member, picPath);
 		zipDialog = new ZipDialog(member, "우편번호 검색");
 		zipDialog.getBtnAdd().addActionListener(new ActionListener() {
 			@Override
@@ -434,28 +488,19 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 				zipDialog.dispose();
 			}
 		});
-		
+
 		zipDialog.setBounds(50, 50, 350, 550);
 		zipDialog.setVisible(true);
-	
+
 	}
 
-	private void btnIDCheckAction(ActionEvent e) {
-		String userID = tfID.getText();
-		findMber = service.IDCheckMember(new Member(userID));
-		if(userID.equals("이메일 입력") || userID.length()==0){
-			JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.");
-		}
-		if(!userID.equals("이메일 입력") && findMber == null) {
-			JOptionPane.showMessageDialog(null, "사용 가능한 아이디입니다.");
-		}else if(!userID.equals("이메일 입력") && findMber!=null){
-			JOptionPane.showMessageDialog(null, "중복된 아이디입니다.");
-			clearTf();
-			return;
-		}
+	protected void btnCancelActionPerformed(ActionEvent e) {
+
+		tMember.clearTf();
+
 	}
 
-	private void btnPicAction(ActionEvent e) {
+	protected void button_1ActionPerformed(ActionEvent e) {
 		JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG or PNG or GIF", "jpg", "png", "gif");
 		chooser.setFileFilter(filter);
@@ -469,8 +514,14 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		setPic(picPath);
 	}
 
-	public void setPicImageIcon(ImageIcon icon) {
-		lblPic.setIcon(new ImageIcon(icon.getImage().getScaledInstance((int) picDimension.getWidth(),
-				(int) picDimension.getHeight(), Image.SCALE_DEFAULT)));
+	protected void btnSaveActionPerformed(ActionEvent e) {
+		
+		try {
+			Member updateMem = tMember.getItem();
+			service.updateByWdrCdt(updateMem);
+			JOptionPane.showMessageDialog(null, String.format("%s님의 프로필 수정이 완료되었습니다.", updateMem.getMberId()));
+		}catch(InvalidCheckException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
 	}
 }

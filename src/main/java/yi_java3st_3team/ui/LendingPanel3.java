@@ -4,11 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,9 +20,9 @@ import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.MemberIdSelectPanel;
 import yi_java3st_3team.ui.list.MemberListDialog;
+import yi_java3st_3team.ui.list.MemberListDialog2;
 import yi_java3st_3team.ui.list.RentListPanel;
 import yi_java3st_3team.ui.service.BookUiService;
-import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
 public class LendingPanel3 extends JPanel implements ActionListener {
@@ -40,7 +40,6 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 	private JPanel p05;
 	private JPanel p06;
 	private JButton btnLending;
-	private LendingUiService lendingService;
 	private BookUiService bookService;
 	private JRadioButton rdbtnBookCode;
 	private JRadioButton rdbtnBookName;
@@ -51,7 +50,6 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 	private int res;
 
 	public LendingPanel3() {
-		lendingService = new LendingUiService();
 		bookService = new BookUiService();
 		initialize();
 	}
@@ -60,6 +58,7 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 		setLayout(new BorderLayout(0, 0));
 
 		pMember = new MemberIdSelectPanel();
+		pMember.getBtnMberName().addActionListener(this);
 		pMember.getBtnMberId().addActionListener(this);
 		add(pMember, BorderLayout.NORTH);
 		pMember.setLayout(new GridLayout(0, 1, 0, 0));
@@ -142,6 +141,9 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == pMember.getBtnMberName()) {
+			do_pMemberBtnMberName_actionPerformed(e);
+		}
 		if (e.getSource() == btnCheckFalse) {
 			do_btnCheckFalse_actionPerformed(e);
 		}
@@ -161,6 +163,11 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 
 	protected void do_btnSearch_actionPerformed(ActionEvent e) {
 		try {
+			if(pMember.getTfLendBookCdt().getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "회원을 선택하고 와주세요.");
+				return;
+			}
+			res = Integer.parseInt(pMember.getTfLendBookCdt().getText().trim());
 			if (rdbtnBookCode.isSelected()) {
 				Book id = new Book(tfBookSearch.getText());
 				List<Book> book = bookService.LendingBookByCode2(id);
@@ -168,7 +175,7 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 				tfBookSearch.setText("");
 			}
 			if (rdbtnBookName.isSelected()) {
-				Book name = new Book(tfBookSearch.getText());
+				Book name = new Book(tfBookSearch.getText(), new Date());
 				List<Book> book = bookService.LendingBookByName(name);
 				pLendingList.search2(book, res);
 				tfBookSearch.setText("");
@@ -193,29 +200,21 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {
 		Member id = new Member(pMember.getTfMberId().getText());
+		JOptionPane.showMessageDialog(null, id.toString());
 		MemberListDialog memberDialog = new MemberListDialog(new JFrame(), "회원검색", true, id);
 		memberDialog.setLending3(this);
 		memberDialog.setVisible(true);
-//		pMember.getTfMberName().setText(member.getMberName());
-//		if (member.getGrade().getGradeNo() == 1) {
-//			pMember.getTfGrade().setText("일반");
-//		} else {
-//			pMember.getTfGrade().setText("우수");
-//		}
-//
-//		if (member.getLendPsbCdt() == 0) {
-//			pMember.getTfLendPsbCdt().setText("가능");
-//		} else {
-//			pMember.getTfLendPsbCdt().setText("불가능");
-//			JOptionPane.showMessageDialog(null, "대출하실 수 없습니다.");
-//		}
-//		int LendBookCnt = member.getLendBookCnt();
-//		int BookLeCnt = member.getGrade().getBookLeCnt();
-//		res = BookLeCnt - LendBookCnt;
-		pMember.getTfLendBookCdt().setText(res + "");
+	}
+
+	protected void do_pMemberBtnMberName_actionPerformed(ActionEvent e) {
+		Member name = new Member(pMember.getTfMberName().getText(), new Date());
+		MemberListDialog2 memberDialog = new MemberListDialog2(new JFrame(), "회원검색", true, name);
+		memberDialog.setLending3(this);
+		memberDialog.setVisible(true);
 	}
 
 	protected void do_btnCheckFalse_actionPerformed(ActionEvent e) {
 		pLendingList.AllChecking(false);
 	}
+
 }

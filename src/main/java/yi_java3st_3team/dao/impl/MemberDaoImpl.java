@@ -475,7 +475,6 @@ public class MemberDaoImpl implements MemberDao {
 				try(ResultSet rs = pstmt.executeQuery()){
 					while (rs.next()){
 						list.add(getMemberByAll2(rs));
-						System.out.println("====================================================================================================================");
 					} 
 				}
 		} catch (SQLException e) {
@@ -503,6 +502,26 @@ public class MemberDaoImpl implements MemberDao {
 		Member mber = new Member(mberId, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt, odCnt);
 		LogUtil.prnLog("getMember => " + mber);
 		return mber;
+	}
+
+	@Override
+	public List<Member> selectMemberByCodeName2(Member member) {
+		List<Member> list = new ArrayList<>();
+		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt, g.book_le_cnt, g.grad_name\r\n" + 
+				"from member m left join grade g on m.grade = g.grade_no \r\n" + 
+				"where mber_name like ?";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);){
+			pstmt.setString(1, "%" + member.getMberName() + "%" );
+				try(ResultSet rs = pstmt.executeQuery()){
+					while (rs.next()){
+						list.add(getMemberByAll2(rs));
+					} 
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 

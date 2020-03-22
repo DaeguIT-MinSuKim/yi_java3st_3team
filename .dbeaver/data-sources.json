@@ -1,7 +1,11 @@
 {
 	"folders": {},
 	"connections": {
+<<<<<<< HEAD
 		"mysql5-17101451a61-788a93cee05181a2": {
+=======
+		"mysql5-17100934b96-6def87754be40b71": {
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 			"provider": "mysql",
 			"driver": "mysql5",
 			"name": "MySQL - localhost",
@@ -16,7 +20,11 @@
 				"handlers": {}
 			}
 		},
+<<<<<<< HEAD
 		"mysql5-171014553b2-6d03ff2355762fd7": {
+=======
+		"mysql5-1710093da62-488c1705d18e8346": {
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 			"provider": "mysql",
 			"driver": "mysql5",
 			"name": "MySQL - yi_java3st_3team",

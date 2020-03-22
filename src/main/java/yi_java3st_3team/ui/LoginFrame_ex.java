@@ -386,7 +386,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 			loginLib = service.login(new Librarian(id, pw));
 
 			if (loginLib != null) {
-				if(loginLib.getWorkCdt() == 1) {
+				if(loginLib.getWorkCdt() == 0) {
 					JOptionPane.showMessageDialog(null, "로그인 권한이 없습니다");
 					return;
 				}

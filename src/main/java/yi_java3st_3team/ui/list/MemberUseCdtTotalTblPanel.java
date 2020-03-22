@@ -12,14 +12,14 @@ public class MemberUseCdtTotalTblPanel extends AbsListPanel<Lending> {
 
 	@Override
 	protected void setTblWidthAlign() {
-		tableSetWidth(150, 100, 100, 100, 100, 100, 100, 100, 100, 80);
-		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+		tableSetWidth(100, 150, 100, 100, 100, 100, 100, 100, 100, 100, 80);
+		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 	}
 
 	@Override
 	protected String[] getColNames() {
 		return new String[] {
-				"도서명", "저자/역자", "분류", "출판사", "출간일", "대여일", "반납예정일", "반납일", "반납연기여부", "연체여부"
+				"도서코드", "도서명", "저자/역자", "분류", "출판사", "출간일", "대여일", "반납예정일", "반납일", "반납연기여부", "연체여부"
 		};
 	}
 
@@ -43,6 +43,7 @@ public class MemberUseCdtTotalTblPanel extends AbsListPanel<Lending> {
 			}
 			
 			return new Object[] {
+					item.getBookCd().getBookCode(),
 					item.getBookCd().getBookName().replace("|", ","),
 					writer,
 					String.format("%s / %s", item.getBookCd().getLcNo().getLclasName(), item.getBookCd().getMlNo().getMlsfcName()),
@@ -55,9 +56,7 @@ public class MemberUseCdtTotalTblPanel extends AbsListPanel<Lending> {
 					item.getOverdueCdt() > 0 ? "O" : "X",
 			};
 		} catch (NullPointerException e) {
-			return new Object[] {
-					"", "", "", "", "", "", "", "", "", "",
-			};
+			return null;
 		}
 	}
 

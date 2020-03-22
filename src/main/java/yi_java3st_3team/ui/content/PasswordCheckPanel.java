@@ -48,18 +48,18 @@ public class PasswordCheckPanel extends JPanel implements ActionListener {
 		setLayout(new GridLayout(0, 1, 0, 30));
 		
 		JLabel lblPass = new JLabel("비밀번호 재확인");
-		lblPass.setFont(new Font("굴림", Font.BOLD, 20));
+		lblPass.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		lblPass.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblPass);
 		
 		pfPassword = new JPasswordField();
 		pfPassword.setHorizontalAlignment(SwingConstants.CENTER);
-		pfPassword.setFont(new Font("굴림", Font.PLAIN, 20));
+		pfPassword.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		add(pfPassword);
 		
 		btnCheck = new JButton("확인");
 		btnCheck.addActionListener(this);
-		btnCheck.setFont(new Font("굴림", Font.PLAIN, 20));
+		btnCheck.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		add(btnCheck);
 	}
 	

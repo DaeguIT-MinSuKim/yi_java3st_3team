@@ -105,9 +105,6 @@ select * from vw_book where book_code like '09%' and lc_no = 9;
 
 select * from vw_book where book_code like '%09%'  
 
-
-
-
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no,
 	   b1.regist_date , b1.dsuse_cdt
@@ -223,7 +220,6 @@ select * from book;
 select * from recommendation;
 select book_code, book_cont 
 	from recommendation
-	
 	order by recom_book_no desc limit 1;
 
 
@@ -373,6 +369,13 @@ select * from book;
 -- 신청도서 ---------------------------------------------------------------------------------------------------
 select * from request_book;
 select count(*) from request_book group by reqst_book_name;
+
+select * from book;
+-- 신청 전 도서 검색
+select b.book_name , b.authr_name , b.trnslr_name , pls.pls_name 
+	from book b left join publishing_company pls on b.pls = pls.pls_no 
+	where b.book_name = "마블 백과사전" and b.authr_name = "톰 드팔코" and b.trnslr_name like "이규원%" and pls.pls_name like '시공사%'
+	group by b.book_name;
 
 -- 전체 검색
 select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trnslr , request_book_pls , 

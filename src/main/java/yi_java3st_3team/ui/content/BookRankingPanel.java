@@ -49,6 +49,8 @@ public class BookRankingPanel extends JPanel {
 	private BookUiService bookService;
 	private JPanel pBastList;
 	private JPanel pNewList;
+	private List<Lending> bastList;
+	private List<Book> newList;
 	
 	public BookRankingPanel() {
 		lendingService = new LendingUiService();
@@ -93,19 +95,24 @@ public class BookRankingPanel extends JPanel {
 		pNew.add(pNewList, BorderLayout.CENTER);
 		pNewList.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		loadData();
 		getBastRanking();
 		getNewRanking();
 	}
 	
+	public void loadData() {
+		bastList = lendingService.showBastList();
+		newList = bookService.showNewBookList();
+	}
+	
 	public void getBastRanking() {
-		List<Lending> list = lendingService.showBastList();
-		for(int i=0; i<list.size(); i++) {
+		for(int i=0; i<bastList.size(); i++) {
 			
 			String writer;
-			if(list.get(i).getBookCd().getTrnslrName().length() == 0 || list.get(i).getBookCd().getTrnslrName() == null) {
-				writer = list.get(i).getBookCd().getAuthrName();
+			if(bastList.get(i).getBookCd().getTrnslrName().length() == 0 || bastList.get(i).getBookCd().getTrnslrName() == null) {
+				writer = bastList.get(i).getBookCd().getAuthrName();
 			} else {
-				writer = String.format("%s/%s", list.get(i).getBookCd().getAuthrName(), list.get(i).getBookCd().getTrnslrName());
+				writer = String.format("%s/%s", bastList.get(i).getBookCd().getAuthrName(), bastList.get(i).getBookCd().getTrnslrName());
 			}
 			
 			pBastRank = new JPanel();
@@ -142,10 +149,10 @@ public class BookRankingPanel extends JPanel {
 			lblBookImg.setHorizontalAlignment(SwingConstants.CENTER);
 			pBookImg.add(lblBookImg);
 			
-			if(list.get(i).getBookCd().getBookImg() == null || list.get(i).getBookCd().getBookImg().length == 0) {
+			if(bastList.get(i).getBookCd().getBookImg() == null || bastList.get(i).getBookCd().getBookImg().length == 0) {
 				setPicStr(defaultImg);
 			} else {
-				setPicByte(list.get(i).getBookCd().getBookImg());
+				setPicByte(bastList.get(i).getBookCd().getBookImg());
 			}
 			
 			pTitle = new JPanel();
@@ -184,7 +191,7 @@ public class BookRankingPanel extends JPanel {
 			pTitle.add(pRight, BorderLayout.CENTER);
 			pRight.setLayout(new GridLayout(0, 1, 0, 0));
 			
-			lblName = new JLabel(list.get(i).getBookCd().getBookName());
+			lblName = new JLabel(bastList.get(i).getBookCd().getBookName());
 			lblName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 			pRight.add(lblName);
 			
@@ -192,25 +199,24 @@ public class BookRankingPanel extends JPanel {
 			lblWriter.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 			pRight.add(lblWriter);
 			
-			lblPls = new JLabel(list.get(i).getBookCd().getPls().getPlsName());
+			lblPls = new JLabel(bastList.get(i).getBookCd().getPls().getPlsName());
 			lblPls.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 			pRight.add(lblPls);
 			
-			lblCat = new JLabel(String.format("%s/%s", list.get(i).getBookCd().getLcNo().getLclasName(), list.get(i).getBookCd().getMlNo().getMlsfcName()));
+			lblCat = new JLabel(String.format("%s/%s", bastList.get(i).getBookCd().getLcNo().getLclasName(), bastList.get(i).getBookCd().getMlNo().getMlsfcName()));
 			lblCat.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 			pRight.add(lblCat);
 		}
 	}
 	
 	public void getNewRanking() {
-		List<Book> list = bookService.showNewBookList();
-		for(int i=0; i<list.size(); i++) {
+		for(int i=0; i<newList.size(); i++) {
 			
 			String writer;
-			if(list.get(i).getTrnslrName().length() == 0 || list.get(i).getTrnslrName() == null) {
-				writer = list.get(i).getAuthrName();
+			if(newList.get(i).getTrnslrName().length() == 0 || newList.get(i).getTrnslrName() == null) {
+				writer = newList.get(i).getAuthrName();
 			} else {
-				writer = String.format("%s/%s", list.get(i).getAuthrName(), list.get(i).getTrnslrName());
+				writer = String.format("%s/%s", newList.get(i).getAuthrName(), newList.get(i).getTrnslrName());
 			}
 			
 			pBastRank = new JPanel();
@@ -247,10 +253,10 @@ public class BookRankingPanel extends JPanel {
 			lblBookImg.setHorizontalAlignment(SwingConstants.CENTER);
 			pBookImg.add(lblBookImg);
 			
-			if(list.get(i).getBookImg() == null || list.get(i).getBookImg().length == 0) {
+			if(newList.get(i).getBookImg() == null || newList.get(i).getBookImg().length == 0) {
 				setPicStr(defaultImg);
 			} else {
-				setPicByte(list.get(i).getBookImg());
+				setPicByte(newList.get(i).getBookImg());
 			}
 			
 			pTitle = new JPanel();
@@ -289,7 +295,7 @@ public class BookRankingPanel extends JPanel {
 			pTitle.add(pRight, BorderLayout.CENTER);
 			pRight.setLayout(new GridLayout(0, 1, 0, 0));
 			
-			lblName = new JLabel(list.get(i).getBookName());
+			lblName = new JLabel(newList.get(i).getBookName());
 			lblName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 			pRight.add(lblName);
 			
@@ -297,11 +303,11 @@ public class BookRankingPanel extends JPanel {
 			lblWriter.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 			pRight.add(lblWriter);
 			
-			lblPls = new JLabel(list.get(i).getPls().getPlsName());
+			lblPls = new JLabel(newList.get(i).getPls().getPlsName());
 			lblPls.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 			pRight.add(lblPls);
 			
-			lblCat = new JLabel(String.format("%s/%s", list.get(i).getLcNo().getLclasName(), list.get(i).getMlNo().getMlsfcName()));
+			lblCat = new JLabel(String.format("%s/%s", newList.get(i).getLcNo().getLclasName(), newList.get(i).getMlNo().getMlsfcName()));
 			lblCat.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 			pRight.add(lblCat);
 		}

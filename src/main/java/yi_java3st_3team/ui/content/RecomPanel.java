@@ -159,8 +159,11 @@ public class RecomPanel extends JPanel {
 		this.service = service;
 		setItem(service.showRecomBookByLastNo());
 	}
-
 	
+	public void loadData() {
+		setService(service);
+	}
+
 	public void setItem(Recommendation item) {
 		lblGetCat.setText(String.format("%s / %s", item.getBookCode().getLcNo().getLclasName(), item.getBookCode().getMlNo().getMlsfcName()));
 		lblGetBookName.setText(item.getBookCode().getBookName().replace("|", ","));

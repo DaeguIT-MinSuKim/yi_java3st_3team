@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -57,13 +56,6 @@ public class MemberListDialog extends JDialog implements ActionListener {
 		model = new TestTabelModel();
 		List<Member> list = service.showLendingMemberId2(id);
 		for (Member mem : list) {
-//			StringBuilder gradeName = new StringBuilder();
-//			if(mem.getGrade().getGradeNo() == 1) {
-//				gradeName.append("일반");
-//			}
-//			if(mem.getGrade().getGradeNo() == 2) {
-//				gradeName.append("우수");
-//			}
 			StringBuilder lendCdt = new StringBuilder();
 			if (mem.getLendPsbCdt() == 1) {
 				lendCdt.append("불가능");
@@ -129,16 +121,13 @@ public class MemberListDialog extends JDialog implements ActionListener {
 		lending3.getpMember().getTfMberName().setText((String)table.getValueAt(row, 1));
 		lending3.getpMember().getTfGrade().setText((String)table.getValueAt(row, 2));
 		if((boolean)table.getValueAt(row, 3).equals("가능")) {
-			lending3.getpMember().getTfLendPsbCdt().setText("가능");
-		}
-		else {
 			lending3.getpMember().getTfLendPsbCdt().setText("불가능");
 		}
-//		if((Integer)table.getValueAt(row, 3) == 0) {
-//			lending3.getpMember().getTfLendPsbCdt().setText("가능");
-//		}
-//		lending3.getpMember().getTfLendPsbCdt().setText((String)table.getValueAt(row, 3));
-		lending3.getpMember().getTfLendBookCdt().setText((String)table.getValueAt(row, 4));	
+		else {
+			lending3.getpMember().getTfLendPsbCdt().setText("가능");
+		}
+		int res = (int) table.getValueAt(row, 4);
+		lending3.getpMember().getTfLendBookCdt().setText(res+"");	
 		dispose();
 	}
 }

@@ -27,6 +27,12 @@ public class Book {
 		this.bookCode = bookCode;
 	}
 
+	public Book(String bookName, Date registDate) {
+		super();
+		this.bookName = bookName;
+		this.registDate = registDate;
+	}
+
 	public Book(String bookCode, String bookName, String authrName, PublishingCompany pls, Date pblicteYear) {
 		super();
 		this.bookCode = bookCode;

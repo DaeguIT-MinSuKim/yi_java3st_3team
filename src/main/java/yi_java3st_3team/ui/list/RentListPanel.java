@@ -1,11 +1,14 @@
 package yi_java3st_3team.ui.list;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EventObject;
 import java.util.List;
 import java.util.Vector;
 
@@ -14,9 +17,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.event.CellEditorListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
+import javafx.beans.binding.StringBinding;
 import yi_java3st_3team.dto.Book;
+import yi_java3st_3team.dto.Lending;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.service.LendingUiService;
 
@@ -75,7 +86,7 @@ public class RentListPanel extends JPanel {
 			}
 			return clazz;
 		}
-
+		
 		@Override
 		public boolean isCellEditable(int row, int column) {
 			return column == 7;
@@ -84,15 +95,13 @@ public class RentListPanel extends JPanel {
 		@Override
 		public void setValueAt(Object aValue, int row, int column) {
 			if (aValue instanceof Boolean && column == 7) {
-				Vector rowData = (Vector) getDataVector().get(row);
+				Vector rowData = (Vector) getDataVector().get(row);	
 				rowData.set(7, (boolean) aValue);
 				fireTableCellUpdated(row, column);
 			}
-		}
-		public void setValueAt2(Object aValue, int row, int column) {
-			if (aValue instanceof String && column == 7) {
-				Vector rowData = (Vector) getDataVector().get(row);
-				rowData.set(7, "대여완료");
+			else {
+				Vector rowData = (Vector)getDataVector().get(row);
+				rowData.setElementAt(aValue, 7);
 				fireTableCellUpdated(row, column);
 			}
 		}
@@ -114,7 +123,6 @@ public class RentListPanel extends JPanel {
 		}
 	}
 	public void search2(List<Book> bookList, int res) {
-		ArrayList<Book> list = null;
 		try {
 			Date now = new Date();
 			Calendar cal = Calendar.getInstance();
@@ -123,11 +131,20 @@ public class RentListPanel extends JPanel {
 				if(model.getRowCount() >= res) {
 					return;
 				}
+				StringBuilder sb = new StringBuilder();
+				if(book.getTrnslrName().equals("")) {
+					sb.append(book.getAuthrName());
+				}
+				else {
+					sb.append(book.getAuthrName()+"/"+book.getTrnslrName());
+				}
 				model.addRow(new Object[] { book.getBookCode(), book.getBookName(),
-						String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
+//						String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
+						sb,
 						new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
 						new SimpleDateFormat("yyyy-MM-dd").format(now),
-						new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())});	
+						new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime())});
+				JOptionPane.showMessageDialog(null, model.getRowCount());
 			}	
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -142,21 +159,37 @@ public class RentListPanel extends JPanel {
 	}
 
 	public void setRent(String mberId) {
-		int i = model.getRowCount();
-		for(int j =0; j<i; j++) {
-			Boolean chk = (Boolean)model.getValueAt(j, 7);
+		int[] selIdx = table.getSelectedRows();
+		for(int idx : selIdx) {
+			boolean chk = (Boolean)model.getValueAt(idx, 7);
 			if(chk) {
-				String bookCd = (String)model.getValueAt(j, 0);
+				String bookCd = (String)model.getValueAt(idx, 0);
 				Member m = service.selectedMberId(mberId);
 				Book b = service.selectedBookCd(bookCd);
-//				if(model.getColumnClass(7) == Boolean.class) {
-//					if((Boolean)model.getValueAt(j, 7) == true) {
-//						model.setValueAt2("대여완료", j, 7);
-//					}
-//				}
-				service.insertSelectedLendingList(m, b);
+				TableColumnModel colModel = table.getColumnModel();
+				colModel.getColumn(7).setCellRenderer(new DefaultTableCellRenderer());
+				colModel.getColumn(7).getCellRenderer().getTableCellRendererComponent(table,"대여완료", false, false, idx, 7);
+				model.setValueAt("대여완료", idx, 7);
+				
+//				service.insertSelectedLendingList(m, b);
 			}
 		}
+		
+		/*
+		 * int i = model.getRowCount(); for(int j =0; j<i; j++) {
+		 * JOptionPane.showMessageDialog(null, model.getValueAt(j, 7));
+		 * JOptionPane.showMessageDialog(null, message); boolean chk =
+		 * (Boolean)model.getValueAt(j, 7); JOptionPane.showMessageDialog(null, chk);
+		 * if(chk) { String bookCd = (String)model.getValueAt(j, 0); Member m =
+		 * service.selectedMberId(mberId); Book b = service.selectedBookCd(bookCd);
+		 * if(model.getColumnClass(7) == Boolean.class) {
+		 * if((Boolean)model.getValueAt(j, 7) == true) { model.setValueAt2(true, j, 7);
+		 * } } service.insertSelectedLendingList(m, b); } }
+		 */
+	}
+	Class<?> getColumnClass() {
+		Class clazz = String.class;
+		return clazz;
 	}
 	public int checkingRow_Cnt() {
 		int i = model.getRowCount();

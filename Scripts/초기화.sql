@@ -6,7 +6,7 @@ CREATE SCHEMA yi_java3st_3team;
 
 -- 도서
 CREATE TABLE yi_java3st_3team.book (
-	book_code    CHAR(10)    NOT NULL COMMENT '도서코드', -- 도서코드
+	book_code    VARCHAR(100)    NOT NULL COMMENT '도서코드', -- 도서코드
 	book_name    VARCHAR(50) NOT NULL COMMENT '도서명', -- 도서명
 	authr_name   VARCHAR(50) NOT NULL COMMENT '저자이름', -- 저자이름
 	trnslr_name  VARCHAR(50) NULL     COMMENT '역자이름', -- 역자이름
@@ -63,7 +63,7 @@ ALTER TABLE yi_java3st_3team.large_classification
 CREATE TABLE yi_java3st_3team.lending (
 	lend_rturn_no  INTEGER     NOT NULL COMMENT '대여반납번호', -- 대여반납번호
 	mber_id        VARCHAR(30) NOT NULL COMMENT '회원ID', -- 회원ID
-	book_cd        CHAR(10)    NOT NULL COMMENT '도서코드', -- 도서코드
+	book_cd        VARCHAR(100)    NOT NULL COMMENT '도서코드', -- 도서코드
 	lend_date      DATETIME    NOT NULL COMMENT '대여일', -- 대여일
 	rturn_due_date DATETIME    NOT NULL COMMENT '반납예정일', -- 반납예정일
 	rturn_psm_cdt  TINYINT     NOT NULL COMMENT '반납연기여부', -- 반납연기여부

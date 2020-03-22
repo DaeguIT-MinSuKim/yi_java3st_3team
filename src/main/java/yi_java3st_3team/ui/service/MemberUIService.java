@@ -78,4 +78,8 @@ public class MemberUIService {
 		return memDao.selectMemberByCodeName(id);
 	}
 
+	public List<Member> showLendingMemberId3(Member name) {
+		return memDao.selectMemberByCodeName2(name);
+	}
+
 }

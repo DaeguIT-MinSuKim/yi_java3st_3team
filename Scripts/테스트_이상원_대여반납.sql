@@ -464,7 +464,6 @@ call member_someday_overdue_cdt ('phonehu@gmail.com', '2020-03-17');
 
 
 
-
 select m.mber_id, if(total_le_cnt = null? 0, )
 	from member m left join lending l on m.mber_id = l.mber_id;
 
@@ -541,5 +540,20 @@ from member m left join grade g on m.grade = g.grade_no
 where mber_id like '%23%'; 
 
 
+select *
+from book;
 
+desc `member` ;
+
+desc lending ;
+
+call rent_book('0101.001-1', 'ddr23dd@naver.com');
+
+select @@global.sql_mode;
+
+set @@global.sql_mode = "ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION";
+
+INSERT INTO book
+(book_code, book_name, authr_name, trnslr_name, pls, pblicte_year, book_price, lend_psb_cdt, total_le_cnt, book_img, lc_no, ml_no, regist_date, dsuse_cdt)
+VALUES('1002.016-1', '테스트', '테스트', '테스트', 196, '2020-03-22', 14000, 0, 0, null, 10, 2, '2020-03-22', 0);
 

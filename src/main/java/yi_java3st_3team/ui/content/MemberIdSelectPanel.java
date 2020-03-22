@@ -19,6 +19,7 @@ public class MemberIdSelectPanel extends JPanel {
 	private JTextField tfLendBookCdt;
 	private JTextField tfGrade;
 	private JButton btnMberId;
+	private JButton btnMberName;
 
 	public JTextField getTfMberId() {
 		return tfMberId;
@@ -64,8 +65,11 @@ public class MemberIdSelectPanel extends JPanel {
 		return btnMberId;
 	}
 
-	public MemberIdSelectPanel() {
+	public JButton getBtnMberName() {
+		return btnMberName;
+	}
 
+	public MemberIdSelectPanel() {
 		initialize();
 	}
 
@@ -112,6 +116,9 @@ public class MemberIdSelectPanel extends JPanel {
 		tfMberName = new JTextField();
 		pMberName.add(tfMberName);
 		tfMberName.setColumns(10);
+
+		btnMberName = new JButton("검색");
+		pMberName.add(btnMberName);
 
 		JPanel pGrade = new JPanel();
 		p2.add(pGrade);

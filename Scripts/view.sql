@@ -75,7 +75,6 @@ delimiter ;
 
 
 
-
 -- 반납 프로시저 테스트(회원 아이디, 도서코드)
 drop procedure if exists return_book;
 

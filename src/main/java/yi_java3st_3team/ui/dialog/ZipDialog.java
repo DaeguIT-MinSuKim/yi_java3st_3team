@@ -52,7 +52,7 @@ public class ZipDialog extends JDialog implements ActionListener  {
 		getContentPane().add(pCheck);
 		pCheck.setLayout(new GridLayout(0, 2, 10, 10));
 		
-		JLabel lblCtprvn = new JLabel("도");
+		JLabel lblCtprvn = new JLabel("도,광역시");
 		lblCtprvn.setHorizontalAlignment(SwingConstants.CENTER);
 		pCheck.add(lblCtprvn);
 		
@@ -60,7 +60,7 @@ public class ZipDialog extends JDialog implements ActionListener  {
 		pCheck.add(tfCtprvn);
 		tfCtprvn.setColumns(10);
 		
-		JLabel lblSigngu = new JLabel("시");
+		JLabel lblSigngu = new JLabel("시, 군, 구");
 		lblSigngu.setHorizontalAlignment(SwingConstants.CENTER);
 		pCheck.add(lblSigngu);
 		
@@ -148,19 +148,12 @@ public class ZipDialog extends JDialog implements ActionListener  {
 	}
 	
 	
-//	private void validCheck() {
-//		if(tfCtprvn.getText().equals("") || tfSigngu.getText().equals("") || tfRoadName.getText().equals("") || tfBuldOrigin.getText().equals("")){
-//			throw new InvalidCheckException();
-//		}
-//	}
+
 	
 	public String getAddrFull() {
 		return addrFull;
 	}
 
-//	public void setAddrFull(String addrFull) {
-//		this.addrFull = addrFull;
-//	}
 	public String getDetailAd() {
 		return DetailAd;
 	}

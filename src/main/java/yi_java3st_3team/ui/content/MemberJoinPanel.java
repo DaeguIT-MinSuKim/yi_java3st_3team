@@ -39,6 +39,7 @@ import yi_java3st_3team.ui.dialog.ZipDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.listener.MyDocumentListener;
 import yi_java3st_3team.ui.service.MemberUIService;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListener {
@@ -53,7 +54,7 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	private JPasswordField pfPW2;
 	private JLabel lblPic;
 	private JButton btnPic;
-	private Dimension picDimension = new Dimension(100, 150);
+	private Dimension picDimension = new Dimension(200, 200);
 	private JLabel lblPWCheck;
 	private Member findMber;
 	private JTextField tfID;
@@ -70,14 +71,10 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pEast = new JPanel();
+		pEast.setBorder(new EmptyBorder(0, 100, 0, 50));
 		pEast.setBackground(Color.WHITE);
 		add(pEast, BorderLayout.EAST);
-		pEast.setLayout(new GridLayout(0, 3, 0, 0));
-		
-		JPanel pLeft = new JPanel();
-		pLeft.setBackground(Color.WHITE);
-		pEast.add(pLeft);
-		pLeft.setLayout(new BorderLayout(0, 0));
+		pEast.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel pContent = new JPanel();
 		pContent.setBackground(Color.WHITE);
@@ -85,8 +82,8 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		
 		lblPic = new JLabel();
 		lblPic.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPic.setPreferredSize(new Dimension(100, 150));
-		lblPic.setSize(new Dimension(100, 150));
+		lblPic.setPreferredSize(new Dimension(150, 200));
+		lblPic.setSize(new Dimension(200, 200));
 		setPic(getClass().getClassLoader().getResource("no-image.png").getPath());
 		pContent.setLayout(new GridLayout(0, 1, 0, -30));
 		pContent.add(lblPic);
@@ -99,10 +96,6 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		btnPic.addActionListener(this);
 		pBtn.setLayout(new BorderLayout(0, 0));
 		pBtn.add(btnPic, BorderLayout.NORTH);
-		
-		JPanel pRight = new JPanel();
-		pRight.setBackground(Color.WHITE);
-		pEast.add(pRight);
 
 		JPanel pCenter = new JPanel();
 		pCenter.setBackground(Color.WHITE);
@@ -343,7 +336,11 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		Grade grade = new Grade(1);
 		int lendPsbCdt = 0;
 		int odCnt = 0;
-		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, wdrCdt, grade, lendPsbCdt, odCnt);
+		int totalLeCnt = 0;
+		int lendBookCnt = 0;
+		Date joinDt = new Date();
+
+		return new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel, mberImg, totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt, odCnt);
 	}
 
 	private byte[] getImage() {
@@ -366,6 +363,14 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 				|| tfAddress.getText().equals("") || tfTel.getText().equals("") || tfBirthday.getDate()==new Date()){
 					throw new InvalidCheckException();
 				}
+	}
+
+	public JPasswordField getPfPW2() {
+		return pfPW2;
+	}
+
+	public void setPfPW2(JPasswordField pfPW2) {
+		this.pfPW2 = pfPW2;
 	}
 
 	@Override
@@ -438,6 +443,16 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		zipDialog.setBounds(50, 50, 350, 550);
 		zipDialog.setVisible(true);
 	
+	}
+	
+	
+
+	public JLabel getLblPWCheck() {
+		return lblPWCheck;
+	}
+
+	public void setLblPWCheck(JLabel lblPWCheck) {
+		this.lblPWCheck = lblPWCheck;
 	}
 
 	private void btnIDCheckAction(ActionEvent e) {

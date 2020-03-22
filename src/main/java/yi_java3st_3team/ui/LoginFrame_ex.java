@@ -68,9 +68,11 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	private MainFrame_ex ADChiefMainFrame;
 	private MainFrame_user memMainFrame;
 	private MainFrame_lib libMainFrame;
+	private TestMemberNewJoinUIPanel tMemberNewJoin;
 
 	private Dimension bookImg = new Dimension(100, 160);
 	private Dimension libraryIcon = new Dimension(96, 96);
+	private JButton btnNewJoin;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -159,7 +161,8 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		btnFindPw.addActionListener(this);
 		pLoginLbl.add(btnFindPw);
 
-		JButton btnNewJoin = new JButton("회원가입");
+		btnNewJoin = new JButton("회원가입");
+		btnNewJoin.addActionListener(this);
 		pLoginLbl.add(btnNewJoin);
 
 		JPanel pContent = new JPanel();
@@ -346,6 +349,9 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnNewJoin) {
+			btnNewJoinActionPerformed(e);
+		}
 		if (e.getSource() == btnNewButton) {
 			btnNewButtonActionPerformed(e);
 		}
@@ -430,7 +436,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 					public void windowClosed(WindowEvent e) {
 						memMainFrame.getLoginFrame().setVisible(true);
 					}
-					
+
 				});
 				memMainFrame.setLoginFrame(this);
 				memMainFrame.setMember(memService, loginMber);
@@ -458,5 +464,10 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		if (tfLoginId.getText().contentEquals("") || pfLoginPw.getPassword().length == 0) {
 			throw new InvalidCheckException();
 		}
+	}
+	protected void btnNewJoinActionPerformed(ActionEvent e) {
+		setVisible(false);
+		tMemberNewJoin = new TestMemberNewJoinUIPanel();
+		tMemberNewJoin.setVisible(true);
 	}
 }

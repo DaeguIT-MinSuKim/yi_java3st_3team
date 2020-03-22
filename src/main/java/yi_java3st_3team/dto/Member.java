@@ -30,6 +30,51 @@ public class Member {
 	
 	
 
+
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg, int totalLeCnt, int lendBookCnt, Grade grade,
+			int lendPsbCdt, Date joinDt, int wdrCdt, int odCnt) {
+		super();
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
+		this.totalLeCnt = totalLeCnt;
+		this.lendBookCnt = lendBookCnt;
+		this.grade = grade;
+		this.lendPsbCdt = lendPsbCdt;
+		this.joinDt = joinDt;
+		this.wdrCdt = wdrCdt;
+		this.odCnt = odCnt;
+		this.mberBrthStr = mberBrthStr;
+	}
+
+	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
+			String mberDetailAd, String mberTel, byte[] mberImg, int totalLeCnt, int lendBookCnt, Grade grade,
+			int lendPsbCdt, int wdrCdt, int odCnt) {
+		super();
+		this.mberId = mberId;
+		this.mberPass = mberPass;
+		this.mberName = mberName;
+		this.mberBrthdy = mberBrthdy;
+		this.mberZip = mberZip;
+		this.mberBassAd = mberBassAd;
+		this.mberDetailAd = mberDetailAd;
+		this.mberTel = mberTel;
+		this.mberImg = mberImg;
+		this.totalLeCnt = totalLeCnt;
+		this.lendBookCnt = lendBookCnt;
+		this.grade = grade;
+		this.lendPsbCdt = lendPsbCdt;
+		this.wdrCdt = wdrCdt;
+		this.odCnt = odCnt;
+	}
+
 	public Member(String mberId, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, byte[] mberImg, int totalLeCnt, int lendBookCnt, Grade grade,
 			int lendPsbCdt, Date joinDt, int wdrCdt, int odCnt) {
@@ -99,6 +144,8 @@ public class Member {
 		this.mberTel = mberTel;
 		this.joinDt = joinDt;
 	}
+	
+
 
 	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
 			String mberDetailAd, String mberTel, byte[] mberImg, int wdrCdt, Grade grade, int lendPsbCdt, int odCnt) {
@@ -195,26 +242,7 @@ public class Member {
 		this.wdrCdt = wdrCdt;
 	}
 
-	public Member(String mberId, String mberPass, String mberName, Date mberBrthdy, ZipCode mberZip, String mberBassAd,
-			String mberDetailAd, String mberTel, byte[] mberImg, int totalLeCnt, int lendBookCnt, Grade grade,
-			int lendPsbCdt, Date joinDt, int wdrCdt, int odCnt) {
-		this.mberId = mberId;
-		this.mberPass = mberPass;
-		this.mberName = mberName;
-		this.mberBrthdy = mberBrthdy;
-		this.mberZip = mberZip;
-		this.mberBassAd = mberBassAd;
-		this.mberDetailAd = mberDetailAd;
-		this.mberTel = mberTel;
-		this.mberImg = mberImg;
-		this.totalLeCnt = totalLeCnt;
-		this.lendBookCnt = lendBookCnt;
-		this.grade = grade;
-		this.lendPsbCdt = lendPsbCdt;
-		this.joinDt = joinDt;
-		this.wdrCdt = wdrCdt;
-		this.odCnt = odCnt;
-	}
+
 
 	public String getMberId() {
 		return mberId;

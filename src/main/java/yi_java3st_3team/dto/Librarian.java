@@ -24,6 +24,9 @@ public class Librarian {
 		this.lbId = lbId;
 	}
 
+	
+
+
 	public Librarian(String lbId, String lbName, Title title, int workCdt) {
 		super();
 		this.lbId = lbId;

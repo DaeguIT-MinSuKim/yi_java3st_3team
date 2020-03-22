@@ -271,7 +271,7 @@ public class BookDaoImpl implements BookDao {
 					+ "		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2\r\n" 
 					+ "	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and \r\n" 
 					+ "			b1.book_price = b2.book_price\r\n" 
-					+ "	order by b1.book_name";
+					+ "	order by b1.book_code";
 
 		List<Book> list = null;
 
@@ -665,6 +665,35 @@ public class BookDaoImpl implements BookDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public Book selectBookByNameAndWriterNameAndPls(String bookName, String authr, String trnslr, String pls) {
+		String sql = "select b.book_name , b.authr_name , b.trnslr_name , pls.pls_name \r\n" + 
+				"	from book b left join publishing_company pls on b.pls = pls.pls_no \r\n" + 
+				"	where b.book_name = ? and b.authr_name = ? and b.trnslr_name like ? and pls.pls_name like ? \r\n" + 
+				"	group by b.book_name";
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, bookName);
+			pstmt.setString(2, authr);
+			pstmt.setString(3, "%"+trnslr+"%");
+			pstmt.setString(4, "%"+pls+"%");
+			LogUtil.prnLog(pstmt);
+			try (ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					Book checkBook = new Book();
+					checkBook.setBookName(rs.getString(1));
+					checkBook.setAuthrName(rs.getString(2));
+					checkBook.setTrnslrName(rs.getString(3));
+					checkBook.setPls(new PublishingCompany(rs.getString(4)));
+					return checkBook;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

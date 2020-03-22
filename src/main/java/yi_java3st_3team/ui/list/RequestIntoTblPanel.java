@@ -84,7 +84,7 @@ public class RequestIntoTblPanel extends JPanel {
 				
 			}
 		} catch (NullPointerException e) {
-			model.addRow(new Object[] {});
+			
 		}
 		
 		table.setModel(model);

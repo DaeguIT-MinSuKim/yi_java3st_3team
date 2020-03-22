@@ -23,4 +23,5 @@ public interface MemberDao {
 	Member selectMemberByNo2(Member member);
 	Member selectMemberByNo3(Member member);
 	List<Member> selectMemberByCodeName(Member id);
+	List<Member> selectMemberByCodeName2(Member name);
 }

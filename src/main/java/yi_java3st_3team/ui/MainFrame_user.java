@@ -228,8 +228,7 @@ public class MainFrame_user extends JFrame {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				//profileModifyPanel = new MemberProfileModifyPanel();
-				profileModifyPanel = new TestMemberProfileModifyPanel();
+				profileModifyPanel = new MemberProfileModifyPanel();
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
 				bookRecomPanel = new RecomPanel();

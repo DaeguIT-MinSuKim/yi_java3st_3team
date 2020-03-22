@@ -171,7 +171,7 @@ public class MemberUseCdtPanel extends JPanel implements ActionListener {
 		pTotalTblList.setBackground(Color.WHITE);
 		pTotalTbl.add(pTotalTblList, BorderLayout.CENTER);
 		
-		setItem();
+		//setItem();
 	}
 
 	public void setService(LendingUiService lendService) {

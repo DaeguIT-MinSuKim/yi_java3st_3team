@@ -16,7 +16,7 @@ import yi_java3st_3team.ui.MainFrame_ex;
 import yi_java3st_3team.ui.MainFrame_lib;
 import yi_java3st_3team.ui.MainFrame_user;
 import yi_java3st_3team.ui.ProfileMenuPanel;
-import yi_java3st_3team.ui.TestMemberProfileModifyPanel;
+import yi_java3st_3team.ui.MemberProfileModifyPanel;
 import yi_java3st_3team.ui.MemberProfileModifyPanel;
 
 import javax.swing.SwingConstants;
@@ -104,9 +104,7 @@ public class PasswordCheckPanel extends JPanel implements ActionListener {
 			String password = new String(pfPassword.getPassword());
 			if(password.equals(member.getMberPass())) {
 				mainFrame_user.getContentPane().remove(mainFrame_user.getpCenter());
-				//MemberProfileModifyPanel pCenter = new MemberProfileModifyPanel();
-				//pCenter.initTf(member);
-				TestMemberProfileModifyPanel pCenter = new TestMemberProfileModifyPanel();
+				MemberProfileModifyPanel pCenter = new MemberProfileModifyPanel();
 				pCenter.initTf(member);
 				mainFrame_user.setpCenter(pCenter);
 				mainFrame_user.getContentPane().add(mainFrame_user.getpCenter(),BorderLayout.CENTER);

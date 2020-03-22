@@ -98,7 +98,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		libService = new LibrarianService();
 		setTitle("도서관 관리 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 590);
+		setBounds(400, 200, 900, 590);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

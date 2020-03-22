@@ -1,9 +1,5 @@
 package yi_java3st_3team.ui.list;
 
-import java.awt.Dimension;
-import java.awt.Image;
-
-import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
 import yi_java3st_3team.dto.Book;
@@ -13,14 +9,14 @@ public class MberBookSearchTblPanel extends AbsListPanel<Book> {
 
 	@Override
 	protected void setTblWidthAlign() {
-		tableSetWidth(250, 150, 100, 100, 100, 80, 80, 100);
-		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7);
+		tableSetWidth(150, 250, 150, 100, 100, 100, 80, 80, 100);
+		tableCellAlign(SwingConstants.CENTER, 0, 1, 2, 3, 4, 5, 6, 7, 8);
 	}
 
 	@Override
 	protected String[] getColNames() {
 		return new String[] {
-			"도서명", "저자/역자", "출판사", "발행일", "분류", "보유권수", "소장위치", "대여가능여부"
+			"도서코드", "도서명", "저자/역자", "출판사", "발행일", "분류", "보유권수", "소장위치", "대여가능여부"
 		};
 	}
 
@@ -44,6 +40,7 @@ public class MberBookSearchTblPanel extends AbsListPanel<Book> {
 		}
 		
 		return new Object[] {
+				item.getBookCode(),
 				item.getBookName().replace("|", ","),
 				writer,
 				item.getPls().getPlsName(),

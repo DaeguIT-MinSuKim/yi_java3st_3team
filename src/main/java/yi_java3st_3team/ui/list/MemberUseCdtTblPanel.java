@@ -73,12 +73,13 @@ public class MemberUseCdtTblPanel extends JPanel {
 						new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
 						String.format("%tF", lending.getRturnDueDate()),
 						lending.getRturnPsmCdt() > 0 ? "신청완료" : "신청가능",
-								false
+						false
 				});
 				
 			}
+			
 		} catch (NullPointerException e) {
-			model.addRow(new Object[] {});
+			
 		}
 		
 		table.setModel(model);

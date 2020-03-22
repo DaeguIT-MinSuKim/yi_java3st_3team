@@ -18,12 +18,12 @@ public class LibHomePanel extends JPanel {
 		setLayout(new GridLayout(0, 1, 0, 0));
 
 		JLabel lblName = new JLabel("");
-		lblName.setFont(new Font("굴림", Font.BOLD, 36));
+		lblName.setFont(new Font("맑은 고딕", Font.BOLD, 36));
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblName);
 
 		JLabel lblWelcome = new JLabel("환영합니다.");
-		lblWelcome.setFont(new Font("굴림", Font.BOLD, 36));
+		lblWelcome.setFont(new Font("맑은 고딕", Font.BOLD, 36));
 		lblWelcome.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblWelcome);
 	}

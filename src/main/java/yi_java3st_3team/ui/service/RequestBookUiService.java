@@ -2,15 +2,20 @@ package yi_java3st_3team.ui.service;
 
 import java.util.List;
 
+import yi_java3st_3team.dao.BookDao;
 import yi_java3st_3team.dao.RequestBookDao;
+import yi_java3st_3team.dao.impl.BookDaoImpl;
 import yi_java3st_3team.dao.impl.RequestBookDaoImpl;
+import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.RequestBook;
 
 public class RequestBookUiService {
 	private RequestBookDao dao;
+	private BookDao bookDao;
 	
 	public RequestBookUiService() {
 		dao = RequestBookDaoImpl.getInstance();
+		bookDao = BookDaoImpl.getInstance();
 	}
 	
 	public List<RequestBook> showRequestAll() {
@@ -43,5 +48,9 @@ public class RequestBookUiService {
 	
 	public void removeRequestBook(RequestBook rb) {
 		dao.deleteRequestBook(rb);
+	}
+	
+	public Book checkBook(String bookName, String authr, String trnslr, String pls) {
+		return bookDao.selectBookByNameAndWriterNameAndPls(bookName, authr, trnslr, pls);
 	}
 }

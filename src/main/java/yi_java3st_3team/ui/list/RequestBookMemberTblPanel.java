@@ -5,7 +5,7 @@ import javax.swing.SwingConstants;
 import yi_java3st_3team.dto.RequestBook;
 
 @SuppressWarnings("serial")
-public class RequestBookMemberTblPanel extends AbsListPanel<RequestBook> {
+public class RequestBookMemberTblPanel extends AbsListPanel2<RequestBook> {
 
 	@Override
 	protected void setTblWidthAlign() {
@@ -22,7 +22,6 @@ public class RequestBookMemberTblPanel extends AbsListPanel<RequestBook> {
 
 	@Override
 	protected Object[] toArray(RequestBook item) {
-		
 		return new Object[] {
 				item.getRequestBookName(),
 				item.getRequestBookAuthor(),

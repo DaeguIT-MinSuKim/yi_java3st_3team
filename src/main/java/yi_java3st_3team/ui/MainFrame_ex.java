@@ -86,26 +86,26 @@ public class MainFrame_ex extends JFrame {
 	private Thread panelThread;
 	private MainFrame_ex mainFrame;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					// select Look and Feel
-					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
-//					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-//					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-					JFrame frame = new MainFrame_ex();
-					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					// select Look and Feel
+//					UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+////					UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
+////					UIManager.setLookAndFeel("com.jtattoo.plaf.aero.AeroLookAndFeel");
+////					UIManager.setLookAndFeel("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
+////					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+////					UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+//					JFrame frame = new MainFrame_ex();
+//					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	public MainFrame_ex() {
 		initialize();
@@ -116,7 +116,7 @@ public class MainFrame_ex extends JFrame {
 		setThread();
 		setTitle("도서관 관리 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 960);
+		setBounds(200, 50, 1400, 960);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -140,7 +140,7 @@ public class MainFrame_ex extends JFrame {
 
 		lblHome = new JLabel("HOME");
 		lblHome.setForeground(Color.WHITE);
-		lblHome.setFont(new Font("굴림", Font.BOLD, 15));
+		lblHome.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		lblHome.setHorizontalAlignment(SwingConstants.CENTER);
 		pHome.add(lblHome, BorderLayout.CENTER);
 
@@ -152,7 +152,7 @@ public class MainFrame_ex extends JFrame {
 
 		lblBookMgn = new JLabel("도서관리");
 		lblBookMgn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBookMgn.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblBookMgn.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pBookMgn.add(lblBookMgn, BorderLayout.NORTH);
 
 		pMemMgn = new JPanel();
@@ -163,7 +163,7 @@ public class MainFrame_ex extends JFrame {
 
 		lblMemMgn = new JLabel("회원관리");
 		lblMemMgn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMemMgn.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblMemMgn.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pMemMgn.add(lblMemMgn, BorderLayout.NORTH);
 
 		pChkOutRtn = new JPanel();
@@ -174,7 +174,7 @@ public class MainFrame_ex extends JFrame {
 
 		lblChkOutRtn = new JLabel("대여/반납");
 		lblChkOutRtn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblChkOutRtn.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblChkOutRtn.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pChkOutRtn.add(lblChkOutRtn, BorderLayout.NORTH);
 
 		pEmpMgn = new JPanel();
@@ -185,7 +185,7 @@ public class MainFrame_ex extends JFrame {
 
 		lblEmpMgn = new JLabel("직원관리");
 		lblEmpMgn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEmpMgn.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblEmpMgn.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pEmpMgn.add(lblEmpMgn, BorderLayout.NORTH);
 
 		pStatistic = new JPanel();
@@ -196,7 +196,7 @@ public class MainFrame_ex extends JFrame {
 
 		lblStatistic = new JLabel("통계조회");
 		lblStatistic.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStatistic.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblStatistic.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pStatistic.add(lblStatistic, BorderLayout.NORTH);
 
 		pProfile = new JPanel();
@@ -205,7 +205,7 @@ public class MainFrame_ex extends JFrame {
 
 		lblProfile = new JLabel("프로필");
 		lblProfile.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProfile.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblProfile.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pProfile.add(lblProfile);
 
 		JPanel pDummy1 = new JPanel();
@@ -225,7 +225,7 @@ public class MainFrame_ex extends JFrame {
 		lblLogOut = new JLabel("로그아웃");
 		lblLogOut.setForeground(Color.WHITE);
 		lblLogOut.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogOut.setFont(new Font("굴림", Font.BOLD, 15));
+		lblLogOut.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		pLogout.add(lblLogOut, BorderLayout.NORTH);
 
 		JPanel pMain = new JPanel();
@@ -274,7 +274,7 @@ public class MainFrame_ex extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new EmptyBorder(50, 50, 50, 50));
 		lblGreeting = new JLabel("");
-		lblGreeting.setFont(new Font("굴림", Font.BOLD, 65));
+		lblGreeting.setFont(new Font("맑은 고딕", Font.BOLD, 65));
 		lblGreeting.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblGreeting, BorderLayout.CENTER);
 		return panel;
@@ -293,7 +293,7 @@ public class MainFrame_ex extends JFrame {
 					p.setBackground(Color.white);
 				}
 				for (JLabel label : menuLabels) {
-					label.setFont(new Font("굴림", Font.PLAIN, 15));
+					label.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 
 					label.setForeground(Color.black);
 				}
@@ -303,7 +303,7 @@ public class MainFrame_ex extends JFrame {
 					if (p.equals(chkPanel)) {
 						p.setBackground(new Color(12, 160, 174));
 						JLabel label = (JLabel) p.getComponent(0);
-						label.setFont(new Font("굴림", Font.BOLD, 15));
+						label.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 						label.setForeground(Color.white);
 					}
 				}

@@ -44,4 +44,6 @@ public interface BookDao {
 	List<Book> lendingBookByName(Book book);
 
 	List<Book> LendingBookByCode2(Book book);
+	
+	Book selectBookByNameAndWriterNameAndPls(String bookName, String authr, String trnslr, String pls);
 }

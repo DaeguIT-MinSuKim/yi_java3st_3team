@@ -516,7 +516,7 @@ public class BookDaoImpl implements BookDao {
 	public List<Book> LendingBookByCode2(Book book) {
 		List<Book> list = null;
 		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, p.pls_name, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n"
-				+ "	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + "	where book_code like ?";
+				+ "	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + "	where book_code like ? and lend_psb_cdt = 0";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, "%"+book.getBookCode()+"%");
 			LogUtil.prnLog(pstmt);
@@ -651,7 +651,7 @@ public class BookDaoImpl implements BookDao {
 	public List<Book> lendingBookByName(Book book) {
 		List<Book> list = null;
 		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, p.pls_name, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n"
-				+ "	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + "	where book_name like ?";
+				+ "	from book b left join publishing_company p on b.pls = p.pls_no \r\n" + "	where book_name like ? and lend_psb_cdt = 0";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, "%"+book.getBookName()+"%");
 			LogUtil.prnLog(pstmt);
@@ -701,6 +701,7 @@ public class BookDaoImpl implements BookDao {
 	}
 }
 
+
 //	public List<Book> LendingBookByCode2(Book book) {
 //		List<Book> list = null;
 //		String sql = "select book_code ,book_name ,authr_name ,trnslr_name , pls, p.pls_name, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt \r\n"
@@ -721,4 +722,5 @@ public class BookDaoImpl implements BookDao {
 //		}
 //		return list;
 //	}
+
 

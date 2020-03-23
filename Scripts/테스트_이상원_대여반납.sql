@@ -516,7 +516,7 @@ select lend_psb_cdt, total_le_cnt
 	where book_code = 'A090119';
 
 select * 
-	from lending
+	from lending l left join book b on l.book_cd = b.book_code 
 	where mber_id = 'ddr23dd@naver.com';
 
 
@@ -546,6 +546,7 @@ from book;
 desc `member` ;
 
 desc lending ;
+desc book;
 
 call rent_book('0101.001-1', 'ddr23dd@naver.com');
 
@@ -557,3 +558,51 @@ INSERT INTO book
 (book_code, book_name, authr_name, trnslr_name, pls, pblicte_year, book_price, lend_psb_cdt, total_le_cnt, book_img, lc_no, ml_no, regist_date, dsuse_cdt)
 VALUES('1002.016-1', '테스트', '테스트', '테스트', 196, '2020-03-22', 14000, 0, 0, null, 10, 2, '2020-03-22', 0);
 
+select book_code ,book_name ,authr_name ,trnslr_name , pls, p.pls_name, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt
+	from book b left join publishing_company p on b.pls = p.pls_no
+	where book_name like '%누구%' and lend_psb_cdt = 0; 
+select book_code ,book_name ,authr_name ,trnslr_name , pls, p.pls_name, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt
+	from book b left join publishing_company p on b.pls = p.pls_no
+	where book_code like '%01%' and lend_psb_cdt = 0; 
+	
+
+drop procedure if exists rent_book;
+
+delimiter $$
+$$
+create procedure rent_book(in _mber_id varchar(30), in _book_cd char(7))
+
+begin
+	declare continue handler for sqlexception
+	begin
+		select '오류 발생했습니다.';
+		rollback;
+	end;
+	set AUTOCOMMIT = 0;
+	start transaction;
+		-- 회원 테이블에 총대여권수, 대여도서권수가 대여한 숫자만큼  증가시키는 업데이트
+		update member
+			set total_le_cnt = total_le_cnt + 1, lend_book_cnt = lend_book_cnt +1
+			where mber_id = _mber_id;
+		update member
+			set total_le_cnt = total_le_cnt + 1, lend_book_cnt = lend_book_cnt +1
+			where mber_id = 'ddr23dd@naver.com';
+		update member
+			set total_le_cnt = total_le_cnt + 1, lend_book_cnt = lend_book_cnt +1
+			where mber_id = _mber_id;
+			
+		-- 도서 테이블에 대여가능여부, 총대여횟수가 1로 바뀌고 , 1이 증가하여야 한다
+		update book 
+			set lend_psb_cdt = 1, total_le_cnt = total_le_cnt +1
+			where book_code = _book_cd;
+	
+		-- 대여반납 테이블에 대여 도서정보가 등록
+		INSERT INTO lending
+		(mber_id, book_cd, lend_date, rturn_due_date, rturn_psm_cdt, rturn_date, overdue_cdt)
+		VALUES(_mber_id, _book_cd, curdate(), ADDDATE(curdate(), 15), 0, null, 0);
+	
+	commit;
+	set AUTOCOMMIT = 1;
+end $$
+
+delimiter ;

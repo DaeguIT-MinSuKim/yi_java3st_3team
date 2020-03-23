@@ -12,7 +12,6 @@ import yi_java3st_3team.dao.impl.MiddleClassificationDaoImpl;
 import yi_java3st_3team.dao.impl.PublishingCompanyDaoImpl;
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.LargeClassification;
-import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.MiddleClassification;
 import yi_java3st_3team.dto.PublishingCompany;
 

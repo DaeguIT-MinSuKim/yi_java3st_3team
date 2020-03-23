@@ -137,6 +137,13 @@ public class MemberBookSearchPanel extends JPanel implements ActionListener {
 
 		setService(service);
 	}
+	
+	public void loadData() {
+		pBookList.loadData(service.showBookAllOnMber());
+		cmbCat.setSelectedIndex(-1);
+		tfAuthr.setText("");
+		tfName.setText("");
+	}
 
 	public void setService(BookUiService service) {
 		this.service = service;

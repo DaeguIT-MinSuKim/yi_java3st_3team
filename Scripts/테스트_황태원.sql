@@ -145,3 +145,6 @@ where lb_id='43ojlkjl@book.ff.kr';
 select *
 from member;
 
+select *
+from book;
+

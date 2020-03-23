@@ -97,7 +97,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int insertMember(Member member) {
-		String sql = "insert into member(mber_id, mber_pass,mber_name, mber_brthdy,mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img,join_dt, wdr_cdt, grade, lend_psb_cdt, od_cnt) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into member(mber_id, mber_pass,mber_name, mber_brthdy,mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img, total_le_cnt, lend_book_cnt, grade, lend_psb_cdt, od_cnt, join_dt, wdr_cdt) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, member.getMberId());
 			pstmt.setString(2, member.getMberPass());
@@ -107,18 +107,14 @@ public class MemberDaoImpl implements MemberDao {
 			pstmt.setString(6, member.getMberBassAd());
 			pstmt.setString(7, member.getMberDetailAd());
 			pstmt.setString(8, member.getMberTel());
-//			if (member.getMberImg() != null) {
-//				pstmt.setBytes(9, member.getMberImg());
-//			}
 			pstmt.setBytes(9, member.getMberImg());
-			pstmt.setString(10, nowTime());
-			pstmt.setInt(11, member.getWdrCdt());
+			pstmt.setInt(10, member.getTotalLeCnt());
+			pstmt.setInt(11, member.getLendBookCnt());
 			pstmt.setInt(12, member.getGrade().getGradeNo());
 			pstmt.setInt(13, member.getLendPsbCdt());
 			pstmt.setInt(14, member.getOdCnt());
-//			pstmt.setInt(13, member.getTotalLeCnt());
-//			pstmt.setInt(14, member.getLendBookCnt());
-//			pstmt.setTimestamp(16, new Timestamp(member.getJoinDt().getTime()));
+			pstmt.setTimestamp(15, new Timestamp(member.getJoinDt().getTime()));
+			pstmt.setInt(16, member.getWdrCdt());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

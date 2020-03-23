@@ -41,6 +41,8 @@ public class BookInfoPanel extends JPanel {
 	private JLabel lblGetCat;
 	private JLabel lblGetPls;
 	private JLabel lblGetPblicDate;
+	private JLabel lblBookCnt;
+	private JLabel lblGetBookCnt;
 	
 
 	public BookInfoPanel() {
@@ -136,6 +138,15 @@ public class BookInfoPanel extends JPanel {
 		lblGetLendPsbCdt = new JLabel("New label");
 		lblGetLendPsbCdt.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		pCenter.add(lblGetLendPsbCdt);
+		
+		lblBookCnt = new JLabel("보유도서권수");
+		lblBookCnt.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBookCnt.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+		pCenter.add(lblBookCnt);
+		
+		lblGetBookCnt = new JLabel("New label");
+		lblGetBookCnt.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+		pCenter.add(lblGetBookCnt);
 
 		JPanel pEast = new JPanel();
 		pEast.setBorder(new EmptyBorder(50, 0, 0, 50));
@@ -180,6 +191,7 @@ public class BookInfoPanel extends JPanel {
 		lblGetCat.setText(String.format("%s / %s", item.getLcNo().getLclasName(), item.getMlNo().getMlsfcName()));
 		lblGetPls.setText(item.getPls().getPlsName());
 		lblGetPblicDate.setText(String.format("%tF", item.getPblicteYear()));
+		lblGetBookCnt.setText(item.getBookCnt() + " 권");
 		
 		if(item.getLendPsbCdt() == 0) {
 			lblGetLendPsbCdt.setText("대여가능");

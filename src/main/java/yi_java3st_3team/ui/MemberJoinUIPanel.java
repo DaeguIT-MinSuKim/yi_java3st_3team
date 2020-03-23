@@ -23,11 +23,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 @SuppressWarnings("serial")
-public class MemberJoinUIPanel extends JPanel implements ActionListener{
+public class MemberJoinUIPanel extends JPanel implements ActionListener {
 	private MemberUIService service;
 	private MemberJoinPanel pMember;
 	private MemberTblPanel pMemberList;
-	
+
 	private JButton btnAdd;
 	private JButton btnCancel;
 
@@ -40,26 +40,26 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 		setBackground(Color.WHITE);
 		setBorder(new EmptyBorder(40, 40, 40, 40));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
+
 		JPanel pContent = new JPanel();
 		add(pContent);
 		pContent.setLayout(new BorderLayout(0, 0));
-		
+
 		pMember = new MemberJoinPanel();
 		pMember.setService(service);
 		pContent.add(pMember, BorderLayout.CENTER);
-		
+
 		JPanel pBtns = new JPanel();
 		pBtns.setBorder(new EmptyBorder(10, 0, 0, 0));
 		pBtns.setBackground(Color.WHITE);
 		add(pBtns);
-		
+
 		btnAdd = new JButton("저장");
 		btnAdd.setPreferredSize(new Dimension(80, 30));
 		btnAdd.addActionListener(this);
 		pBtns.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pBtns.add(btnAdd);
-		
+
 		btnCancel = new JButton("취소");
 		btnCancel.setPreferredSize(new Dimension(80, 30));
 		btnCancel.addActionListener(this);
@@ -68,29 +68,35 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == btnAdd) {
+		if (e.getSource() == btnAdd) {
 			btnAddAction(e);
 		}
-		if(e.getSource() == btnCancel) {
+		if (e.getSource() == btnCancel) {
 			btnCancelAction(e);
 		}
 	}
 
 	private void btnCancelAction(ActionEvent e) {
 		pMember.clearTf();
-		
+
 	}
 
 	private void btnAddAction(ActionEvent e) {
-		try{
+	if(pMember.getLblPWCheck().getText().equals("비밀번호 불일치") || pMember.getPfPW2().getPassword().length==0) {
+		JOptionPane.showMessageDialog(null, "비밀번호를 확인해주세요.");
+		return;
+	}else {
+		try {
 			Member newMem = pMember.getItem();
 			service.addMember(newMem);
-		//	pMemberList.addItem(newMem);
+			// pMemberList.addItem(newMem);
 			pMember.clearTf();
-			JOptionPane.showMessageDialog(null, String.format("%s님 회원가입이 완료되었습니다.", newMem.getMberId()));
-		}catch(InvalidCheckException e1) {
+			JOptionPane.showMessageDialog(null, String.format("%s님 회원등록이 완료되었습니다.", newMem.getMberId()));
+		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
+	}
+	
 	}
 
 }

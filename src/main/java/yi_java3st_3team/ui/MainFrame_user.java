@@ -67,7 +67,7 @@ public class MainFrame_user extends JFrame {
 		MouseAdapter menuAdapter = getMouseAdapter();
 		setTitle("도서관 회원 프로그램");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 960);
+		setBounds(200, 50, 1400, 960);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -91,7 +91,7 @@ public class MainFrame_user extends JFrame {
 		
 		lblHome = new JLabel("HOME");
 		lblHome.setForeground(Color.WHITE);
-		lblHome.setFont(new Font("굴림", Font.BOLD, 15));
+		lblHome.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		lblHome.setHorizontalAlignment(SwingConstants.CENTER);
 		pHome.add(lblHome, BorderLayout.CENTER);
 		
@@ -103,7 +103,7 @@ public class MainFrame_user extends JFrame {
 		
 		lblProfile = new JLabel("프로필");
 		lblProfile.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProfile.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblProfile.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pProfile.add(lblProfile, BorderLayout.NORTH);
 		
 		pBookSearch = new JPanel();
@@ -114,7 +114,7 @@ public class MainFrame_user extends JFrame {
 		
 		lblBookSearch = new JLabel("도서검색");
 		lblBookSearch.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBookSearch.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblBookSearch.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pBookSearch.add(lblBookSearch, BorderLayout.NORTH);
 		
 		pRecommendBook = new JPanel();
@@ -125,7 +125,7 @@ public class MainFrame_user extends JFrame {
 		
 		lblRecommendBook = new JLabel("도서추천");
 		lblRecommendBook.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRecommendBook.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblRecommendBook.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pRecommendBook.add(lblRecommendBook, BorderLayout.NORTH);
 		
 		pRequestBook = new JPanel();
@@ -136,7 +136,7 @@ public class MainFrame_user extends JFrame {
 		
 		lblRequestBook = new JLabel("도서신청");
 		lblRequestBook.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRequestBook.setFont(new Font("굴림", Font.PLAIN, 15));
+		lblRequestBook.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pRequestBook.add(lblRequestBook, BorderLayout.NORTH);
 		
 		JPanel pDummy1 = new JPanel();
@@ -168,7 +168,7 @@ public class MainFrame_user extends JFrame {
 		lblLogOut = new JLabel("로그아웃");
 		lblLogOut.setForeground(Color.WHITE);
 		lblLogOut.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogOut.setFont(new Font("굴림", Font.BOLD, 15));
+		lblLogOut.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		pLogout.add(lblLogOut, BorderLayout.NORTH);
 		
 		JPanel pMain = new JPanel();
@@ -228,8 +228,7 @@ public class MainFrame_user extends JFrame {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				//profileModifyPanel = new MemberProfileModifyPanel();
-				profileModifyPanel = new TestMemberProfileModifyPanel();
+				profileModifyPanel = new MemberProfileModifyPanel();
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
 				bookRecomPanel = new RecomPanel();
@@ -247,7 +246,7 @@ public class MainFrame_user extends JFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(new EmptyBorder(50, 50, 50, 50));
 		lblGreeting = new JLabel();
-		lblGreeting.setFont(new Font("굴림", Font.BOLD, 65));
+		lblGreeting.setFont(new Font("맑은 고딕", Font.BOLD, 65));
 		lblGreeting.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblGreeting, BorderLayout.CENTER);
 		return panel;
@@ -266,7 +265,7 @@ public class MainFrame_user extends JFrame {
 					p.setBackground(Color.white);
 				}
 				for(JLabel label : menuLabels) {
-					label.setFont(new Font("굴림", Font.PLAIN, 15));
+					label.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 					label.setForeground(Color.black);
 				}
 				//mouse가 눌린 menu panel 및 menu label 판별 및 클릭
@@ -275,7 +274,7 @@ public class MainFrame_user extends JFrame {
 					if(p.equals(chkPanel)) {
 						p.setBackground(new Color(12,160,174));
 						JLabel label = (JLabel)p.getComponent(0);
-						label.setFont(new Font("굴림", Font.BOLD, 15));
+						label.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 						label.setForeground(Color.white);
 					}
 				}
@@ -344,6 +343,7 @@ public class MainFrame_user extends JFrame {
 					contentPane.add(pCenter,BorderLayout.CENTER);
 					repaint();
 					revalidate();
+					((MemberBookSearchPanel)pCenter).loadData();
 					break;
 				case "도서추천":
 					contentPane.remove(pCenter);
@@ -373,6 +373,7 @@ public class MainFrame_user extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookRankingPanel)pCenter).loadData();
 									break;
 								case "추천도서":
 									contentPane.remove(pCenter);
@@ -380,6 +381,7 @@ public class MainFrame_user extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((RecomPanel)pCenter).loadData();
 									break;
 								}
 							}
@@ -399,6 +401,7 @@ public class MainFrame_user extends JFrame {
 					contentPane.add(pCenter,BorderLayout.CENTER);
 					repaint();
 					revalidate();
+					((RequestBookMemberPanel)pCenter).loadData();
 					break;
 				case "로그아웃":
 					dispose();

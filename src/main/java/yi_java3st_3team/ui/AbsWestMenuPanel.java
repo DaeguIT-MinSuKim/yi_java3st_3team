@@ -144,7 +144,7 @@ public abstract class AbsWestMenuPanel extends JPanel {
 		String[] texts = getTexts();
 		for(int i=0;i<jLabels.length;i++) {
 			jLabels[i].setText(texts[i]);
-			jLabels[i].setFont(new Font("굴림",Font.BOLD,16));
+			jLabels[i].setFont(new Font("맑은 고딕",Font.BOLD,16));
 		}
 	}
 	protected abstract String[] getTexts();

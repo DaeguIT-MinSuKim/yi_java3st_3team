@@ -183,7 +183,7 @@ public class RentPanel extends JPanel implements ActionListener {
 			res = Integer.parseInt(pMember.getTfLendBookCdt().getText().trim());
 			if (rdbtnBookCode.isSelected()) {
 				Book id = new Book(tfBookSearch.getText());
-				BookListDialog bookDialog = new BookListDialog(new JFrame(), "도서검색", true, id);
+				BookListDialog bookDialog = new BookListDialog(new JFrame(), "도서검색", true, id, res);
 				bookDialog.setLending3(this);
 				bookDialog.setVisible(true);
 				tfBookSearch.setText("");

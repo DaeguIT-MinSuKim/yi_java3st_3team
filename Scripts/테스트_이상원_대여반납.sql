@@ -546,6 +546,7 @@ from book;
 desc `member` ;
 
 desc lending ;
+desc book;
 
 call rent_book('0101.001-1', 'ddr23dd@naver.com');
 
@@ -557,3 +558,6 @@ INSERT INTO book
 (book_code, book_name, authr_name, trnslr_name, pls, pblicte_year, book_price, lend_psb_cdt, total_le_cnt, book_img, lc_no, ml_no, regist_date, dsuse_cdt)
 VALUES('1002.016-1', '테스트', '테스트', '테스트', 196, '2020-03-22', 14000, 0, 0, null, 10, 2, '2020-03-22', 0);
 
+select book_code ,book_name ,authr_name ,trnslr_name , pls, p.pls_name, pblicte_year ,book_price ,lend_psb_cdt ,total_le_cnt ,book_img , lc_no , ml_no , regist_date , dsuse_cdt
+	from book b left join publishing_company p on b.pls = p.pls_no
+	where book_name like '%누구%' and lend_psb_cdt = 0; 

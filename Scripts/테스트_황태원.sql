@@ -148,3 +148,12 @@ from member;
 select *
 from book;
 
+select *
+from lending;
+
+insert into lending(mber_id, book_cd , lend_date , rturn_due_date ,rturn_psm_cdt , rturn_date ,overdue_cdt ) values
+('bus503@daum.net', '0201.001-1', '2018-10-15','2018-10-30', 1, null,0 );
+
+
+
+

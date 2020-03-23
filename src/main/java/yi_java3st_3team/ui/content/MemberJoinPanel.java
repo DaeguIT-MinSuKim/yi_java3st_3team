@@ -389,12 +389,6 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 		} else {
 			setPic(item.getMberImg());
 		}
-//		  private int totalLeCnt;
-//		  private int lendBookCnt;
-//		  private Grade grade;
-//		  private int lendPsbCdt; 
-//		  private Date joinDt; 
-//		  private int wdrCdt;
 	}
 
 	@Override

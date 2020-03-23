@@ -70,7 +70,7 @@ public class MainFrame_lib extends JFrame {
 	private OverdueUIPanel overdueMgn;
 	private LoginFrame_ex loginFrame;
 
-	private LendingPanel lendingPanel;
+	private LendingPanel3 lendingPanel;
 	private LendingPanel2 lendingPanel2;
 	private Thread chartThread;
 	private JLabel lblGreeting;
@@ -625,7 +625,7 @@ public class MainFrame_lib extends JFrame {
 
 				overdueMgn = new OverdueUIPanel();
 
-				lendingPanel = new LendingPanel();
+				lendingPanel = new LendingPanel3();
 				lendingPanel2 = new LendingPanel2();
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();

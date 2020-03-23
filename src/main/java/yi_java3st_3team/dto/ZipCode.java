@@ -136,4 +136,5 @@ public class ZipCode {
 				+ ", buldNoOriginNo=" + buldNoOriginNo + ", buldNoViceNo=" + buldNoViceNo + "]";
 	}
 
+
 }

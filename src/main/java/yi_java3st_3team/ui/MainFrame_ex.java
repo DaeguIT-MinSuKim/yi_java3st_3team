@@ -31,7 +31,6 @@ import yi_java3st_3team.ui.content.RequestBookIntoPanel;
 import yi_java3st_3team.ui.service.LibrarianService;
 import yi_java3st_3team.ui.service.MemberUIService;
 
-
 @SuppressWarnings("serial")
 public class MainFrame_ex extends JFrame {
 	private JPanel contentPane;
@@ -57,7 +56,7 @@ public class MainFrame_ex extends JFrame {
 	private JPanel chartMemberInfo;
 	private BookInfoPanelBarChart bookInfoChart;
 	private BookInfoCatePanelBarChart bookInfoCafeChart;
-	
+
 	private MemberInfoPanelPieChart memInfoChart;
 	private MemberJoinUIPanel memberJoin;
 	private MemberSelectUIPanel memberSelect;
@@ -250,7 +249,7 @@ public class MainFrame_ex extends JFrame {
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		pProfile.addMouseListener(menuAdapter);
-		
+
 		mainFrame = this;
 	}
 
@@ -313,7 +312,7 @@ public class MainFrame_ex extends JFrame {
 					contentPane.remove(pWest);
 					pCenter = getHomeMenuPanel();
 					lblGreeting.setText(greeting);
-					contentPane.add(pCenter,BorderLayout.CENTER);
+					contentPane.add(pCenter, BorderLayout.CENTER);
 					repaint();
 					revalidate();
 					break;
@@ -345,6 +344,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookRegistrationPanel) pCenter).clearTf();
 									break;
 								case "보유도서 관리":
 									contentPane.remove(pCenter);
@@ -376,6 +376,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookPlsManageMentPanel) pCenter).loadDate();
 									break;
 								case "도서분류 관리":
 									contentPane.remove(pCenter);
@@ -383,6 +384,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookLcAndMlManagerPanel) pCenter).loadData();
 									break;
 								}
 							}
@@ -493,7 +495,7 @@ public class MainFrame_ex extends JFrame {
 					repaint();
 					revalidate();
 					break;
-					
+
 				case "직원관리":
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
@@ -532,7 +534,7 @@ public class MainFrame_ex extends JFrame {
 					repaint();
 					revalidate();
 					break;
-					
+
 				case "통계조회":
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
@@ -588,7 +590,7 @@ public class MainFrame_ex extends JFrame {
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
 					pCenter = getPassMenuPanel();
-					contentPane.add(pCenter,BorderLayout.CENTER);
+					contentPane.add(pCenter, BorderLayout.CENTER);
 					repaint();
 					revalidate();
 					break;
@@ -607,7 +609,6 @@ public class MainFrame_ex extends JFrame {
 		return menuAdapter;
 	}
 
-	
 	public LoginFrame_ex getLoginFrame() {
 		return loginFrame;
 	}
@@ -620,7 +621,7 @@ public class MainFrame_ex extends JFrame {
 		return lib;
 	}
 
-	public void setLib(LibrarianService service,Librarian lib) {
+	public void setLib(LibrarianService service, Librarian lib) {
 		try {
 			this.lib = service.showLibrarianById(lib);
 		} catch (SQLException e) {
@@ -632,18 +633,18 @@ public class MainFrame_ex extends JFrame {
 		return member;
 	}
 
-	public void setMember(Member member,MemberUIService service) {
+	public void setMember(Member member, MemberUIService service) {
 		this.member = service.SelectedByNo(member);
 	}
 
 	public MainFrame_ex getMainFrame() {
 		return mainFrame;
 	}
-	
+
 	public void setMainFrame(MainFrame_ex mainFrame) {
 		this.mainFrame = mainFrame;
 	}
-	
+
 	public JPanel getpCenter() {
 		return pCenter;
 	}
@@ -693,21 +694,31 @@ public class MainFrame_ex extends JFrame {
 
 				rentPanel = new RentPanel();
 				returnPanel = new ReturnPanel();
+
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();
+
 				chartBookCateInfo.add(bookInfoCafeChart, BorderLayout.CENTER);
+				chartBookCateInfo.setBorder(new EmptyBorder(50, 100, 50, 100));
+				chartBookCateInfo.setBackground(Color.WHITE);
+
 				chartBookInfo.add(bookInfoChart, BorderLayout.CENTER);
+				bookInfoChart.setBorder(new EmptyBorder(100, 200, 50, 100));
+				chartBookInfo.setBackground(Color.WHITE);
+
 				chartMemberInfo.add(memInfoChart, BorderLayout.CENTER);
+				memInfoChart.setBorder(new EmptyBorder(0, 120, 0, 0));
+				chartMemberInfo.setBackground(Color.WHITE);
 			}
 		});
 		return thread;
 	}
-	
+
 	private JPanel getPassMenuPanel() {
 		JPanel panel = new PasswordCheckPanel();
 		((PasswordCheckPanel) panel).setLib(lib);
 		((PasswordCheckPanel) panel).setMainFrame_ex(mainFrame);
 		return panel;
-	}	
+	}
 }

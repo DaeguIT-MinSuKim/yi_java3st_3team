@@ -21,6 +21,7 @@ import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class MemberJoinUIPanel extends JPanel implements ActionListener {
@@ -55,12 +56,14 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener {
 		add(pBtns);
 
 		btnAdd = new JButton("저장");
+		btnAdd.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		btnAdd.setPreferredSize(new Dimension(80, 30));
 		btnAdd.addActionListener(this);
 		pBtns.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		pBtns.add(btnAdd);
 
 		btnCancel = new JButton("취소");
+		btnCancel.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		btnCancel.setPreferredSize(new Dimension(80, 30));
 		btnCancel.addActionListener(this);
 		pBtns.add(btnCancel);

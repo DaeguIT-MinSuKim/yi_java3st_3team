@@ -124,6 +124,9 @@ public class BookListPanel extends JPanel implements ActionListener {
 	
 	public void loadData() {
 		pBookList.loadData(service.showBookListAll());
+		rdoBookCode.setSelected(true);
+		cmbCat.setSelectedIndex(-1);
+		tfSearchBar.setText("");
 	}
 
 	private JPopupMenu createPopupMenu() {

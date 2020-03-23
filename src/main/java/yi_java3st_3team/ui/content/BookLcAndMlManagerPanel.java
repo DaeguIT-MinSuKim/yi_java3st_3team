@@ -164,6 +164,11 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 
 		setLcList(bookService);
 	}
+	
+	public void loadData() {
+		clearTf();
+		pLcMlList.loadData(service.showListAll());
+	}
 
 	private JPopupMenu createPopupMenu() {
 		JPopupMenu popMenu = new JPopupMenu();

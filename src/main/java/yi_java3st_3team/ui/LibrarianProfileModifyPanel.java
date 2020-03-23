@@ -115,6 +115,7 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 		pDetail.setLayout(new BorderLayout(0, 0));
 		
 		btnPic = new JButton("증명사진");
+		btnPic.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		btnPic.addActionListener(this);
 		btnPic.setPreferredSize(new Dimension(20, 30));
 		pDetail.add(btnPic, BorderLayout.NORTH);
@@ -132,7 +133,7 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 		pCenter.setLayout(new GridLayout(0, 2, 0, 15));
 
 		JLabel lblID = new JLabel("ID");
-		lblID.setFont(new Font("굴림", Font.PLAIN, 17));
+		lblID.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblID.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblID);
 
@@ -142,6 +143,7 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 		pID.setLayout(new GridLayout(0, 2, 20, 0));
 
 		tfID = new JTextField();
+		tfID.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		tfID.setForeground(Color.GRAY);
 		tfID.setColumns(10);
 		tfID.setEditable(false);
@@ -149,33 +151,36 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 
 		btnIDCheck = new JButton("ID 중복확인");
 		btnIDCheck.addActionListener(this);
-		btnIDCheck.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnIDCheck.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pID.add(btnIDCheck);
 
 		JLabel lblName = new JLabel("이름");
-		lblName.setFont(new Font("굴림", Font.PLAIN, 17));
+		lblName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblName.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblName);
 
 		tfName = new JTextField();
+		tfName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfName);
 		tfName.setColumns(10);
 
 		JLabel lblPW1 = new JLabel("비밀번호");
-		lblPW1.setFont(new Font("굴림", Font.PLAIN, 17));
+		lblPW1.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblPW1.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPW1);
 
 		pfPW1 = new JPasswordField();
+		pfPW1.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pfPW1.getDocument().addDocumentListener(docListener);
 		pCenter.add(pfPW1);
 
 		JLabel lblPW2 = new JLabel("비밀번호 확인");
-		lblPW2.setFont(new Font("굴림", Font.PLAIN, 17));
+		lblPW2.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblPW2.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblPW2);
 
 		pfPW2 = new JPasswordField();
+		pfPW2.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pfPW2.getDocument().addDocumentListener(docListener);
 		pCenter.add(pfPW2);
 
@@ -186,30 +191,31 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 		lblPWCheck = new JLabel("비밀번호 중복확인");
 		lblPWCheck.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPWCheck.setForeground(Color.GRAY);
-		lblPWCheck.setFont(new Font("굴림", Font.BOLD, 11));
+		lblPWCheck.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(lblPWCheck);
 
 		JLabel lblBirthday = new JLabel("생년월일");
-		lblBirthday.setFont(new Font("굴림", Font.PLAIN, 17));
+		lblBirthday.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblBirthday.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblBirthday);
 
 		tfBirthday = new JDateChooser(new Date(), "yyyy-MM-dd");
+		tfBirthday.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfBirthday);
 
 		JLabel lblTel = new JLabel("전화번호");
-		lblTel.setFont(new Font("굴림", Font.PLAIN, 17));
+		lblTel.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblTel.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblTel);
 
 		tfTel = new JTextField();
 		tfTel.setForeground(Color.GRAY);
-		tfTel.setFont(new Font("굴림", Font.PLAIN, 11));
+		tfTel.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfTel);
 		tfTel.setColumns(10);
 
 		JLabel lblZip = new JLabel("우편번호");
-		lblZip.setFont(new Font("굴림", Font.PLAIN, 17));
+		lblZip.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblZip.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblZip);
 
@@ -219,21 +225,23 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 		pZip.setLayout(new GridLayout(0, 2, 20, 0));
 
 		tfZip = new JTextField();
+		tfZip.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		tfZip.setHorizontalAlignment(SwingConstants.LEFT);
 		tfZip.setColumns(7);
 		pZip.add(tfZip);
 
 		btnZip = new JButton("우편번호 검색");
 		btnZip.addActionListener(this);
-		btnZip.setFont(new Font("굴림", Font.PLAIN, 12));
+		btnZip.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pZip.add(btnZip);
 
 		JLabel lblAddress = new JLabel("주소");
-		lblAddress.setFont(new Font("굴림", Font.PLAIN, 17));
+		lblAddress.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		lblAddress.setHorizontalAlignment(SwingConstants.CENTER);
 		pCenter.add(lblAddress);
 
 		tfAddress = new JTextField();
+		tfAddress.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfAddress);
 		tfAddress.setColumns(10);
 
@@ -242,6 +250,7 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 		pCenter.add(pGarbage);
 
 		tfDetailAdress = new JTextField();
+		tfDetailAdress.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfDetailAdress);
 		tfDetailAdress.setColumns(10);
 
@@ -251,11 +260,13 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 		add(panel, BorderLayout.SOUTH);
 
 		btnSave = new JButton("수정");
+		btnSave.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnSave.addActionListener(this);
 		btnSave.setPreferredSize(new Dimension(80, 30));
 		panel.add(btnSave);
 
 		btnCancel = new JButton("취소");
+		btnCancel.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnCancel.addActionListener(this);
 		btnCancel.setPreferredSize(new Dimension(80, 30));
 		panel.add(btnCancel);

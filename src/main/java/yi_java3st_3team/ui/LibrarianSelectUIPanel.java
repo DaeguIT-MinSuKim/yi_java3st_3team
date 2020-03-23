@@ -49,6 +49,8 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 	}
 
 	private void initialize() {
+		setBackground(Color.WHITE);
+		setBorder(new EmptyBorder(30, 20, 10, 20));
 		setLayout(new BorderLayout(0, 0));
 		pLibrarianList = new LibrarianTblPanel();
 		JPanel pNorth = new JPanel();
@@ -57,35 +59,37 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 		pNorth.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 10));
 
 		radioId = new JRadioButton("사서ID");
+		radioId.setSelected(true);
 		radioId.setBackground(Color.WHITE);
-		radioId.setFont(new Font("굴림", Font.PLAIN, 14));
+		radioId.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pNorth.add(radioId);
 
 		radioName = new JRadioButton("사서이름");
 		radioName.setBackground(Color.WHITE);
-		radioName.setFont(new Font("굴림", Font.PLAIN, 14));
+		radioName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pNorth.add(radioName);
 		
 		buttonGroup.add(radioId);
 		buttonGroup.add(radioName);
 
 		tfSearch = new JTextField();
+		tfSearch.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pNorth.add(tfSearch);
 		tfSearch.setColumns(20);
 
 		btnSearch = new JButton("검색");
 		btnSearch.addActionListener(this);
 		btnSearch.setForeground(Color.BLACK);
-		btnSearch.setBackground(Color.ORANGE);
-		btnSearch.setFont(new Font("굴림", Font.PLAIN, 14));
+//		btnSearch.setBackground(Color.ORANGE);
+		btnSearch.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnSearch.setPreferredSize(new Dimension(80, 30));
 		pNorth.add(btnSearch);
 		
 		btnAdd = new JButton("등록");
-		btnAdd.setFont(new Font("굴림", Font.PLAIN, 14));
+		btnAdd.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnAdd.addActionListener(this);
 		btnAdd.setForeground(Color.BLACK);
-		btnAdd.setBackground(new Color(245, 222, 179));
+//		btnAdd.setBackground(new Color(245, 222, 179));
 		btnAdd.setPreferredSize(new Dimension(80, 30));
 		pNorth.add(btnAdd);
 

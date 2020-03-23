@@ -37,15 +37,15 @@ public class MemberInfoPanel extends JPanel {
 		add(panel, BorderLayout.NORTH);
 		
 		JLabel lblTotalMembers = new JLabel("총 회원수");
-		lblTotalMembers.setFont(new Font("굴림", Font.PLAIN, 20));
+		lblTotalMembers.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(lblTotalMembers);
 		
 		JLabel lblNormalMembers = new JLabel("일반회원");
-		lblNormalMembers.setFont(new Font("굴림", Font.PLAIN, 20));
+		lblNormalMembers.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(lblNormalMembers);
 		
 		JLabel labelVipMembers = new JLabel("우수회원");
-		labelVipMembers.setFont(new Font("굴림", Font.PLAIN, 20));
+		labelVipMembers.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(labelVipMembers);
 		
 		JPanel panel_1 = new JPanel();
@@ -57,15 +57,15 @@ public class MemberInfoPanel extends JPanel {
 		add(panel_1, BorderLayout.CENTER);
 		
 		lblTotalMemberCount = new JLabel("0명");
-		lblTotalMemberCount.setFont(new Font("굴림", Font.PLAIN, 35));
+		lblTotalMemberCount.setFont(new Font("맑은 고딕", Font.BOLD, 35));
 		panel_1.add(lblTotalMemberCount);
 		
 		lblNormalMemberCount = new JLabel("0명");
-		lblNormalMemberCount.setFont(new Font("굴림", Font.PLAIN, 35));
+		lblNormalMemberCount.setFont(new Font("맑은 고딕", Font.BOLD, 35));
 		panel_1.add(lblNormalMemberCount);
 		
 		lblVipMemberCount = new JLabel("0명");
-		lblVipMemberCount.setFont(new Font("굴림", Font.PLAIN, 35));
+		lblVipMemberCount.setFont(new Font("맑은 고딕", Font.BOLD, 35));
 		panel_1.add(lblVipMemberCount);
 	}
 	public void setLblText(StatisticUIService service) {

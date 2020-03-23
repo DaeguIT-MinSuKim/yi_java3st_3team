@@ -119,13 +119,33 @@ public class RequestIntoTblPanel extends JPanel {
 					} else if( lists.get(i).getWhCdt() > 0){
 						JOptionPane.showMessageDialog(null, "입고완료된 도서가 선택되었습니다.");
 					}
-				}
+				} 
 			}
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(null, "선택된 정보가 없습니다");
 		}
-		
-		
+	}
+	
+	public void getCancleItem() {
+		try {
+			for(int i=0; i<table.getRowCount(); i++) {
+				Boolean checkCdt = (Boolean) table.getValueAt(i, 7);
+				
+				if(checkCdt) {
+					if (lists.get(i).getWhCdt() == 1) {										
+						RequestBook reqst = new RequestBook();
+						reqst.setRequestBookName(lists.get(i).getRequestBookName());
+						reqst.setRequestBookPls(lists.get(i).getRequestBookPls());
+						reqst.setWhCdt(0);
+						service.modifyRequestBook(reqst);
+					} else if( lists.get(i).getWhCdt() == 0){
+						JOptionPane.showMessageDialog(null, "미입고 도서가 선택되었습니다.");
+					}
+				} 
+			}
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null, "선택된 정보가 없습니다");
+		}
 	}
 	
 	protected void tableCellAlign(int align, int... idx) {

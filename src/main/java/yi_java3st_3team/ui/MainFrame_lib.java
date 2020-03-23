@@ -33,7 +33,6 @@ import yi_java3st_3team.ui.content.RequestBookIntoPanel;
 import yi_java3st_3team.ui.service.LibrarianService;
 import yi_java3st_3team.ui.service.MemberUIService;
 
-
 @SuppressWarnings("serial")
 public class MainFrame_lib extends JFrame {
 	private JPanel contentPane;
@@ -57,7 +56,7 @@ public class MainFrame_lib extends JFrame {
 	private JPanel chartMemberInfo;
 	private BookInfoPanelBarChart bookInfoChart;
 	private BookInfoCatePanelBarChart bookInfoCafeChart;
-	
+
 	private MemberInfoPanelPieChart memInfoChart;
 	private MemberJoinUIPanel memberJoin;
 	private MemberSelectUIPanel memberSelect;
@@ -72,6 +71,7 @@ public class MainFrame_lib extends JFrame {
 
 	private RentPanel lendingPanel;
 	private ReturnPanel lendingPanel2;
+
 	private Thread chartThread;
 	private JLabel lblGreeting;
 	private JLabel lblProfile;
@@ -192,7 +192,7 @@ public class MainFrame_lib extends JFrame {
 		lblProfile.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProfile.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pProfile.add(lblProfile);
-		
+
 		pDummy1 = new JPanel();
 		pDummy1.setBackground(Color.WHITE);
 		pSouthMenuPanel.add(pDummy1);
@@ -240,7 +240,7 @@ public class MainFrame_lib extends JFrame {
 		pStatistic.addMouseListener(menuAdapter);
 		pLogout.addMouseListener(menuAdapter);
 		pProfile.addMouseListener(menuAdapter);
-		
+
 		mainFrame = this;
 	}
 
@@ -272,10 +272,9 @@ public class MainFrame_lib extends JFrame {
 		MouseAdapter menuAdapter = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel[] menuPanels = new JPanel[] { pHome, pBookMgn, pMemMgn, pChkOutRtn, pStatistic,
-						pProfile };
-				JLabel[] menuLabels = new JLabel[] { lblHome, lblBookMgn, lblMemMgn, lblChkOutRtn,
-						lblStatistic, lblProfile };
+				JPanel[] menuPanels = new JPanel[] { pHome, pBookMgn, pMemMgn, pChkOutRtn, pStatistic, pProfile };
+				JLabel[] menuLabels = new JLabel[] { lblHome, lblBookMgn, lblMemMgn, lblChkOutRtn, lblStatistic,
+						lblProfile };
 				// Menu panel,label 초기화
 				for (JPanel p : menuPanels) {
 					p.setBackground(Color.white);
@@ -303,7 +302,7 @@ public class MainFrame_lib extends JFrame {
 					contentPane.remove(pWest);
 					pCenter = getHomeMenuPanel();
 					lblGreeting.setText(greeting);
-					contentPane.add(pCenter,BorderLayout.CENTER);
+					contentPane.add(pCenter, BorderLayout.CENTER);
 					repaint();
 					revalidate();
 					break;
@@ -468,7 +467,7 @@ public class MainFrame_lib extends JFrame {
 					contentPane.add(pWest, BorderLayout.WEST);
 					repaint();
 					revalidate();
-					break;			
+					break;
 				case "통계조회":
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
@@ -524,7 +523,7 @@ public class MainFrame_lib extends JFrame {
 					contentPane.remove(pWest);
 					contentPane.remove(pCenter);
 					pCenter = getPassMenuPanel();
-					contentPane.add(pCenter,BorderLayout.CENTER);
+					contentPane.add(pCenter, BorderLayout.CENTER);
 					repaint();
 					revalidate();
 					break;
@@ -543,7 +542,6 @@ public class MainFrame_lib extends JFrame {
 		return menuAdapter;
 	}
 
-	
 	public LoginFrame_ex getLoginFrame() {
 		return loginFrame;
 	}
@@ -556,7 +554,7 @@ public class MainFrame_lib extends JFrame {
 		return lib;
 	}
 
-	public void setLib(LibrarianService service,Librarian lib) {
+	public void setLib(LibrarianService service, Librarian lib) {
 		try {
 			this.lib = service.showLibrarianById(lib);
 		} catch (SQLException e) {
@@ -569,18 +567,18 @@ public class MainFrame_lib extends JFrame {
 		return member;
 	}
 
-	public void setMember(Member member,MemberUIService service) {
+	public void setMember(Member member, MemberUIService service) {
 		this.member = service.SelectedByNo(member);
 	}
 
 	public MainFrame_lib getMainFrame() {
 		return mainFrame;
 	}
-	
+
 	public void setMainFrame(MainFrame_lib mainFrame) {
 		this.mainFrame = mainFrame;
 	}
-	
+
 	public JPanel getpCenter() {
 		return pCenter;
 	}
@@ -619,7 +617,7 @@ public class MainFrame_lib extends JFrame {
 				bookMgn = new BookManagerPanel();
 				recomBookAdd = new RecomBookAddPanel();
 				reqstInto = new RequestBookIntoPanel();
-				
+
 				memberJoin = new MemberJoinUIPanel();
 				memberSelect = new MemberSelectUIPanel();
 
@@ -627,6 +625,7 @@ public class MainFrame_lib extends JFrame {
 
 				lendingPanel = new RentPanel();
 				lendingPanel2 = new ReturnPanel();
+
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();
@@ -637,11 +636,11 @@ public class MainFrame_lib extends JFrame {
 		});
 		return thread;
 	}
-	
+
 	private JPanel getPassMenuPanel() {
 		JPanel panel = new PasswordCheckPanel();
 		((PasswordCheckPanel) panel).setLib(lib);
 		((PasswordCheckPanel) panel).setMainFrame_lib(mainFrame);
 		return panel;
-	}	
+	}
 }

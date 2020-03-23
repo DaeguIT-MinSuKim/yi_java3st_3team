@@ -14,7 +14,7 @@ import yi_java3st_3team.ui.list.ReturnListPanel;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
-public class LendingPanel2 extends JPanel implements ActionListener {
+public class ReturnPanel extends JPanel implements ActionListener {
 	private MemberIdSelectPanel2 pMember;
 	private JPanel pList;
 	private JPanel pLendingSearch;
@@ -32,7 +32,7 @@ public class LendingPanel2 extends JPanel implements ActionListener {
 	private LendingUiService lendingService;
 	private Member member;
 
-	public LendingPanel2() {
+	public ReturnPanel() {
 		lendingService = new LendingUiService();
 		initialize();
 	}

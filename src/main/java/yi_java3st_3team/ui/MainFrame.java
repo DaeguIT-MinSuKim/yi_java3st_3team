@@ -131,23 +131,23 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	protected void do_btnTest2_actionPerformed(ActionEvent e) {
-//		if (frame2 == null) {
-//			frame2 = new JFrame();
-//			frame2.setBounds(50, 50, 850, 600);
-//			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//			LendingPanel3 Lendings = new LendingPanel3();
-//			frame2.getContentPane().add(Lendings);
-//			frame2.setVisible(true);
-//		} else {
-//			if (frame2.isVisible()) {
-//				return;
-//			}
-//			frame2 = new JFrame();
-//			frame2.setBounds(50, 50, 850, 600);
-//			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//			LendingPanel3 Lendings = new LendingPanel3();
-//			frame2.getContentPane().add(Lendings);
-//			frame2.setVisible(true);
-//		}
+		if (frame2 == null) {
+			frame2 = new JFrame();
+			frame2.setBounds(50, 50, 850, 600);
+			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			RentPanel Lendings = new RentPanel();
+			frame2.getContentPane().add(Lendings);
+			frame2.setVisible(true);
+		} else {
+			if (frame2.isVisible()) {
+				return;
+			}
+			frame2 = new JFrame();
+			frame2.setBounds(50, 50, 850, 600);
+			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			RentPanel Lendings = new RentPanel();
+			frame2.getContentPane().add(Lendings);
+			frame2.setVisible(true);
+		}
 	}
 }

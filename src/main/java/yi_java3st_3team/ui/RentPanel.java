@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -19,13 +18,14 @@ import javax.swing.SwingConstants;
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.content.MemberIdSelectPanel;
-import yi_java3st_3team.ui.list.MemberListDialog;
-import yi_java3st_3team.ui.list.MemberListDialog2;
+import yi_java3st_3team.ui.dialog.BookListDialog;
+import yi_java3st_3team.ui.dialog.BookListDialog2;
+import yi_java3st_3team.ui.dialog.MemberListDialog;
+import yi_java3st_3team.ui.dialog.MemberListDialog2;
 import yi_java3st_3team.ui.list.RentListPanel;
-import yi_java3st_3team.ui.service.BookUiService;
 
 @SuppressWarnings("serial")
-public class LendingPanel3 extends JPanel implements ActionListener {
+public class RentPanel extends JPanel implements ActionListener {
 	private JTextField tfBookSearch;
 	private MemberIdSelectPanel pMember;
 	private JPanel pList;
@@ -40,7 +40,6 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 	private JPanel p05;
 	private JPanel p06;
 	private JButton btnLending;
-	private BookUiService bookService;
 	private JRadioButton rdbtnBookCode;
 	private JRadioButton rdbtnBookName;
 	private JPanel pUseless;
@@ -49,8 +48,7 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 	private JPanel pUseless2;
 	private int res;
 
-	public LendingPanel3() {
-		bookService = new BookUiService();
+	public RentPanel() {
 		initialize();
 	}
 
@@ -140,6 +138,22 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 		this.pMember = pMember;
 	}
 
+	public RentListPanel getpLendingList() {
+		return pLendingList;
+	}
+
+	public void setpLendingList(RentListPanel pLendingList) {
+		this.pLendingList = pLendingList;
+	}
+
+	public int getRes() {
+		return res;
+	}
+
+	public void setRes(int res) {
+		this.res = res;
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pMember.getBtnMberName()) {
 			do_pMemberBtnMberName_actionPerformed(e);
@@ -162,36 +176,33 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnSearch_actionPerformed(ActionEvent e) {
-		try {
-			if(pMember.getTfLendBookCdt().getText().equals("")) {
+			if (pMember.getTfLendBookCdt().getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "회원을 선택하고 와주세요.");
 				return;
 			}
 			res = Integer.parseInt(pMember.getTfLendBookCdt().getText().trim());
 			if (rdbtnBookCode.isSelected()) {
 				Book id = new Book(tfBookSearch.getText());
-				List<Book> book = bookService.LendingBookByCode2(id);
-				pLendingList.search2(book, res);
+				BookListDialog bookDialog = new BookListDialog(new JFrame(), "도서검색", true, id);
+				bookDialog.setLending3(this);
+				bookDialog.setVisible(true);
 				tfBookSearch.setText("");
 			}
 			if (rdbtnBookName.isSelected()) {
 				Book name = new Book(tfBookSearch.getText(), new Date());
-				List<Book> book = bookService.LendingBookByName(name);
-				pLendingList.search2(book, res);
+				BookListDialog2 bookDialog = new BookListDialog2(new JFrame(), "도서검색", true, name);
+				bookDialog.setLending3(this);
+				bookDialog.setVisible(true);
 				tfBookSearch.setText("");
 			}
 			if (rdbtnBookCode.isSelected() == false && rdbtnBookName.isSelected() == false) {
 				JOptionPane.showMessageDialog(null, "선택해주세요.");
 				return;
 			}
-		} catch (NullPointerException e2) {
-			JOptionPane.showMessageDialog(null, "입력하지 않으셨거나 잘못 입력하셨습니다.");
-			e2.printStackTrace();
-		}
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
-		pLendingList.AllChecking(true);
+		pLendingList.checkingAll(true);
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
@@ -200,7 +211,6 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {
 		Member id = new Member(pMember.getTfMberId().getText());
-		JOptionPane.showMessageDialog(null, id.toString());
 		MemberListDialog memberDialog = new MemberListDialog(new JFrame(), "회원검색", true, id);
 		memberDialog.setLending3(this);
 		memberDialog.setVisible(true);
@@ -214,7 +224,7 @@ public class LendingPanel3 extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnCheckFalse_actionPerformed(ActionEvent e) {
-		pLendingList.AllChecking(false);
+		pLendingList.checkingAll(false);
 	}
 
 }

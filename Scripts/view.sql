@@ -39,7 +39,7 @@ drop procedure if exists rent_book;
 
 delimiter $$
 $$
-create procedure rent_book(in _mber_id varchar(30), in _book_cd char(7))
+create procedure rent_book(in _mber_id varchar(30), in _book_cd varchar(20))
 
 begin
 	declare continue handler for sqlexception
@@ -80,7 +80,7 @@ drop procedure if exists return_book;
 
 delimiter $$
 $$
-create procedure return_book(in _mber_id varchar(30), in _book_cd char(7))
+create procedure return_book(in _mber_id varchar(30), in _book_cd varchar(20))
 
 begin
 	declare continue handler for sqlexception

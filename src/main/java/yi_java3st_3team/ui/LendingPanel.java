@@ -160,7 +160,7 @@ public class LendingPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {
-		pLendingList.AllChecking(true);
+		pLendingList.checkingAll(true);
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
@@ -189,6 +189,6 @@ public class LendingPanel extends JPanel implements ActionListener {
 		pMember.getTfLendBookCdt().setText(res + "");
 	}
 	protected void do_btnCheckFalse_actionPerformed(ActionEvent e) {
-		pLendingList.AllChecking(false);
+		pLendingList.checkingAll(false);
 	}
 }

@@ -2,7 +2,6 @@ package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -14,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
@@ -75,8 +73,8 @@ public class MainFrame_ex extends JFrame {
 	private OverdueUIPanel overdueMgn;
 	private LoginFrame_ex loginFrame;
 
-	private LendingPanel3 lendingPanel;
-	private LendingPanel2 lendingPanel2;
+	private RentPanel rentPanel;
+	private ReturnPanel returnPanel;
 	private Thread chartThread;
 	private JLabel lblGreeting;
 	private JLabel lblProfile;
@@ -466,14 +464,14 @@ public class MainFrame_ex extends JFrame {
 								switch (chkLabel.getText()) {
 								case "대여 관리":
 									contentPane.remove(pCenter);
-									pCenter = lendingPanel;
+									pCenter = rentPanel;
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
 									break;
 								case "반납 관리":
 									contentPane.remove(pCenter);
-									pCenter = lendingPanel2;
+									pCenter = returnPanel;
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
@@ -626,7 +624,6 @@ public class MainFrame_ex extends JFrame {
 		try {
 			this.lib = service.showLibrarianById(lib);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -694,8 +691,8 @@ public class MainFrame_ex extends JFrame {
 
 				overdueMgn = new OverdueUIPanel();
 
-				lendingPanel = new LendingPanel3();
-				lendingPanel2 = new LendingPanel2();
+				rentPanel = new RentPanel();
+				returnPanel = new ReturnPanel();
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();

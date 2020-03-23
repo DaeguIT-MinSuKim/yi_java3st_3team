@@ -10,7 +10,7 @@ insert into grade values
 
 -- member 회원
 desc member;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/member.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/member.csv'
 into table yi_java3st_3team.member
 character set 'utf8'
 fields terminated by ','
@@ -34,7 +34,7 @@ insert into request_book values
 
 -- book 도서
 desc book;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/book_data2.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/book_data2.csv'
 into table yi_java3st_3team.book 
 character set 'utf8'
 fields terminated by ','
@@ -46,7 +46,7 @@ ignore 1 lines;
 -- select * from lending;
 set autocommit = false;
 desc lending;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/lending2.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/lending2.csv'
 into table yi_java3st_3team.lending 
 character set 'utf8'
 fields terminated by ','
@@ -62,7 +62,7 @@ update lending
 -- publishing_company 출판사
 -- truncate table publishing_company;
 desc publishing_company;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/pls_data.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/pls_data.csv'
 into table yi_java3st_3team.publishing_company
 character set 'utf8'
 fields terminated by ','
@@ -117,7 +117,7 @@ insert into title values
 
 -- librarian 사서
 desc librarian;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/librarian.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/librarian.csv'
 into table yi_java3st_3team.librarian 
 character set 'utf8'
 fields terminated by ','
@@ -127,7 +127,7 @@ ignore 1 lines;
 -- truncate table zip_code; -- zip_code 전체 삭제
 -- select * from zip_code;
 desc zip_code;
-load data local infile 'I:/eclipse-workspace-teamProject/yi_java3st_3team/document/data/경북,대구.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/경북,대구.csv'
 into table yi_java3st_3team.zip_code
 character set 'utf8'
 fields terminated by ','

@@ -85,12 +85,12 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 	private BookPlsSearchDialog plsSearchDig;
 	private JFrame plsSearch;
 
-	public static void main(String[] args) {
-		JFrame test = new JFrame();
-		test.setBounds(2000, 100, 1000, 800);
-		test.getContentPane().add(new BookRegistrationPanel());
-		test.setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		JFrame test = new JFrame();
+//		test.setBounds(2000, 100, 1000, 800);
+//		test.getContentPane().add(new BookRegistrationPanel());
+//		test.setVisible(true);
+//	}
 
 	public BookRegistrationPanel() {
 		service = new BookUiService();
@@ -113,6 +113,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(lblBookName);
 
 		tfBookName = new JTextField();
+		tfBookName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfBookName);
 		tfBookName.setColumns(10);
 
@@ -122,6 +123,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(lblAuthr);
 
 		tfAuthr = new JTextField();
+		tfAuthr.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		tfAuthr.setColumns(10);
 		pCenter.add(tfAuthr);
 
@@ -131,6 +133,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(lblTrnslr);
 
 		tfTrnslr = new JTextField();
+		tfTrnslr.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfTrnslr);
 		tfTrnslr.setColumns(10);
 
@@ -140,6 +143,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(lblBookPirce);
 
 		tfBookPirce = new JTextField();
+		tfBookPirce.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfBookPirce);
 		tfBookPirce.setColumns(10);
 
@@ -153,9 +157,11 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCategory.setLayout(new GridLayout(0, 2, 10, 10));
 
 		cmbLc = new JComboBox<>();
+		cmbLc.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCategory.add(cmbLc);
 
 		cmbMl = new JComboBox<>();
+		cmbMl.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCategory.add(cmbMl);
 
 		JLabel lblPls = new JLabel("출판사");
@@ -169,10 +175,12 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		cmbPls = new JComboBox<>();
+		cmbPls.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		panel.add(cmbPls);
 
 		btnPlsSearch = new JButton("검색");
-		btnPlsSearch.setFont(new Font("굴림", Font.PLAIN, 14));
+		btnPlsSearch.setPreferredSize(new Dimension(80, 50));
+		btnPlsSearch.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnPlsSearch.addActionListener(this);
 		
 		lblNewLabel_1 = new JLabel("");
@@ -186,6 +194,7 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		pCenter.add(lblPblicYear);
 
 		tfRegistDate = new JDateChooser(new Date(), "yyyy-MM-dd");
+		tfRegistDate.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pCenter.add(tfRegistDate);
 
 		JLabel lblLendPsbCdt = new JLabel("대여가능여부");
@@ -201,13 +210,13 @@ public class BookRegistrationPanel extends AbsItemPanel<Book> implements ActionL
 		lendPsbCdtBtnGrp = new ButtonGroup();
 
 		rdoYes = new JRadioButton("대여 가능");
-		rdoYes.setFont(new Font("굴림", Font.PLAIN, 12));
+		rdoYes.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		rdoYes.setBackground(Color.WHITE);
 		rdoYes.setSelected(true);
 		pLendPsbCdt.add(rdoYes);
 
 		rdoNo = new JRadioButton("대여 불가능");
-		rdoNo.setFont(new Font("굴림", Font.PLAIN, 12));
+		rdoNo.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		rdoNo.setBackground(Color.WHITE);
 		pLendPsbCdt.add(rdoNo);
 

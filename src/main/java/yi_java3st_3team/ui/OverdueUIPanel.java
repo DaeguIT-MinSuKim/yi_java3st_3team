@@ -35,23 +35,28 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 		initialize();
 	}
 	private void initialize() {
+		setBorder(new EmptyBorder(50, 30, 50, 30));
+		setBackground(Color.WHITE);
 		service = new LendingUiService();
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel pNorth = new JPanel();
-		pNorth.setBorder(new EmptyBorder(10, 10, 10, 10));
+		pNorth.setBackground(Color.WHITE);
+		pNorth.setBorder(new EmptyBorder(10, 10, 20, 10));
 		add(pNorth, BorderLayout.NORTH);
 		pNorth.setLayout(new GridLayout(0, 3, 0, 0));
 		
 		JLabel lblTitle = new JLabel("연체회원 목록");
-		lblTitle.setFont(new Font("굴림", Font.BOLD, 20));
+		lblTitle.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		lblTitle.setHorizontalAlignment(SwingConstants.LEFT);
 		pNorth.add(lblTitle);
 		
 		JPanel pDummy = new JPanel();
+		pDummy.setBackground(Color.WHITE);
 		pNorth.add(pDummy);
 		
 		btnSelAll = new JButton("모두선택/모두해제");
+		btnSelAll.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		btnSelAll.addActionListener(this);
 		pNorth.add(btnSelAll);
 		
@@ -64,9 +69,12 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 		add(pCenter, BorderLayout.CENTER);
 		
 		JPanel pSouth = new JPanel();
+		pSouth.setBorder(new EmptyBorder(30, 0, 0, 0));
+		pSouth.setBackground(Color.WHITE);
 		add(pSouth, BorderLayout.SOUTH);
 		
 		btnSendMail = new JButton("메일 보내기");
+		btnSendMail.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		btnSendMail.addActionListener(this);
 		pSouth.add(btnSendMail);
 	}

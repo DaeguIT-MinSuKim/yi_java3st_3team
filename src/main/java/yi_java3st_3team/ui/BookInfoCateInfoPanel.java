@@ -37,11 +37,11 @@ public class BookInfoCateInfoPanel extends JPanel {
 		add(panel, BorderLayout.NORTH);
 		
 		JLabel lblTotalBooks = new JLabel("총 보유권수");
-		lblTotalBooks.setFont(new Font("굴림", Font.PLAIN, 20));
+		lblTotalBooks.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(lblTotalBooks);
 		
 		JLabel lblDisposalBooks = new JLabel("총 폐기도서");
-		lblDisposalBooks.setFont(new Font("굴림", Font.PLAIN, 20));
+		lblDisposalBooks.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		panel.add(lblDisposalBooks);
 		
 		JPanel panel_1 = new JPanel();
@@ -53,11 +53,11 @@ public class BookInfoCateInfoPanel extends JPanel {
 		add(panel_1, BorderLayout.CENTER);
 		
 		lblTotalBookCount = new JLabel("0권");
-		lblTotalBookCount.setFont(new Font("굴림", Font.PLAIN, 35));
+		lblTotalBookCount.setFont(new Font("맑은 고딕", Font.BOLD, 35));
 		panel_1.add(lblTotalBookCount);
 		
 		lblDisposalBookCount = new JLabel("0권");
-		lblDisposalBookCount.setFont(new Font("굴림", Font.PLAIN, 35));
+		lblDisposalBookCount.setFont(new Font("맑은 고딕", Font.BOLD, 35));
 		panel_1.add(lblDisposalBookCount);
 	}
 	public void setLblText(StatisticUIService service) {

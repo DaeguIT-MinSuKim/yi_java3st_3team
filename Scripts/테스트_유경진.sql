@@ -392,27 +392,32 @@ select reqst_book_no , rb1.reqst_book_name , reqst_book_author , reqst_book_trns
 		(select reqst_book_name , count(*) as cnt from request_book group by reqst_book_name) rb2
 	where rb1.reqst_book_name = rb2.reqst_book_name;
 
+-- 전체 검색
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
-	from vw_request_book; 
+	from vw_request_book order by reqst_date ; 
 
 -- 선택조건 모두 검색
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt
 	from vw_request_book 
-	where year(reqst_date) = 2020 and month(reqst_date) = 3 and wh_cdt = 1;
+	where year(reqst_date) = 2020 and month(reqst_date) = 2 and wh_cdt = 0
+	order by reqst_date ;
 
 -- 년도조건, 입고조건 검색
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt
 	from vw_request_book 
-	where year(reqst_date) = 2020 and wh_cdt = 0;
+	where year(reqst_date) = 2020 and wh_cdt = 0
+	order by reqst_date ;
 
 -- 신청 id와 도서명 검색 (회원 페이지에서 나와야할 신청도서 리스트)
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
 	from vw_request_book_member 
-	where reqst_mb_id = 'ggg243r4@gmail.com';
+	where reqst_mb_id = 'ggg243r4@gmail.com'
+	order by reqst_date ;
 
 select reqst_book_no, reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt, cnt 
 	from vw_request_book_member 
-	where year(reqst_date) = '2020' and reqst_mb_id = 'ggg243r4@gmail.com';
+	where year(reqst_date) = '2020' and reqst_mb_id = 'ggg243r4@gmail.com'
+	order by reqst_date;
 
 -- 신청 도서 등록 (회원 페이지)
 insert into request_book(reqst_book_name, reqst_book_author, reqst_book_trnslr, request_book_pls, reqst_mb_id, reqst_date, wh_cdt)

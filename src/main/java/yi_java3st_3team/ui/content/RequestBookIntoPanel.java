@@ -46,6 +46,7 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 	private JButton btnExcel;
 	private JButton btnWh;
 	private JButton btnTotalUnChk;
+	private JButton btnCancelWh;
 
 	public RequestBookIntoPanel() {
 		service = new RequestBookUiService();
@@ -145,6 +146,11 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 		btnWh = new JButton("입고처리");
 		btnWh.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnWh.addActionListener(this);
+		
+		btnCancelWh = new JButton("입고 취소");
+		btnCancelWh.addActionListener(this);
+		btnCancelWh.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+		pRight.add(btnCancelWh);
 		pRight.add(btnWh);
 
 		setCmbYearList();
@@ -158,6 +164,9 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 	
 	public void loadData() {
 		pReqstList.loadData(service.showRequestAll());
+		cmbYear.setSelectedIndex(0);
+		cmbMonth.setSelectedIndex(-1);
+		cmbOption.setSelectedIndex(-1);
 	}
 
 	public void setCmbYearList() {
@@ -198,6 +207,9 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnCancelWh) {
+			btnCancelWhActionPerformed(e);
+		}
 		if (e.getSource() == btnWh) {
 			btnWhActionPerformed(e);
 		}
@@ -205,7 +217,6 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 			try {
 				btnExcelActionPerformed(e);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -327,6 +338,10 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 
 	protected void btnWhActionPerformed(ActionEvent e) {
 		pReqstList.getSelectedItem();
+		pReqstList.loadData(service.showRequestAll());
+	}
+	protected void btnCancelWhActionPerformed(ActionEvent e) {
+		pReqstList.getCancleItem();
 		pReqstList.loadData(service.showRequestAll());
 	}
 }

@@ -347,6 +347,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookRegistrationPanel)pCenter).clearTf();
 									break;
 								case "보유도서 관리":
 									contentPane.remove(pCenter);
@@ -378,6 +379,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookPlsManageMentPanel)pCenter).loadDate();
 									break;
 								case "도서분류 관리":
 									contentPane.remove(pCenter);
@@ -385,6 +387,7 @@ public class MainFrame_ex extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookLcAndMlManagerPanel)pCenter).loadData();
 									break;
 								}
 							}
@@ -696,12 +699,23 @@ public class MainFrame_ex extends JFrame {
 
 				lendingPanel = new LendingPanel3();
 				lendingPanel2 = new LendingPanel2();
+				
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();
+				
+				
 				chartBookCateInfo.add(bookInfoCafeChart, BorderLayout.CENTER);
+				chartBookCateInfo.setBorder(new EmptyBorder(50, 100, 50, 100));
+				chartBookCateInfo.setBackground(Color.WHITE);
+
 				chartBookInfo.add(bookInfoChart, BorderLayout.CENTER);
+				bookInfoChart.setBorder(new EmptyBorder(100, 200, 50, 100));
+				chartBookInfo.setBackground(Color.WHITE);
+				
 				chartMemberInfo.add(memInfoChart, BorderLayout.CENTER);
+				memInfoChart.setBorder(new EmptyBorder(0, 120, 0, 0));
+				chartMemberInfo.setBackground(Color.WHITE);
 			}
 		});
 		return thread;

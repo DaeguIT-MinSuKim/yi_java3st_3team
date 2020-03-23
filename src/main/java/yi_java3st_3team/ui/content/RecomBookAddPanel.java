@@ -55,6 +55,8 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 	}
 
 	private void initialize() {
+		setBackground(Color.WHITE);
+		setBorder(new EmptyBorder(20, 0, 0, 0));
 		setLayout(new GridLayout(0, 1, 0, 0));
 
 		JPanel pList = new JPanel();
@@ -168,6 +170,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 		pTa.setLayout(new BoxLayout(pTa, BoxLayout.X_AXIS));
 		
 		taPost = new JTextArea();
+		taPost.setEditable(false);
 		taPost.setBorder(new EmptyBorder(10, 10, 10, 10));
 		taPost.setLineWrap(true);
 
@@ -215,6 +218,9 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 	public void loadData() {
 		pBookList.loadData();
 		setItem(service.showRecomBookByLastNo());
+		taPost.setEditable(false);
+		btnSave.setEnabled(false);
+		lblTitle.setText("등록된 추천도서");
 	}
 
 	private void setPicByte(byte[] bookImg) {
@@ -244,6 +250,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 			setPicByte(item.getBookImg());
 		}
 		taPost.setText("");
+		taPost.setEditable(true);
 		btnSave.setEnabled(true);
 		lblTitle.setText("New 추천도서 등록");
 	}
@@ -289,6 +296,7 @@ public class RecomBookAddPanel extends AbsItemPanel<Recommendation> implements A
 
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		clearTf();
+		taPost.setEditable(false);
 		btnSave.setEnabled(false);
 		lblTitle.setText("등록된 추천도서");
 	}

@@ -123,7 +123,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		lblLoginId.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(lblLoginId);
 
-		tfLoginId = new JTextField("daddystop@gmail.com");
+		tfLoginId = new JTextField("43ojlkjl@book.ff.kr");
 		tfLoginId.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(tfLoginId);
 		tfLoginId.setColumns(10);
@@ -132,7 +132,7 @@ public class LoginFrame_ex extends JFrame implements ActionListener {
 		lblLoginPw.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(lblLoginPw);
 
-		pfLoginPw = new JPasswordField("airopwieop3678");
+		pfLoginPw = new JPasswordField("fjgfkdlj6");
 		pfLoginPw.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(pfLoginPw);
 

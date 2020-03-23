@@ -12,6 +12,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.paint.Color;
 import yi_java3st_3team.ui.service.StatisticUIService;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
@@ -20,6 +21,7 @@ public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 	public BookInfoPanelBarChart() {
 
 	}
+	
 	public BarChart<String, Number> getBarChart() {
 		return barChart;
 	}
@@ -36,8 +38,8 @@ public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 		barChart = new BarChart<>(xAxis, yAxis);
 		barChart.setLegendVisible(false);
 		barChart.setTitle("대여 반납 통계");
-		barChart.setStyle("-fx-font-size: " + 25 + "px;");;
-		barChart.setPrefSize(900, 800);
+		barChart.setStyle("-fx-font-size: " + 25 + "px;");
+		barChart.setPrefSize(700, 600);
 		barChart.setData(getChartData());
 		root.getChildren().add(barChart);
 

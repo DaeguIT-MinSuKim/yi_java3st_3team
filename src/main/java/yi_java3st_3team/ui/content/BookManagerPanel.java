@@ -51,6 +51,7 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 	}
 
 	private void initialize() {
+		setBorder(new EmptyBorder(20, 0, 0, 0));
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
 
@@ -92,6 +93,7 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 		pBars.setLayout(new BoxLayout(pBars, BoxLayout.X_AXIS));
 
 		tfSearchBar = new JTextField();
+		tfSearchBar.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pBars.add(tfSearchBar);
 		tfSearchBar.setColumns(10);
 
@@ -101,9 +103,7 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 		pSearchBtns.setLayout(new GridLayout(0, 1, 0, 0));
 
 		btnSearch = new JButton("검색");
-		btnSearch.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		btnSearch.setForeground(Color.BLACK);
-		btnSearch.setBackground(new Color(255, 204, 51));
+		btnSearch.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnSearch.setPreferredSize(new Dimension(80, 20));
 		pSearchBtns.add(btnSearch);
 
@@ -125,6 +125,9 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 	
 	public void loadData() {
 		pBookList.loadData(service.showBookListAll());
+		rdoBookCode.setSelected(true);
+		cmbCat.setSelectedIndex(-1);
+		tfSearchBar.setText("");
 	}
 
 	private JPopupMenu createPopupMenu() {

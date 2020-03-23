@@ -124,6 +124,7 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 	
 	public void loadDate() {
 		pPlsList.loadData(service.showPlsListAll());
+		clearTf();
 	}
 
 	public void setService(PublishingCompanyUiService service) {
@@ -194,7 +195,7 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 
 	@Override
 	public void clearTf() {
-		tfCode.setText("");
+		setService(service);
 		tfName.setText("");
 	}
 
@@ -253,7 +254,6 @@ public class BookPlsManageMentPanel extends AbsItemPanel<PublishingCompany> impl
 
 	protected void btnCancelActionPerformed(ActionEvent e) {
 		clearTf();
-		setService(service);
 		btnAdd.setText("추가");
 	}
 }

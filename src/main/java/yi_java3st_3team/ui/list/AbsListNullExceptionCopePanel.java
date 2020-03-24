@@ -16,13 +16,13 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 @SuppressWarnings("serial")
-public abstract class AbsListPanel2<T> extends JPanel {
+public abstract class AbsListNullExceptionCopePanel<T> extends JPanel {
 	private JScrollPane scrollPane;
 	protected JTable table;
 	protected NotEditableModel model;
 	protected List<T> list;
 
-	public AbsListPanel2() {
+	public AbsListNullExceptionCopePanel() {
 		initialize();
 	}
 

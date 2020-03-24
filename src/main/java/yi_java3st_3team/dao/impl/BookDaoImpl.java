@@ -154,7 +154,7 @@ public class BookDaoImpl implements BookDao {
 				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
 			int argCnt = 1;
 			if (book.getBookCode() != null)
-				pstmt.setString(argCnt++, "%" + book.getBookCode() + "%");
+				pstmt.setString(argCnt++, book.getBookCode() + "%");
 			if (book.getLcNo() != null)
 				pstmt.setInt(argCnt++, book.getLcNo().getLclasNo());
 			LogUtil.prnLog(pstmt);

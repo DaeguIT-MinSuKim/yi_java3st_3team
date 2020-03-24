@@ -1,5 +1,9 @@
 select user(), database();
 
+select (select count(mber_id) from member) as 'totalmember',
+	(select count(mber_id) from member where total_le_cnt < 50) as 'normalmember',
+	(select count(mber_id) from member where total_le_cnt >= 50) as 'vipmember';
+
 -- 탈퇴회원 테스트 용 데이터 변경
 --update `member` 
 --	set wdr_cdt = 1

@@ -108,6 +108,8 @@ public class LibrarianSelectUIPanel extends JPanel implements ActionListener {
 
 	public void loadData() {
 		pLibrarianList.loadData(service.showLibrarianListAll());
+		radioId.setSelected(true);
+		tfSearch.setText("");
 	}
 
 	private JPopupMenu createPop() {

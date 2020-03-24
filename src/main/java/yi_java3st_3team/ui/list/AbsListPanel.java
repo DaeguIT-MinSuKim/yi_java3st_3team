@@ -11,6 +11,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -21,6 +22,7 @@ public abstract class AbsListPanel<T> extends JPanel {
 	protected JTable table;
 	protected NotEditableModel model;
 	protected List<T> list;
+	protected TableCellRenderer cellRen;
 
 	public AbsListPanel() {
 		initialize();
@@ -68,6 +70,11 @@ public abstract class AbsListPanel<T> extends JPanel {
 		for (int i = 0; i < idx.length; i++) {
 			cModel.getColumn(idx[i]).setCellRenderer(dtcr);
 		}
+	}
+	
+	protected void tableCellRenderer() {
+		DefaultTableCellRenderer dTCR = new DefaultTableCellRenderer();
+		dTCR.setBackground(getForeground().RED);
 	}
 
 	protected void tableSetWidth(int... width) {

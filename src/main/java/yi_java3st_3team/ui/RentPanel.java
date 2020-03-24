@@ -23,6 +23,10 @@ import yi_java3st_3team.ui.dialog.BookListDialog2;
 import yi_java3st_3team.ui.dialog.MemberListDialog;
 import yi_java3st_3team.ui.dialog.MemberListDialog2;
 import yi_java3st_3team.ui.list.RentListPanel;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.EmptyBorder;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class RentPanel extends JPanel implements ActionListener {
@@ -47,37 +51,54 @@ public class RentPanel extends JPanel implements ActionListener {
 	private JButton btnCheckFalse;
 	private JPanel pUseless2;
 	private int res;
+	private JPanel pNorth;
 
 	public RentPanel() {
 		initialize();
 	}
 
 	private void initialize() {
+		setBorder(new EmptyBorder(20, 20, 20, 20));
+		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
+		
+		pNorth = new JPanel();
+		pNorth.setBorder(new LineBorder(Color.DARK_GRAY));
+		add(pNorth, BorderLayout.NORTH);
 
 		pMember = new MemberIdSelectPanel();
 		pMember.getBtnMberName().addActionListener(this);
 		pMember.getBtnMberId().addActionListener(this);
-		add(pMember, BorderLayout.NORTH);
-		pMember.setLayout(new GridLayout(0, 1, 0, 0));
+		pNorth.setLayout(new GridLayout(0, 1, 0, 0));
+		pMember.setLayout(new GridLayout(0, 1, 10, 10));
+		pNorth.add(pMember);
 
 		pList = new JPanel();
+		pList.setBackground(Color.WHITE);
 		add(pList, BorderLayout.CENTER);
 		pList.setLayout(new BorderLayout(0, 0));
 
 		pLendingSearch = new JPanel();
+		pLendingSearch.setBackground(Color.WHITE);
+		pLendingSearch.setBorder(new EmptyBorder(20, 0, 10, 0));
 		pList.add(pLendingSearch, BorderLayout.NORTH);
 		pLendingSearch.setLayout(new GridLayout(1, 0, 0, 0));
 
 		pLendingLbl = new JPanel();
+		pLendingLbl.setBackground(Color.WHITE);
 		pLendingSearch.add(pLendingLbl);
-		pLendingLbl.setLayout(new GridLayout(1, 0, 0, 0));
+		pLendingLbl.setLayout(new GridLayout(1, 0, 10, 10));
 
 		rdbtnBookCode = new JRadioButton("도서코드");
+		rdbtnBookCode.setSelected(true);
+		rdbtnBookCode.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+		rdbtnBookCode.setBackground(Color.WHITE);
 		pLendingLbl.add(rdbtnBookCode);
 		buttonGroup.add(rdbtnBookCode);
 
 		rdbtnBookName = new JRadioButton("도서명");
+		rdbtnBookName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+		rdbtnBookName.setBackground(Color.WHITE);
 		pLendingLbl.add(rdbtnBookName);
 		buttonGroup.add(rdbtnBookName);
 
@@ -87,47 +108,60 @@ public class RentPanel extends JPanel implements ActionListener {
 		tfBookSearch.setColumns(10);
 
 		btnSearch = new JButton("검색");
+		btnSearch.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnSearch.addActionListener(this);
 		pLendingLbl.add(btnSearch);
 
 		pAllCk = new JPanel();
+		pAllCk.setBackground(Color.WHITE);
 		pLendingSearch.add(pAllCk);
-		pAllCk.setLayout(new GridLayout(0, 3, 0, 0));
+		pAllCk.setLayout(new GridLayout(0, 3, 10, 0));
 
 		p03 = new JPanel();
+		p03.setBackground(Color.WHITE);
 		pAllCk.add(p03);
 
 		btnCheckTrue = new JButton("모두 선택");
+		btnCheckTrue.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnCheckTrue.addActionListener(this);
 		pAllCk.add(btnCheckTrue);
 
 		btnCheckFalse = new JButton("취소");
+		btnCheckFalse.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnCheckFalse.addActionListener(this);
 		pAllCk.add(btnCheckFalse);
 
 		pLendingList = new RentListPanel();
+		pLendingList.setBackground(Color.WHITE);
 		pList.add(pLendingList, BorderLayout.CENTER);
 
 		pBtn = new JPanel();
+		pBtn.setBackground(Color.WHITE);
+		pBtn.setBorder(new EmptyBorder(10, 0, 10, 0));
 		add(pBtn, BorderLayout.SOUTH);
 		pBtn.setLayout(new GridLayout(1, 0, 0, 0));
 
 		p05 = new JPanel();
+		p05.setBackground(Color.WHITE);
 		pBtn.add(p05);
 
 		p06 = new JPanel();
 		pBtn.add(p06);
 
 		pUseless = new JPanel();
+		pUseless.setBackground(Color.WHITE);
 		p06.add(pUseless);
 		p06.setLayout(new GridLayout(0, 3, 0, 0));
 
 		pUseless2 = new JPanel();
+		pUseless2.setBackground(Color.WHITE);
 		p06.add(pUseless2);
 
 		btnLending = new JButton("대여");
+		btnLending.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnLending.addActionListener(this);
 		p06.add(btnLending);
+		
 	}
 
 	public MemberIdSelectPanel getpMember() {

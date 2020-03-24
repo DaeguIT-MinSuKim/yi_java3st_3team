@@ -135,7 +135,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			frame2 = new JFrame();
 			frame2.setBounds(50, 50, 850, 600);
 			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			RentPanel Lendings = new RentPanel();
+			ReturnPanel Lendings = new ReturnPanel();
 			frame2.getContentPane().add(Lendings);
 			frame2.setVisible(true);
 		} else {
@@ -145,7 +145,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			frame2 = new JFrame();
 			frame2.setBounds(50, 50, 850, 600);
 			frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			RentPanel Lendings = new RentPanel();
+			ReturnPanel Lendings = new ReturnPanel();
 			frame2.getContentPane().add(Lendings);
 			frame2.setVisible(true);
 		}

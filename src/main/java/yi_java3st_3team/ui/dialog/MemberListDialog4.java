@@ -16,14 +16,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import yi_java3st_3team.dto.Member;
-import yi_java3st_3team.ui.RentPanel;
+import yi_java3st_3team.ui.ReturnPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
-public class MemberListDialog2 extends JDialog implements ActionListener {
+public class MemberListDialog4 extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
-	private RentPanel lending3;
-	private static MemberListDialog2 test;
+	private ReturnPanel lending3;
 	private JTable table;
 	private MemberUIService service;
 	private TestTabelModel model;
@@ -31,21 +30,21 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 	private JButton okButton;
 	private JButton cancelButton;
 
-	public MemberListDialog2(JFrame jFrame, String string, boolean b, Member name) {
+	public MemberListDialog4(JFrame jFrame, String string, boolean b, Member id) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		initialize(name);
+		initialize(id);
 	}
 
-	public RentPanel getLending3() {
+	public ReturnPanel getReturnPanel() {
 		return lending3;
 	}
 
-	public void setLending3(RentPanel lending3) {
-		this.lending3 = lending3;
+	public void setReturnPanel(ReturnPanel returnPanel) {
+		this.lending3 = returnPanel;
 	}
 
 	private void initialize(Member name) {
@@ -55,19 +54,18 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		model = new TestTabelModel();
 		List<Member> list = service.showLendingMemberId3(name);
+
 		for (Member mem : list) {
-			StringBuilder lendCdt = new StringBuilder();
-			if (mem.getLendPsbCdt() == 1) {
-				lendCdt.append("불가능");
-			}
+			StringBuilder overdueCdt = new StringBuilder();
+
 			if (mem.getLendPsbCdt() == 0) {
-				lendCdt.append("가능");
+				overdueCdt.append("정상");
 			}
-			int LendBookCnt = mem.getLendBookCnt();
-			int BookLeCnt = mem.getGrade().getBookLeCnt();
-			int res = BookLeCnt - LendBookCnt;
-			model.addRow(
-					new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(), lendCdt, res });
+			if (mem.getLendPsbCdt() == 1) {
+				overdueCdt.append("연체");
+			}
+			model.addRow(new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(), overdueCdt,
+					mem.getOdCnt() });
 		}
 		table = new JTable(model);
 		{
@@ -93,7 +91,7 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 
 	public class TestTabelModel extends DefaultTableModel {
 		public TestTabelModel() {
-			super(new String[] { "회원ID", "회원이름", "회원등급", "대여가능여부", "대여가능권수" }, 0);
+			super(new String[] { "회원ID", "회원이름", "회원등급", "연체여부", "연체일수" }, 0);
 		}
 
 		@Override
@@ -121,16 +119,17 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 		lending3.getpMember().getTfMberId().setText((String) table.getValueAt(row, 0));
 		lending3.getpMember().getTfMberName().setText((String) table.getValueAt(row, 1));
 		lending3.getpMember().getTfGrade().setText((String) table.getValueAt(row, 2));
-		
-		if ((boolean) table.getValueAt(row, 3).equals("가능")) {
-			lending3.getpMember().getTfLendPsbCdt().setText("불가능");
+		if ((boolean) table.getValueAt(row, 3).equals("정상")) {
+			lending3.getpMember().getTfOverdueCdt().setText("연체");
+		} else {
+			lending3.getpMember().getTfOverdueCdt().setText("정상");
 		}
+		int odCdt = (int) table.getValueAt(row, 4);
+		lending3.getpMember().getTfOdCnt().setText(odCdt + "");
 
-		else {
-			lending3.getpMember().getTfLendPsbCdt().setText("가능");
-		}
-		int res = (int) table.getValueAt(row, 4);
-		lending3.getpMember().getTfLendBookCdt().setText(res + "");
+		Member id = new Member((String) table.getValueAt(row, 0));
+		lending3.returnBookList(id);
 		dispose();
 	}
+
 }

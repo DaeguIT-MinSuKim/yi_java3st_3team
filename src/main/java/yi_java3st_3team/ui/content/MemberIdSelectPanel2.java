@@ -1,5 +1,6 @@
 package yi_java3st_3team.ui.content;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -9,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class MemberIdSelectPanel2 extends JPanel {
@@ -19,6 +19,7 @@ public class MemberIdSelectPanel2 extends JPanel {
 	private JTextField tfOdCnt;
 	private JTextField tfGrade;
 	private JButton btnMberId;
+	private JButton btnMberName;
 
 	public JTextField getTfMberId() {
 		return tfMberId;
@@ -60,12 +61,20 @@ public class MemberIdSelectPanel2 extends JPanel {
 		this.tfGrade = tfGrade;
 	}
 
+	public JTextField getTfOdCnt() {
+		return tfOdCnt;
+	}
+
+	public void setTfOdCnt(JTextField tfOdCnt) {
+		this.tfOdCnt = tfOdCnt;
+	}
+
 	public JButton getBtnMberId() {
 		return btnMberId;
 	}
 
-	public void setBtnMberId(JButton btnMberId) {
-		this.btnMberId = btnMberId;
+	public JButton getBtnMberName() {
+		return btnMberName;
 	}
 
 	public MemberIdSelectPanel2() {
@@ -116,6 +125,9 @@ public class MemberIdSelectPanel2 extends JPanel {
 		tfMberName = new JTextField();
 		pMberName.add(tfMberName);
 		tfMberName.setColumns(10);
+
+		btnMberName = new JButton("검색");
+		pMberName.add(btnMberName);
 
 		JPanel pGrade = new JPanel();
 		p2.add(pGrade);

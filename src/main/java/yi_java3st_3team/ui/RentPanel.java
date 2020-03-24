@@ -74,6 +74,7 @@ public class RentPanel extends JPanel implements ActionListener {
 		pLendingLbl.setLayout(new GridLayout(1, 0, 0, 0));
 
 		rdbtnBookCode = new JRadioButton("도서코드");
+		rdbtnBookCode.setSelected(true);
 		pLendingLbl.add(rdbtnBookCode);
 		buttonGroup.add(rdbtnBookCode);
 
@@ -183,14 +184,13 @@ public class RentPanel extends JPanel implements ActionListener {
 			res = Integer.parseInt(pMember.getTfLendBookCdt().getText().trim());
 			if (rdbtnBookCode.isSelected()) {
 				Book id = new Book(tfBookSearch.getText());
-				BookListDialog bookDialog = new BookListDialog(new JFrame(), "도서검색", true, id, res);
-				bookDialog.setLending3(this);
+				BookListDialog bookDialog = new BookListDialog(new JFrame(), "도서검색", true, id, res, this);
 				bookDialog.setVisible(true);
 				tfBookSearch.setText("");
 			}
 			if (rdbtnBookName.isSelected()) {
 				Book name = new Book(tfBookSearch.getText(), new Date());
-				BookListDialog2 bookDialog = new BookListDialog2(new JFrame(), "도서검색", true, name);
+				BookListDialog2 bookDialog = new BookListDialog2(new JFrame(), "도서검색", true, name, res, this);
 				bookDialog.setLending3(this);
 				bookDialog.setVisible(true);
 				tfBookSearch.setText("");

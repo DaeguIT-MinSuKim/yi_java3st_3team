@@ -54,6 +54,7 @@ public class RentPanel extends JPanel implements ActionListener {
 	private JPanel pNorth;
 
 	public RentPanel() {
+		
 		initialize();
 	}
 
@@ -262,4 +263,13 @@ public class RentPanel extends JPanel implements ActionListener {
 		pLendingList.checkingAll(false);
 	}
 
+	public void loadData() {
+		pMember.getTfGrade().setText("");
+		pMember.getTfLendBookCdt().setText("");
+		pMember.getTfLendPsbCdt().setText("");
+		pMember.getTfMberId().setText("");
+		pMember.getTfMberName().setText("");
+		rdbtnBookCode.setSelected(true);
+		pLendingList.clearTf();
+	}
 }

@@ -91,7 +91,7 @@ public class MemberListDialog3 extends JDialog implements ActionListener {
 
 	public class TestTabelModel extends DefaultTableModel {
 		public TestTabelModel() {
-			super(new String[] { "회원ID", "회원이름", "회원등급", "연체여부", "연체일수" }, 0);
+			super(new String[] { "회원ID", "회원이름", "회원등급", "연체여부", "연체횟수" }, 0);
 		}
 
 		@Override
@@ -119,11 +119,8 @@ public class MemberListDialog3 extends JDialog implements ActionListener {
 		lending3.getpMember().getTfMberId().setText((String) table.getValueAt(row, 0));
 		lending3.getpMember().getTfMberName().setText((String) table.getValueAt(row, 1));
 		lending3.getpMember().getTfGrade().setText((String) table.getValueAt(row, 2));
-		if ((boolean) table.getValueAt(row, 3).equals("정상")) {
-			lending3.getpMember().getTfOverdueCdt().setText("연체");
-		} else {
-			lending3.getpMember().getTfOverdueCdt().setText("정상");
-		}
+		
+		lending3.getpMember().getTfOverdueCdt().setText(table.getValueAt(row, 3).toString());
 		int odCdt = (int) table.getValueAt(row, 4);
 		lending3.getpMember().getTfOdCnt().setText(odCdt + "");
 

@@ -120,12 +120,7 @@ public class MemberListDialog extends JDialog implements ActionListener {
 		lending3.getpMember().getTfMberId().setText((String)table.getValueAt(row, 0));
 		lending3.getpMember().getTfMberName().setText((String)table.getValueAt(row, 1));
 		lending3.getpMember().getTfGrade().setText((String)table.getValueAt(row, 2));
-		if((boolean)table.getValueAt(row, 3).equals("가능")) {
-			lending3.getpMember().getTfLendPsbCdt().setText("불가능");
-		}
-		else {
-			lending3.getpMember().getTfLendPsbCdt().setText("가능");
-		}
+		lending3.getpMember().getTfLendPsbCdt().setText(table.getValueAt(row, 3).toString());
 		int res = (int) table.getValueAt(row, 4);
 		lending3.getpMember().getTfLendBookCdt().setText(res+"");	
 		dispose();

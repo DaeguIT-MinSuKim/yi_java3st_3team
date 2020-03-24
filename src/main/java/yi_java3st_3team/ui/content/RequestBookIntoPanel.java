@@ -288,7 +288,7 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 		if(!file.exists()) {
 			file.createNewFile();
 		} else {
-			JOptionPane.showMessageDialog(null, "저장폴더 위치에 이름이 같이 파일이 있습니다.\n 폴더 위치 \n[D:\\workspace\\workspace_teamProject\\yi_java3st_3team\\document]");
+			JOptionPane.showMessageDialog(null, "저장폴더 위치에 이름이 같이 파일이 있습니다.\n 폴더 위치 [D:\\workspace\\workspace_teamProject\\yi_java3st_3team\\document]");
 			return;
 		}
 		
@@ -331,6 +331,8 @@ public class RequestBookIntoPanel extends JPanel implements ActionListener {
 
 			workbook.write();// 파일저장
 			workbook.close();// 파일닫기
+			
+			JOptionPane.showMessageDialog(null, "신청도서리스트가 엑셀파일로 저장되었습니다.\n폴더 위치 [D:\\workspace\\workspace_teamProject\\yi_java3st_3team\\document]");
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

@@ -5,7 +5,7 @@ import javax.swing.SwingConstants;
 import yi_java3st_3team.dto.Lending;
 
 @SuppressWarnings("serial")
-public class MemberUseCdtTotalTblPanel extends AbsListPanel2<Lending> {
+public class MemberUseCdtTotalTblPanel extends AbsListNullExceptionCopePanel<Lending> {
 	public MemberUseCdtTotalTblPanel() {
 		
 	}

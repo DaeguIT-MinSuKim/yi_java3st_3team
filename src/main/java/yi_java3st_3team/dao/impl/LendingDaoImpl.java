@@ -392,9 +392,18 @@ public class LendingDaoImpl implements LendingDao {
 
 	private Lending getLendingByAllTest2(ResultSet rs) throws SQLException {
 		Lending lending = new Lending();
+		StringBuilder sb = new StringBuilder();
+
 		Book book = new Book(rs.getString("book_code"));
 		book.setBookName(rs.getString("book_name"));
-		book.setAuthrName(String.format("%s", rs.getString("authr_name") + "/" + rs.getString("trnslr_name")));
+		if(rs.getString("trnslr_name").equals("")) {
+			sb.append(rs.getString("authr_name"));
+		}else {
+			sb.append(rs.getString("authr_name"));
+			sb.append("/");
+			sb.append(rs.getString("trnslr_name"));
+		}
+		book.setAuthrName(sb.toString());
 		book.setPblicteYear(rs.getTimestamp("pblicte_year"));
 		PublishingCompany pCompany = new PublishingCompany(rs.getString("pls_name"));
 		book.setPls(pCompany);

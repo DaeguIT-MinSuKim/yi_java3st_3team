@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,13 +35,14 @@ public class BookListDialog extends JDialog implements ActionListener {
 	private JButton cancelButton;
 	private int cnt;
 	
-	public BookListDialog(JFrame jFrame, String string, boolean b, Book id,int res) {
+	public BookListDialog(JFrame jFrame, String string, boolean b, Book id,int res, RentPanel rentPanel) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		cnt = res;
+		this.lending3 = rentPanel;
 		initialize(id);
 	}
 
@@ -120,6 +122,11 @@ public class BookListDialog extends JDialog implements ActionListener {
 		String bookCd = (String) table.getValueAt(row, 0);
 		Book bookCode = new Book(bookCd);
 		Book book = service.LendingBookByCode(bookCode);
+		
+		if(lending3.getpLendingList().getModel().getRowCount() >= cnt) {
+			JOptionPane.showMessageDialog(null, "더 이상 초과할 수 없습니다.");
+			return;
+		}
 		lending3.getpLendingList().search(book);
 		dispose();
 	}

@@ -604,12 +604,16 @@ end $$
 
 delimiter ;
 
-select *
-	from book
+select book_name ,authr_name ,trnslr_name 
+	from book;
 	where book_code like '1%';
 	
 
 select *
 	from librarian l;
 	
-selec *
+select *
+	from lending l left join book b on l.book_cd = b.book_code 
+	where mber_id = 'rwe232@gamil.com';
+
+

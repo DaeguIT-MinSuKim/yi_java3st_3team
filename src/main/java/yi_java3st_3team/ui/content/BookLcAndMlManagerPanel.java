@@ -71,12 +71,12 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		JPanel pLcMlCon = new JPanel();
 		pLcMlCon.setBackground(Color.WHITE);
 		pContent.add(pLcMlCon);
-		pLcMlCon.setLayout(new BorderLayout(0, 0));
+		pLcMlCon.setLayout(new BoxLayout(pLcMlCon, BoxLayout.Y_AXIS));
 
 		JPanel pNorth = new JPanel();
+		pNorth.setBorder(new EmptyBorder(10, 0, 10, 0));
 		pNorth.setBackground(Color.WHITE);
-		pNorth.setBorder(new EmptyBorder(50, 50, 0, 30));
-		pLcMlCon.add(pNorth, BorderLayout.NORTH);
+		pLcMlCon.add(pNorth);
 		pNorth.setLayout(new GridLayout(0, 3, 0, 0));
 
 		JLabel lblLcTitle = new JLabel("대분류");
@@ -85,22 +85,23 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		pNorth.add(lblLcTitle);
 
 		cmbLc = new JComboBox<>();
+		cmbLc.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		pNorth.add(cmbLc);
 
 		JPanel pLcBtn = new JPanel();
 		pLcBtn.setBackground(Color.WHITE);
 		pLcBtn.setBorder(new EmptyBorder(0, 10, 0, 0));
 		pNorth.add(pLcBtn);
-		pLcBtn.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 		btnLcAdd = new JButton("등록/수정");
+		btnLcAdd.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnLcAdd.addActionListener(this);
+		pLcBtn.setLayout(new BoxLayout(pLcBtn, BoxLayout.X_AXIS));
 		pLcBtn.add(btnLcAdd);
 
 		JPanel pCenter = new JPanel();
 		pCenter.setBackground(Color.WHITE);
-		pCenter.setBorder(new EmptyBorder(30, 50, 50, 30));
-		pLcMlCon.add(pCenter, BorderLayout.CENTER);
+		pLcMlCon.add(pCenter);
 		pCenter.setLayout(new GridLayout(0, 3, 0, 10));
 
 		JLabel lblMlCode = new JLabel("중분류 코드");
@@ -109,6 +110,7 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		pCenter.add(lblMlCode);
 
 		tfMlCode = new JTextField();
+		tfMlCode.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		tfMlCode.setEnabled(false);
 		pCenter.add(tfMlCode);
 		tfMlCode.setColumns(10);
@@ -122,6 +124,7 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		pCenter.add(lblMlName);
 
 		tfMlName = new JTextField();
+		tfMlName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		tfMlName.setColumns(10);
 		pCenter.add(tfMlName);
 
@@ -129,8 +132,10 @@ public class BookLcAndMlManagerPanel extends AbsItemPanel<MiddleClassification> 
 		pCenter.add(label_1);
 
 		JPanel pSouth = new JPanel();
+		pSouth.setBorder(new EmptyBorder(20, 0, 0, 0));
+		FlowLayout flowLayout = (FlowLayout) pSouth.getLayout();
 		pSouth.setBackground(Color.WHITE);
-		pLcMlCon.add(pSouth, BorderLayout.SOUTH);
+		pLcMlCon.add(pSouth);
 
 		btnAdd = new JButton("추가");
 		btnAdd.setPreferredSize(new Dimension(80, 40));

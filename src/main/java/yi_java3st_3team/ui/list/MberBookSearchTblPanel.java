@@ -47,7 +47,7 @@ public class MberBookSearchTblPanel extends AbsListPanel<Book> {
 				String.format("%tF", item.getPblicteYear()),
 				String.format("%s/%s", item.getLcNo().getLclasName(), item.getMlNo().getMlsfcName()),
 				item.getBookCnt(),
-				item.getBookCode().substring(1, 3),
+				item.getBookCode().substring(0, 2),
 				lendCdt
 		};
 	}

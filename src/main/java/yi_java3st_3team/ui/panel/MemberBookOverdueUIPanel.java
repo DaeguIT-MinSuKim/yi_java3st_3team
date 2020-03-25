@@ -102,13 +102,13 @@ public class MemberBookOverdueUIPanel extends JPanel implements ActionListener {
 		TableModel model = pCenter.getTable().getModel();
 		if(!allChk) {
 			for(int i=0;i<model.getRowCount();i++) {
-				model.setValueAt(true, i, 6);
+				model.setValueAt(true, i, 5);
 			}
 			allChk = true;
 		}
 		else {
 			for(int i=0;i<model.getRowCount();i++) {
-				model.setValueAt(false, i, 6);
+				model.setValueAt(false, i, 5);
 			}
 			allChk = false;
 		}

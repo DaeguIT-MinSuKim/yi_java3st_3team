@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,7 +24,6 @@ import yi_java3st_3team.ui.service.MemberUIService;
 public class MemberListDialog2 extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private RentPanel lending3;
-	private static MemberListDialog2 test;
 	private JTable table;
 	private MemberUIService service;
 	private TestTabelModel model;
@@ -118,6 +118,10 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 
 	protected void do_okButton_actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
+		if(table.getValueAt(row, 3).toString().equals("불가능")) {
+			JOptionPane.showMessageDialog(null, "대여불가능하십니다.");
+			return;
+		}
 		lending3.getpMember().getTfMberId().setText((String) table.getValueAt(row, 0));
 		lending3.getpMember().getTfMberName().setText((String) table.getValueAt(row, 1));
 		lending3.getpMember().getTfGrade().setText((String) table.getValueAt(row, 2));

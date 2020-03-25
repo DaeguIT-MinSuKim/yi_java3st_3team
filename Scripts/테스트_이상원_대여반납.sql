@@ -616,4 +616,14 @@ select *
 	from lending l left join book b on l.book_cd = b.book_code 
 	where mber_id = 'rwe232@gamil.com';
 
+select *
+	from `member` m ;
 
+
+update member m left join lending l
+	on m.mber_id = l.mber_id
+	set od_cnt = od_cnt +1
+	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'mamatellme@gmail.com';
+select od_cnt 
+	from member m left join lending l on m.mber_id = l.mber_id
+	where m.mber_id = 'mamatellme@gmail.com';

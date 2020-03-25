@@ -150,7 +150,7 @@ public class ReturnListPanel extends JPanel {
 		ArrayList<String> list = new ArrayList<String>();
 		int cnt = model.getRowCount();
 		for (int j = 0; j < cnt; j++) {
-			Boolean chk = (Boolean) model.getValueAt(j, 7);
+			boolean chk = (Boolean) model.getValueAt(j, 7);
 			if (chk == true) {
 				String bookCd = (String) model.getValueAt(j, 0);
 				Member member = service.selectedMberId(mberId);

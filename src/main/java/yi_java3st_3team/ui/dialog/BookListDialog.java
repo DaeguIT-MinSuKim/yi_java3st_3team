@@ -102,6 +102,10 @@ public class BookListDialog extends JDialog implements ActionListener {
 		public TestTabelModel() {
 			super(new String[] { "도서코드", "도서명", "저자/역자", "발행년도", "출판사" }, 0);
 		}
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {

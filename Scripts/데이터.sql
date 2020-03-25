@@ -16,6 +16,7 @@ character set 'utf8'
 fields terminated by ','
 ignore 1 lines;
 
+select * from `member` m ;
 
 -- request_book 신청도서
 desc request_book; 
@@ -29,7 +30,7 @@ insert into request_book values
 (7, 'ddr23dd@naver.com', '태평천하', '채만식', null, '문학과지성사', '2020.02.05', 0),
 (8, 'fdfsdasd@naver.com', '단 하나의 문장', '구병모', null, '문학동네', '2020.02.08', 0),
 (9, 'ggg243r4@gmail.com', '독의 꽃', '최수철', null, '작가정신', '2020.02.09', 0),
-(10, 'gfdssdh@naver.com', '우리들의 행복한 시간', '공지영', null, '해냄', '2020.02.09', 0);
+(10, 'xodnjs1218@naver.com', '우리들의 행복한 시간', '공지영', null, '해냄', '2020.02.09', 0);
 
 
 -- book 도서

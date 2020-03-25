@@ -1,5 +1,9 @@
 select user(), database();
 
+select book_code, book_name, authr_name, trnslr_name, pls, pls_name, pblicte_year, book_price,b.lend_psb_cdt , b.total_le_cnt, book_img, lc_no, ml_no, lend_date, rturn_date, rturn_due_date, od_cnt 
+	from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no left join member m on l.mber_id = m.mber_id 
+	where l.mber_id = 'ddr23dd@naver.com' and rturn_date is null;
+
 -- 탈퇴회원 테스트 용 데이터 변경
 --update `member` 
 --	set wdr_cdt = 1

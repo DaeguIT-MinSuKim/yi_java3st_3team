@@ -34,7 +34,7 @@ insert into request_book values
 
 -- book 도서
 desc book;
-load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/book_data2.csv'
+load data local infile 'D:/workspace/workspace_teamProject/yi_java3st_3team/document/data/book_data.csv'
 into table yi_java3st_3team.book 
 character set 'utf8'
 fields terminated by ','

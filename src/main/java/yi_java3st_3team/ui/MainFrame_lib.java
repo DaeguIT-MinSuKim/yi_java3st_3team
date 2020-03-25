@@ -629,9 +629,18 @@ public class MainFrame_lib extends JFrame {
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();
 				chartMemberInfo = new MemberInfoUIPanel();
+				
 				chartBookCateInfo.add(bookInfoCafeChart, BorderLayout.CENTER);
+				chartBookCateInfo.setBorder(new EmptyBorder(50, 100, 50, 100));
+				chartBookCateInfo.setBackground(Color.WHITE);
+
 				chartBookInfo.add(bookInfoChart, BorderLayout.CENTER);
+				bookInfoChart.setBorder(new EmptyBorder(100, 200, 50, 100));
+				chartBookInfo.setBackground(Color.WHITE);
+
 				chartMemberInfo.add(memInfoChart, BorderLayout.CENTER);
+				memInfoChart.setBorder(new EmptyBorder(0, 120, 0, 0));
+				chartMemberInfo.setBackground(Color.WHITE);
 			}
 		});
 		return thread;

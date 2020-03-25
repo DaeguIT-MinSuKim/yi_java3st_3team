@@ -3,6 +3,7 @@ package yi_java3st_3team.ui.list;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -111,48 +112,59 @@ public class ReturnListPanel extends JPanel {
 
 	public void testting2(Member member) {
 		List<Lending> list = service.selectLendingByMberId(member);
-		
-		for(Lending lending : list) { 
-			
-			model.addRow(new Object[] {
-					lending.getBookCd().getBookCode(),
-					lending.getBookCd().getBookName(),
-					String.format("%s", lending.getBookCd().getAuthrName()+ "/" + lending.getBookCd().getTrnslrName()),
+		if (list == null) {
+			JOptionPane.showMessageDialog(null, "반납할 도서가 없습니다.");
+		}
+		for (Lending lending : list) {
+			StringBuilder sb = new StringBuilder();
+			if (lending.getBookCd().getTrnslrName() == null) {
+				sb.append(lending.getBookCd().getAuthrName());
+			} else {
+				sb.append(lending.getBookCd().getAuthrName());
+				sb.append("/");
+				sb.append(lending.getBookCd().getTrnslrName());
+			}
+			model.addRow(new Object[] { lending.getBookCd().getBookCode(), lending.getBookCd().getBookName(), sb,
 					new SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
 					lending.getBookCd().getPls().getPlsName(),
 					new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
-					lending.getRturnDueDate()==null?"":String.format("%s",new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate()))
-					}); 
+					lending.getRturnDueDate() == null ? ""
+							: String.format("%s",
+									new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate())) });
 		}
 
 	}
 
 	public void AllChecking(boolean b) {
 		int i = model.getRowCount();
-		for(int j= 0; j<i; j++) {
+		for (int j = 0; j < i; j++) {
 			model.setValueAt(b, j, 7);
 		}
 	}
 
 	public void setReturn(String mberId) {
-		int i = model.getRowCount();
-		for(int j =0; j<i; j++) {
-			Boolean chk = (Boolean)model.getValueAt(j, 7);
-			
-			if(chk) {
-//				Book book = new Book();
-//				book.setBookCode((String)model.getValueAt(j, 0));
-				String bookCd = (String)model.getValueAt(j, 0);
-				JOptionPane.showMessageDialog(null, bookCd);
-				Member m = service.selectedMberId(mberId);
-				System.out.println("=================================="+bookCd);
-				Book b = service.selectedBookCd(bookCd);
-				System.out.println("=================================="+bookCd);
-				service.updateLendingList(m, b);
+		StringBuilder sb = new StringBuilder();
+		ArrayList<String> list = new ArrayList<String>();
+		int cnt = model.getRowCount();
+		for (int j = 0; j < cnt; j++) {
+			Boolean chk = (Boolean) model.getValueAt(j, 7);
+			if (chk) {
+				String bookCd = (String) model.getValueAt(j, 0);
+				Member member = service.selectedMberId(mberId);
+				Book book = service.selectedBookCd(bookCd);
+				service.updateLendingList(member, book);
+				sb.append(book.getBookName());
+				list.add(book.getBookName());
 			}
 		}
+		for (int i = cnt - 1; i > -1; i--) {
+			boolean chk = (Boolean) model.getValueAt(i, 7);
+			if (chk) {
+				model.removeRow(i);
+			}
+		}
+		JOptionPane.showMessageDialog(null, sb.toString() + " 대여 되었습니다.");
+		JOptionPane.showMessageDialog(null, list.toString() + " 대여 되었습니다.");
 	}
-
-
 
 }

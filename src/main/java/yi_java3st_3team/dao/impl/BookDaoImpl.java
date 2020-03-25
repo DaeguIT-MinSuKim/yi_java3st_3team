@@ -446,7 +446,7 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public int selectLendableBooks() {
-		String sql = "select count(book_code) as 'lendableBooks' from book where lend_psb_cdt = 1";
+		String sql = "select count(book_code) as 'lendableBooks' from book where lend_psb_cdt = 0";
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {

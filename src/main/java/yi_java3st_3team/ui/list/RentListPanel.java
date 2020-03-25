@@ -3,6 +3,7 @@ package yi_java3st_3team.ui.list;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Member;
@@ -106,14 +105,29 @@ public class RentListPanel extends JPanel {
 
 	public void search(Book book) {
 		try {
+			int cnt = model.getRowCount();
 			Date now = new Date();
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DATE, +15);
-			model.addRow(new Object[] { book.getBookCode(), book.getBookName(),
-					String.format("%s", book.getAuthrName() + "/" + book.getTrnslrName()),
+			StringBuilder sb = new StringBuilder();
+			if (book.getTrnslrName().equals("")) {
+				sb.append(book.getAuthrName());
+			} else {
+				sb.append(book.getAuthrName() + "/" + book.getTrnslrName());
+			}
+			for (int i = 0; i < cnt; i++) {
+				if ((boolean) model.getValueAt(i, 0).equals(book.getBookCode())) {
+
+					JOptionPane.showMessageDialog(null, "이미 추가한 책입니다.");
+					model.removeRow(i);
+					break;
+				}
+			}
+			model.addRow(new Object[] { book.getBookCode(), book.getBookName(), sb,
 					new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
 					new SimpleDateFormat("yyyy-MM-dd").format(now),
 					new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });
+
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "입력하지 않으셨거나 잘못입력하셨습니다. 다시 입력해주세요.");
@@ -154,21 +168,28 @@ public class RentListPanel extends JPanel {
 	}
 
 	public void setRent(String mberId) {
-		int[] selIdx = table.getSelectedRows();
-		for (int idx : selIdx) {
-			boolean chk = (Boolean) model.getValueAt(idx, 7);
+		StringBuilder sb = new StringBuilder();
+		ArrayList<String> list = new ArrayList<String>();
+		int cnt = table.getRowCount();
+		for (int i = 0; i < cnt; i++) {
+			boolean chk = (Boolean) model.getValueAt(i, 7);
 			if (chk) {
-				String bookCd = (String) model.getValueAt(idx, 0);
-				Member m = service.selectedMberId(mberId);
-				Book b = service.selectedBookCd(bookCd);
-				service.insertSelectedLendingList(m, b);
-				TableColumnModel colModel = table.getColumnModel();
-				colModel.getColumn(7).setCellRenderer(new DefaultTableCellRenderer());
-				colModel.getColumn(7).getCellRenderer().getTableCellRendererComponent(table, "대여완료", false, false, idx,
-						7);
-				model.setValueAt("대여완료", idx, 7);
+				String bookCd = (String) model.getValueAt(i, 0);
+				Member member = service.selectedMberId(mberId);
+				Book book = service.selectedBookCd(bookCd);
+				service.insertSelectedLendingList(member, book);
+				sb.append(book.getBookName());
+				list.add(book.getBookName());
 			}
 		}
+		for (int i = cnt - 1; i > -1; i--) {
+			boolean chk = (Boolean) model.getValueAt(i, 7);
+			if (chk) {
+				model.removeRow(i);
+			}
+		}
+		JOptionPane.showMessageDialog(null, sb.toString() + " 대여 되었습니다.");
+		JOptionPane.showMessageDialog(null, list.toString() + " 대여 되었습니다.");
 	}
 
 	Class<?> getColumnClass() {

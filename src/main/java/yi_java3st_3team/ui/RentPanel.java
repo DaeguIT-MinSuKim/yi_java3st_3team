@@ -1,6 +1,8 @@
 package yi_java3st_3team.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Member;
@@ -23,10 +27,6 @@ import yi_java3st_3team.ui.dialog.BookListDialog2;
 import yi_java3st_3team.ui.dialog.MemberListDialog;
 import yi_java3st_3team.ui.dialog.MemberListDialog2;
 import yi_java3st_3team.ui.list.RentListPanel;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.EmptyBorder;
-import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class RentPanel extends JPanel implements ActionListener {
@@ -61,7 +61,7 @@ public class RentPanel extends JPanel implements ActionListener {
 		setBorder(new EmptyBorder(20, 20, 20, 20));
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout(0, 0));
-		
+
 		pNorth = new JPanel();
 		pNorth.setBorder(new LineBorder(Color.DARK_GRAY));
 		add(pNorth, BorderLayout.NORTH);
@@ -91,8 +91,10 @@ public class RentPanel extends JPanel implements ActionListener {
 
 		rdbtnBookCode = new JRadioButton("도서코드");
 		rdbtnBookCode.setSelected(true);
+
 		rdbtnBookCode.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		rdbtnBookCode.setBackground(Color.WHITE);
+
 		pLendingLbl.add(rdbtnBookCode);
 		buttonGroup.add(rdbtnBookCode);
 
@@ -161,7 +163,7 @@ public class RentPanel extends JPanel implements ActionListener {
 		btnLending.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnLending.addActionListener(this);
 		p06.add(btnLending);
-		
+
 	}
 
 	public MemberIdSelectPanel getpMember() {
@@ -210,29 +212,28 @@ public class RentPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnSearch_actionPerformed(ActionEvent e) {
-			if (pMember.getTfLendBookCdt().getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "회원을 선택하고 와주세요.");
-				return;
-			}
-			res = Integer.parseInt(pMember.getTfLendBookCdt().getText().trim());
-			if (rdbtnBookCode.isSelected()) {
-				Book id = new Book(tfBookSearch.getText());
-				BookListDialog bookDialog = new BookListDialog(new JFrame(), "도서검색", true, id, res);
-				bookDialog.setLending3(this);
-				bookDialog.setVisible(true);
-				tfBookSearch.setText("");
-			}
-			if (rdbtnBookName.isSelected()) {
-				Book name = new Book(tfBookSearch.getText(), new Date());
-				BookListDialog2 bookDialog = new BookListDialog2(new JFrame(), "도서검색", true, name);
-				bookDialog.setLending3(this);
-				bookDialog.setVisible(true);
-				tfBookSearch.setText("");
-			}
-			if (rdbtnBookCode.isSelected() == false && rdbtnBookName.isSelected() == false) {
-				JOptionPane.showMessageDialog(null, "선택해주세요.");
-				return;
-			}
+		if (pMember.getTfLendBookCdt().getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "회원을 선택하고 와주세요.");
+			return;
+		}
+		res = Integer.parseInt(pMember.getTfLendBookCdt().getText().trim());
+		if (rdbtnBookCode.isSelected()) {
+			Book id = new Book(tfBookSearch.getText());
+			BookListDialog bookDialog = new BookListDialog(new JFrame(), "도서검색", true, id, res, this);
+			bookDialog.setVisible(true);
+			tfBookSearch.setText("");
+		}
+		if (rdbtnBookName.isSelected()) {
+			Book name = new Book(tfBookSearch.getText(), new Date());
+			BookListDialog2 bookDialog = new BookListDialog2(new JFrame(), "도서검색", true, name, res, this);
+			bookDialog.setLending3(this);
+			bookDialog.setVisible(true);
+			tfBookSearch.setText("");
+		}
+		if (rdbtnBookCode.isSelected() == false && rdbtnBookName.isSelected() == false) {
+			JOptionPane.showMessageDialog(null, "선택해주세요.");
+			return;
+		}
 	}
 
 	protected void do_btnCk_actionPerformed(ActionEvent e) {

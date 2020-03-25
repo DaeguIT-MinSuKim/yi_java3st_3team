@@ -38,17 +38,18 @@ import yi_java3st_3team.ui.panel.BookRegistrationPanel;
 import yi_java3st_3team.ui.panel.MemberJoinUIPanel;
 import yi_java3st_3team.ui.panel.MemberSelectUIPanel;
 import yi_java3st_3team.ui.panel.MemberBookOverdueUIPanel;
+import yi_java3st_3team.ui.panel.MemberJoinPanel;
 import yi_java3st_3team.ui.panel.BookRecomManagerPanel;
 import yi_java3st_3team.ui.panel.MemberRentPanel;
 import yi_java3st_3team.ui.panel.BookRequestIntoPanel;
 import yi_java3st_3team.ui.panel.MemberReturnPanel;
 import yi_java3st_3team.ui.panel.content.PasswordCheckPanel;
+import yi_java3st_3team.ui.panel.submenu.WestBookManagementPanel_lib;
+import yi_java3st_3team.ui.panel.submenu.WestLendingManagementPanel;
+import yi_java3st_3team.ui.panel.submenu.WestMemberManagementPanel;
+import yi_java3st_3team.ui.panel.submenu.WestStatisticPanel;
 import yi_java3st_3team.ui.service.LibrarianService;
 import yi_java3st_3team.ui.service.MemberUIService;
-import yi_java3st_3team.ui.subMenu.WestBookManagementPanel_lib;
-import yi_java3st_3team.ui.subMenu.WestLendingManagementPanel;
-import yi_java3st_3team.ui.subMenu.WestMemberManagementPanel;
-import yi_java3st_3team.ui.subMenu.WestStatisticPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame_lib extends JFrame {
@@ -415,6 +416,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((MemberJoinUIPanel)pCenter).clearTf();
 									break;
 								case "회원 조회/수정":
 									contentPane.remove(pCenter);
@@ -638,7 +640,7 @@ public class MainFrame_lib extends JFrame {
 				bookMgn = new BookManagerPanel();
 				recomBookAdd = new BookRecomManagerPanel();
 				reqstInto = new BookRequestIntoPanel();
-
+				
 				memberJoin = new MemberJoinUIPanel();
 				memberSelect = new MemberSelectUIPanel();
 

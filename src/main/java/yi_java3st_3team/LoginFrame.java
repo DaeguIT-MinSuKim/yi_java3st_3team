@@ -127,7 +127,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		lblLoginId.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(lblLoginId);
 
-		tfLoginId = new JTextField("eiwreioj@book.ff.kr");
+		tfLoginId = new JTextField();
 		tfLoginId.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(tfLoginId);
 		tfLoginId.setColumns(10);
@@ -136,7 +136,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 		lblLoginPw.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(lblLoginPw);
 
-		pfLoginPw = new JPasswordField("hgfjk4323");
+		pfLoginPw = new JPasswordField();
 		pfLoginPw.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		pLoginTfs.add(pfLoginPw);
 
@@ -450,7 +450,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 				dispose();
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다 다시 확인해주세요");
+				JOptionPane.showMessageDialog(null, "비밀번호가 틀렸거나 등록되지 않은 아이디입니다.");
 			}
 
 		} catch (InvalidCheckException e1) {

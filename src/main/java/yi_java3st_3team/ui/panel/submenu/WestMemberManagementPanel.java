@@ -1,4 +1,4 @@
-package yi_java3st_3team.ui.subMenu;
+package yi_java3st_3team.ui.panel.submenu;
 
 import javax.swing.JPanel;
 

@@ -317,6 +317,11 @@ public class MemberJoinPanel extends AbsItemPanel<Member> implements ActionListe
 	public JLabel getLblPic() {
 		return lblPic;
 	}
+	
+
+	public void setLblPic(JLabel lblPic) {
+		this.lblPic = lblPic;
+	}
 
 	private void setPic(byte[] mberImg) {
 		lblPic.setIcon(new ImageIcon(new ImageIcon(mberImg).getImage().getScaledInstance((int) picDimension.getWidth(),

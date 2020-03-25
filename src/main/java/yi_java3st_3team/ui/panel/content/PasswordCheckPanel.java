@@ -16,7 +16,7 @@ import yi_java3st_3team.ui.MainFrame_lib;
 import yi_java3st_3team.ui.MainFrame_user;
 import yi_java3st_3team.ui.panel.LibrarianProfileModifyPanel;
 import yi_java3st_3team.ui.panel.MemberProfileModifyPanel;
-import yi_java3st_3team.ui.subMenu.WestMemberProfileMenuPanel;
+import yi_java3st_3team.ui.panel.submenu.WestMemberProfileMenuPanel;
 
 import javax.swing.SwingConstants;
 

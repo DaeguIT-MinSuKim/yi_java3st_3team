@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,6 +18,7 @@ import yi_java3st_3team.ui.panel.list.MemberTblPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
@@ -27,6 +30,7 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener {
 	private MemberUIService service;
 	private MemberJoinPanel pMember;
 	private MemberTblPanel pMemberList;
+	private String defaultImg = getClass().getClassLoader().getResource("book-noImg.png").getPath();
 
 	private JButton btnAdd;
 	private JButton btnCancel;
@@ -98,7 +102,11 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
-	
-	}
+}
 
+
+	public void clearTf() {
+		pMember.clearTf();
+		
+	}
 }

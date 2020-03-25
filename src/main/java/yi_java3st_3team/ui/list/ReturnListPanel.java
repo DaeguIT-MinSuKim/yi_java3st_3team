@@ -116,7 +116,9 @@ public class ReturnListPanel extends JPanel {
 			JOptionPane.showMessageDialog(null, "반납할 도서가 없습니다.");
 			return;
 		}
+//		model = new TestTabelModel();
 		for (Lending lending : list) {
+			
 			StringBuilder sb = new StringBuilder();
 			if (lending.getBookCd().getTrnslrName() == null) {
 				sb.append(lending.getBookCd().getAuthrName());
@@ -133,7 +135,8 @@ public class ReturnListPanel extends JPanel {
 							: String.format("%s",
 									new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate())) });
 		}
-
+		
+//		table.setModel(model);
 	}
 
 	public void AllChecking(boolean b) {

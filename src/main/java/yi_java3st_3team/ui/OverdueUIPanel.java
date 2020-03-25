@@ -78,6 +78,14 @@ public class OverdueUIPanel extends JPanel implements ActionListener {
 		btnSendMail.addActionListener(this);
 		pSouth.add(btnSendMail);
 	}
+	
+	public void loadData() {
+		List<Lending> list = service.showOverDueList();
+		if(list!=null) {
+			pCenter.loadData(list);
+		}
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnSendMail) {
 			try {

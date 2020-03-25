@@ -4,9 +4,15 @@ select book_code, book_name, authr_name, trnslr_name, pls, pls_name, pblicte_yea
 	from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no left join member m on l.mber_id = m.mber_id 
 	where l.mber_id = 'ddr23dd@naver.com' and rturn_date is null;
 
-select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date 
-from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id 
-where date(now()) >= date(rturn_due_date) and l.rturn_date is NULL;
+select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date
+	from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id 
+	where date(now()) >= date(rturn_due_date) and l.rturn_date is null;
+
+select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date , count(m.mber_id) as cnt
+	from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id 
+	where date(now()) >= date(rturn_due_date) and l.rturn_date is null
+	group by m.mber_id ;
+
 
 
 

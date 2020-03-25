@@ -334,6 +334,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookRegistrationPanel) pCenter).clearTf();
 									break;
 								case "보유도서 관리":
 									contentPane.remove(pCenter);
@@ -443,6 +444,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((RentPanel) pCenter).loadData();
 									break;
 								case "반납 관리":
 									contentPane.remove(pCenter);
@@ -450,6 +452,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((ReturnPanel)pCenter).loadData();
 									break;
 								case "연체 조회":
 									contentPane.remove(pCenter);
@@ -457,6 +460,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((OverdueUIPanel)pCenter).loadData();
 									break;
 								}
 							}

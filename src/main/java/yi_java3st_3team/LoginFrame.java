@@ -450,7 +450,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 				dispose();
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "비밀번호가 틀렸습니다 다시 확인해주세요");
+				JOptionPane.showMessageDialog(null, "비밀번호가 틀렸거나 등록되지 않은 아이디입니다.");
 			}
 
 		} catch (InvalidCheckException e1) {

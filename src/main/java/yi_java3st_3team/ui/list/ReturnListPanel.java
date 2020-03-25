@@ -116,7 +116,7 @@ public class ReturnListPanel extends JPanel {
 			JOptionPane.showMessageDialog(null, "반납할 도서가 없습니다.");
 			return;
 		}
-		model = new TestTabelModel();
+//		model = new TestTabelModel();
 		for (Lending lending : list) {
 			
 			StringBuilder sb = new StringBuilder();
@@ -136,7 +136,7 @@ public class ReturnListPanel extends JPanel {
 									new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate())) });
 		}
 		
-		table.setModel(model);
+//		table.setModel(model);
 	}
 
 	public void AllChecking(boolean b) {

@@ -197,9 +197,7 @@ public class ReturnPanel extends JPanel implements ActionListener {
 	}
 
 	public void returnBookList(Member id) {
-		
 		member = lendingService.showLendingMemberId2(id);
-		
 		pLendingList.testting2(member);
 	}
 

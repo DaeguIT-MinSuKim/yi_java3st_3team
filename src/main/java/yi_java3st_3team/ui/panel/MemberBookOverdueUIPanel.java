@@ -116,25 +116,25 @@ public class MemberBookOverdueUIPanel extends JPanel implements ActionListener {
 	protected void btnSendMailActionPerformed(ActionEvent e) throws ParseException {
 		TableModel model = pCenter.getTable().getModel();
 		for(int i=0;i<model.getRowCount();i++) {
-			if((boolean)model.getValueAt(i, 6)) {
-				String email = (String)model.getValueAt(i, 2);
+			if((boolean)model.getValueAt(i, 5)) {
+				String email = (String)model.getValueAt(i, 0);
 				// 현재까지 연체된 일수 구하기
 				
-				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 				Date now = new Date();
-				String returnString = (String) (model.getValueAt(i, 5));
+				String returnString = (String) (model.getValueAt(i, 3));
 				Date returnD = sdf1.parse(returnString);
 				long result = now.getTime() - returnD.getTime();
 				long resultDay = result / (24 * 60 * 60 * 1000);
 				resultDay = Math.abs(resultDay);
 
 				//메일로 보낼 대여일
-				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date lendDate = sdf2.parse((String)(model.getValueAt(i, 4)));
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				Date lendDate = sdf2.parse((String)(model.getValueAt(i, 2)));
 				String lendStr = new SimpleDateFormat("yyyy년 MM월 dd일").format(lendDate);
 				
 				//메일로 보낼 반납예정일
-				Date returnDate = sdf2.parse((String)(model.getValueAt(i, 5)));
+				Date returnDate = sdf2.parse((String)(model.getValueAt(i, 3)));
 				String returnStr = new SimpleDateFormat("yyyy년 MM월 dd일").format(returnDate);
 				
 				
@@ -142,19 +142,20 @@ public class MemberBookOverdueUIPanel extends JPanel implements ActionListener {
 				//보낼 이메일 형식
 				StringBuilder message = new StringBuilder();
 				
-				String title = " [ " + (String)model.getValueAt(i, 3) + "님 대구도서관 도서 연체 메일 ] ";
+				String title = " [ " + (String)model.getValueAt(i, 1) + "님 대구도서관 도서 연체 메일 ] ";
 				
 				message.append(" [ 대구도서관에서 안내 드립니다 ]" +System.getProperty("line.separator"));
 				message.append(System.getProperty("line.separator"));
-				message.append((String)model.getValueAt(i, 3) + "님께서 대출중인 도서가 " + resultDay + "일 연체 중에 있습니다." + System.getProperty("line.separator"));
+				message.append((String)model.getValueAt(i, 1) + "님께서 대출중인 도서가 " + resultDay + "일 연체 중에 있습니다." + System.getProperty("line.separator"));
 				message.append("내용을 참고 하시어 연체 도서를 반납하여 주시길 바랍니다. " +System.getProperty("line.separator"));
 				message.append(System.getProperty("line.separator"));
 				message.append("1.도서 대출도서관 : 대구 3조 도서관" + System.getProperty("line.separator"));
 				message.append(System.getProperty("line.separator"));
 				message.append("2.연체도서 상세 " +  System.getProperty("line.separator"));
-				message.append("도서 대출일 : " + lendStr + System.getProperty("line.separator"));
-				message.append("반납 예정일 : " + returnStr + System.getProperty("line.separator"));
-				message.append("대출 도서명 : " + (String)model.getValueAt(i, 1) + System.getProperty("line.separator"));
+				message.append(System.getProperty("line.separator"));
+				message.append("1)도서 대출일 : " + lendStr + System.getProperty("line.separator"));
+				message.append("2)반납 예정일 : " + returnStr + System.getProperty("line.separator"));
+				message.append("3)대출 도서권수 : " + model.getValueAt(i, 4) +"권"+ System.getProperty("line.separator"));
 				message.append(System.getProperty("line.separator"));
 				message.append("문의전화 : 053 - 3333 - 3333");
 				

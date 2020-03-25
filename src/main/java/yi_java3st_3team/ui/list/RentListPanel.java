@@ -168,17 +168,15 @@ public class RentListPanel extends JPanel {
 	}
 
 	public void setRent(String mberId) {
-		StringBuilder sb = new StringBuilder();
 		ArrayList<String> list = new ArrayList<String>();
 		int cnt = table.getRowCount();
 		for (int i = 0; i < cnt; i++) {
 			boolean chk = (Boolean) model.getValueAt(i, 7);
-			if (chk) {
+			if (chk == true) {
 				String bookCd = (String) model.getValueAt(i, 0);
 				Member member = service.selectedMberId(mberId);
 				Book book = service.selectedBookCd(bookCd);
 				service.insertSelectedLendingList(member, book);
-				sb.append(book.getBookName());
 				list.add(book.getBookName());
 			}
 		}
@@ -188,7 +186,6 @@ public class RentListPanel extends JPanel {
 				model.removeRow(i);
 			}
 		}
-		JOptionPane.showMessageDialog(null, sb.toString() + " 대여 되었습니다.");
 		JOptionPane.showMessageDialog(null, list.toString() + " 대여 되었습니다.");
 	}
 
@@ -207,9 +204,11 @@ public class RentListPanel extends JPanel {
 		}
 		return c;
 	}
-
-	public void checkingRow_Cnt(int res) {
-
+	public void clearTf() {
+		table.removeAll();
+		int cnt = model.getRowCount();
+		for (int i = cnt - 1; i > -1; i--) {
+				model.removeRow(i);
+		}
 	}
-
 }

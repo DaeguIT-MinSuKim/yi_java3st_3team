@@ -206,4 +206,13 @@ public class ReturnPanel extends JPanel implements ActionListener {
 		memberDialog.setReturnPanel(this);
 		memberDialog.setVisible(true);
 	}
+
+	public void loadData() {
+		pMember.getTfGrade().setText("");
+		pMember.getTfOdCnt().setText("");
+		pMember.getTfOverdueCdt().setText("");
+		pMember.getTfMberId().setText("");
+		pMember.getTfMberName().setText("");
+		pLendingList.clearTf();
+	}
 }

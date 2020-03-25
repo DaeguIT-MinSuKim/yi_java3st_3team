@@ -1,4 +1,4 @@
-package yi_java3st_3team.ui.subMenu;
+package yi_java3st_3team.ui.panel.submenu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

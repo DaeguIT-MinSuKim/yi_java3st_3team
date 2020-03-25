@@ -106,12 +106,6 @@ public class LendingUiService {
 	}
 
 	public void insertSelectedLendingList(Member mberId, Book bookCd) {
-//		memberDao.updateMember(member);
-//		bookDao.updateBook(book);
-//		lendingDao.insertLending(lending);
-		System.out.println("-------------------------------------------------");
-		System.out.println(mberId);
-		System.out.println(bookCd);
 		lendingDao.insertLendingUpdateBookMember(mberId, bookCd);
 	}
 
@@ -127,7 +121,5 @@ public class LendingUiService {
 
 	public void updateLendingList(Member m, Book b) {
 		lendingDao.updateLendingBookMember(m,b);
-		
 	}
-
 }

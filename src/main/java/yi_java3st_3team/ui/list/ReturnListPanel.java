@@ -114,8 +114,11 @@ public class ReturnListPanel extends JPanel {
 		List<Lending> list = service.selectLendingByMberId(member);
 		if (list == null) {
 			JOptionPane.showMessageDialog(null, "반납할 도서가 없습니다.");
+			return;
 		}
+//		model = new TestTabelModel();
 		for (Lending lending : list) {
+			
 			StringBuilder sb = new StringBuilder();
 			if (lending.getBookCd().getTrnslrName() == null) {
 				sb.append(lending.getBookCd().getAuthrName());
@@ -132,7 +135,8 @@ public class ReturnListPanel extends JPanel {
 							: String.format("%s",
 									new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate())) });
 		}
-
+		
+//		table.setModel(model);
 	}
 
 	public void AllChecking(boolean b) {
@@ -143,17 +147,15 @@ public class ReturnListPanel extends JPanel {
 	}
 
 	public void setReturn(String mberId) {
-		StringBuilder sb = new StringBuilder();
 		ArrayList<String> list = new ArrayList<String>();
 		int cnt = model.getRowCount();
 		for (int j = 0; j < cnt; j++) {
 			Boolean chk = (Boolean) model.getValueAt(j, 7);
-			if (chk) {
+			if (chk == true) {
 				String bookCd = (String) model.getValueAt(j, 0);
 				Member member = service.selectedMberId(mberId);
 				Book book = service.selectedBookCd(bookCd);
 				service.updateLendingList(member, book);
-				sb.append(book.getBookName());
 				list.add(book.getBookName());
 			}
 		}
@@ -163,8 +165,15 @@ public class ReturnListPanel extends JPanel {
 				model.removeRow(i);
 			}
 		}
-		JOptionPane.showMessageDialog(null, sb.toString() + " 대여 되었습니다.");
-		JOptionPane.showMessageDialog(null, list.toString() + " 대여 되었습니다.");
+		JOptionPane.showMessageDialog(null, list.toString() + " 반납 되었습니다.");
+	}
+
+	public void clearTf() {
+		table.removeAll();
+		int cnt = model.getRowCount();
+		for (int i = cnt - 1; i > -1; i--) {
+				model.removeRow(i);
+		}
 	}
 
 }

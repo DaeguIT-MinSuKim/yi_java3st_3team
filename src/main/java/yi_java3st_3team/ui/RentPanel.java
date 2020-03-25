@@ -54,6 +54,7 @@ public class RentPanel extends JPanel implements ActionListener {
 	private JPanel pNorth;
 
 	public RentPanel() {
+		
 		initialize();
 	}
 
@@ -245,6 +246,7 @@ public class RentPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {
+		pLendingList.clearTf();
 		Member id = new Member(pMember.getTfMberId().getText());
 		MemberListDialog memberDialog = new MemberListDialog(new JFrame(), "회원검색", true, id);
 		memberDialog.setLending3(this);
@@ -252,6 +254,7 @@ public class RentPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_pMemberBtnMberName_actionPerformed(ActionEvent e) {
+		pLendingList.clearTf();
 		Member name = new Member(pMember.getTfMberName().getText(), new Date());
 		MemberListDialog2 memberDialog = new MemberListDialog2(new JFrame(), "회원검색", true, name);
 		memberDialog.setLending3(this);
@@ -262,4 +265,13 @@ public class RentPanel extends JPanel implements ActionListener {
 		pLendingList.checkingAll(false);
 	}
 
+	public void loadData() {
+		pMember.getTfGrade().setText("");
+		pMember.getTfLendBookCdt().setText("");
+		pMember.getTfLendPsbCdt().setText("");
+		pMember.getTfMberId().setText("");
+		pMember.getTfMberName().setText("");
+		rdbtnBookCode.setSelected(true);
+		pLendingList.clearTf();
+	}
 }

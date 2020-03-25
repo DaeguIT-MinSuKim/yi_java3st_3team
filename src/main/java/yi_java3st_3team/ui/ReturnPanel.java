@@ -189,6 +189,7 @@ public class ReturnPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {
+		pLendingList.clearTf();
 		Member id = new Member(pMember.getTfMberId().getText());
 		MemberListDialog3 memberDialog = new MemberListDialog3(new JFrame(), "회원검색", true, id);
 		memberDialog.setReturnPanel(this);
@@ -201,9 +202,19 @@ public class ReturnPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_pMemberBtnMberName_actionPerformed(ActionEvent e) {
+		pLendingList.clearTf();
 		Member name = new Member(pMember.getTfMberName().getText(), new Date());
 		MemberListDialog4 memberDialog = new MemberListDialog4(new JFrame(), "회원검색", true, name);
 		memberDialog.setReturnPanel(this);
 		memberDialog.setVisible(true);
+	}
+
+	public void loadData() {
+		pMember.getTfGrade().setText("");
+		pMember.getTfOdCnt().setText("");
+		pMember.getTfOverdueCdt().setText("");
+		pMember.getTfMberId().setText("");
+		pMember.getTfMberName().setText("");
+		pLendingList.clearTf();
 	}
 }

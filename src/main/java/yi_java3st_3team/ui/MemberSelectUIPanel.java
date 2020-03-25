@@ -20,6 +20,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableCellRenderer;
 
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.dialog.MemberUpdateDialog;
@@ -39,7 +40,8 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 	private MemberUpdateDialog updateDialog;
 	private JFrame updateFrame;
 	private Member member;
-	
+	private TableCellRenderer cellRender;
+
 	public MemberSelectUIPanel() {
 		service = new MemberUIService();
 		initialize();
@@ -102,12 +104,14 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 		pMemberList.setPopupMenu(createPop());
 		pMemberList.setBorder(new EmptyBorder(10, 0, 0, 0));
 		pList.add(pMemberList, BorderLayout.CENTER);
-		
-		//btnSearch.addActionListener(this); //이거 있으니까 에러가 두번씩 찍힘
+
 	}
 
 	public void loadData() {
 		pMemberList.loadData(service.showMemberListAll());
+		radioBtnID.setSelected(true);
+		tfSearch.setText("");
+
 	}
 
 	private JPopupMenu createPop() {
@@ -132,58 +136,68 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				if(e.getActionCommand().contentEquals("회원정보 수정")) {
+				if (e.getActionCommand().contentEquals("회원정보 수정")) {
 					Member upMember = pMemberList.getSelectedItem();
-					
-				
+
 					updateDialog = new MemberUpdateDialog(updateFrame, "회원정보 수정");
 					updateDialog.setItem(upMember);
 					updateDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					updateDialog.setVisible(true);
 
 					loadData();
-					
-				}
-				
-				if(e.getActionCommand().contentEquals("탈퇴여부 설정")) {
-					Member upMember = pMemberList.getSelectedItem();
-					
-					int result = JOptionPane.showConfirmDialog(null, "탈퇴상태로 바꾸시겠습니까?", "탈퇴여부 설정", JOptionPane.YES_NO_OPTION);
-					
-					if(result == JOptionPane.CLOSED_OPTION) {
-						loadData();
-					} else if(result == JOptionPane.YES_OPTION) {
-						upMember.setWdrCdt(1);
-						service.updateByWdrCdt(upMember);
-						loadData();
-					} else{
-						upMember.setWdrCdt(0);
-						service.updateByWdrCdt(upMember);
-						loadData();
-					} 
 
 				}
-				
-				if(e.getActionCommand().contentEquals("대여권한 설정")) {
+
+				if (e.getActionCommand().contentEquals("탈퇴여부 설정")) {
 					Member upMember = pMemberList.getSelectedItem();
-					
-					int result = JOptionPane.showConfirmDialog(null, "대여권한을 변경하시겠습니까?", "대여권한 변경", JOptionPane.YES_NO_OPTION);
-					
-					if(result == JOptionPane.YES_OPTION && upMember.getLendPsbCdt()==0) {
+
+					if (upMember.getWdrCdt() == 0) {
+						int dropOut = JOptionPane.showConfirmDialog(null, "탈퇴상태로 바꾸시겠습니까?", "탈퇴여부 설정",
+								JOptionPane.YES_NO_OPTION);
+
+						if (dropOut == JOptionPane.CLOSED_OPTION) {
+							loadData();
+						} else if (dropOut == JOptionPane.YES_OPTION) {
+							upMember.setWdrCdt(1);
+							service.updateByWdrCdt(upMember);
+							loadData();
+						}
+					} else if (upMember.getWdrCdt() == 1) {
+
+						int reJoin = JOptionPane.showConfirmDialog(null, "탈퇴회원입니다. 다시 가입으로 바꾸시겠습니까?", "재가입여부 설정",
+								JOptionPane.YES_NO_OPTION);
+
+						if (reJoin == JOptionPane.CLOSED_OPTION) {
+							loadData();
+						} else if (reJoin == JOptionPane.YES_OPTION) {
+							upMember.setWdrCdt(0);
+							service.updateByWdrCdt(upMember);
+							loadData();
+						}
+					}
+
+				}
+
+				if (e.getActionCommand().contentEquals("대여권한 설정")) {
+					Member upMember = pMemberList.getSelectedItem();
+
+					int result = JOptionPane.showConfirmDialog(null, "대여권한을 변경하시겠습니까?", "대여권한 변경",
+							JOptionPane.YES_NO_OPTION);
+
+					if (result == JOptionPane.YES_OPTION && upMember.getLendPsbCdt() == 0) {
 						upMember.setLendPsbCdt(1);
 						service.updateByWdrCdt(upMember);
 						loadData();
-					}else if(result == JOptionPane.YES_OPTION && upMember.getLendPsbCdt()==1) {
+					} else if (result == JOptionPane.YES_OPTION && upMember.getLendPsbCdt() == 1) {
 						upMember.setLendPsbCdt(0);
 						upMember.setOdCnt(0);
 						service.updateByWdrCdt(upMember);
 						loadData();
-					}else if(result == JOptionPane.CLOSED_OPTION || result == JOptionPane.NO_OPTION){
+					} else if (result == JOptionPane.CLOSED_OPTION || result == JOptionPane.NO_OPTION) {
 						loadData();
 					}
 				}
-			}
-			catch (Exception e1) {
+			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
@@ -200,34 +214,34 @@ public class MemberSelectUIPanel extends JPanel implements ActionListener {
 			btnSearchActionPerformed(e);
 		}
 	}
+
 	public void notCheck() {
-		if(!radioBtnID.isSelected() && !radioBtnName.isSelected() && !radioBtnBirthday.isSelected()) {
+		if (!radioBtnID.isSelected() && !radioBtnName.isSelected() && !radioBtnBirthday.isSelected()) {
 			JOptionPane.showMessageDialog(null, "체크박스를 선택해주세요.");
 		}
 	}
 
 	protected void btnSearchActionPerformed(ActionEvent e) {
-			Member member = new Member();
-			notCheck();
-		
-			try {
-				if(radioBtnID.isSelected()) {
-					member.setMberId(tfSearch.getText());
-					pMemberList.loadData(service.searchMemberByID(member));
-				}
-				
-				if(radioBtnName.isSelected()) {
-					member.setMberName(tfSearch.getText());
-					pMemberList.loadData(service.searchMemberByName(member));
-				}
-				
-				if(radioBtnBirthday.isSelected()) {
-					member.setMberBrthdy(new SimpleDateFormat("yyyy-MM-dd").parse(tfSearch.getText().trim()));
-					pMemberList.loadData(service.searchMemberByBirtyday(member));
-				}
-			}catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, "찾는 회원이 없습니다.");
+		Member member = new Member();
+		notCheck();
+
+		try {
+			if (radioBtnID.isSelected()) {
+				member.setMberId(tfSearch.getText());
+				pMemberList.loadData(service.searchMemberByID(member));
 			}
+
+			if (radioBtnName.isSelected()) {
+				member.setMberName(tfSearch.getText());
+				pMemberList.loadData(service.searchMemberByName(member));
+			}
+
+			if (radioBtnBirthday.isSelected()) {
+				member.setMberBrthdy(new SimpleDateFormat("yyyy-MM-dd").parse(tfSearch.getText().trim()));
+				pMemberList.loadData(service.searchMemberByBirtyday(member));
+			}
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "찾는 회원이 없습니다.");
+		}
 	}
 }
-

@@ -333,8 +333,8 @@ public class MemberDaoImpl implements MemberDao {
 	public int[] selectMemberCounts() {
 		int [] members = new int[3];
 		String sql = "select (select count(mber_id) from member) as 'totalmember',\r\n" + 
-				"	   (select count(mber_id) from member where total_le_cnt < 100) as 'normalmember',\r\n" + 
-				"	   (select count(mber_id) from member where total_le_cnt >= 100) as 'vipmember'";
+				"	   (select count(mber_id) from member where total_le_cnt < 50) as 'normalmember',\r\n" + 
+				"	   (select count(mber_id) from member where total_le_cnt >= 50) as 'vipmember'";
 		try(Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {

@@ -45,22 +45,34 @@ public class BookInfoPanelBarChart extends JFXPanel implements InitScene {
 
 		return scene;
 	}
-	public XYChart.Series<String, Number> getChartData(int data1,int data2, int data3, int data4) {
+	
+//	public XYChart.Series<String, Number> getChartData(int data1,int data2, int data3, int data4) {
+//		XYChart.Series<String, Number> dataSeries = new Series<String, Number>();
+//		dataSeries.getData().add(new XYChart.Data<>("대여가능",data1));
+//		dataSeries.getData().add(new XYChart.Data<>("대여중", data2));
+//		dataSeries.getData().add(new XYChart.Data<>("전체", data3));
+//		dataSeries.getData().add(new XYChart.Data<>("평균대여일", data4));
+//		return dataSeries;
+//	}
+	
+	public XYChart.Series<String, Number> getChartData(int data1,int data2, int data3) {
 		XYChart.Series<String, Number> dataSeries = new Series<String, Number>();
 		dataSeries.getData().add(new XYChart.Data<>("대여가능",data1));
 		dataSeries.getData().add(new XYChart.Data<>("대여중", data2));
 		dataSeries.getData().add(new XYChart.Data<>("전체", data3));
-		dataSeries.getData().add(new XYChart.Data<>("평균대여일", data4));
+//		dataSeries.getData().add(new XYChart.Data<>("평균대여일", data4));
 		return dataSeries;
 	}
+	
 	private ObservableList<XYChart.Series<String, Number>> getChartData() {
 		service = new StatisticUIService();
 		ObservableList<XYChart.Series<String, Number>> list = FXCollections.observableArrayList();
 		int data1 = service.selectLendableBooks();
 		int data2 = service.selectDuringLendBooks();
 		int data3 = service.selectTotalBooks();
-		int data4 = service.selectAvgRendDate();
-		list.add(getChartData(data1,data2,data3,data4));
+//		int data4 = service.selectAvgRendDate();
+//		list.add(getChartData(data1,data2,data3,data4));
+		list.add(getChartData(data1,data2,data3));
 		return list;
 	}
 }

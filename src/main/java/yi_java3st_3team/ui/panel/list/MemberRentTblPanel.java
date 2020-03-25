@@ -21,8 +21,8 @@ import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
-public class RentListPanel extends JPanel {
-	private static RentListPanel test = new RentListPanel();
+public class MemberRentTblPanel extends JPanel {
+	private static MemberRentTblPanel test = new MemberRentTblPanel();
 	private JTable table;
 	private LendingUiService service;
 	private TestTabelModel model;
@@ -43,7 +43,7 @@ public class RentListPanel extends JPanel {
 		});
 	}
 
-	public RentListPanel() {
+	public MemberRentTblPanel() {
 		initialize();
 	}
 

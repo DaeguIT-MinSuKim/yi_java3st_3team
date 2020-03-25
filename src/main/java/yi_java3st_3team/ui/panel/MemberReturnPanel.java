@@ -19,7 +19,7 @@ import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.dialog.MemberListDialog3;
 import yi_java3st_3team.ui.dialog.MemberListDialog4;
 import yi_java3st_3team.ui.panel.content.MemberIdSelectPanel2;
-import yi_java3st_3team.ui.panel.list.ReturnListPanel;
+import yi_java3st_3team.ui.panel.list.MemberReturnTblPanel;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
@@ -32,7 +32,7 @@ public class MemberReturnPanel extends JPanel implements ActionListener {
 	private JPanel p03;
 	private JPanel p04;
 	private JButton btnCk;
-	private ReturnListPanel pLendingList;
+	private MemberReturnTblPanel pLendingList;
 	private JPanel pBtn;
 	private JPanel p05;
 	private JPanel p06;
@@ -102,7 +102,7 @@ public class MemberReturnPanel extends JPanel implements ActionListener {
 		btnCk.addActionListener(this);
 		pAllCk.add(btnCk);
 
-		pLendingList = new ReturnListPanel();
+		pLendingList = new MemberReturnTblPanel();
 		pLendingList.setBackground(Color.WHITE);
 		pList.add(pLendingList, BorderLayout.CENTER);
 
@@ -142,11 +142,11 @@ public class MemberReturnPanel extends JPanel implements ActionListener {
 		this.pMember = pMember;
 	}
 
-	public ReturnListPanel getpLendingList() {
+	public MemberReturnTblPanel getpLendingList() {
 		return pLendingList;
 	}
 
-	public void setpLendingList(ReturnListPanel pLendingList) {
+	public void setpLendingList(MemberReturnTblPanel pLendingList) {
 		this.pLendingList = pLendingList;
 	}
 

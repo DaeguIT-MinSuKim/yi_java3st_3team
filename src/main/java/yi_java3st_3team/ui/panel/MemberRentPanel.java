@@ -26,7 +26,7 @@ import yi_java3st_3team.ui.dialog.BookListDialog2;
 import yi_java3st_3team.ui.dialog.MemberListDialog;
 import yi_java3st_3team.ui.dialog.MemberListDialog2;
 import yi_java3st_3team.ui.panel.content.MemberIdSelectPanel;
-import yi_java3st_3team.ui.panel.list.RentListPanel;
+import yi_java3st_3team.ui.panel.list.MemberRentTblPanel;
 
 @SuppressWarnings("serial")
 public class MemberRentPanel extends JPanel implements ActionListener {
@@ -39,7 +39,7 @@ public class MemberRentPanel extends JPanel implements ActionListener {
 	private JPanel pAllCk;
 	private JPanel p03;
 	private JButton btnCheckTrue;
-	private RentListPanel pLendingList;
+	private MemberRentTblPanel pLendingList;
 	private JPanel pBtn;
 	private JPanel p05;
 	private JPanel p06;
@@ -134,7 +134,7 @@ public class MemberRentPanel extends JPanel implements ActionListener {
 		btnCheckFalse.addActionListener(this);
 		pAllCk.add(btnCheckFalse);
 
-		pLendingList = new RentListPanel();
+		pLendingList = new MemberRentTblPanel();
 		pLendingList.setBackground(Color.WHITE);
 		pList.add(pLendingList, BorderLayout.CENTER);
 
@@ -175,11 +175,11 @@ public class MemberRentPanel extends JPanel implements ActionListener {
 		this.pMember = pMember;
 	}
 
-	public RentListPanel getpLendingList() {
+	public MemberRentTblPanel getpLendingList() {
 		return pLendingList;
 	}
 
-	public void setpLendingList(RentListPanel pLendingList) {
+	public void setpLendingList(MemberRentTblPanel pLendingList) {
 		this.pLendingList = pLendingList;
 	}
 

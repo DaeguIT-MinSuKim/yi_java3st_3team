@@ -31,13 +31,13 @@ import jxl.write.WritableCellFormat;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import yi_java3st_3team.dto.RequestBook;
-import yi_java3st_3team.ui.panel.list.RequestIntoTblPanel;
+import yi_java3st_3team.ui.panel.list.BookRequestIntoTblPanel;
 import yi_java3st_3team.ui.service.RequestBookUiService;
 
 @SuppressWarnings("serial")
 public class BookRequestIntoPanel extends JPanel implements ActionListener {
 	private RequestBookUiService service;
-	private RequestIntoTblPanel pReqstList;
+	private BookRequestIntoTblPanel pReqstList;
 	private JComboBox<String> cmbYear;
 	private JComboBox<String> cmbMonth;
 	private JComboBox<String> cmbOption;
@@ -114,7 +114,7 @@ public class BookRequestIntoPanel extends JPanel implements ActionListener {
 		add(pList, BorderLayout.CENTER);
 		pList.setLayout(new BorderLayout(0, 0));
 
-		pReqstList = new RequestIntoTblPanel();
+		pReqstList = new BookRequestIntoTblPanel();
 		pReqstList.setBackground(Color.WHITE);
 		pReqstList.loadData(service.showRequestAll());
 

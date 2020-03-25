@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.panel.content.MemberIdSelectPanel;
-import yi_java3st_3team.ui.panel.list.RentListPanel;
+import yi_java3st_3team.ui.panel.list.MemberRentTblPanel;
 import yi_java3st_3team.ui.service.BookUiService;
 import yi_java3st_3team.ui.service.LendingUiService;
 
@@ -31,7 +31,7 @@ public class MemberLendingPanel extends JPanel implements ActionListener {
 	private JPanel pAllCk;
 	private JPanel p03;
 	private JButton btnCheckTrue;
-	private RentListPanel pLendingList;
+	private MemberRentTblPanel pLendingList;
 	private JPanel pBtn;
 	private JPanel p05;
 	private JPanel p06;
@@ -103,7 +103,7 @@ public class MemberLendingPanel extends JPanel implements ActionListener {
 		btnCheckFalse.addActionListener(this);
 		pAllCk.add(btnCheckFalse);
 
-		pLendingList = new RentListPanel();
+		pLendingList = new MemberRentTblPanel();
 		pList.add(pLendingList, BorderLayout.CENTER);
 
 		pBtn = new JPanel();

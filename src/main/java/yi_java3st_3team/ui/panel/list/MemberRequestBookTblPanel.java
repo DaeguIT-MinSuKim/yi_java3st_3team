@@ -5,7 +5,7 @@ import javax.swing.SwingConstants;
 import yi_java3st_3team.dto.RequestBook;
 
 @SuppressWarnings("serial")
-public class RequestBookMemberTblPanel extends AbsListNullExceptionCopePanel<RequestBook> {
+public class MemberRequestBookTblPanel extends AbsListNullExceptionCopePanel<RequestBook> {
 
 	@Override
 	protected void setTblWidthAlign() {

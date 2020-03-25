@@ -33,7 +33,7 @@ import java.sql.SQLException;
 import java.awt.event.ItemEvent;
 
 import yi_java3st_3team.ui.exception.InvalidCheckException;
-import yi_java3st_3team.ui.panel.list.RequestBookMemberTblPanel;
+import yi_java3st_3team.ui.panel.list.MemberRequestBookTblPanel;
 import yi_java3st_3team.ui.service.RequestBookUiService;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -48,7 +48,7 @@ public class MemberRequestBookPanel extends AbsItemPanel<RequestBook> implements
 	private JComboBox<String> cmbYear;
 	private RequestBookUiService service;
 	private RequestBook rbId = new RequestBook(new Member(LoginFrame.loginMber.getMberId()));
-	private RequestBookMemberTblPanel pReqstBookList;
+	private MemberRequestBookTblPanel pReqstBookList;
 	private JPanel pListDummy;
 	private JButton btnNewButton;
 	private JButton btnCancel;
@@ -162,7 +162,7 @@ public class MemberRequestBookPanel extends AbsItemPanel<RequestBook> implements
 		pList.add(pListDummy, BorderLayout.CENTER);
 		pListDummy.setLayout(new BorderLayout(0, 0));
 
-		pReqstBookList = new RequestBookMemberTblPanel();
+		pReqstBookList = new MemberRequestBookTblPanel();
 		pReqstBookList.setBackground(Color.WHITE);
 		pListDummy.add(pReqstBookList, BorderLayout.CENTER);
 

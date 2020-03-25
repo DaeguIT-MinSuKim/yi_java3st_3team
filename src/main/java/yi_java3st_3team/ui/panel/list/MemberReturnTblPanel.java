@@ -20,8 +20,8 @@ import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.ui.service.LendingUiService;
 
 @SuppressWarnings("serial")
-public class ReturnListPanel extends JPanel {
-	private static ReturnListPanel test = new ReturnListPanel();
+public class MemberReturnTblPanel extends JPanel {
+	private static MemberReturnTblPanel test = new MemberReturnTblPanel();
 	private JTable table;
 	private LendingUiService service;
 	private TestTabelModel model;
@@ -42,7 +42,7 @@ public class ReturnListPanel extends JPanel {
 		});
 	}
 
-	public ReturnListPanel() {
+	public MemberReturnTblPanel() {
 		initialize();
 	}
 

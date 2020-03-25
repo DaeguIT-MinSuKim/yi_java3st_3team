@@ -17,14 +17,14 @@ import yi_java3st_3team.dto.RequestBook;
 import yi_java3st_3team.ui.service.RequestBookUiService;
 
 @SuppressWarnings("serial")
-public class RequestIntoTblPanel extends JPanel {
+public class BookRequestIntoTblPanel extends JPanel {
 	private JTable table;
 	private TestTabelModel model;
 	private RequestBookUiService service;
 	
 	private List<RequestBook> lists;
 
-	public RequestIntoTblPanel() {
+	public BookRequestIntoTblPanel() {
 		service = new RequestBookUiService();
 		initialize();
 	}

@@ -122,4 +122,8 @@ public class LendingUiService {
 	public void updateLendingList(Member m, Book b) {
 		lendingDao.updateLendingBookMember(m,b);
 	}
+
+	public void updateOdCnt(Member member) {
+		memberDao.updateOdCnt(member);
+	}
 }

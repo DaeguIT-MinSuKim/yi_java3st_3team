@@ -520,6 +520,26 @@ public class MemberDaoImpl implements MemberDao {
 		return list;
 	}
 
+	@Override
+	public void updateOdCnt(Member member) {
+//		List<Member> list = new ArrayList<>();
+//		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt, g.book_le_cnt, g.grad_name\r\n" + 
+//				"from member m left join grade g on m.grade = g.grade_no \r\n" + 
+//				"where mber_name like ?";
+//		try (Connection con = MysqlDataSource.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(sql);){
+//			pstmt.setString(1, "%" + member.getMberName() + "%" );
+//				try(ResultSet rs = pstmt.executeQuery()){
+//					while (rs.next()){
+//						list.add(getMemberByAll2(rs));
+//					} 
+//				}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+	}
+
 
 //	public Member selectLendingMemberByNo(Member member) {
 ////		String sql = "select m.mber_id , m.mber_name , g.grad_name , m.lend_psb_cdt , (g.book_le_cnt - count(l.rturn_date)) as 'lend_book_cnt'\r\n"

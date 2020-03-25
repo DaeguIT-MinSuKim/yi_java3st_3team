@@ -24,4 +24,5 @@ public interface MemberDao {
 	Member selectMemberByNo3(Member member);
 	List<Member> selectMemberByCodeName(Member id);
 	List<Member> selectMemberByCodeName2(Member name);
+	void updateOdCnt(Member member);
 }

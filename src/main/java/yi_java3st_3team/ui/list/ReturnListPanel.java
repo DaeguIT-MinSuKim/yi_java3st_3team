@@ -165,6 +165,8 @@ public class ReturnListPanel extends JPanel {
 				model.removeRow(i);
 			}
 		}
+		Member member = service.selectedMberId(mberId);
+		service.updateOdCnt(member);
 		JOptionPane.showMessageDialog(null, list.toString() + " 반납 되었습니다.");
 	}
 

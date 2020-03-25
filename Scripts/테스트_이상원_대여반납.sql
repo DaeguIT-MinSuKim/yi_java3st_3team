@@ -623,7 +623,10 @@ select *
 update member m left join lending l
 	on m.mber_id = l.mber_id
 	set od_cnt = od_cnt +1
-	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'mamatellme@gmail.com';
-select od_cnt 
+	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'xodnjs1218@naver.com';
+
+
+select count(*)  
 	from member m left join lending l on m.mber_id = l.mber_id
-	where m.mber_id = 'mamatellme@gmail.com';
+	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'xodnjs1218@naver.com';
+	

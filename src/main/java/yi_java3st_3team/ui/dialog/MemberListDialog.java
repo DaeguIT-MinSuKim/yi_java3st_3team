@@ -100,6 +100,10 @@ public class MemberListDialog extends JDialog implements ActionListener {
 			Class clazz = String.class;
 			return clazz;
 		}
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {

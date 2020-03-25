@@ -443,6 +443,7 @@ public class MainFrame_mgr extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((MemberJoinUIPanel)pCenter).clearTf();
 									break;
 								case "회원 조회/수정":
 									contentPane.remove(pCenter);

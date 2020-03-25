@@ -101,4 +101,7 @@ public class MemberJoinUIPanel extends JPanel implements ActionListener {
 	
 	}
 
+	public void clearTf() {
+		
+	}
 }

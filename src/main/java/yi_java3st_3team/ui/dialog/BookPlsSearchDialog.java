@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.dto.PublishingCompany;
-import yi_java3st_3team.ui.list.BookPlsTblPanel;
+import yi_java3st_3team.ui.panel.list.BookPlsTblPanel;
 import yi_java3st_3team.ui.service.BookUiService;
 
 @SuppressWarnings("serial")

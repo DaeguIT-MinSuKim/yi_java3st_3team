@@ -22,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.dto.LargeClassification;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
-import yi_java3st_3team.ui.list.BookLcTblPanel;
+import yi_java3st_3team.ui.panel.list.BookLcTblPanel;
 import yi_java3st_3team.ui.service.LargeClassificationUiService;
 
 @SuppressWarnings("serial")

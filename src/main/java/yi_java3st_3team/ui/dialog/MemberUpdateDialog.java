@@ -37,7 +37,7 @@ import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Member;
 import yi_java3st_3team.dto.ZipCode;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
-import yi_java3st_3team.ui.list.MemberTblPanel;
+import yi_java3st_3team.ui.panel.list.MemberTblPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")

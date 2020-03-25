@@ -25,9 +25,9 @@ import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Title;
-import yi_java3st_3team.ui.LibrarianSelectUIPanel;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
-import yi_java3st_3team.ui.list.LibrarianTblPanel;
+import yi_java3st_3team.ui.panel.LibrarianSelectUIPanel;
+import yi_java3st_3team.ui.panel.list.LibrarianTblPanel;
 import yi_java3st_3team.ui.service.LibrarianUIService;
 
 @SuppressWarnings("serial")

@@ -20,13 +20,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import yi_java3st_3team.dto.Book;
-import yi_java3st_3team.ui.RentPanel;
+import yi_java3st_3team.ui.panel.MemberRentPanel;
 import yi_java3st_3team.ui.service.BookUiService;
 
 @SuppressWarnings("serial")
 public class BookListDialog extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
-	private RentPanel lending3;
+	private MemberRentPanel lending3;
 	private JTable table;
 	private BookUiService service;
 	private TestTabelModel model;
@@ -35,7 +35,7 @@ public class BookListDialog extends JDialog implements ActionListener {
 	private JButton cancelButton;
 	private int cnt;
 	
-	public BookListDialog(JFrame jFrame, String string, boolean b, Book id,int res, RentPanel rentPanel) {
+	public BookListDialog(JFrame jFrame, String string, boolean b, Book id,int res, MemberRentPanel rentPanel) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
@@ -46,11 +46,11 @@ public class BookListDialog extends JDialog implements ActionListener {
 		initialize(id);
 	}
 
-	public RentPanel getLending3() {
+	public MemberRentPanel getLending3() {
 		return lending3;
 	}
 
-	public void setLending3(RentPanel lending3) {
+	public void setLending3(MemberRentPanel lending3) {
 		this.lending3 = lending3;
 	}
 

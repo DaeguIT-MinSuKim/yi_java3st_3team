@@ -1,5 +1,6 @@
 package yi_java3st_3team.ui.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import yi_java3st_3team.dao.BookDao;
@@ -125,5 +126,11 @@ public class LendingUiService {
 
 	public void updateOdCnt(Member member) {
 		memberDao.updateOdCnt(member);
+	}
+	public int updateMemberOdCnt(Member m) throws SQLException {
+		return lendingDao.updateMemberOdcnt(m);
+	}
+	public int selectLendingByMemberReturnNullCount(Member member) {
+		return lendingDao.selectLendingByMemberReturnNullCount(member);
 	}
 }

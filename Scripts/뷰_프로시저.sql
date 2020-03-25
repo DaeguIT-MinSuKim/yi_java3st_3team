@@ -106,24 +106,61 @@ begin
 		update lending l left join book b 
 			on l.book_cd = b.book_code
 			set lend_psb_cdt = 0
-			where rturn_date is not null;
+			where l.rturn_date is not null;
 		
 		-- 회원 테이블
 		-- 회원 테이블의 특정 회원의 대여도서권수(=대여반납 테이블에 반납일이 없는 행의 수)를 감소시키기() 위한 업데이트
 		update member
 			set lend_book_cnt = lend_book_cnt -1
 			where mber_id = _mber_id;
-		-- 특정 회원이 도서를 반납했을 경우 반납날을 기준으로 반납예정일 보다 늦었을 경우 회원 테이블의 연체횟수가 1 증가
-		update member m left join lending l
-			on m.mber_id = l.mber_id
-			set od_cnt = od_cnt +1
-			where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = _mber_id; 
-		-- 회원 테이블의 연체횟수가 5회 이상일시 대여가능여부를 업데이트 
-		update member
-			set lend_psb_cdt = 1
-			where od_cnt>4;
 	commit;
 	set AUTOCOMMIT = 1;
 end $$
 
 delimiter ;
+
+
+
+
+
+-- 반납 프로시저 테스트2(회원 아이디)
+drop procedure if exists return_book_od_cnt;
+
+delimiter $$
+$$
+create procedure return_book_od_cnt(in _mber_id varchar(30))
+
+begin
+	declare _od_cnt1 int;
+	declare _od_cnt2 int;
+	declare continue handler for sqlexception
+	begin
+		select '오류 발생했습니다.';
+		rollback;
+	end;
+	set AUTOCOMMIT = 0;
+	start transaction;
+		-- 회원 테이블
+		-- 특정 회원이 도서를 반납했을 경우 반납일의 연체도서의 카운트
+		select count(*) into _od_cnt1
+			from lending
+			where mber_id = _mber_id and rturn_date is null and rturn_due_date <curdate();
+		-- 특정 회원의 오늘을 제외한 
+		-- 특정 회원이 도서를 반납했을 경우 반납날을 기준으로 반납예정일 보다 늦었을 경우 회원 테이블의 연체횟수가 1 증가
+		if _od_cnt1 >= 1 then
+			update member m left join lending l
+				on m.mber_id = l.mber_id
+				set od_cnt = od_cnt +1
+				where m.mber_id = _mber_id; 
+		end if;
+		-- 회원 테이블의 연체횟수가 5회 이상일시 대여가능여부를 업데이트 
+		update member
+			set lend_psb_cdt = 1
+			where od_cnt>4;
+		select od_cnt from member where mber_id = _mber_id; 
+	commit;
+	set AUTOCOMMIT = 1;
+end $$
+
+delimiter ;
+

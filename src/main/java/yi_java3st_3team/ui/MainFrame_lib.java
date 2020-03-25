@@ -21,17 +21,34 @@ import javax.swing.border.MatteBorder;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import yi_java3st_3team.LoginFrame;
 import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Member;
-import yi_java3st_3team.ui.content.BookLcAndMlManagerPanel;
-import yi_java3st_3team.ui.content.BookManagerPanel;
-import yi_java3st_3team.ui.content.BookPlsManageMentPanel;
-import yi_java3st_3team.ui.content.BookRegistrationPanel;
-import yi_java3st_3team.ui.content.PasswordCheckPanel;
-import yi_java3st_3team.ui.content.RecomBookAddPanel;
-import yi_java3st_3team.ui.content.RequestBookIntoPanel;
+import yi_java3st_3team.ui.chart.BookCafeInfoUIPanel;
+import yi_java3st_3team.ui.chart.BookInfoCatePanelBarChart;
+import yi_java3st_3team.ui.chart.BookInfoPanelBarChart;
+import yi_java3st_3team.ui.chart.BookInfoUIPanel;
+import yi_java3st_3team.ui.chart.InitScene;
+import yi_java3st_3team.ui.chart.MemberInfoPanelPieChart;
+import yi_java3st_3team.ui.chart.MemberInfoUIPanel;
+import yi_java3st_3team.ui.panel.BookLcAndMlManagerPanel;
+import yi_java3st_3team.ui.panel.BookManagerPanel;
+import yi_java3st_3team.ui.panel.BookPlsManageMentPanel;
+import yi_java3st_3team.ui.panel.BookRegistrationPanel;
+import yi_java3st_3team.ui.panel.MemberJoinUIPanel;
+import yi_java3st_3team.ui.panel.MemberSelectUIPanel;
+import yi_java3st_3team.ui.panel.MemberBookOverdueUIPanel;
+import yi_java3st_3team.ui.panel.BookRecomManagerPanel;
+import yi_java3st_3team.ui.panel.MemberRentPanel;
+import yi_java3st_3team.ui.panel.BookRequestIntoPanel;
+import yi_java3st_3team.ui.panel.MemberReturnPanel;
+import yi_java3st_3team.ui.panel.content.PasswordCheckPanel;
 import yi_java3st_3team.ui.service.LibrarianService;
 import yi_java3st_3team.ui.service.MemberUIService;
+import yi_java3st_3team.ui.subMenu.WestBookManagementPanel_lib;
+import yi_java3st_3team.ui.subMenu.WestLendingManagementPanel;
+import yi_java3st_3team.ui.subMenu.WestMemberManagementPanel;
+import yi_java3st_3team.ui.subMenu.WestStatisticPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame_lib extends JFrame {
@@ -63,14 +80,14 @@ public class MainFrame_lib extends JFrame {
 
 	private BookRegistrationPanel bookReqst;
 	private BookManagerPanel bookMgn;
-	private RecomBookAddPanel recomBookAdd;
-	private RequestBookIntoPanel reqstInto;
+	private BookRecomManagerPanel recomBookAdd;
+	private BookRequestIntoPanel reqstInto;
 
-	private OverdueUIPanel overdueMgn;
-	private LoginFrame_ex loginFrame;
+	private MemberBookOverdueUIPanel overdueMgn;
+	private LoginFrame loginFrame;
 
-	private RentPanel lendingPanel;
-	private ReturnPanel lendingPanel2;
+	private MemberRentPanel lendingPanel;
+	private MemberReturnPanel lendingPanel2;
 
 	private Thread chartThread;
 	private JLabel lblGreeting;
@@ -334,6 +351,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
+									((BookRegistrationPanel) pCenter).clearTf();
 									break;
 								case "보유도서 관리":
 									contentPane.remove(pCenter);
@@ -349,7 +367,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
-									((RequestBookIntoPanel) pCenter).loadData();
+									((BookRequestIntoPanel) pCenter).loadData();
 									break;
 								case "추천도서 등록":
 									contentPane.remove(pCenter);
@@ -357,7 +375,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									repaint();
 									revalidate();
-									((RecomBookAddPanel) pCenter).loadData();
+									((BookRecomManagerPanel) pCenter).loadData();
 									break;
 								}
 							}
@@ -443,6 +461,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((MemberRentPanel) pCenter).loadData();
 									break;
 								case "반납 관리":
 									contentPane.remove(pCenter);
@@ -450,6 +469,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((MemberReturnPanel)pCenter).loadData();
 									break;
 								case "연체 조회":
 									contentPane.remove(pCenter);
@@ -457,6 +477,7 @@ public class MainFrame_lib extends JFrame {
 									contentPane.add(pCenter, BorderLayout.CENTER);
 									contentPane.repaint();
 									contentPane.revalidate();
+									((MemberBookOverdueUIPanel)pCenter).loadData();
 									break;
 								}
 							}
@@ -529,7 +550,7 @@ public class MainFrame_lib extends JFrame {
 					break;
 				case "로그아웃":
 					dispose();
-					LoginFrame_ex.loginLib = null;
+					LoginFrame.loginLib = null;
 					loginFrame.setVisible(true);
 					loginFrame.loadData();
 					loginFrame.clearTf();
@@ -542,11 +563,11 @@ public class MainFrame_lib extends JFrame {
 		return menuAdapter;
 	}
 
-	public LoginFrame_ex getLoginFrame() {
+	public LoginFrame getLoginFrame() {
 		return loginFrame;
 	}
 
-	public void setLoginFrame(LoginFrame_ex loginFrame) {
+	public void setLoginFrame(LoginFrame loginFrame) {
 		this.loginFrame = loginFrame;
 	}
 
@@ -615,16 +636,16 @@ public class MainFrame_lib extends JFrame {
 			public void run() {
 				bookReqst = new BookRegistrationPanel();
 				bookMgn = new BookManagerPanel();
-				recomBookAdd = new RecomBookAddPanel();
-				reqstInto = new RequestBookIntoPanel();
+				recomBookAdd = new BookRecomManagerPanel();
+				reqstInto = new BookRequestIntoPanel();
 
 				memberJoin = new MemberJoinUIPanel();
 				memberSelect = new MemberSelectUIPanel();
 
-				overdueMgn = new OverdueUIPanel();
+				overdueMgn = new MemberBookOverdueUIPanel();
 
-				lendingPanel = new RentPanel();
-				lendingPanel2 = new ReturnPanel();
+				lendingPanel = new MemberRentPanel();
+				lendingPanel2 = new MemberReturnPanel();
 
 				chartBookCateInfo = new BookCafeInfoUIPanel();
 				chartBookInfo = new BookInfoUIPanel();

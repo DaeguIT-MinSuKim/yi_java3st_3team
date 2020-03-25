@@ -18,16 +18,21 @@ import javax.swing.border.MatteBorder;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import yi_java3st_3team.LoginFrame;
 import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Member;
-import yi_java3st_3team.ui.content.BookRankingPanel;
-import yi_java3st_3team.ui.content.MemberBookSearchPanel;
-import yi_java3st_3team.ui.content.MemberUseCdtPanel;
-import yi_java3st_3team.ui.content.PasswordCheckPanel;
-import yi_java3st_3team.ui.content.RecomPanel;
-import yi_java3st_3team.ui.content.RequestBookMemberPanel;
+import yi_java3st_3team.ui.chart.InitScene;
+import yi_java3st_3team.ui.panel.BookRankingPanel;
+import yi_java3st_3team.ui.panel.MemberBookSearchPanel;
+import yi_java3st_3team.ui.panel.MemberProfileModifyPanel;
+import yi_java3st_3team.ui.panel.MemberUseCdtPanel;
+import yi_java3st_3team.ui.panel.MemberRecomBookInfoPanel;
+import yi_java3st_3team.ui.panel.MemberRequestBookPanel;
+import yi_java3st_3team.ui.panel.content.PasswordCheckPanel;
 //github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 import yi_java3st_3team.ui.service.MemberUIService;
+import yi_java3st_3team.ui.subMenu.WestMemberProfileMenuPanel;
+import yi_java3st_3team.ui.subMenu.WestRecomBookPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame_user extends JFrame {
@@ -53,7 +58,7 @@ public class MainFrame_user extends JFrame {
 	private Member member;
 	private JLabel lblRecommendBook;
 	private JPanel bookRecomPanel;
-	private LoginFrame_ex loginFrame;
+	private LoginFrame loginFrame;
 	private JPanel bookRankPanel;
 	private Thread menuThread;
 	private MainFrame_user mainFrame;
@@ -231,9 +236,9 @@ public class MainFrame_user extends JFrame {
 				profileModifyPanel = new MemberProfileModifyPanel();
 				memberUseCdtpanel = new MemberUseCdtPanel();
 				memberBookSearchPanel = new MemberBookSearchPanel();
-				bookRecomPanel = new RecomPanel();
+				bookRecomPanel = new MemberRecomBookInfoPanel();
 				bookRankPanel = new BookRankingPanel();
-				requestBookPanel = new RequestBookMemberPanel();
+				requestBookPanel = new MemberRequestBookPanel();
 			}
 		});
 		return thread;
@@ -295,8 +300,8 @@ public class MainFrame_user extends JFrame {
 					contentPane.remove(pWest);
 					pCenter = new JPanel();
 					pCenter.setBackground(Color.white);
-					pWest = new ProfileMenuPanel();
-					JPanel[] pBook = ((ProfileMenuPanel) pWest).getPanels();
+					pWest = new WestMemberProfileMenuPanel();
+					JPanel[] pBook = ((WestMemberProfileMenuPanel) pWest).getPanels();
 					for(JPanel panel : pBook) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override
@@ -381,7 +386,7 @@ public class MainFrame_user extends JFrame {
 									contentPane.add(pCenter,BorderLayout.CENTER);
 									repaint();
 									revalidate();
-									((RecomPanel)pCenter).loadData();
+									((MemberRecomBookInfoPanel)pCenter).loadData();
 									break;
 								}
 							}
@@ -401,11 +406,11 @@ public class MainFrame_user extends JFrame {
 					contentPane.add(pCenter,BorderLayout.CENTER);
 					repaint();
 					revalidate();
-					((RequestBookMemberPanel)pCenter).loadData();
+					((MemberRequestBookPanel)pCenter).loadData();
 					break;
 				case "로그아웃":
 					dispose();
-					LoginFrame_ex.loginMber = null;
+					LoginFrame.loginMber = null;
 					loginFrame.setVisible(true);
 					loginFrame.loadData();
 					loginFrame.clearTf();
@@ -415,11 +420,11 @@ public class MainFrame_user extends JFrame {
 		return menuAdapter;
 	}
 	
-	public LoginFrame_ex getLoginFrame() {
+	public LoginFrame getLoginFrame() {
 		return loginFrame;
 	}
 
-	public void setLoginFrame(LoginFrame_ex loginFrame) {
+	public void setLoginFrame(LoginFrame loginFrame) {
 		this.loginFrame = loginFrame;
 	}
 	

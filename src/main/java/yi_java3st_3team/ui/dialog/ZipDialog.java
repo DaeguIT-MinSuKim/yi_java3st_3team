@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import yi_java3st_3team.dto.ZipCode;
-import yi_java3st_3team.ui.content.MemberJoinPanel;
+import yi_java3st_3team.ui.panel.MemberJoinPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 import javax.swing.BoxLayout;
 

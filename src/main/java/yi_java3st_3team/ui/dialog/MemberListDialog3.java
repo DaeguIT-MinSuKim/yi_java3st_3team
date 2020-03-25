@@ -16,13 +16,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import yi_java3st_3team.dto.Member;
-import yi_java3st_3team.ui.ReturnPanel;
+import yi_java3st_3team.ui.panel.MemberReturnPanel;
 import yi_java3st_3team.ui.service.MemberUIService;
 
 @SuppressWarnings("serial")
 public class MemberListDialog3 extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
-	private ReturnPanel lending3;
+	private MemberReturnPanel lending3;
 	private JTable table;
 	private MemberUIService service;
 	private TestTabelModel model;
@@ -39,11 +39,11 @@ public class MemberListDialog3 extends JDialog implements ActionListener {
 		initialize(id);
 	}
 
-	public ReturnPanel getReturnPanel() {
+	public MemberReturnPanel getReturnPanel() {
 		return lending3;
 	}
 
-	public void setReturnPanel(ReturnPanel returnPanel) {
+	public void setReturnPanel(MemberReturnPanel returnPanel) {
 		this.lending3 = returnPanel;
 	}
 

@@ -41,7 +41,7 @@ dependencies {
 }
 jar{
     version = 1.0
-    mainClassName="yi_java3st_3team.ui.MainFrame"
+    mainClassName="yi_java3st_3team.LoginFrame_ex"
   	baseName = 'Erp'
   	manifest{
   	    attributes 'Title' : baseName, 'Version':version, 'Main-Class':mainClassName

@@ -26,9 +26,9 @@ import yi_java3st_3team.dto.Grade;
 import yi_java3st_3team.dto.Librarian;
 import yi_java3st_3team.dto.Title;
 import yi_java3st_3team.dto.ZipCode;
-import yi_java3st_3team.ui.LibrarianSelectUIPanel;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
-import yi_java3st_3team.ui.list.LibrarianTblPanel;
+import yi_java3st_3team.ui.panel.LibrarianSelectUIPanel;
+import yi_java3st_3team.ui.panel.list.LibrarianTblPanel;
 import yi_java3st_3team.ui.service.LibrarianUIService;
 import javax.swing.JPasswordField;
 

@@ -37,6 +37,7 @@ import yi_java3st_3team.ui.panel.LibrarianSelectUIPanel;
 import yi_java3st_3team.ui.panel.MemberJoinUIPanel;
 import yi_java3st_3team.ui.panel.MemberSelectUIPanel;
 import yi_java3st_3team.ui.panel.MemberBookOverdueUIPanel;
+import yi_java3st_3team.ui.panel.MemberJoinPanel;
 import yi_java3st_3team.ui.panel.BookRecomManagerPanel;
 import yi_java3st_3team.ui.panel.MemberRentPanel;
 import yi_java3st_3team.ui.panel.BookRequestIntoPanel;

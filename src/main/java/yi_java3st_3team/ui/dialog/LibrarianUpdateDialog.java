@@ -139,7 +139,6 @@ public class LibrarianUpdateDialog extends JDialog implements ActionListener {
 		this.service = service;
 		setCmbTitleList(service.showTitleList());
 		setCmbWorkList();
-
 	}
 
 	private void setCmbTitleList(List<Title> titleList) {

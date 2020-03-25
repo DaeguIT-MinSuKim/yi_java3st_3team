@@ -166,6 +166,7 @@ public class ZipDialog extends JDialog implements ActionListener {
 		pAdd.add(label_1);
 
 		btnAdd = new JButton("등록");
+		btnAdd.addActionListener(this);
 		pAdd.add(btnAdd);
 
 		label = new JLabel("");
@@ -236,6 +237,9 @@ public class ZipDialog extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAdd) {
+			btnAddActionPerformed(e);
+		}
 		if (e.getSource() == btnCheck) {
 			btnCheckActionPerformed(e);
 		}
@@ -277,4 +281,6 @@ public class ZipDialog extends JDialog implements ActionListener {
 		}
 	}
 
+	protected void btnAddActionPerformed(ActionEvent e) {
+	}
 }

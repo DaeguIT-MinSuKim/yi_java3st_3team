@@ -11,6 +11,7 @@ public class Lending {
 	private int rturnPsmCdt;
 	private Date rturnDate;
 	private int overdueCdt;
+	private int overdueBookCnt;
 
 	public Lending() {
 	}
@@ -28,8 +29,6 @@ public class Lending {
 		this.bookCd = bookCd;
 	}
 
-	
-	
 	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate) {
 		this.mberId = mberId;
 		this.bookCd = bookCd;
@@ -37,8 +36,16 @@ public class Lending {
 		this.rturnDueDate = rturnDueDate;
 	}
 
-	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, Date rturnDate,
-			int overdueCdt) {
+	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, int overdueBookCnt) {
+		super();
+		this.mberId = mberId;
+		this.bookCd = bookCd;
+		this.lendDate = lendDate;
+		this.rturnDueDate = rturnDueDate;
+		this.overdueBookCnt = overdueBookCnt;
+	}
+
+	public Lending(Member mberId, Book bookCd, Date lendDate, Date rturnDueDate, Date rturnDate, int overdueCdt) {
 		this.mberId = mberId;
 		this.bookCd = bookCd;
 		this.lendDate = lendDate;
@@ -135,6 +142,14 @@ public class Lending {
 		this.overdueCdt = overdueCdt;
 	}
 
+	public int getOverdueBookCnt() {
+		return overdueBookCnt;
+	}
+
+	public void setOverdueBookCnt(int overdueBookCnt) {
+		this.overdueBookCnt = overdueBookCnt;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -143,6 +158,7 @@ public class Lending {
 		result = prime * result + ((lendDate == null) ? 0 : lendDate.hashCode());
 		result = prime * result + lendRturnNo;
 		result = prime * result + ((mberId == null) ? 0 : mberId.hashCode());
+		result = prime * result + overdueBookCnt;
 		result = prime * result + overdueCdt;
 		result = prime * result + ((rturnDate == null) ? 0 : rturnDate.hashCode());
 		result = prime * result + ((rturnDueDate == null) ? 0 : rturnDueDate.hashCode());
@@ -176,6 +192,8 @@ public class Lending {
 				return false;
 		} else if (!mberId.equals(other.mberId))
 			return false;
+		if (overdueBookCnt != other.overdueBookCnt)
+			return false;
 		if (overdueCdt != other.overdueCdt)
 			return false;
 		if (rturnDate == null) {
@@ -196,8 +214,9 @@ public class Lending {
 	@Override
 	public String toString() {
 		return String.format(
-				"Lending [lendRturnNo=%s, mberId=%s, bookCd=%s, lendDate=%s, rturnDueDate=%s, rturnPsmCdt=%s, rturnDate=%s, overdueCdt=%s]",
-				lendRturnNo, mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt);
+				"Lending [lendRturnNo=%s, mberId=%s, bookCd=%s, lendDate=%s, rturnDueDate=%s, rturnPsmCdt=%s, rturnDate=%s, overdueCdt=%s, overdueBookCnt=%s]",
+				lendRturnNo, mberId, bookCd, lendDate, rturnDueDate, rturnPsmCdt, rturnDate, overdueCdt,
+				overdueBookCnt);
 	}
 
 }

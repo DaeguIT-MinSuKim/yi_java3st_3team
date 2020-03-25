@@ -24,8 +24,8 @@ public class MemberBookOverdueTblPanel extends AbsListPanel<Lending> {
 
 	@Override
 	protected void setTblWidthAlign() {
-		tableSetWidth(80,170,150,50,150,150,50);
-		tableCellAlign(SwingConstants.CENTER, 0,1,2,3,4,5);
+		tableSetWidth(150,100,150,150,80);
+		tableCellAlign(SwingConstants.CENTER, 0,1,2,3,4);
 	}
 	
 	@Override
@@ -42,12 +42,19 @@ public class MemberBookOverdueTblPanel extends AbsListPanel<Lending> {
 
 	@Override
 	protected String[] getColNames() {
-		return new String[] {"도서코드","도서명","회원ID","이름","대여일","반납예정일","선택"};
+		return new String[] {"회원ID","이름","대여일","반납예정일", "대여도서권수","선택"};
 	}
 
 	@Override
 	protected Object[] toArray(Lending item) {
-		return new Object[] {item.getBookCd().getBookCode(),item.getBookCd().getBookName(),item.getMberId().getMberId(),item.getMberId().getMberName(),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(item.getLendDate()),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(item.getRturnDueDate()),false};
+		return new Object[] {
+				item.getMberId().getMberId(),
+				item.getMberId().getMberName(),
+				String.format("%tF", item.getLendDate()),
+				String.format("%tF", item.getRturnDueDate()),
+				item.getOverdueBookCnt(),
+				false
+		};
 	}
 
 	@Override
@@ -56,7 +63,7 @@ public class MemberBookOverdueTblPanel extends AbsListPanel<Lending> {
 	}
 	public class TestTabelModel extends DefaultTableModel {
 		public TestTabelModel() {
-			super(new String[] {"도서코드", "도서명", "저자/역자", "발행년도", "출판사", "대여일", "반납예정일","선택"},0);
+			super(new String[] {"회원ID","이름","대여일","반납예정일", "대여도서권수","선택"},0);
 		}
 		public TestTabelModel(Object[][] rows, String[] columns) {
 			super(rows,columns);
@@ -69,7 +76,7 @@ public class MemberBookOverdueTblPanel extends AbsListPanel<Lending> {
 			case 0:
 				clazz = Integer.class;
 				break;
-			case 6:
+			case 5:
 				clazz = Boolean.class;
 				break;
 			}
@@ -78,14 +85,14 @@ public class MemberBookOverdueTblPanel extends AbsListPanel<Lending> {
 
 		@Override
 		public boolean isCellEditable(int row, int column) {
-			return column == 6;
+			return column == 5;
 		}
 
 		@Override
 		public void setValueAt(Object aValue, int row, int column) {
-			if(aValue instanceof Boolean && column == 6) {
+			if(aValue instanceof Boolean && column == 5) {
 				Vector rowData = (Vector)getDataVector().get(row);
-				rowData.set(6, (boolean)aValue);
+				rowData.set(5, (boolean)aValue);
 				fireTableCellUpdated(row, column);
 			}
 		}	

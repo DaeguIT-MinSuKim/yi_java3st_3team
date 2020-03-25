@@ -520,9 +520,10 @@ public class LendingDaoImpl implements LendingDao {
 
 	public List<Lending> showLendingListByOverdue() {
 		List<Lending> list = new ArrayList<>();
-		String sql = "select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date \r\n" + 
-				"from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id \r\n" + 
-				"where date(now()) >= date(rturn_due_date) and l.rturn_date is NULL";
+		String sql = "select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date , count(m.mber_id) \r\n" + 
+				"	from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id \r\n" + 
+				"	where date(now()) >= date(rturn_due_date) and l.rturn_date is null\r\n" + 
+				"	group by m.mber_id ;";
 		try(Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery(sql)) {
@@ -544,7 +545,8 @@ public class LendingDaoImpl implements LendingDao {
 		bookCd.setBookName(rs.getString("book_name"));
 		Date lendDate = rs.getTimestamp("lend_date");
 		Date rturnDueDate = rs.getTimestamp("rturn_due_date");
-		return new Lending(mberId, bookCd, lendDate, rturnDueDate);
+		int overdueBookCnt = rs.getInt("count(m.mber_id)");
+		return new Lending(mberId, bookCd, lendDate, rturnDueDate, overdueBookCnt);
 	}
 	
 	@Override

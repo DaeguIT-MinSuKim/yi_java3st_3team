@@ -114,6 +114,7 @@ public class ReturnListPanel extends JPanel {
 		List<Lending> list = service.selectLendingByMberId(member);
 		if (list == null) {
 			JOptionPane.showMessageDialog(null, "반납할 도서가 없습니다.");
+			return;
 		}
 		for (Lending lending : list) {
 			StringBuilder sb = new StringBuilder();

@@ -255,6 +255,7 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 			cmbCat.setSelectedIndex(-1);
 		} catch (NullPointerException e1) {
 			JOptionPane.showMessageDialog(null, "찾는 도서가 없습니다");
+			cmbCat.setSelectedIndex(-1);
 		}
 
 	}

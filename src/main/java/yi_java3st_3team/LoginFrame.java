@@ -290,15 +290,15 @@ public class LoginFrame extends JFrame implements ActionListener {
 		pLibrary.add(pLibraryLbls);
 		pLibraryLbls.setLayout(new GridLayout(0, 1, 5, 5));
 
-		JLabel lblLibraryName = new JLabel("3조 도서관");
+		JLabel lblLibraryName = new JLabel("대구 3조 도서관");
 		lblLibraryName.setBackground(Color.WHITE);
 		pLibraryLbls.add(lblLibraryName);
 
-		JLabel lblLibraryAdss = new JLabel("대구광역시 서구 어딘가");
+		JLabel lblLibraryAdss = new JLabel("대구광역시 서구 내당동");
 		lblLibraryAdss.setBackground(Color.WHITE);
 		pLibraryLbls.add(lblLibraryAdss);
 
-		JLabel lblLibraryTel = new JLabel("053-000-0000 / FAX : 000-0000");
+		JLabel lblLibraryTel = new JLabel("053-333-3333 / FAX : 333-3000");
 		lblLibraryTel.setBackground(Color.WHITE);
 		pLibraryLbls.add(lblLibraryTel);
 

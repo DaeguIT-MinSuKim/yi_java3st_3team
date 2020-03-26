@@ -18,6 +18,10 @@ select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad , m
 from member 	
 where mber_id = 'daddystop@gmail.com' and mber_pass = 'airopwieop3678';
 
+select book_code, book_name, authr_name, trnslr_name, pls, pls_name, pblicte_year, book_price,b.lend_psb_cdt , b.total_le_cnt, book_img, lc_no, ml_no, lend_date, rturn_date, rturn_due_date, od_cnt 
+	from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no left join member m on l.mber_id = m.mber_id 
+	where l.mber_id = 'ku23324@naver.com' and rturn_date is null;
+
 
 
 -- 탈퇴회원 테스트 용 데이터 변경
@@ -124,6 +128,17 @@ create view vw_book as
 select * from vw_book where book_code like '09%' and lc_no = 9;
 
 select * from vw_book where book_code like '%09%'  
+
+select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year ,
+	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no,
+	   b1.regist_date , b1.dsuse_cdt
+	from book b1 
+		left join publishing_company p on b1.pls = p.pls_no left join large_classification l on b1.lc_no = l.lclas_no 
+		left join middle_classification m on m.mlsfc_no = b1.ml_no and l.lclas_no = m.lclas_no,
+		(select book_name, authr_name , pls, pblicte_year , book_price , count(*) as book_cnt from book group by book_name, authr_name , pls, pblicte_year , book_price) b2
+	where b1.book_name = b2.book_name and b1.authr_name = b2.authr_name and b1.pls = b2.pls and b1.pblicte_year = b2.pblicte_year and 
+			b1.book_price = b2.book_price 
+	order by b1.book_code;
 
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year ,
 	   b1.book_price , b2.book_cnt, b1.lend_psb_cdt , b1.total_le_cnt , b1.book_img , b1.lc_no, l.lclas_name , b1.ml_no,
@@ -461,7 +476,8 @@ delete from request_book where reqst_book_name = 'Java의 정석';
 -- delete from request_book where reqst_book_no = 14;
 
 
-
+-- 반납 연기 신청
+update lending  set rturn_psm_cdt = 1 , rturn_due_date = '2020-04-10' where book_cd = '0901.025-1' and mber_id = 'ku23324@naver.com' and rturn_date is null
 
 		
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year , 

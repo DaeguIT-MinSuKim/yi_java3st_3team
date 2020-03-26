@@ -55,7 +55,6 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	private Dimension picDimension = new Dimension(100, 150);
 	private String picPath;
 	private JButton btnUpdate;
-	private JComboBox<Grade> cmbGrade;
 	private String defaultImg = getClass().getClassLoader().getResource("no-image.png").getPath();
 	private JButton btnPic;
 	private MemberUIService service;
@@ -64,6 +63,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	private JFrame zipFrame;
 	private MemberTblPanel pMemberList;
 	private MemberUpdateDialog updateDialog;
+	private JTextField tfGrade;
 
 //	public static void main(String[] args) {
 //		try {
@@ -139,13 +139,15 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		btnZip = new JButton("검색");
 		btnZip.addActionListener(this);
 		pUpdate.add(btnZip);
-
+		
 		JLabel lblGrade = new JLabel("등급");
 		lblGrade.setHorizontalAlignment(SwingConstants.CENTER);
 		pUpdate.add(lblGrade);
-
-		cmbGrade = new JComboBox();
-		pUpdate.add(cmbGrade);
+		
+		tfGrade = new JTextField();
+		tfGrade.setEditable(false);
+		pUpdate.add(tfGrade);
+		tfGrade.setColumns(10);
 
 		JPanel pImage = new JPanel();
 		contentPanel.add(pImage);
@@ -191,7 +193,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 
 	private void setService(MemberUIService service) {
 		this.service = service;
-		setCmbList(service.showGradeList());
+//		setCmbList(service.showGradeList());
 	}
 
 	private void setByte(byte[] mberImg) {
@@ -213,14 +215,21 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		tfTel.setText(item.getMberTel());
 		tfAd.setText(String.format("(%d) %s %s", item.getMberZip().getZipCode(), item.getMberBassAd(),
 				item.getMberDetailAd()));
-		if(item.getGrade().getGradeNo() == 0) {
-			//cmbGrade.setSelectedIndex(grade+1);
-			cmbGrade.setSelectedItem("일반");
-		}else {
-			cmbGrade.setSelectedIndex(item.getGrade().getGradeNo()-1);
-			//cmbGrade.setSelectedItem(item.getGrade().getGradeName());
+		
+		if(item.getGrade().getGradeNo() == 1) {
+			tfGrade.setText("일반");
+		} else if(item.getGrade().getGradeNo() == 2) {
+			tfGrade.setText("우수");
 		}
-		//JOptionPane.showMessageDialog(null, item.getMberImg().length);
+		
+//		if(item.getGrade().getGradeNo() == 0) {
+//			//cmbGrade.setSelectedIndex(grade+1);
+//			cmbGrade.setSelectedItem("일반");
+//		}else {
+//			cmbGrade.setSelectedIndex(item.getGrade().getGradeNo()-1);
+//			//cmbGrade.setSelectedItem(item.getGrade().getGradeName());
+//		}
+//		//JOptionPane.showMessageDialog(null, item.getMberImg().length);
 		
 		if (item.getMberImg() == null || item.getMberImg().length == 0) {
 			setStr(defaultImg);
@@ -229,11 +238,10 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		}
 	}
 
-	public void setCmbList(List<Grade> gradeList) {
-		DefaultComboBoxModel<Grade> model = new DefaultComboBoxModel<Grade>(new Vector<>(gradeList));
-		cmbGrade.setModel(model);
-		// cmbGrade.setSelectedIndex(-1);
-	}
+//	public void setCmbList(List<Grade> gradeList) {
+//		DefaultComboBoxModel<Grade> model = new DefaultComboBoxModel<Grade>(new Vector<>(gradeList));
+//		// cmbGrade.setSelectedIndex(-1);
+//	}
 	
 	
 	public void validCheck() {
@@ -265,7 +273,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	protected void btnUpdateActionPerformed(ActionEvent e) {
 		try {
 			Member upMember = getItem();
-			service.updateMember(upMember);
+			service.updateCountMember(upMember);
 			JOptionPane.showMessageDialog(null, String.format("%s [%s]님의 정보가 수정 되었습니다.",upMember.getMberId() ,upMember.getMberName()));
 			dispose();
 		} catch (InvalidCheckException e1) {
@@ -282,7 +290,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		Date mberBrthdy = tfBirthday.getDate();
 		String mberTel = tfTel.getText().trim();
 		byte[] mberImg = getImage();
-		Grade gradeName = (Grade) cmbGrade.getSelectedItem();
+		Grade gradeName = new Grade(tfGrade.getText().trim());
 		Grade grade = new Grade(gradeName.getGradeName().equals("일반")? 1 : 2);
 		ZipCode zip = null;
 		String mberBassAd = null;

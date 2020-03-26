@@ -132,10 +132,10 @@ public class MemberProfileModifyPanel extends AbsItemPanel<Member> implements Ac
 		tfID.setEditable(false);
 		pID.add(tfID);
 
-		btnIDCheck = new JButton("ID 중복확인");
-		btnIDCheck.addActionListener(this);
-		btnIDCheck.setFont(new Font("굴림", Font.PLAIN, 12));
-		pID.add(btnIDCheck);
+//		btnIDCheck = new JButton("ID 중복확인");
+//		btnIDCheck.addActionListener(this);
+//		btnIDCheck.setFont(new Font("굴림", Font.PLAIN, 12));
+//		pID.add(btnIDCheck);
 
 		JLabel lblName = new JLabel("이름");
 		lblName.setFont(new Font("굴림", Font.PLAIN, 17));

@@ -147,10 +147,10 @@ public class LibrarianProfileModifyPanel extends AbsItemPanel<Librarian> impleme
 		tfID.setEditable(false);
 		pID.add(tfID);
 
-		btnIDCheck = new JButton("ID 중복확인");
-		btnIDCheck.addActionListener(this);
-		btnIDCheck.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-		pID.add(btnIDCheck);
+//		btnIDCheck = new JButton("ID 중복확인");
+//		btnIDCheck.addActionListener(this);
+//		btnIDCheck.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+//		pID.add(btnIDCheck);
 
 		JLabel lblName = new JLabel("이름");
 		lblName.setFont(new Font("맑은 고딕", Font.PLAIN, 14));

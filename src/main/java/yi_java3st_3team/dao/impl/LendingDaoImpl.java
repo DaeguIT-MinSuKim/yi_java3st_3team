@@ -475,12 +475,13 @@ public class LendingDaoImpl implements LendingDao {
 
 	@Override
 	public int updateLendingByCodeAndMberId(Lending lending) {
-		String sql = "update lending  set rturn_psm_cdt = ? where book_cd = ? and mber_id = ? and rturn_date is null";
+		String sql = "update lending  set rturn_psm_cdt = ?, rturn_due_date = ? where book_cd = ? and mber_id = ? and rturn_date is null";
 
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, lending.getRturnPsmCdt());
-			pstmt.setString(2, lending.getBookCd().getBookCode());
-			pstmt.setString(3, lending.getMberId().getMberId());
+			pstmt.setTimestamp(2, new Timestamp(lending.getRturnDueDate().getTime()));
+			pstmt.setString(3, lending.getBookCd().getBookCode());
+			pstmt.setString(4, lending.getMberId().getMberId());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {

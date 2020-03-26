@@ -157,7 +157,7 @@ public class MemberDaoImpl implements MemberDao {
 			sql.append("od_cnt=?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append("where mber_id=?");
-
+		
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
 			int argCnt = 1;
@@ -192,6 +192,61 @@ public class MemberDaoImpl implements MemberDao {
 				pstmt.setInt(argCnt++, member.getWdrCdt());
 			if (member.getOdCnt() !=-1)
 				pstmt.setInt(argCnt++, member.getOdCnt());
+			pstmt.setString(argCnt++, member.getMberId());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+	
+	public int updateCountMember(Member member) {
+		StringBuffer sql = new StringBuffer("update member set "); // 띄워쓰기 주의하자!
+		if (member.getMberPass() != null)
+			sql.append("mber_pass=?, ");
+		if (member.getMberName() != null)
+			sql.append("mber_name=?, ");
+		if (member.getMberBrthdy() != null)
+			sql.append("mber_brthdy=?, ");
+		if (member.getMberZip() != null)
+			sql.append("mber_zip=?, ");
+		if (member.getMberBassAd() != null)
+			sql.append("mber_bass_ad=?, ");
+		if (member.getMberDetailAd() != null)
+			sql.append("mber_detail_ad=?, ");
+		if (member.getMberTel() != null)
+			sql.append("mber_tel=?, ");
+		if (member.getMberImg() != null)
+			sql.append("mber_img=?, ");
+		if (member.getGrade().getGradeNo() != -1)
+			sql.append("grade=?, ");
+		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
+		sql.append("where mber_id=?");
+
+		try (Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+			int argCnt = 1;
+
+			if (member.getMberPass() != null)
+				pstmt.setString(argCnt++, member.getMberPass());
+			if (member.getMberName() != null)
+				pstmt.setString(argCnt++, member.getMberName());
+			if (member.getMberBrthdy() != null)
+				pstmt.setTimestamp(argCnt++, new Timestamp(member.getMberBrthdy().getTime()));
+			if (member.getMberZip() != null)
+				pstmt.setInt(argCnt++, member.getMberZip().getZipCode());
+			if (member.getMberBassAd() != null)
+				pstmt.setString(argCnt++, member.getMberBassAd());
+			if (member.getMberDetailAd() != null)
+				pstmt.setString(argCnt++, member.getMberDetailAd());
+			if (member.getMberTel() != null)
+				pstmt.setString(argCnt++, member.getMberTel());
+			if (member.getMberImg() != null)
+				pstmt.setBytes(argCnt++, member.getMberImg());
+			if (member.getGrade().getGradeNo() != -1)
+				pstmt.setInt(argCnt++, member.getGrade().getGradeNo());
 			pstmt.setString(argCnt++, member.getMberId());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();

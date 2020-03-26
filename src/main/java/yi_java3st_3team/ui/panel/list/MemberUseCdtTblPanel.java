@@ -99,7 +99,7 @@ public class MemberUseCdtTblPanel extends JPanel {
 						cal.setTime(date);
 						cal.add(Calendar.DATE, 10);
 						Date rturnDate = cal.getTime();
-						System.out.println(rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
+						System.out.println("반납연기신청 : "+rturnDate + " / " + cdt + " / " + lists.get(i).getBookCd().getBookCode()+"/"
 								+ lists.get(i).getMberId().getMberId());
 						
 						
@@ -108,6 +108,8 @@ public class MemberUseCdtTblPanel extends JPanel {
 						lending.setMberId(new Member(lists.get(i).getMberId().getMberId()));
 						lending.setRturnPsmCdt(1);
 						lending.setRturnDueDate(rturnDate);
+						
+						System.out.println("반납연기신청 Date : "+lending.getRturnDueDate());
 						service.modifyLendingByCodeAndMberId(lending);
 					} else if( lists.get(i).getRturnPsmCdt() > 0){
 						JOptionPane.showMessageDialog(null, "이미 반납신청 되었습니다.\n(반납연기신청은 1회만 가능합니다.)");

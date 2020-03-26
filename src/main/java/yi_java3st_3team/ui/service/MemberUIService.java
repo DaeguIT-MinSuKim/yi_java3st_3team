@@ -73,6 +73,9 @@ public class MemberUIService {
 	public void updateMember(Member mem) {
 		memDao.updateMember(mem);
 	}
+	public void updateCountMember(Member mem) {
+		memDao.updateCountMember(mem);
+	}
 
 	public List<Member> showLendingMemberId2(Member id) {
 		return memDao.selectMemberByCodeName(id);

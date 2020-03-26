@@ -265,7 +265,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	protected void btnUpdateActionPerformed(ActionEvent e) {
 		try {
 			Member upMember = getItem();
-			service.updateMember(upMember);
+			service.updateCountMember(upMember);
 			JOptionPane.showMessageDialog(null, String.format("%s [%s]님의 정보가 수정 되었습니다.",upMember.getMberId() ,upMember.getMberName()));
 			dispose();
 		} catch (InvalidCheckException e1) {

@@ -29,10 +29,10 @@ import yi_java3st_3team.ui.panel.MemberUseCdtPanel;
 import yi_java3st_3team.ui.panel.MemberRecomBookInfoPanel;
 import yi_java3st_3team.ui.panel.MemberRequestBookPanel;
 import yi_java3st_3team.ui.panel.content.PasswordCheckPanel;
+import yi_java3st_3team.ui.panel.submenu.WestMemberProfileMenuPanel;
+import yi_java3st_3team.ui.panel.submenu.WestRecomBookPanel;
 //github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
 import yi_java3st_3team.ui.service.MemberUIService;
-import yi_java3st_3team.ui.subMenu.WestMemberProfileMenuPanel;
-import yi_java3st_3team.ui.subMenu.WestRecomBookPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame_user extends JFrame {

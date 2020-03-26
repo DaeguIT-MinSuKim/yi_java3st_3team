@@ -616,4 +616,33 @@ public class LendingDaoImpl implements LendingDao {
 		}
 		return 0;
 	}
+
+	@Override
+	public int updateMemberOdcnt(Member m) throws SQLException {
+		String sql = "update member set od_cnt = ? where mber_id = ?";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, m.getOdCnt());
+			pstmt.setString(2, m.getMberId());
+			return pstmt.executeUpdate();
+		}
+	}
+
+	public int selectLendingByMemberReturnNullCount(Member member) {
+		List<Lending> list = new ArrayList<>();
+		String sql = "select * from lending where mber_id = ? and rturn_date is null";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, member.getMberId());
+			try(ResultSet rs = pstmt.executeQuery()) {
+				while(rs.next()) {
+					list.add(getLending(rs));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list.size();
+	}
 }

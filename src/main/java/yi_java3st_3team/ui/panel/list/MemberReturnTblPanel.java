@@ -2,6 +2,7 @@ package yi_java3st_3team.ui.panel.list;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class MemberReturnTblPanel extends JPanel {
 	private JTable table;
 	private LendingUiService service;
 	private TestTabelModel model;
+	private int returnIdx;
+	private int returnGetIdx;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -54,18 +57,17 @@ public class MemberReturnTblPanel extends JPanel {
 		model = new TestTabelModel();
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
-
-		/*
-		 * for(Lending lending : list) { model.addRow(new Object[] {
-		 * lending.getBookCd().getBookCode(), lending.getBookCd().getBookName(),
-		 * lending.getBookCd().getAuthrName(), new
-		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
-		 * lending.getBookCd().getPls().getPlsName(), new
-		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),lending.
-		 * getRturnDate()==null?"":String.format("%s",new
-		 * SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate())),false}); }
-		 */
 	}
+	
+
+	public int getReturnGetIdx() {
+		return returnGetIdx;
+	}
+
+	public void setReturnGetIdx(int returnGetIdx) {
+		this.returnGetIdx = returnGetIdx;
+	}
+
 
 	public class TestTabelModel extends DefaultTableModel {
 		public TestTabelModel() {
@@ -116,7 +118,6 @@ public class MemberReturnTblPanel extends JPanel {
 			JOptionPane.showMessageDialog(null, "반납할 도서가 없습니다.");
 			return;
 		}
-//		model = new TestTabelModel();
 		for (Lending lending : list) {
 			
 			StringBuilder sb = new StringBuilder();
@@ -135,8 +136,6 @@ public class MemberReturnTblPanel extends JPanel {
 							: String.format("%s",
 									new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate())) });
 		}
-		
-//		table.setModel(model);
 	}
 
 	public void AllChecking(boolean b) {
@@ -146,26 +145,42 @@ public class MemberReturnTblPanel extends JPanel {
 		}
 	}
 
-	public void setReturn(String mberId) {
+	public int setReturn(String mberId) {
+		int rturnbookCount = service.selectLendingByMemberReturnNullCount(new Member(mberId));
 		ArrayList<String> list = new ArrayList<String>();
 		int cnt = model.getRowCount();
-		for (int j = 0; j < cnt; j++) {
-			boolean chk = (Boolean) model.getValueAt(j, 7);
-			if (chk == true) {
-				String bookCd = (String) model.getValueAt(j, 0);
-				Member member = service.selectedMberId(mberId);
-				Book book = service.selectedBookCd(bookCd);
-				service.updateLendingList(member, book);
-				list.add(book.getBookName());
+		Member member = service.selectedMberId(mberId);
+		System.out.println(member.getOdCnt());
+		for(int i=0;i<cnt;i++) {
+			boolean chk = model.getValueAt(i, 7)==null?false:true;
+			if(chk) {
+				String bookcd = (String)(model.getValueAt(i, 1));
+				service.updateLendingList(member, new Book(bookcd));
 			}
 		}
+		if(rturnbookCount > returnGetIdx) {
+			try {
+				System.out.println(member.getOdCnt());
+				int i = member.getOdCnt();
+				i++;
+				member.setOdCnt(i);
+				System.out.println(i);
+				System.out.println(member.getOdCnt());
+				service.updateMemberOdCnt(member);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		for (int i = cnt - 1; i > -1; i--) {
-			boolean chk = (Boolean) model.getValueAt(i, 7);
+			boolean chk = model.getValueAt(i, 7)==null?false:true;
 			if (chk) {
 				model.removeRow(i);
 			}
 		}
 		JOptionPane.showMessageDialog(null, list.toString() + " 반납 되었습니다.");
+		return rturnbookCount;
 	}
 
 	public void clearTf() {

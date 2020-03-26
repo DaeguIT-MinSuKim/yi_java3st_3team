@@ -1,5 +1,6 @@
 package yi_java3st_3team.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import yi_java3st_3team.dto.Book;
@@ -10,7 +11,7 @@ public interface LendingDao {
 	Lending selectLendingByNo(Lending lending);
 
 	List<Lending> selectLendingByAll();
-
+	int selectLendingByMemberReturnNullCount(Member member);
 	List<Lending> selectLendingByAllTest();
 
 	List<Lending> selectLendingByMberIdAll(Lending lending);
@@ -50,4 +51,5 @@ public interface LendingDao {
 	int insertLendingUpdateBookMember(Member member, Book book);
 
 	int updateLendingBookMember(Member m, Book b);
+	int updateMemberOdcnt(Member m) throws SQLException;
 }

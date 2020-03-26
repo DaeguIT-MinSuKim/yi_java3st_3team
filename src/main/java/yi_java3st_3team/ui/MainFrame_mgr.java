@@ -43,13 +43,13 @@ import yi_java3st_3team.ui.panel.MemberRentPanel;
 import yi_java3st_3team.ui.panel.BookRequestIntoPanel;
 import yi_java3st_3team.ui.panel.MemberReturnPanel;
 import yi_java3st_3team.ui.panel.content.PasswordCheckPanel;
+import yi_java3st_3team.ui.panel.submenu.WestBookManagementPanel;
+import yi_java3st_3team.ui.panel.submenu.WestLendingManagementPanel;
+import yi_java3st_3team.ui.panel.submenu.WestLibrarianManagementPanel;
+import yi_java3st_3team.ui.panel.submenu.WestMemberManagementPanel;
+import yi_java3st_3team.ui.panel.submenu.WestStatisticPanel;
 import yi_java3st_3team.ui.service.LibrarianService;
 import yi_java3st_3team.ui.service.MemberUIService;
-import yi_java3st_3team.ui.subMenu.WestBookManagementPanel;
-import yi_java3st_3team.ui.subMenu.WestLendingManagementPanel;
-import yi_java3st_3team.ui.subMenu.WestLibrarianManagementPanel;
-import yi_java3st_3team.ui.subMenu.WestMemberManagementPanel;
-import yi_java3st_3team.ui.subMenu.WestStatisticPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame_mgr extends JFrame {

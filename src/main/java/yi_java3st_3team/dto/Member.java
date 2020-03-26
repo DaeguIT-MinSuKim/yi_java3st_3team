@@ -480,5 +480,7 @@ public class Member {
 
 	public void getMberBrthStr(String mberBrthStr) {
 		this.mberBrthStr = mberBrthStr;
-	}	
+	}
+
+	
 }

@@ -36,7 +36,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public Member selectMemberByNo(Member member) {
-		String sql = "select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, grad_name, book_le_cnt, lend_psb_cdt, join_dt, wdr_cdt from member m left join grade g on m.grade = g.grade_no where mber_id = ?";
+		String sql = "select mber_id, mber_pass, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, grad_name, book_le_cnt, lend_psb_cdt, join_dt, wdr_cdt,od_cnt from member m left join grade g on m.grade = g.grade_no where mber_id = ?";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, member.getMberId());
 //			LogUtil.prnLog(pstmt);
@@ -277,12 +277,14 @@ public class MemberDaoImpl implements MemberDao {
 		int lendPsbCdt = rs.getInt("lend_psb_cdt");
 		Date joinDt = rs.getTimestamp("join_dt");
 		int wdrCdt = rs.getInt("wdr_cdt");
+		int odCnt = rs.getInt("od_cnt");
 		Member mber = new Member(mberId, mberPass, mberName, mberBrthdy, mberZip, mberBassAd, mberDetailAd, mberTel,
 				totalLeCnt, lendBookCnt, grade, lendPsbCdt, joinDt, wdrCdt);
 		if (isImg) {
 			byte[] mberImg = rs.getBytes("mber_img");
 			mber.setMberImg(mberImg);
 		}
+		mber.setOdCnt(odCnt);
 		LogUtil.prnLog("getMember => " + mber);
 		return mber;
 	}
@@ -521,23 +523,43 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public void updateOdCnt(Member member) {
-//		List<Member> list = new ArrayList<>();
-//		String sql = "select mber_id, mber_name, mber_brthdy, mber_zip, mber_bass_ad, mber_detail_ad, mber_tel, mber_img, total_le_cnt, lend_book_cnt, grade, join_dt , wdr_cdt, lend_psb_cdt, od_cnt, g.book_le_cnt, g.grad_name\r\n" + 
-//				"from member m left join grade g on m.grade = g.grade_no \r\n" + 
-//				"where mber_name like ?";
-//		try (Connection con = MysqlDataSource.getConnection();
-//				PreparedStatement pstmt = con.prepareStatement(sql);){
-//			pstmt.setString(1, "%" + member.getMberName() + "%" );
-//				try(ResultSet rs = pstmt.executeQuery()){
-//					while (rs.next()){
-//						list.add(getMemberByAll2(rs));
-//					} 
-//				}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return list;
+	public int updateOdCnt(Member member) {
+		String sql = "{call return_book_od_cnt(?)}";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareCall(sql);) {
+			pstmt.setString(1, member.getMberId());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int selectByOdCnt(Member member) {
+		String sql = "insert into member(mber_id, mber_pass,mber_name, mber_brthdy,mber_zip,mber_bass_ad,mber_detail_ad,mber_tel,mber_img, total_le_cnt, lend_book_cnt, grade, lend_psb_cdt, od_cnt, join_dt, wdr_cdt) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, member.getMberId());
+			pstmt.setString(2, member.getMberPass());
+			pstmt.setString(3, member.getMberName());
+			pstmt.setTimestamp(4, new Timestamp(member.getMberBrthdy().getTime()));
+			pstmt.setInt(5, member.getMberZip().getZipCode());
+			pstmt.setString(6, member.getMberBassAd());
+			pstmt.setString(7, member.getMberDetailAd());
+			pstmt.setString(8, member.getMberTel());
+			pstmt.setBytes(9, member.getMberImg());
+			pstmt.setInt(10, member.getTotalLeCnt());
+			pstmt.setInt(11, member.getLendBookCnt());
+			pstmt.setInt(12, member.getGrade().getGradeNo());
+			pstmt.setInt(13, member.getLendPsbCdt());
+			pstmt.setInt(14, member.getOdCnt());
+			pstmt.setTimestamp(15, new Timestamp(member.getJoinDt().getTime()));
+			pstmt.setInt(16, member.getWdrCdt());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 

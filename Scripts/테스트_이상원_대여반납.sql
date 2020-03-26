@@ -630,3 +630,207 @@ select count(*)
 	from member m left join lending l on m.mber_id = l.mber_id
 	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'xodnjs1218@naver.com';
 	
+-- 반납 프로시저 테스트2(회원 아이디)
+drop procedure if exists return_book_od_cnt;
+
+delimiter $$
+$$
+create procedure return_book_od_cnt(in _mber_id varchar(30))
+
+begin
+	declare _od_cnt int;
+	declare continue handler for sqlexception
+	begin
+		select '오류 발생했습니다.';
+		rollback;
+	end;
+	set AUTOCOMMIT = 0;
+	start transaction;
+		-- 회원 테이블
+		-- 특정 회원이 도서를 반납했을 경우 반납도서를 카운트
+		select count(*) into _od_cnt
+			from member m left join lending l on m.mber_id = l.mber_id
+			where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = _mber_id;
+		-- 특정 회원이 도서를 반납했을 경우 반납날을 기준으로 반납예정일 보다 늦었을 경우 회원 테이블의 연체횟수가 1 증가
+		if _od_cnt >= 1 then
+			update member m left join lending l
+				on m.mber_id = l.mber_id
+				set od_cnt = od_cnt +1
+				where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = _mber_id; 
+		end if;
+		-- 회원 테이블의 연체횟수가 5회 이상일시 대여가능여부를 업데이트 
+		update member
+			set lend_psb_cdt = 1
+			where od_cnt>4;
+	commit;
+	set AUTOCOMMIT = 1;
+end $$
+
+delimiter ;
+
+
+
+
+
+
+
+
+
+select *
+	from member m left join lending l on m.mber_id = l.mber_id
+	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'xodnjs1218@naver.com';
+
+
+update member m left join lending l
+	on m.mber_id = l.mber_id
+	set od_cnt = od_cnt +1
+	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'xodnjs1218@naver.com';
+
+
+select count(*)  
+	from member m left join lending l on m.mber_id = l.mber_id
+	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'xodnjs1218@naver.com';
+
+select od_cnt 
+	from `member` m 
+	where mber_id = 'xodnjs1218@naver.com';
+
+
+select *
+	from lending
+	where mber_id = 'xodnjs1218@naver.com';
+
+select count(*) 
+	from member m left join lending l on m.mber_id = l.mber_id
+	where l.rturn_date = curdate() and l.overdue_cdt = 1 and m.mber_id = 'xodnjs1218@naver.com';
+select count(*) 
+	from member m left join lending l on m.mber_id = l.mber_id
+	where l.rturn_date = curdate() and l.overdue_cdt = 0 and m.mber_id = 'xodnjs1218@naver.com';
+select count(*) 
+	from member m left join lending l on m.mber_id = l.mber_id
+	where l.rturn_date = curdate() and m.mber_id = 'xodnjs1218@naver.com';
+
+
+-- 반납 프로시저 테스트2(회원 아이디)
+drop procedure if exists return_book_od_cnt;
+
+delimiter $$
+$$
+create procedure return_book_od_cnt(in _mber_id varchar(30))
+
+begin
+	declare _od_cnt1 int;
+	declare continue handler for sqlexception
+	begin
+		select '오류 발생했습니다.';
+		rollback;
+	end;
+	set AUTOCOMMIT = 0;
+	start transaction;
+		-- 회원 테이블
+		-- 특정 회원이 도서를 반납했을 경우 반납일을 기준으로 연체도서를 카운트
+		select * into _od_cnt1
+			from lending
+			where mber_id = _mber_id and rturn_date is null and rturn_due_date <curdate();
+		-- 특정 회원이 도서를 반납했을 경우 반납날을 기준으로 반납예정일 보다 늦었을 경우 회원 테이블의 연체횟수가 1 증가
+		if _od_cnt >= 1 then
+			update member m left join lending l
+				on m.mber_id = l.mber_id
+				set od_cnt = od_cnt +1
+				where m.mber_id = _mber_id; 
+		end if;
+	commit;
+	set AUTOCOMMIT = 1;
+end $$
+
+delimiter ;
+
+select *
+	from lending l 
+	where DATEDIFF(rturn_date, rturn_due_date ) > 0;
+
+
+select *
+	from lending l;
+
+
+
+
+select * 
+	from member m left join lending l on m.mber_id = l.mber_id
+	where l.rturn_date is null and l.overdue_cdt = 0 and m.mber_id = 'xodnjs1218@naver.com';
+select * 
+	from member m left join lending l on m.mber_id = l.mber_id
+	where l.rturn_date = '0000-00-00 00:00:00' and l.overdue_cdt = 0 and m.mber_id = 'xodnjs1218@naver.com';
+select *
+	from lending
+	where mber_id = 'xodnjs1218@naver.com' and rturn_date is null and rturn_due_date <curdate();
+select *
+	from lending
+	where mber_id = 'xodnjs1218@naver.com' and rturn_date curdate() and rturn_due_date <curdate();
+	
+
+
+
+
+
+
+
+select *
+	from lending
+	where mber_id = 'xodnjs1218@naver.com';
+
+
+select m.od_cnt 
+	from lending l join member m on l.mber_id = m.mber_id 
+	where l.mber_id = 'xodnjs1218@naver.com' and l.rturn_date != curdate() and l.rturn_due_date <curdate();
+select l.overdue_cdt, l.rturn_date 
+	from lending l join member m on l.mber_id = m.mber_id 
+	where l.mber_id = 'xodnjs1218@naver.com' and l.rturn_date != curdate() and l.rturn_due_date <curdate()
+	group by l.rturn_date ;
+
+select od_cnt
+	from member m left join lending l on m.mber_id = l.mber_id
+	where m.mber_id = 'xodnjs1218@naver.com'and rturn_date != curdate() and rturn_due_date <curdate(); 
+select count(*) 
+	from member m left join lending l on m.mber_id = l.mber_id
+	where m.mber_id = 'xodnjs1218@naver.com'and rturn_date = curdate() and rturn_due_date <curdate();
+select od_cnt
+	from `member` m 
+	where mber_id = 'xodnjs1218@naver.com';
+	
+
+select count(*) 
+	from lending
+	where mber_id = 'xodnjs1218@naver.com' and rturn_date is null and rturn_due_date <curdate();
+select * 
+	from lending
+	where mber_id = 'xodnjs1218@naver.com' and rturn_date is null and rturn_due_date <curdate();
+select * 
+	from lending
+	where mber_id = 'xodnjs1218@naver.com'  and rturn_due_date <curdate() and overdue_cdt =1
+	group by rturn_date;
+select * 
+	from lending
+	where mber_id = 'xodnjs1218@naver.com'  and rturn_due_date <curdate()
+	group by rturn_date;
+select count(overdue_cdt )
+	from lending
+	where mber_id = 'xodnjs1218@naver.com' and overdue_cdt =1
+	group by rturn_date;
+select * 
+	from lending
+	where mber_id = 'xodnjs1218@naver.com'  and rturn_due_date <curdate() and overdue_cdt =1 and rturn_date = curdate() 
+	group by rturn_date;
+	
+
+select mber_name,od_cnt from member where mber_id = 'xodnjs1218@naver.com';
+update member set od_cnt = 1 where mber_id = 'xodnjs1218@naver.com';
+	
+select *
+			from lending
+			where mber_id = 'xodnjs1218@naver.com' and rturn_date is null;
+			
+select rturn_date 
+			from lending
+			where mber_id = 'xodnjs1218@naver.com' and book_cd = '0601.001-1';

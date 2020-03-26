@@ -18,6 +18,10 @@ select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad , m
 from member 	
 where mber_id = 'daddystop@gmail.com' and mber_pass = 'airopwieop3678';
 
+select book_code, book_name, authr_name, trnslr_name, pls, pls_name, pblicte_year, book_price,b.lend_psb_cdt , b.total_le_cnt, book_img, lc_no, ml_no, lend_date, rturn_date, rturn_due_date, od_cnt 
+	from lending l left join book b on l.book_cd = b.book_code left join publishing_company p on b.pls = p.pls_no left join member m on l.mber_id = m.mber_id 
+	where l.mber_id = 'ku23324@naver.com' and rturn_date is null;
+
 
 
 -- 탈퇴회원 테스트 용 데이터 변경
@@ -461,7 +465,8 @@ delete from request_book where reqst_book_name = 'Java의 정석';
 -- delete from request_book where reqst_book_no = 14;
 
 
-
+-- 반납 연기 신청
+update lending  set rturn_psm_cdt = 1 , rturn_due_date = '2020-04-10' where book_cd = '0901.025-1' and mber_id = 'ku23324@naver.com' and rturn_date is null
 
 		
 select b1.book_code , b1.book_name, b1.authr_name , b1.trnslr_name , b1.pls, p.pls_name , b1.pblicte_year , 

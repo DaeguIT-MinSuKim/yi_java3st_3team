@@ -21,7 +21,7 @@ select * from `member` m ;
 -- request_book 신청도서
 desc request_book; 
 insert into request_book values
-(1, 'ku23324@naver.com', 'Cosmos', '칼 세이건', null, 'Ballantine Books', '2020.02.15', 0),
+(1, 'jojo123@naver.com', 'Cosmos', '칼 세이건', null, 'Ballantine Books', '2020.02.15', 0),
 (2, 'ferw2@naver.com', 'Sapiens', '유발 하라리', null, 'vintage Books', '2020.02.01', 0),
 (3, 'ya2354fr@yahoo.com', '먼 바다', '공지영', null, '해냄', '2020.02.01', 0),
 (4, 'sdksdl@daum.net', '오늘 밤은 사라지지 말아요', '백수린', null, '마음산책', '2020.02.02', 0),

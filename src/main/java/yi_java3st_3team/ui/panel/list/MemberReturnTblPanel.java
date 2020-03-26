@@ -2,7 +2,6 @@ package yi_java3st_3team.ui.panel.list;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +116,6 @@ public class MemberReturnTblPanel extends JPanel {
 			return;
 		}
 		for (Lending lending : list) {
-
 			StringBuilder sb = new StringBuilder();
 			if (lending.getBookCd().getTrnslrName() == null) {
 				sb.append(lending.getBookCd().getAuthrName());
@@ -147,8 +145,11 @@ public class MemberReturnTblPanel extends JPanel {
 		ArrayList<String> list = new ArrayList<String>();
 		int cnt = model.getRowCount();
 		for (int i = 0; i < cnt; i++) {
-			boolean chk = (Boolean) model.getValueAt(i, 7);
-			if (chk == true) {
+//			boolean chk = (Boolean) model.getValueAt(i, 7);
+//			System.out.println("1=============================" + model.getValueAt(i, 7));
+			boolean chk = model.getValueAt(i, 7) == null ? false : true;
+//			System.out.println("2=============================" + model.getValueAt(i, 7));
+			if (chk) {
 				String bookCd = (String) model.getValueAt(i, 0);
 				Member member = service.selectedMberId(mberId);
 				Book book = service.selectedBookCd(bookCd);
@@ -157,8 +158,9 @@ public class MemberReturnTblPanel extends JPanel {
 			}
 		}
 		for (int i = cnt - 1; i > -1; i--) {
-			boolean chk = (Boolean) model.getValueAt(i, 7);
-			if (chk == true) {
+//			boolean chk = (Boolean) model.getValueAt(i, 7);
+			boolean chk = model.getValueAt(i, 7) == null ? false : true;
+			if (chk) {
 				model.removeRow(i);
 			}
 		}

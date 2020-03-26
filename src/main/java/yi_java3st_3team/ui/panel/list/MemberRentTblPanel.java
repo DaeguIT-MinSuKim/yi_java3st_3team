@@ -171,8 +171,7 @@ public class MemberRentTblPanel extends JPanel {
 		ArrayList<String> list = new ArrayList<String>();
 		int cnt = table.getRowCount();
 		for (int i = 0; i < cnt; i++) {
-			boolean chk = model.getValueAt(i, 7)==null?false:true;
-			System.out.println("체크박스의 값 ======================================================>      "+model.getValueAt(i, 7));
+			boolean chk = model.getValueAt(i, 7) == null ? false : true;
 			if (chk == true) {
 				String bookCd = (String) model.getValueAt(i, 0);
 				Member member = service.selectedMberId(mberId);
@@ -182,8 +181,7 @@ public class MemberRentTblPanel extends JPanel {
 			}
 		}
 		for (int i = cnt - 1; i > -1; i--) {
-			boolean chk = model.getValueAt(i, 7)==null?false:true;
-			System.out.println("체크박스의 값 ======================================================>      "+model.getValueAt(i, 7));
+			boolean chk = model.getValueAt(i, 7) == null ? false : true;
 			if (chk) {
 				model.removeRow(i);
 			}
@@ -206,11 +204,12 @@ public class MemberRentTblPanel extends JPanel {
 		}
 		return c;
 	}
+
 	public void clearTf() {
 		table.removeAll();
 		int cnt = model.getRowCount();
 		for (int i = cnt - 1; i > -1; i--) {
-				model.removeRow(i);
+			model.removeRow(i);
 		}
 	}
 }

@@ -194,7 +194,7 @@ begin
 			where overdue_cdt = 1 and mber_id = _mber_id and rturn_date = curdate();
 		-- 연체 도서 카운팅한 수를 연체횟수에 입력
 		update member
-			set od_cnt = cnt
+			set od_cnt = od_cnt+cnt
 			where mber_id = _mber_id; 
 		-- 회원 테이블의 연체횟수가 5회 이상일시 대여가능여부를 업데이트 
 		update member

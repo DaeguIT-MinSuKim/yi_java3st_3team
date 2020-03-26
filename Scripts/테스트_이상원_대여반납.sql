@@ -207,7 +207,13 @@ select *
 	from `member` m;
 
 
+update member
+	set od_cnt = od_cnt+1
+	where mber_id = 'ssdfr@daum.net';
 
+select od_cnt
+	from `member` m 
+	where mber_id = 'ssdfr@daum.net';
 
 
 

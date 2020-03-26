@@ -127,9 +127,10 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 			return;
 		}
 		lending3.getpMember().getTfMberId().setText((String) table.getValueAt(row, 0));
+		lending3.getpMember().getTfMberId().setEnabled(false);
 		lending3.getpMember().getTfMberName().setText((String) table.getValueAt(row, 1));
+		lending3.getpMember().getTfMberName().setEnabled(false);
 		lending3.getpMember().getTfGrade().setText((String) table.getValueAt(row, 2));
-		
 		lending3.getpMember().getTfLendPsbCdt().setText(table.getValueAt(row, 3).toString());
 		int res = (int) table.getValueAt(row, 4);
 		lending3.getpMember().getTfLendBookCdt().setText(res + "");

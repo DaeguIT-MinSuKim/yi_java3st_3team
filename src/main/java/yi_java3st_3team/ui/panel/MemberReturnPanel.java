@@ -187,6 +187,8 @@ public class MemberReturnPanel extends JPanel implements ActionListener {
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
 		pLendingList.setReturn(pMember.getTfMberId().getText());
 //		pLendingList.setReturnGetIdx(rturnbookCount);
+		pMember.getTfMberId().setEnabled(true);
+		pMember.getTfMberName().setEnabled(true);
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {
@@ -212,10 +214,15 @@ public class MemberReturnPanel extends JPanel implements ActionListener {
 
 	public void loadData() {
 		pMember.getTfGrade().setText("");
+		pMember.getTfGrade().setEnabled(false);
 		pMember.getTfOdCnt().setText("");
+		pMember.getTfOdCnt().setEnabled(false);
 		pMember.getTfOverdueCdt().setText("");
+		pMember.getTfOverdueCdt().setEnabled(false);
 		pMember.getTfMberId().setText("");
+		pMember.getTfMberId().setEnabled(true);
 		pMember.getTfMberName().setText("");
+		pMember.getTfMberName().setEnabled(true);
 		pLendingList.clearTf();
 	}
 }

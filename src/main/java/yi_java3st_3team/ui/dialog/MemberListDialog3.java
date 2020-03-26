@@ -99,6 +99,7 @@ public class MemberListDialog3 extends JDialog implements ActionListener {
 			Class clazz = String.class;
 			return clazz;
 		}
+
 		@Override
 		public boolean isCellEditable(int row, int column) {
 			return false;
@@ -121,13 +122,13 @@ public class MemberListDialog3 extends JDialog implements ActionListener {
 	protected void do_okButton_actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
 		lending3.getpMember().getTfMberId().setText((String) table.getValueAt(row, 0));
+		lending3.getpMember().getTfMberId().setEnabled(false);
 		lending3.getpMember().getTfMberName().setText((String) table.getValueAt(row, 1));
+		lending3.getpMember().getTfMberName().setEnabled(false);
 		lending3.getpMember().getTfGrade().setText((String) table.getValueAt(row, 2));
-		
 		lending3.getpMember().getTfOverdueCdt().setText(table.getValueAt(row, 3).toString());
 		int odCdt = (int) table.getValueAt(row, 4);
 		lending3.getpMember().getTfOdCnt().setText(odCdt + "");
-
 		Member id = new Member((String) table.getValueAt(row, 0));
 		lending3.returnBookList(id);
 		dispose();

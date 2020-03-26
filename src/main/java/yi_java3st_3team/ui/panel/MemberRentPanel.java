@@ -243,6 +243,8 @@ public class MemberRentPanel extends JPanel implements ActionListener {
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
 		pLendingList.setRent(pMember.getTfMberId().getText());
+		pMember.getTfMberId().setEnabled(true);
+		pMember.getTfMberName().setEnabled(true);
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {
@@ -267,10 +269,15 @@ public class MemberRentPanel extends JPanel implements ActionListener {
 
 	public void loadData() {
 		pMember.getTfGrade().setText("");
+		pMember.getTfGrade().setEnabled(false);
 		pMember.getTfLendBookCdt().setText("");
+		pMember.getTfLendBookCdt().setEnabled(false);
 		pMember.getTfLendPsbCdt().setText("");
+		pMember.getTfLendPsbCdt().setEnabled(false);
 		pMember.getTfMberId().setText("");
+		pMember.getTfMberId().setEnabled(true);
 		pMember.getTfMberName().setText("");
+		pMember.getTfMberName().setEnabled(true);
 		rdbtnBookCode.setSelected(true);
 		pLendingList.clearTf();
 	}

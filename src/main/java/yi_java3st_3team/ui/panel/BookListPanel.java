@@ -100,9 +100,8 @@ public class BookListPanel extends JPanel implements ActionListener {
 		pSearchBtns.setLayout(new GridLayout(0, 1, 0, 0));
 
 		btnSearch = new JButton("검색");
-		btnSearch.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+		btnSearch.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		btnSearch.setForeground(Color.BLACK);
-		btnSearch.setBackground(new Color(255, 204, 51));
 		btnSearch.setPreferredSize(new Dimension(80, 20));
 		pSearchBtns.add(btnSearch);
 

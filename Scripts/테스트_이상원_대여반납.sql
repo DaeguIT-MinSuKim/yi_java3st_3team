@@ -29,6 +29,8 @@ select l.book_cd , b.book_name , if(b.trnslr_name = null, b.authr_name, concat(b
 	from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id left join publishing_company p on b.pls = p.pls_no 
 	where l.mber_id = 'daddystop@gmail.com';
 
+select *
+	from `member` m ;
 
 
 desc `member`;
@@ -201,7 +203,8 @@ select *
 select *
 from librarian;
 
-
+select *
+	from `member` m;
 
 
 

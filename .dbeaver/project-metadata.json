@@ -1,9 +1,1 @@
-<<<<<<< HEAD
-{"resources":{"Scripts/테스트_황태원.sql":{"sql-editor-data-source-id":"mysql5-17111d1b403-1750cfacc7f8c9c"}}}
-=======
-<<<<<<< HEAD
-{"resources":{"Scripts/데이터.sql":{"sql-editor-data-source-id":"mysql5-1711119bf18-434da064dd299a99"},"Scripts/뷰_프로시저.sql":{"sql-editor-data-source-id":"mysql5-1711119bf18-434da064dd299a99"},"Scripts/초기화.sql":{"sql-editor-data-source-id":"mysql5-1711119372e-22bbf684376f2b4"},"Scripts/테스트_이상원_대여반납.sql":{"sql-editor-data-source-id":"mysql5-1711119bf18-434da064dd299a99"}}}
-=======
-{"resources":{"Scripts/기본_테스트.sql":{"sql-editor-data-source-id":"mysql5-17111e0d87a-5a6c2b2b036f1117"},"Scripts/테스트_유경진.sql":{"sql-editor-data-source-id":"mysql5-17111e0d87a-5a6c2b2b036f1117"}}}
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java3st_3team.git
+{"resources":{"Scripts/기본_테스트.sql":{"sql-editor-data-source-id":"mysql5-17114540bf8-4808134c530438db"},"Scripts/데이터.sql":{"sql-editor-data-source-id":"mysql5-17114540bf8-4808134c530438db"},"Scripts/뷰_프로시저.sql":{"sql-editor-data-source-id":"mysql5-17114540bf8-4808134c530438db"},"Scripts/초기화.sql":{"sql-editor-data-source-id":"mysql5-1711453b29e-24e29fc7af95c6bb"},"Scripts/테스트_유경진.sql":{"sql-editor-data-source-id":"mysql5-17114540bf8-4808134c530438db"}}}

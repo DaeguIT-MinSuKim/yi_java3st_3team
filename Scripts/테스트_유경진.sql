@@ -13,6 +13,10 @@ select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_dat
 	where date(now()) >= date(rturn_due_date) and l.rturn_date is null
 	group by m.mber_id ;
 
+select mber_id , mber_pass, mber_name, mber_brthdy , mber_zip , mber_bass_ad , mber_detail_ad , mber_tel , total_le_cnt , 
+	lend_book_cnt , grade , lend_psb_cdt , join_dt , wdr_cdt  	
+from member 	
+where mber_id = 'daddystop@gmail.com' and mber_pass = 'airopwieop3678';
 
 
 

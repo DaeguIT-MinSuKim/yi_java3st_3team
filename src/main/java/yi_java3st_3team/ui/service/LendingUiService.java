@@ -133,4 +133,9 @@ public class LendingUiService {
 	public int selectLendingByMemberReturnNullCount(Member member) {
 		return lendingDao.selectLendingByMemberReturnNullCount(member);
 	}
+
+	public void updateLendingList2(Member member) {
+		lendingDao.updateLendingBookMember(member);
+		
+	}
 }

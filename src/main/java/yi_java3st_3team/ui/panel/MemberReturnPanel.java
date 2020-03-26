@@ -41,7 +41,7 @@ public class MemberReturnPanel extends JPanel implements ActionListener {
 	private LendingUiService lendingService;
 	private Member member;
 	private JPanel pNorth;
-	private int rturnbookCount;
+//	private int rturnbookCount;
 
 	public MemberReturnPanel() {
 		lendingService = new LendingUiService();
@@ -185,8 +185,8 @@ public class MemberReturnPanel extends JPanel implements ActionListener {
 	}
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
-		rturnbookCount = pLendingList.setReturn(pMember.getTfMberId().getText());
-		pLendingList.setReturnGetIdx(rturnbookCount);
+		pLendingList.setReturn(pMember.getTfMberId().getText());
+//		pLendingList.setReturnGetIdx(rturnbookCount);
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {

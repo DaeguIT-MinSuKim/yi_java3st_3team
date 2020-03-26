@@ -58,7 +58,6 @@ public class MemberReturnTblPanel extends JPanel {
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
 	}
-	
 
 	public int getReturnGetIdx() {
 		return returnGetIdx;
@@ -67,7 +66,6 @@ public class MemberReturnTblPanel extends JPanel {
 	public void setReturnGetIdx(int returnGetIdx) {
 		this.returnGetIdx = returnGetIdx;
 	}
-
 
 	public class TestTabelModel extends DefaultTableModel {
 		public TestTabelModel() {
@@ -119,7 +117,7 @@ public class MemberReturnTblPanel extends JPanel {
 			return;
 		}
 		for (Lending lending : list) {
-			
+
 			StringBuilder sb = new StringBuilder();
 			if (lending.getBookCd().getTrnslrName() == null) {
 				sb.append(lending.getBookCd().getAuthrName());
@@ -145,47 +143,33 @@ public class MemberReturnTblPanel extends JPanel {
 		}
 	}
 
-	public int setReturn(String mberId) {
-		int rturnbookCount = service.selectLendingByMemberReturnNullCount(new Member(mberId));
+	public void setReturn(String mberId) {
+		ArrayList<String> list = new ArrayList<String>();
 		int cnt = model.getRowCount();
-		Member member = service.selectedMberId(mberId);
-		System.out.println(member.getOdCnt());
-		for(int i=0;i<cnt;i++) {
-			boolean chk = model.getValueAt(i, 7)==null?false:true;
-			if(chk) {
-				String bookCd = (String)(model.getValueAt(i, 1));
-				service.updateLendingList(member, new Book(bookCd));
+		for (int i = 0; i < cnt; i++) {
+			boolean chk = (Boolean) model.getValueAt(i, 7);
+			if (chk == true) {
+				String bookCd = (String) model.getValueAt(i, 0);
+				Member member = service.selectedMberId(mberId);
+				Book book = service.selectedBookCd(bookCd);
+				service.updateLendingList(member, book);
+				list.add(book.getBookName());
 			}
 		}
-		if(rturnbookCount > returnGetIdx) {
-			try {
-				System.out.println(member.getOdCnt());
-				int i = member.getOdCnt();
-				i++;
-				member.setOdCnt(i);
-				System.out.println(i);
-				System.out.println(member.getOdCnt());
-				service.updateMemberOdCnt(member);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
 		for (int i = cnt - 1; i > -1; i--) {
-			boolean chk = model.getValueAt(i, 7)==null?false:true;
-			if (chk) {
+			boolean chk = (Boolean) model.getValueAt(i, 7);
+			if (chk == true) {
 				model.removeRow(i);
 			}
 		}
-		JOptionPane.showMessageDialog(null," 반납 되었습니다.");
-		return rturnbookCount;
+		JOptionPane.showMessageDialog(null, list.toString() + " 반납 되었습니다.");
 	}
 
 	public void clearTf() {
 		table.removeAll();
 		int cnt = model.getRowCount();
 		for (int i = cnt - 1; i > -1; i--) {
-				model.removeRow(i);
+			model.removeRow(i);
 		}
 	}
 

@@ -26,7 +26,8 @@ public class LendingDaoImpl implements LendingDao {
 		return instance;
 	}
 
-	private LendingDaoImpl() {};
+	private LendingDaoImpl() {
+	};
 
 	@Override
 	public Lending selectLendingByNo(Lending lending) {
@@ -396,9 +397,9 @@ public class LendingDaoImpl implements LendingDao {
 
 		Book book = new Book(rs.getString("book_code"));
 		book.setBookName(rs.getString("book_name"));
-		if(rs.getString("trnslr_name").equals("")) {
+		if (rs.getString("trnslr_name").equals("")) {
 			sb.append(rs.getString("authr_name"));
-		}else {
+		} else {
 			sb.append(rs.getString("authr_name"));
 			sb.append("/");
 			sb.append(rs.getString("trnslr_name"));
@@ -520,14 +521,13 @@ public class LendingDaoImpl implements LendingDao {
 
 	public List<Lending> showLendingListByOverdue() {
 		List<Lending> list = new ArrayList<>();
-		String sql = "select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date , count(m.mber_id) \r\n" + 
-				"	from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id \r\n" + 
-				"	where date(now()) >= date(rturn_due_date) and l.rturn_date is null\r\n" + 
-				"	group by m.mber_id ;";
-		try(Connection con = MysqlDataSource.getConnection();
+		String sql = "select b.book_code,b.book_name,m.mber_id,m.mber_name,l.lend_date,l.rturn_due_date , count(m.mber_id) \r\n"
+				+ "	from lending l left join book b on l.book_cd = b.book_code left join member m on l.mber_id = m.mber_id \r\n"
+				+ "	where date(now()) >= date(rturn_due_date) and l.rturn_date is null\r\n" + "	group by m.mber_id ;";
+		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery(sql)) {
-			while(rs.next()) {
+			while (rs.next()) {
 				LogUtil.prnLog(getLendingByOverdue(rs));
 				list.add(getLendingByOverdue(rs));
 			}
@@ -548,29 +548,28 @@ public class LendingDaoImpl implements LendingDao {
 		int overdueBookCnt = rs.getInt("count(m.mber_id)");
 		return new Lending(mberId, bookCd, lendDate, rturnDueDate, overdueBookCnt);
 	}
-	
+
 	@Override
 	public List<Lending> selectLendingBastList() {
-		String sql = "select l1.book_cd , b.book_name, b.book_img , b.authr_name , b.trnslr_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n" + 
-				"		b.pls , p.pls_name ,l2.totlaCnt\r\n" + 
-				"	from lending l1 left join book b on l1.book_cd = b.book_code \r\n" + 
-				"					left join large_classification lc on b.lc_no = lc.lclas_no \r\n" + 
-				"					left join middle_classification ml on b.ml_no = ml.mlsfc_no and lc.lclas_no = ml.lclas_no\r\n" + 
-				"					left join publishing_company p on b.pls = p.pls_no ,\r\n" + 
-				"		(select book_cd , count(*) as totlaCnt from lending group by book_cd) l2\r\n" + 
-				"	where l1.book_cd = l2.book_cd\r\n" + 
-				"	group by l1.book_cd\r\n" + 
-				"	order by l2.totlaCnt desc limit 5";
+		String sql = "select l1.book_cd , b.book_name, b.book_img , b.authr_name , b.trnslr_name , b.lc_no , lc.lclas_name , b.ml_no , ml.mlsfc_name , \r\n"
+				+ "		b.pls , p.pls_name ,l2.totlaCnt\r\n"
+				+ "	from lending l1 left join book b on l1.book_cd = b.book_code \r\n"
+				+ "					left join large_classification lc on b.lc_no = lc.lclas_no \r\n"
+				+ "					left join middle_classification ml on b.ml_no = ml.mlsfc_no and lc.lclas_no = ml.lclas_no\r\n"
+				+ "					left join publishing_company p on b.pls = p.pls_no ,\r\n"
+				+ "		(select book_cd , count(*) as totlaCnt from lending group by book_cd) l2\r\n"
+				+ "	where l1.book_cd = l2.book_cd\r\n" + "	group by l1.book_cd\r\n"
+				+ "	order by l2.totlaCnt desc limit 5";
 		List<Lending> list = null;
-		try(Connection con = MysqlDataSource.getConnection();
+		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()){
+				ResultSet rs = pstmt.executeQuery()) {
 			LogUtil.prnLog(pstmt);
-			if(rs.next()) {
+			if (rs.next()) {
 				list = new ArrayList<>();
 				do {
 					list.add(getBastList(rs));
-				} while(rs.next());
+				} while (rs.next());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -585,10 +584,12 @@ public class LendingDaoImpl implements LendingDao {
 		bookCd.setAuthrName(rs.getString("b.authr_name"));
 		bookCd.setTrnslrName(rs.getString("b.trnslr_name"));
 		bookCd.setLcNo(new LargeClassification(rs.getInt("b.lc_no"), rs.getString("lc.lclas_name")));
-		bookCd.setMlNo(new MiddleClassification(new LargeClassification(rs.getInt("b.lc_no")), rs.getInt("b.ml_no"), rs.getString("ml.mlsfc_name")));
+		bookCd.setMlNo(new MiddleClassification(new LargeClassification(rs.getInt("b.lc_no")), rs.getInt("b.ml_no"),
+				rs.getString("ml.mlsfc_name")));
 		bookCd.setPls(new PublishingCompany(rs.getInt("b.pls"), rs.getString("p.pls_name")));
 		return new Lending(bookCd);
 	}
+
 	@Override
 	public int insertLendingUpdateBookMember(Member member, Book book) {
 		String sql = "{call rent_book(?, ?)}";
@@ -606,6 +607,7 @@ public class LendingDaoImpl implements LendingDao {
 	@Override
 	public int updateLendingBookMember(Member member, Book book) {
 		String sql = "{call return_book(?, ?)}";
+//		String sql = "{call update_lending_return_date_overdue_cdt(?, ?)}";
 		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareCall(sql);) {
 			pstmt.setString(1, member.getMberId());
 			pstmt.setString(2, book.getBookCode());
@@ -620,8 +622,7 @@ public class LendingDaoImpl implements LendingDao {
 	@Override
 	public int updateMemberOdcnt(Member m) throws SQLException {
 		String sql = "update member set od_cnt = ? where mber_id = ?";
-		try(Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, m.getOdCnt());
 			pstmt.setString(2, m.getMberId());
 			return pstmt.executeUpdate();
@@ -631,11 +632,10 @@ public class LendingDaoImpl implements LendingDao {
 	public int selectLendingByMemberReturnNullCount(Member member) {
 		List<Lending> list = new ArrayList<>();
 		String sql = "select * from lending where mber_id = ? and rturn_date is null";
-		try(Connection con = MysqlDataSource.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, member.getMberId());
-			try(ResultSet rs = pstmt.executeQuery()) {
-				while(rs.next()) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
 					list.add(getLending(rs));
 				}
 			}
@@ -644,5 +644,18 @@ public class LendingDaoImpl implements LendingDao {
 			e.printStackTrace();
 		}
 		return list.size();
+	}
+
+	@Override
+	public int updateLendingBookMember(Member member) {
+		String sql = "{call update_lending_lend_psb_cdt_lend_book_cnt_book_lend_psb_cdt(?)}";
+		try (Connection con = MysqlDataSource.getConnection(); PreparedStatement pstmt = con.prepareCall(sql);) {
+			pstmt.setString(1, member.getMberId());
+			LogUtil.prnLog(pstmt);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

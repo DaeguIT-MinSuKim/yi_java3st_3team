@@ -52,4 +52,6 @@ public interface LendingDao {
 
 	int updateLendingBookMember(Member m, Book b);
 	int updateMemberOdcnt(Member m) throws SQLException;
+
+	int updateLendingBookMember(Member member);
 }

@@ -222,12 +222,6 @@ public class MemberDaoImpl implements MemberDao {
 			sql.append("mber_img=?, ");
 		if (member.getGrade().getGradeNo() != -1)
 			sql.append("grade=?, ");
-		if (member.getLendPsbCdt() != -1)
-			sql.append("lend_psb_cdt=?, ");
-		if (member.getJoinDt() != null)
-			sql.append("join_dt=?, ");
-		if (member.getWdrCdt() != -1)
-			sql.append("wdr_cdt=?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append("where mber_id=?");
 
@@ -253,12 +247,6 @@ public class MemberDaoImpl implements MemberDao {
 				pstmt.setBytes(argCnt++, member.getMberImg());
 			if (member.getGrade().getGradeNo() != -1)
 				pstmt.setInt(argCnt++, member.getGrade().getGradeNo());
-			if (member.getLendPsbCdt() != -1)
-				pstmt.setInt(argCnt++, member.getLendPsbCdt());
-			if (member.getJoinDt() != null)
-				pstmt.setTimestamp(argCnt++, new Timestamp(member.getJoinDt().getTime()));
-			if (member.getWdrCdt() !=-1)
-				pstmt.setInt(argCnt++, member.getWdrCdt());
 			pstmt.setString(argCnt++, member.getMberId());
 			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();

@@ -224,8 +224,13 @@ select m.mber_name,b.book_name , l.rturn_date , l.overdue_cdt
 
 
 
+select *
+	from member 
+	where mber_name = '조조';
 
-
+select * 
+	from lending
+	where rturn
 
 
 

@@ -243,8 +243,7 @@ public class MemberRentPanel extends JPanel implements ActionListener {
 
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
 		pLendingList.setRent(pMember.getTfMberId().getText());
-		pMember.getTfMberId().setEnabled(true);
-		pMember.getTfMberName().setEnabled(true);
+		pMember.clearTf();
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {

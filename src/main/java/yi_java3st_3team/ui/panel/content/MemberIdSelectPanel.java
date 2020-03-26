@@ -182,4 +182,12 @@ public class MemberIdSelectPanel extends JPanel {
 		tfLendBookCdt.setColumns(10);
 	}
 
+	public void clearTf() {
+		tfGrade.setText("");
+		tfLendBookCdt.setText("");
+		tfLendPsbCdt.setText("");
+		tfMberId.setText("");
+		tfMberName.setText("");		
+	}
+
 }

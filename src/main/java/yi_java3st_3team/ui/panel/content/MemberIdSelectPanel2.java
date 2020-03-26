@@ -189,4 +189,12 @@ public class MemberIdSelectPanel2 extends JPanel {
 		tfOdCnt.setColumns(10);
 	}
 
+	public void clearTf() {
+		tfGrade.setText("");
+		tfMberId.setText("");
+		tfMberName.setText("");
+		tfOdCnt.setText("");
+		tfOverdueCdt.setText("");
+	}
+
 }

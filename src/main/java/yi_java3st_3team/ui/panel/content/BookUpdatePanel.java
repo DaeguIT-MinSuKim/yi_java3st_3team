@@ -324,10 +324,15 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 		
 		if(item.getLendPsbCdt() == 0) {
 			rdoYes.setSelected(true);
+			rdoRental.setEnabled(false);
 		} else if (item.getLendPsbCdt() == 1) {
 			rdoRental.setSelected(true);
+			rdoRental.setEnabled(false);
+			rdoNo.setEnabled(false);
+			rdoYes.setEnabled(false);
 		} else {
 			rdoNo.setSelected(true);
+			rdoRental.setEnabled(false);
 		}
 		
 		if(item.getBookImg() == null || item.getBookImg().length == 0) {

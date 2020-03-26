@@ -298,13 +298,13 @@ public class MemberRequestBookPanel extends AbsItemPanel<RequestBook> implements
 		try {
 			RequestBook deleteRd = pReqstBookList.getSelectedItem();
 			
-			int result = JOptionPane.showConfirmDialog(null, "선택된 정보를 삭제하겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION);
+			int result = JOptionPane.showConfirmDialog(null, "선택된 도서신청을 취소하시겠습니까?", "신청취소 확인", JOptionPane.YES_NO_OPTION);
 
 			if (result == JOptionPane.CLOSED_OPTION) {
 			} else if (result == JOptionPane.YES_OPTION) {
 				service.removeRequestBook(deleteRd);
 				setService(service);
-				JOptionPane.showMessageDialog(null, "삭제되었습니다");
+				JOptionPane.showMessageDialog(null, "신청 취소되었습니다");
 			} else {
 			}
 			

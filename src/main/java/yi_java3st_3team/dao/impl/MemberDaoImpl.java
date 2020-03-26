@@ -157,7 +157,7 @@ public class MemberDaoImpl implements MemberDao {
 			sql.append("od_cnt=?, ");
 		sql.replace(sql.lastIndexOf(","), sql.length(), " ");
 		sql.append("where mber_id=?");
-
+		
 		try (Connection con = MysqlDataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
 			int argCnt = 1;

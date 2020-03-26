@@ -147,15 +147,14 @@ public class MemberReturnTblPanel extends JPanel {
 
 	public int setReturn(String mberId) {
 		int rturnbookCount = service.selectLendingByMemberReturnNullCount(new Member(mberId));
-		ArrayList<String> list = new ArrayList<String>();
 		int cnt = model.getRowCount();
 		Member member = service.selectedMberId(mberId);
 		System.out.println(member.getOdCnt());
 		for(int i=0;i<cnt;i++) {
 			boolean chk = model.getValueAt(i, 7)==null?false:true;
 			if(chk) {
-				String bookcd = (String)(model.getValueAt(i, 1));
-				service.updateLendingList(member, new Book(bookcd));
+				String bookCd = (String)(model.getValueAt(i, 1));
+				service.updateLendingList(member, new Book(bookCd));
 			}
 		}
 		if(rturnbookCount > returnGetIdx) {
@@ -168,7 +167,6 @@ public class MemberReturnTblPanel extends JPanel {
 				System.out.println(member.getOdCnt());
 				service.updateMemberOdCnt(member);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -179,7 +177,7 @@ public class MemberReturnTblPanel extends JPanel {
 				model.removeRow(i);
 			}
 		}
-		JOptionPane.showMessageDialog(null, list.toString() + " 반납 되었습니다.");
+		JOptionPane.showMessageDialog(null," 반납 되었습니다.");
 		return rturnbookCount;
 	}
 

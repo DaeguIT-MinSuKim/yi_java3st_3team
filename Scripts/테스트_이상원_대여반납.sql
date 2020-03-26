@@ -834,3 +834,7 @@ select *
 select rturn_date 
 			from lending
 			where mber_id = 'xodnjs1218@naver.com' and book_cd = '0601.001-1';
+			
+		
+select *
+	from librarian l ;

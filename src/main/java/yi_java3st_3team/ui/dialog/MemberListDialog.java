@@ -58,9 +58,6 @@ public class MemberListDialog extends JDialog implements ActionListener {
 		for (Member mem : list) {
 			StringBuilder lendCdt = new StringBuilder();
 			if (mem.getWdrCdt() == 0) {
-				if(mem.getLendPsbCdt() ==1) {
-					return;
-				}
 				if (mem.getLendPsbCdt() == 1) {
 					lendCdt.append("불가능");
 				}

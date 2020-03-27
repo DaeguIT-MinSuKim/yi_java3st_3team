@@ -940,6 +940,8 @@ select *
 
 select *
 	from book;
+select *
+	from `member` m ;
 
 
 

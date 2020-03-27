@@ -18,4 +18,5 @@ public interface MiddleClassificationDao {
 	int deleteMiddleClassification(MiddleClassification mlsfc);
 	
 	int selectLastCode(LargeClassification lc);
+
 }

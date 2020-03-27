@@ -244,6 +244,10 @@ select lclas_no , mlsfc_no , mlsfc_name from middle_classification where lclas_n
 select max(mlsfc_no) from middle_classification where lclas_no = 2;
 select max(mlsfc_no) from middle_classification where lclas_no = 2
 
+-- 대분류 삭제 시 연결된 중분류가 있는지 판단
+select ml.mlsfc_no from large_classification lc left join middle_classification ml on lc.lclas_no = ml.lclas_no where lc.lclas_no = 11;
+select count(ml.mlsfc_no) from large_classification lc left join middle_classification ml on lc.lclas_no = ml.lclas_no where lc.lclas_no = 11;
+
 insert into middle_classification values(10, 3, '테스트분류');
 update middle_classification set mlsfc_name = '테스트중분류' where lclas_no = 10 and mlsfc_no = 3;
 delete from middle_classification where lclas_no = 10 and mlsfc_no = 3;

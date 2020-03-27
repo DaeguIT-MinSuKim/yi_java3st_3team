@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -64,16 +65,8 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 	private MemberTblPanel pMemberList;
 	private MemberUpdateDialog updateDialog;
 	private JTextField tfGrade;
+	private Member member;
 
-//	public static void main(String[] args) {
-//		try {
-//			MemberUpdateDialog dialog = new MemberUpdateDialog(frame, "실험");
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	public MemberUpdateDialog(JFrame frame, String title) {
 		super(frame, title, true);
@@ -193,7 +186,6 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 
 	private void setService(MemberUIService service) {
 		this.service = service;
-//		setCmbList(service.showGradeList());
 	}
 
 	private void setByte(byte[] mberImg) {
@@ -222,26 +214,13 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 			tfGrade.setText("우수");
 		}
 		
-//		if(item.getGrade().getGradeNo() == 0) {
-//			//cmbGrade.setSelectedIndex(grade+1);
-//			cmbGrade.setSelectedItem("일반");
-//		}else {
-//			cmbGrade.setSelectedIndex(item.getGrade().getGradeNo()-1);
-//			//cmbGrade.setSelectedItem(item.getGrade().getGradeName());
-//		}
-//		//JOptionPane.showMessageDialog(null, item.getMberImg().length);
-		
-		if (item.getMberImg() == null || item.getMberImg().length == 0) {
+		if (item.getMberImg() == null || item.getMberImg().length == 0){
 			setStr(defaultImg);
 		} else {
 			setByte(item.getMberImg());
 		}
 	}
 
-//	public void setCmbList(List<Grade> gradeList) {
-//		DefaultComboBoxModel<Grade> model = new DefaultComboBoxModel<Grade>(new Vector<>(gradeList));
-//		// cmbGrade.setSelectedIndex(-1);
-//	}
 	
 	
 	public void validCheck() {
@@ -274,7 +253,7 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 		try {
 			Member upMember = getItem();
 			service.updateCountMember(upMember);
-			JOptionPane.showMessageDialog(null, String.format("%s [%s]님의 정보가 수정 되었습니다.",upMember.getMberId() ,upMember.getMberName()));
+			JOptionPane.showMessageDialog(null, String.format("[  %s ] 님의 정보가 수정 되었습니다.",upMember.getMberName()));
 			dispose();
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -311,7 +290,6 @@ public class MemberUpdateDialog extends JDialog implements ActionListener {
 			mberDetailAd = zipDialog.getDetailAd().trim();
 		}
 		return new Member(mberId, mberName, mberBrthdy, zip, mberBassAd, mberDetailAd, mberTel, mberImg, grade);
-
 	}
 	
 	private byte[] getImage() {

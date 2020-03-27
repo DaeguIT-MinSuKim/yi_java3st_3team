@@ -13,8 +13,9 @@ from grade;
 select * 
 from publishing_company;
 
-select *
-from book;
+select length(book_img) 
+from book
+where book_code = "0101.001-1";
 
 select *
 from large_classification;

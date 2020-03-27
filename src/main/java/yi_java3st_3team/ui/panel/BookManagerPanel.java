@@ -157,10 +157,12 @@ public class BookManagerPanel extends JPanel implements ActionListener {
 			try {
 				if(e.getActionCommand().contentEquals("도서정보수정")) {
 					Book upBook = pBookList.getSelectedItem();
-					BookUpdatePanel upBookPanel = new BookUpdatePanel();
-					upBookPanel.setItem(upBook);
+					
+					
 					
 					updateDialog = new BookUpdateDialog(updateFrame, "도서정보수정");
+					BookUpdatePanel upBookPanel = new BookUpdatePanel(updateDialog);
+					upBookPanel.setItem(upBook);
 					updateDialog.setBounds(100, 100, 1000, 600);
 					updateDialog.getContentPane().add(upBookPanel);
 					updateDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

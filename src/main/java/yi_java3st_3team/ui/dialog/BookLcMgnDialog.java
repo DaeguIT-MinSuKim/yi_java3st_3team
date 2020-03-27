@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import yi_java3st_3team.dto.LargeClassification;
+import yi_java3st_3team.dto.MiddleClassification;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.panel.list.BookLcTblPanel;
 import yi_java3st_3team.ui.service.LargeClassificationUiService;
@@ -149,6 +150,12 @@ public class BookLcMgnDialog extends JDialog implements ActionListener {
 
 					if (result == JOptionPane.CLOSED_OPTION) {
 					} else if (result == JOptionPane.YES_OPTION) {
+						int chkMl = service.checkMl(deleteLc.getLclasNo());
+						if(chkMl > 0) {
+							JOptionPane.showMessageDialog(null, "선택된 대분류에 속한 중분류가 있습니다.\n삭제를 원하시면 중분류부터 삭제 후 삭제해주세요.");
+							return;
+						}
+						
 						service.removeLc(deleteLc);
 						pLcList.loadData(service.showLcListAll());
 						clearTf();

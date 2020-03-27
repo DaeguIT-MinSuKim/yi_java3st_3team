@@ -5,6 +5,7 @@ import java.util.List;
 import yi_java3st_3team.dao.LargeClassificationDao;
 import yi_java3st_3team.dao.impl.LargeClassificationDaoImpl;
 import yi_java3st_3team.dto.LargeClassification;
+import yi_java3st_3team.dto.MiddleClassification;
 
 public class LargeClassificationUiService {
 	private LargeClassificationDao lcDao;
@@ -31,6 +32,10 @@ public class LargeClassificationUiService {
 	
 	public int removeLc(LargeClassification lc) {
 		return lcDao.deleteLargeClassification(lc);
+	}
+	
+	public int checkMl(int lcNo) {
+		return lcDao.selectLargeClassificationByNoAndMl(lcNo);
 	}
 }
 

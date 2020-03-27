@@ -58,6 +58,9 @@ public class MemberListDialog4 extends JDialog implements ActionListener {
 		for (Member mem : list) {
 			StringBuilder overdueCdt = new StringBuilder();
 			if (mem.getWdrCdt() == 0) {
+				if(mem.getLendPsbCdt() ==1) {
+					return;
+				}
 				if (mem.getLendPsbCdt() == 0) {
 					overdueCdt.append("정상");
 				}

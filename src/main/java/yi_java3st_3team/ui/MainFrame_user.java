@@ -371,6 +371,9 @@ public class MainFrame_user extends JFrame {
 					pCenter = bookRankPanel;
 					contentPane.add(pWest,BorderLayout.WEST);
 					contentPane.add(pCenter,BorderLayout.CENTER);
+					repaint();
+					revalidate();
+					((BookRankingPanel)pCenter).loadData();
 					for(JPanel panel : pReqst) {
 						panel.addMouseListener(new MouseAdapter() {
 

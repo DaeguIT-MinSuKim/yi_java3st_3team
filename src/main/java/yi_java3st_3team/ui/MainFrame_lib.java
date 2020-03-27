@@ -339,6 +339,9 @@ public class MainFrame_lib extends JFrame {
 					pCenter = bookReqst;
 					contentPane.add(pWest,BorderLayout.WEST);
 					contentPane.add(pCenter,BorderLayout.CENTER);
+					repaint();
+					revalidate();
+					((BookRegistrationPanel) pCenter).clearTf();
 					for (JPanel panel : pBook) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override
@@ -410,6 +413,9 @@ public class MainFrame_lib extends JFrame {
 					pCenter = memberJoin;
 					contentPane.add(pWest,BorderLayout.WEST);
 					contentPane.add(pCenter,BorderLayout.CENTER);
+					contentPane.repaint();
+					contentPane.revalidate();
+					((MemberJoinUIPanel)pCenter).clearTf();
 					for (JPanel panel : pMember) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override
@@ -464,6 +470,9 @@ public class MainFrame_lib extends JFrame {
 					pCenter = lendingPanel;
 					contentPane.add(pWest,BorderLayout.WEST);
 					contentPane.add(pCenter,BorderLayout.CENTER);
+					contentPane.repaint();
+					contentPane.revalidate();
+					((MemberRentPanel) pCenter).loadData();
 					for (JPanel panel : pLending) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override

@@ -59,7 +59,6 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 			StringBuilder lendCdt = new StringBuilder();
 			if (mem.getWdrCdt() == 0) {
 				if(mem.getLendPsbCdt() ==1) {
-					JOptionPane.showMessageDialog(null, "대여불가능합니다.");
 					return;
 				}
 				if (mem.getLendPsbCdt() == 1) {
@@ -71,10 +70,6 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 				int LendBookCnt = mem.getLendBookCnt();
 				int BookLeCnt = mem.getGrade().getBookLeCnt();
 				int res = BookLeCnt - LendBookCnt;
-				if(res == 0) {
-					JOptionPane.showMessageDialog(null, "대여 가능한 권 수를 초과 하였습니다.");
-					return;
-				}
 				model.addRow(new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(), lendCdt,
 						res });
 			}
@@ -135,6 +130,10 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 		int row = table.getSelectedRow();
 		if (table.getValueAt(row, 3).toString().equals("불가능")) {
 			JOptionPane.showMessageDialog(null, "대여불가능하십니다.");
+			return;
+		}
+		if((Integer)table.getValueAt(row, 4) == 0) {
+			JOptionPane.showMessageDialog(null, "대여 가능한 권 수를 초과 하였습니다.");
 			return;
 		}
 		lending3.getpMember().getTfMberId().setText((String) table.getValueAt(row, 0));

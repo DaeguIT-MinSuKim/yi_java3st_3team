@@ -10,6 +10,7 @@ import java.util.List;
 import yi_java3st_3team.dao.LargeClassificationDao;
 import yi_java3st_3team.ds.MysqlDataSource;
 import yi_java3st_3team.dto.LargeClassification;
+import yi_java3st_3team.dto.MiddleClassification;
 import yi_java3st_3team.util.LogUtil;
 
 public class LargeClassificationDaoImpl implements LargeClassificationDao {
@@ -120,6 +121,26 @@ public class LargeClassificationDaoImpl implements LargeClassificationDao {
 				return rs.getInt("max(lclas_no)");
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@Override
+	public int selectLargeClassificationByNoAndMl(int lcNo) {
+		String sql = "select count(ml.mlsfc_no) "
+				+ "from large_classification lc left join middle_classification ml on lc.lclas_no = ml.lclas_no "
+				+ "where lc.lclas_no = ?";
+		try(Connection con = MysqlDataSource.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, lcNo);
+			LogUtil.prnLog(pstmt);
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return rs.getInt("count(ml.mlsfc_no)");
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return 0;

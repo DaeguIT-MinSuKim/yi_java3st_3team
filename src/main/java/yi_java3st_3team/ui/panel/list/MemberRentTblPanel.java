@@ -172,6 +172,7 @@ public class MemberRentTblPanel extends JPanel {
 		int cnt = table.getRowCount();
 		for (int i = 0; i < cnt; i++) {
 			boolean chk = model.getValueAt(i, 7) == null ? false : true;
+//			JOptionPane.showMessageDialog(null, model.getValueAt(i, 7));
 			if (chk == true) {
 				String bookCd = (String) model.getValueAt(i, 0);
 				Member member = service.selectedMberId(mberId);

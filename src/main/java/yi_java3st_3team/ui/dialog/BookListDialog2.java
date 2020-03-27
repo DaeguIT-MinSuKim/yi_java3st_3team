@@ -66,15 +66,17 @@ public class BookListDialog2 extends JDialog implements ActionListener {
 		cal.add(Calendar.DATE, +15);
 		for (Book book : list) {
 			StringBuilder sb = new StringBuilder();
-			if (book.getTrnslrName().equals("")) {
-				sb.append(book.getAuthrName());
-			} else {
-				sb.append(book.getAuthrName() + "/" + book.getTrnslrName());
+			if(book.getDsuseCdt() == 0) {
+				if (book.getTrnslrName().equals("")) {
+					sb.append(book.getAuthrName());
+				} else {
+					sb.append(book.getAuthrName() + "/" + book.getTrnslrName());
+				}
+				model.addRow(new Object[] { book.getBookCode(), book.getBookName(), sb,
+						new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
+						new SimpleDateFormat("yyyy-MM-dd").format(now),
+						new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });
 			}
-			model.addRow(new Object[] { book.getBookCode(), book.getBookName(), sb,
-					new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
-					new SimpleDateFormat("yyyy-MM-dd").format(now),
-					new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });
 		}
 		table = new JTable(model);
 		{

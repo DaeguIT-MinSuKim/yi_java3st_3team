@@ -934,10 +934,12 @@ select *
 	from member
 	where mber_name like '%%';
 
+select *
+	from librarian l ;
 
 
-
-
+select *
+	from book;
 
 
 

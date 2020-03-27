@@ -302,6 +302,13 @@ public class MainFrame_user extends JFrame {
 					pCenter.setBackground(Color.white);
 					pWest = new WestMemberProfileMenuPanel();
 					JPanel[] pBook = ((WestMemberProfileMenuPanel) pWest).getPanels();
+					pBook[0].setBackground(new Color(52, 147, 221));
+					JLabel l = (JLabel)pBook[0].getComponent(0);
+					l.setForeground(Color.white);
+					l.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+					pCenter = getPassMenuPanel();
+					contentPane.add(pWest,BorderLayout.WEST);
+					contentPane.add(pCenter,BorderLayout.CENTER);
 					for(JPanel panel : pBook) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override
@@ -357,6 +364,13 @@ public class MainFrame_user extends JFrame {
 					pCenter.setBackground(Color.white);
 					pWest = new WestRecomBookPanel();
 					JPanel[] pReqst = ((WestRecomBookPanel) pWest).getPanels();
+					pReqst[0].setBackground(new Color(52, 147, 221));
+					JLabel l2 = (JLabel)pReqst[0].getComponent(0);
+					l2.setForeground(Color.white);
+					l2.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+					pCenter = bookRankPanel;
+					contentPane.add(pWest,BorderLayout.WEST);
+					contentPane.add(pCenter,BorderLayout.CENTER);
 					for(JPanel panel : pReqst) {
 						panel.addMouseListener(new MouseAdapter() {
 

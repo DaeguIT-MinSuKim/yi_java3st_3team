@@ -890,7 +890,8 @@ select *
 select *
 	from librarian l ;
 
-
+select *
+	from member;
 
 
 select * 
@@ -917,9 +918,33 @@ update member
 update member
 	set lend_book_cnt
 
+select m.mber_name, count(*) 
+	from lending l left join member m on l.mber_id = m.mber_id
+	where l.rturn_date is not null
+	group by l.mber_id;
 
 
 
+
+
+
+
+
+select *
+	from member
+	where mber_name like '%%';
+
+
+
+
+
+
+
+
+
+
+select mber_name, lend_book_cnt 
+	from member;
 
 
 

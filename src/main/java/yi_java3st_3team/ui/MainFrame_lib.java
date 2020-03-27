@@ -332,6 +332,13 @@ public class MainFrame_lib extends JFrame {
 					pCenter.setBackground(Color.white);
 					pWest = new WestBookManagementPanel_lib();
 					JPanel[] pBook = ((WestBookManagementPanel_lib) pWest).getPanels();
+					pBook[0].setBackground(new Color(52, 147, 221));
+					JLabel l1 = (JLabel)pBook[0].getComponent(0);
+					l1.setForeground(Color.white);
+					l1.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+					pCenter = bookReqst;
+					contentPane.add(pWest,BorderLayout.WEST);
+					contentPane.add(pCenter,BorderLayout.CENTER);
 					for (JPanel panel : pBook) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override
@@ -396,6 +403,13 @@ public class MainFrame_lib extends JFrame {
 					pCenter.setBackground(Color.white);
 					pWest = new WestMemberManagementPanel();
 					JPanel[] pMember = ((WestMemberManagementPanel) pWest).getPanels();
+					pMember[0].setBackground(new Color(52, 147, 221));
+					JLabel l2 = (JLabel)pMember[0].getComponent(0);
+					l2.setForeground(Color.white);
+					l2.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+					pCenter = memberJoin;
+					contentPane.add(pWest,BorderLayout.WEST);
+					contentPane.add(pCenter,BorderLayout.CENTER);
 					for (JPanel panel : pMember) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override
@@ -443,6 +457,13 @@ public class MainFrame_lib extends JFrame {
 					pCenter.setBackground(Color.white);
 					pWest = new WestLendingManagementPanel();
 					JPanel[] pLending = ((WestLendingManagementPanel) pWest).getPanels();
+					pLending[0].setBackground(new Color(52, 147, 221));
+					JLabel l3 = (JLabel)pLending[0].getComponent(0);
+					l3.setForeground(Color.white);
+					l3.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+					pCenter = lendingPanel;
+					contentPane.add(pWest,BorderLayout.WEST);
+					contentPane.add(pCenter,BorderLayout.CENTER);
 					for (JPanel panel : pLending) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override
@@ -498,6 +519,13 @@ public class MainFrame_lib extends JFrame {
 					pCenter.setBackground(Color.white);
 					pWest = new WestStatisticPanel();
 					JPanel[] panels = ((WestStatisticPanel) pWest).getPanels();
+					panels[0].setBackground(new Color(52, 147, 221));
+					JLabel l4 = (JLabel)panels[0].getComponent(0);
+					l4.setForeground(Color.white);
+					l4.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+					pCenter = chartBookInfo;
+					contentPane.add(pWest,BorderLayout.WEST);
+					contentPane.add(pCenter,BorderLayout.CENTER);
 					for (JPanel panel : panels) {
 						panel.addMouseListener(new MouseAdapter() {
 							@Override

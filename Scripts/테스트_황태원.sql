@@ -148,6 +148,10 @@ from member;
 select *
 from book;
 
+select m.mber_name , count(*) 
+	from lending l left join `member` m on l.mber_id = m.mber_id
+	group by l.mber_id;
+
 select *
 from lending;
 

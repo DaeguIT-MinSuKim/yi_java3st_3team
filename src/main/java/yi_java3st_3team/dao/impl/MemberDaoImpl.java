@@ -193,12 +193,10 @@ public class MemberDaoImpl implements MemberDao {
 			if (member.getOdCnt() !=-1)
 				pstmt.setInt(argCnt++, member.getOdCnt());
 			pstmt.setString(argCnt++, member.getMberId());
-			LogUtil.prnLog(pstmt);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return 0;
 	}
 	

@@ -4,6 +4,7 @@ import yi_java3st_3team.dto.Book;
 import yi_java3st_3team.dto.LargeClassification;
 import yi_java3st_3team.dto.MiddleClassification;
 import yi_java3st_3team.dto.PublishingCompany;
+import yi_java3st_3team.ui.dialog.BookUpdateDialog;
 import yi_java3st_3team.ui.exception.InvalidCheckException;
 import yi_java3st_3team.ui.panel.AbsItemPanel;
 import yi_java3st_3team.ui.service.BookUiService;
@@ -77,9 +78,13 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 	private JLabel lblBookCode;
 	private JTextField tfBookCode;
 	private JRadioButton rdoRental;
+	private byte[] pics;
+	private boolean isNewImg;
+	private BookUpdateDialog updateDialog;
 	
-
-	public BookUpdatePanel() {
+	
+	public BookUpdatePanel(BookUpdateDialog updateDialog) {
+		this.updateDialog = updateDialog;
 		service = new BookUiService();
 		initialize();
 	}
@@ -220,7 +225,7 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 		pSouth.setBorder(new EmptyBorder(30, 0, 30, 0));
 		add(pSouth, BorderLayout.SOUTH);
 
-		btnSave = new JButton("저장");
+		btnSave = new JButton("수정");
 		btnSave.addActionListener(this);
 		btnSave.setFocusable(false);
 		btnSave.setPreferredSize(new Dimension(130, 40));
@@ -295,18 +300,25 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 	}
 
 	private byte[] getImge() {
-		byte[] pic = null;
-		File file = new File(picPath);
-		try (InputStream is = new FileInputStream(file)) {
-			pic = new byte[is.available()];
-			is.read(pic);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		System.out.println("================================================================picPath: " + picPath);
+		System.out.println("================================================================pics: " + pics.length);
+		
+		if(isNewImg) {
+			pics = null;
+			
+			File file = new File(picPath);
+			try (InputStream is = new FileInputStream(file)) {
+				pics = new byte[is.available()];
+				is.read(pics);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
 
-		return pic;
+		return pics;
 	}
 
 	@Override
@@ -334,7 +346,7 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 			rdoNo.setSelected(true);
 			rdoRental.setEnabled(false);
 		}
-		
+//		setPicByte(item.getBookImg());
 		if(item.getBookImg() == null || item.getBookImg().length == 0) {
 			setPicStr(defaultImg);
 		} else {
@@ -343,6 +355,7 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 	}
 
 	private void setPicByte(byte[] bookImg) {
+		pics = bookImg;
 		lblBookImg.setIcon(new ImageIcon(new ImageIcon(bookImg).getImage().getScaledInstance((int)picDimesion.getWidth(), 
 				(int)picDimesion.getHeight(), Image.SCALE_DEFAULT)));
 	}
@@ -397,6 +410,7 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 		}
 		picPath = chooser.getSelectedFile().getPath();
 		setPicStr(picPath);
+		isNewImg = true;
 	}
 
 	protected void btnSaveActionPerformed(ActionEvent e) {
@@ -405,7 +419,7 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 			service.modifyBook(upBook);
 			JOptionPane.showMessageDialog(null,
 					String.format("%s[%s] 수정 되었습니다.", upBook.getBookName(), upBook.getBookCode()));
-			
+			 updateDialog.dispose();
 		} catch (InvalidCheckException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (NumberFormatException e1) {

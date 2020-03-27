@@ -57,15 +57,16 @@ public class MemberListDialog3 extends JDialog implements ActionListener {
 
 		for (Member mem : list) {
 			StringBuilder overdueCdt = new StringBuilder();
-
-			if (mem.getLendPsbCdt() == 0) {
-				overdueCdt.append("정상");
+			if (mem.getWdrCdt() == 0) {
+				if (mem.getLendPsbCdt() == 0) {
+					overdueCdt.append("정상");
+				}
+				if (mem.getLendPsbCdt() == 1) {
+					overdueCdt.append("연체");
+				}
+				model.addRow(new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(),
+						overdueCdt, mem.getOdCnt() });
 			}
-			if (mem.getLendPsbCdt() == 1) {
-				overdueCdt.append("연체");
-			}
-			model.addRow(new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(), overdueCdt,
-					mem.getOdCnt() });
 		}
 		table = new JTable(model);
 		{

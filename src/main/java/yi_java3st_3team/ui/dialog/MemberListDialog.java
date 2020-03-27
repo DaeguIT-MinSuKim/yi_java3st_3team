@@ -57,16 +57,19 @@ public class MemberListDialog extends JDialog implements ActionListener {
 		List<Member> list = service.showLendingMemberId2(id);
 		for (Member mem : list) {
 			StringBuilder lendCdt = new StringBuilder();
-			if (mem.getLendPsbCdt() == 1) {
-				lendCdt.append("불가능");
+			if (mem.getWdrCdt() == 0) {
+				if (mem.getLendPsbCdt() == 1) {
+					lendCdt.append("불가능");
+				}
+				if (mem.getLendPsbCdt() == 0) {
+					lendCdt.append("가능");
+				}
+				int LendBookCnt = mem.getLendBookCnt();
+				int BookLeCnt = mem.getGrade().getBookLeCnt();
+				int res = BookLeCnt - LendBookCnt;
+				model.addRow(new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(), lendCdt,
+						res });
 			}
-			if (mem.getLendPsbCdt() == 0) {
-				lendCdt.append("가능");
-			}
-			int LendBookCnt = mem.getLendBookCnt();
-			int BookLeCnt = mem.getGrade().getBookLeCnt();
-			int res = BookLeCnt - LendBookCnt;
-			model.addRow(new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(), lendCdt, res});
 		}
 		table = new JTable(model);
 		{
@@ -100,6 +103,7 @@ public class MemberListDialog extends JDialog implements ActionListener {
 			Class clazz = String.class;
 			return clazz;
 		}
+
 		@Override
 		public boolean isCellEditable(int row, int column) {
 			return false;
@@ -121,16 +125,16 @@ public class MemberListDialog extends JDialog implements ActionListener {
 
 	protected void do_okButton_actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
-		if(table.getValueAt(row, 3).toString().equals("불가능")) {
+		if (table.getValueAt(row, 3).toString().equals("불가능")) {
 			JOptionPane.showMessageDialog(null, "대여불가능하십니다.");
 			return;
 		}
-		lending3.getpMember().getTfMberId().setText((String)table.getValueAt(row, 0));
-		lending3.getpMember().getTfMberName().setText((String)table.getValueAt(row, 1));
-		lending3.getpMember().getTfGrade().setText((String)table.getValueAt(row, 2));
+		lending3.getpMember().getTfMberId().setText((String) table.getValueAt(row, 0));
+		lending3.getpMember().getTfMberName().setText((String) table.getValueAt(row, 1));
+		lending3.getpMember().getTfGrade().setText((String) table.getValueAt(row, 2));
 		lending3.getpMember().getTfLendPsbCdt().setText(table.getValueAt(row, 3).toString());
 		int res = (int) table.getValueAt(row, 4);
-		lending3.getpMember().getTfLendBookCdt().setText(res+"");	
+		lending3.getpMember().getTfLendBookCdt().setText(res + "");
 		dispose();
 	}
 }

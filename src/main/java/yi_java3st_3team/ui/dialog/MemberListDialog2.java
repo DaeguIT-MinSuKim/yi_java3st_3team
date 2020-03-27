@@ -57,17 +57,19 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 		List<Member> list = service.showLendingMemberId3(name);
 		for (Member mem : list) {
 			StringBuilder lendCdt = new StringBuilder();
-			if (mem.getLendPsbCdt() == 1) {
-				lendCdt.append("불가능");
+			if (mem.getWdrCdt() == 0) {
+				if (mem.getLendPsbCdt() == 1) {
+					lendCdt.append("불가능");
+				}
+				if (mem.getLendPsbCdt() == 0) {
+					lendCdt.append("가능");
+				}
+				int LendBookCnt = mem.getLendBookCnt();
+				int BookLeCnt = mem.getGrade().getBookLeCnt();
+				int res = BookLeCnt - LendBookCnt;
+				model.addRow(new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(), lendCdt,
+						res });
 			}
-			if (mem.getLendPsbCdt() == 0) {
-				lendCdt.append("가능");
-			}
-			int LendBookCnt = mem.getLendBookCnt();
-			int BookLeCnt = mem.getGrade().getBookLeCnt();
-			int res = BookLeCnt - LendBookCnt;
-			model.addRow(
-					new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(), lendCdt, res });
 		}
 		table = new JTable(model);
 		{
@@ -101,6 +103,7 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 			Class clazz = String.class;
 			return clazz;
 		}
+
 		@Override
 		public boolean isCellEditable(int row, int column) {
 			return false;
@@ -122,7 +125,7 @@ public class MemberListDialog2 extends JDialog implements ActionListener {
 
 	protected void do_okButton_actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
-		if(table.getValueAt(row, 3).toString().equals("불가능")) {
+		if (table.getValueAt(row, 3).toString().equals("불가능")) {
 			JOptionPane.showMessageDialog(null, "대여불가능하십니다.");
 			return;
 		}

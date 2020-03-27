@@ -300,8 +300,6 @@ public class BookUpdatePanel extends AbsItemPanel<Book> implements ActionListene
 	}
 
 	private byte[] getImge() {
-		System.out.println("================================================================picPath: " + picPath);
-		System.out.println("================================================================pics: " + pics.length);
 		
 		if(isNewImg) {
 			pics = null;

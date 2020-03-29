@@ -146,7 +146,7 @@ public class BookDaoImpl implements BookDao {
 		where.replace(where.lastIndexOf("and"), where.length(), " ");
 		
 		sql.append(where);
-		sql.append("order by regist_date");
+		sql.append("order by book_code");
 
 		List<Book> list = null;
 
@@ -187,7 +187,7 @@ public class BookDaoImpl implements BookDao {
 		if (book.getLcNo() != null)
 			sql.append("b1.lc_no = ? and ");
 		sql.replace(sql.lastIndexOf("and"), sql.length(), " ");
-		sql.append("order by b1.regist_date");
+		sql.append("order by b1.book_code");
 
 		List<Book> list = null;
 

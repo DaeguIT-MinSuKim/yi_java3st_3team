@@ -165,36 +165,35 @@ begin
 	end;
 	set AUTOCOMMIT = 0;
 	start transaction;
+		-- 대여반납 테이블
+		-- 연체도서의 갯수를 카운트 후 변수에 입력
+		select count(*) into cnt
+			from lending
+			where overdue_cdt = 0  and rturn_date is null and mber_id = _mber_id and book_cd = _book_cd and DATEDIFF(curdate() , rturn_due_date ) > 0;
 		-- 반납대여 테이블
-		/* 반납대여 테이블에서 반납일의 null값을 반납날짜로 업데이트*/
+		-- 반납대여 테이블에서 반납일의 null값을 반납날짜로 업데이트
 		update lending 
 			set rturn_date = date_format(curdate(), "%Y-%m-%d")
-			where rturn_date is null and book_cd = _book_cd;			
-		/* 반납대여 테이블에서 반납일이 반납예정일보다 늦다는 조건에 부합할시  연체여부의 값을 연체로 업데이트, 
-		 * 반납일이 반납예정일과 같거나 빠를시는 적용 x */
+			where rturn_date is null and mber_id = _mber_id and book_cd = _book_cd;			
+		-- 반납대여 테이블에서 반납일이 반납예정일보다 늦다는 조건에 부합할시  연체여부의 값을 연체로 업데이트, 
+		-- 반납일이 반납예정일과 같거나 빠를시는 적용 x 
 		update lending
 			set overdue_cdt = 1
-			where DATEDIFF(rturn_date, rturn_due_date ) > 0;
-		
+			where DATEDIFF(rturn_date, rturn_due_date ) > 0 and mber_id = _mber_id and book_cd = _book_cd;
 		-- 도서 테이블
 		/* 반납이 이루어졌을 경우 책 테이블의 대여가능유무를 대여가능으로 업데이트 */
 		update lending l left join book b 
 			on l.book_cd = b.book_code
 			set lend_psb_cdt = 0
-			where rturn_date is not null;
-		
+			where l.rturn_date is not null;
 		-- 회원 테이블
 		-- 회원 테이블의 특정 회원의 대여도서권수(=대여반납 테이블에 반납일이 없는 행의 수)를 감소시키기() 위한 업데이트
 		update member
 			set lend_book_cnt = lend_book_cnt -1
 			where mber_id = _mber_id;
-		-- 연체도서의 갯수를 카운트 후 변수에 입력
-		select count(*) into cnt 
-			from lending
-			where overdue_cdt = 1 and mber_id = _mber_id and rturn_date = curdate();
 		-- 연체 도서 카운팅한 수를 연체횟수에 입력
 		update member
-			set od_cnt = od_cnt+cnt
+			set od_cnt = od_cnt + cnt
 			where mber_id = _mber_id; 
 		-- 회원 테이블의 연체횟수가 5회 이상일시 대여가능여부를 업데이트 
 		update member

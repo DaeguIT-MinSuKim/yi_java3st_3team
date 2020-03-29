@@ -126,7 +126,7 @@ public class MemberRentTblPanel extends JPanel {
 			model.addRow(new Object[] { book.getBookCode(), book.getBookName(), sb,
 					new SimpleDateFormat("yyyy-MM-dd").format(book.getPblicteYear()), book.getPls().getPlsName(),
 					new SimpleDateFormat("yyyy-MM-dd").format(now),
-					new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()) });
+					new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()),false });
 
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -171,7 +171,8 @@ public class MemberRentTblPanel extends JPanel {
 		ArrayList<String> list = new ArrayList<String>();
 		int cnt = table.getRowCount();
 		for (int i = 0; i < cnt; i++) {
-			boolean chk = model.getValueAt(i, 7) == null ? false : true;
+			boolean chk = (Boolean)model.getValueAt(i, 7);
+//			boolean chk = model.getValueAt(i, 7) == null ? false : true;
 //			JOptionPane.showMessageDialog(null, model.getValueAt(i, 7));
 			if (chk == true) {
 				String bookCd = (String) model.getValueAt(i, 0);
@@ -182,7 +183,8 @@ public class MemberRentTblPanel extends JPanel {
 			}
 		}
 		for (int i = cnt - 1; i > -1; i--) {
-			boolean chk = model.getValueAt(i, 7) == null ? false : true;
+			boolean chk = (Boolean)model.getValueAt(i, 7);
+//			boolean chk = model.getValueAt(i, 7) == null ? false : true;
 			if (chk) {
 				model.removeRow(i);
 			}

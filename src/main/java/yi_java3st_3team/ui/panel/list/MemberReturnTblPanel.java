@@ -106,7 +106,7 @@ public class MemberReturnTblPanel extends JPanel {
 				new SimpleDateFormat("yyyy-MM-dd").format(lending.getBookCd().getPblicteYear()),
 				lending.getBookCd().getPls().getPlsName(),
 				new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
-				new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate()) });
+				new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate()),false });
 	}
 
 	public void testting2(Member member) {
@@ -130,7 +130,7 @@ public class MemberReturnTblPanel extends JPanel {
 					new SimpleDateFormat("yyyy-MM-dd").format(lending.getLendDate()),
 					lending.getRturnDueDate() == null ? ""
 							: String.format("%s",
-									new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate())) });
+									new SimpleDateFormat("yyyy-MM-dd").format(lending.getRturnDueDate())),true });
 		}
 	}
 
@@ -147,7 +147,8 @@ public class MemberReturnTblPanel extends JPanel {
 		for (int i = 0; i < cnt; i++) {
 //			boolean chk = (Boolean) model.getValueAt(i, 7);
 //			System.out.println("1=============================" + model.getValueAt(i, 7));
-			boolean chk = model.getValueAt(i, 7) == null ? false : true;
+//			boolean chk = model.getValueAt(i, 7) == null ? false : true;
+			boolean chk = (Boolean)model.getValueAt(i, 7);
 //			System.out.println("2=============================" + model.getValueAt(i, 7));
 			if (chk) {
 				String bookCd = (String) model.getValueAt(i, 0);
@@ -158,8 +159,8 @@ public class MemberReturnTblPanel extends JPanel {
 			}
 		}
 		for (int i = cnt - 1; i > -1; i--) {
-//			boolean chk = (Boolean) model.getValueAt(i, 7);
-			boolean chk = model.getValueAt(i, 7) == null ? false : true;
+			boolean chk = (Boolean) model.getValueAt(i, 7);
+//			boolean chk = model.getValueAt(i, 7) == null ? false : true;
 			if (chk) {
 				model.removeRow(i);
 			}

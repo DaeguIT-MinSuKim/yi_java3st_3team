@@ -187,8 +187,8 @@ public class MemberReturnPanel extends JPanel implements ActionListener {
 	protected void do_btnLending_actionPerformed(ActionEvent e) {
 		pLendingList.setReturn(pMember.getTfMberId().getText());
 //		pLendingList.setReturnGetIdx(rturnbookCount);
-		pMember.clearTf();
-		pLendingList.clearTf();
+//		pMember.clearTf();
+//		pLendingList.clearTf();
 	}
 
 	protected void do_pMemberBtnMberId_actionPerformed(ActionEvent e) {

@@ -65,7 +65,7 @@ public class MemberListDialog3 extends JDialog implements ActionListener {
 					overdueCdt.append("연체");
 				}
 				model.addRow(new Object[] { mem.getMberId(), mem.getMberName(), mem.getGrade().getGradeName(),
-						overdueCdt, mem.getOdCnt() });
+						overdueCdt, mem.getOdCnt(),false });
 			}
 		}
 		table = new JTable(model);

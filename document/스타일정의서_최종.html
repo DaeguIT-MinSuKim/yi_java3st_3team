@@ -78,7 +78,7 @@
     <tr>
         <td>발행년도</td>
         <td>pblicte_year</td>
-        <td>일시</td>
+        <td>발행일</td>
         <td>DATE</td>
         <td>Y</td>
         <td>&nbsp;</td>
@@ -135,7 +135,7 @@
         <td>등록일자</td>
         <td>regist_date</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -254,7 +254,7 @@
         <td>대여일</td>
         <td>lend_date</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -262,7 +262,7 @@
         <td>반납예정일</td>
         <td>rturn_due_date</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -278,7 +278,7 @@
         <td>반납일</td>
         <td>rturn_date</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -288,14 +288,6 @@
         <td>상태</td>
         <td>TINYINT</td>
         <td>Y</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>연체일</td>
-        <td>overdue_date</td>
-        <td>총</td>
-        <td>INTEGER</td>
-        <td>N</td>
         <td>&nbsp;</td>
     </tr>
 </table>
@@ -339,7 +331,7 @@
         <td>사서생년월일</td>
         <td>lb_birthday</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -376,6 +368,14 @@
         <td>&nbsp;</td>
     </tr>
     <tr>
+        <td>사서이미지</td>
+        <td>lb_img</td>
+        <td>이미지</td>
+        <td>LONGBLOB</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
         <td>직책</td>
         <td>title</td>
         <td>번호</td>
@@ -387,7 +387,7 @@
         <td>입사일</td>
         <td>join_date</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -438,9 +438,9 @@
     </tr>
     <tr>
         <td>회원생년월일</td>
-        <td>mber_birthday</td>
+        <td>mber_brthdy</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -474,6 +474,14 @@
         <td>전화번호</td>
         <td>VARCHAR(30)</td>
         <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>회원이미지</td>
+        <td>mber_img</td>
+        <td>이미지</td>
+        <td>LONGBLOB</td>
+        <td>N</td>
         <td>&nbsp;</td>
     </tr>
     <tr>
@@ -512,7 +520,7 @@
         <td>가입일</td>
         <td>join_dt</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -521,6 +529,14 @@
         <td>wdr_cdt</td>
         <td>상태</td>
         <td>TINYINT</td>
+        <td>N</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>연체횟수</td>
+        <td>od_cnt</td>
+        <td>총</td>
+        <td>INTEGER</td>
         <td>N</td>
         <td>&nbsp;</td>
     </tr>
@@ -538,7 +554,15 @@
         <td>설명</td>
     </tr>
     <tr>
-        <td>중분류번호</td>
+        <td>대분류번호(PK)</td>
+        <td>lclas_no</td>
+        <td>번호</td>
+        <td>INTEGER</td>
+        <td>Y</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>중분류번호(PK)</td>
         <td>mlsfc_no</td>
         <td>번호</td>
         <td>INTEGER</td>
@@ -550,14 +574,6 @@
         <td>mlsfc_name</td>
         <td>이름</td>
         <td>VARCHAR(50)</td>
-        <td>Y</td>
-        <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>대분류번호</td>
-        <td>lclas_no</td>
-        <td>번호</td>
-        <td>INTEGER</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -623,7 +639,7 @@
         <td>도서소개</td>
         <td>book_cont</td>
         <td>내용</td>
-        <td>VARCHAR(255)</td>
+        <td>VARCHAR(1050)</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>
@@ -692,7 +708,7 @@
         <td>신청날짜</td>
         <td>reqst_date</td>
         <td>일시</td>
-        <td>DATE</td>
+        <td>DATETIME</td>
         <td>Y</td>
         <td>&nbsp;</td>
     </tr>

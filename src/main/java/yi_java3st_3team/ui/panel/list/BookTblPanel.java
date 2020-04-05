@@ -25,7 +25,7 @@ public class BookTblPanel extends AbsListPanel<Book> {
 	protected Object[] toArray(Book item) {
 		String writer;
 		String lendCdt;
-		String imgCdt = item.getBookImg().length != 8706 && item.getBookImg().length > 0? "있음" : "없음";
+		String imgCdt = item.getBookImg() != null && item.getBookImg().length > 0? "있음" : "없음";
 		String dsuseCdt = item.getDsuseCdt() > 0 ? "Yes" : "No";
 		
 		if(item.getTrnslrName().length() > 0) {
